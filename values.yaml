@@ -1,0 +1,28 @@
+tenants:
+  monitoring:
+    apps:
+      namespace:
+        path: apps/monitoring/namespace/
+        wave: -5
+        namespace: monitoring
+
+      prometheus-operator:
+        path: apps/monitoring/prometheus-operator/chart/
+        wave: -4
+        namespace: monitoring
+        extraSourceConfig: |
+          helm:
+            releaseName: monitoring
+            valueFiles:
+            - ../values.yaml
+            - ../{{ .Values.env }}-values.yaml
+
+      service-monitors:
+        path: apps/monitoring/service-monitors/
+        wave: -3
+        namespace: monitoring
+
+      dashboards:
+        path: apps/monitoring/dashboards/
+        wave: -3
+        namespace: monitoring

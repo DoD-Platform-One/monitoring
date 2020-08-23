@@ -1,0 +1,8 @@
+prometheusOperator:
+  tlsProxy:
+    enabled: false
+  admissionWebhooks: 
+    enabled: false
+
+alertmanager:
+  enabled: false

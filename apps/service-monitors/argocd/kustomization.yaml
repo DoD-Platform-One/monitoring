@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+namespace: argocd
+
+resources:
+  - argocd-metrics.yaml
+  - argocd-repo-server-metrics.yaml
+  - argocd-server-metrics.yaml
+
+patches:
+  - target:
+      group: monitoring.coreos.com
+      kind: ServiceMonitor
+    patch: |
+      apiVersion: monitoring.coreos.com/v1
+      kind: ServiceMonitor
+      metadata:
+        name: argocd-metrics
+      spec:
+        namespaceSelector:
+          matchNames:
+          - argocd

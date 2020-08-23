@@ -1,0 +1,11 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+    name: chart
+upstream:
+    type: git
+    git:
+        commit: 506eedd8f3d58e73fd3f7b3fecfec38f9f45aedb
+        repo: https://github.com/helm/charts
+        directory: /stable/prometheus-operator
+        ref: master

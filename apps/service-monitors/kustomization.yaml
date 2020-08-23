@@ -1,0 +1,5 @@
+commonLabels:
+  release: monitoring
+
+components:
+  - argocd/

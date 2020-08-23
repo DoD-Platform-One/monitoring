@@ -1,0 +1,7 @@
+namespace: monitoring
+
+commonLabels:
+  release: monitoring
+
+components:
+  - argocd/
