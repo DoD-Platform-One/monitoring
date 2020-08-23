@@ -1,0 +1,23 @@
+repos:
+- repo: https://repo1.dsop.io/platform-one/plugins/pre-commit-bootstraps.git
+  rev: v0.2.0
+  hooks:
+  # Monitoring
+  - id: kustomize
+    name: validate kustomize - monitoring dashboards
+    args:
+      - apps/dashboards
+  - id: kustomize
+    name: validate kustomize - monitoring service-monitors
+    args:
+      - apps/service-monitors
+  # TODO: dependency update is being a pain...
+  # - id: helm
+  #   name: validate helm - monitoring prometheus-operator
+  #   alias: prometheus-operator
+  #   args:
+  #     - apps/monitoring/prometheus-operator/chart/
+  #     - -f
+  #     - apps/monitoring/prometheus-operator/dev-values.yaml
+  #     - --dependency-update
+  #   verbose: true
