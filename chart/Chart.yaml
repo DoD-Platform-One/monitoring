@@ -1,0 +1,9 @@
+apiVersion: v2
+name: monitoring
+version: 0.1.0
+
+dependencies:
+  - name: prometheus-operator
+    version: 9.3.1
+    alias: prometheusoperator
+    condition: prometheusoperator.enabled

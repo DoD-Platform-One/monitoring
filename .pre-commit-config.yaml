@@ -6,18 +6,13 @@ repos:
   - id: kustomize
     name: validate kustomize - monitoring dashboards
     args:
-      - apps/dashboards
+      - apps/dashboards/argocd
   - id: kustomize
     name: validate kustomize - monitoring service-monitors
     args:
-      - apps/service-monitors
-  # TODO: dependency update is being a pain...
-  # - id: helm
-  #   name: validate helm - monitoring prometheus-operator
-  #   alias: prometheus-operator
-  #   args:
-  #     - apps/monitoring/prometheus-operator/chart/
-  #     - -f
-  #     - apps/monitoring/prometheus-operator/dev-values.yaml
-  #     - --dependency-update
-  #   verbose: true
+      - apps/service-monitors/argocd
+  - id: helm
+    name: validate helm - monitoring prometheus-operator
+    alias: prometheus-operator
+    args:
+      - chart/

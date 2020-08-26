@@ -3,6 +3,9 @@ kind: Component
 
 namespace: argocd
 
+commonLabels:
+  release: monitoring
+
 resources:
   - argocd-metrics.yaml
   - argocd-repo-server-metrics.yaml
