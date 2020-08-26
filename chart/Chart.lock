@@ -1,0 +1,6 @@
+dependencies:
+- name: prometheus-operator
+  repository: ""
+  version: 9.3.1
+digest: sha256:5fc71e9f2dbde66c27fff3847e1739474a32ac7805972b0b0aa0d514887dec68
+generated: "2020-08-25T21:43:14.671334-06:00"
