@@ -8,6 +8,6 @@ commonLabels:
   grafana_dashboard: "true"
 
 configMapGenerator:
-  - name: main
+  - name: argocd
     files:
       - dashboard.json

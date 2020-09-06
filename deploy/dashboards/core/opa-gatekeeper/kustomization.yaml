@@ -8,6 +8,6 @@ commonLabels:
   grafana_dashboard: "true"
 
 configMapGenerator:
-  - name: main
+  - name: opa-gatekeeper
     files:
       - dashboard.json
