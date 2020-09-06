@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    prometheus: k8s
+  name: gatekeeper-controller-manager
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      gatekeeper.sh/operation: webhook
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      params:
+        format:
+          - prometheus
+      port: metrics
+      scheme: TCP

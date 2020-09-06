@@ -4,13 +4,13 @@ repos:
   hooks:
   # Monitoring
   - id: kustomize
-    name: validate kustomize - monitoring dashboards
+    name: validate kustomize - core dashboards
     args:
-      - apps/dashboards/argocd
+      - deploy/dashboards/core
   - id: kustomize
-    name: validate kustomize - monitoring service-monitors
+    name: validate kustomize - core service-monitors
     args:
-      - apps/service-monitors/argocd
+      - deploy/service-monitors/core
   - id: helm
     name: validate helm - monitoring prometheus-operator
     alias: prometheus-operator

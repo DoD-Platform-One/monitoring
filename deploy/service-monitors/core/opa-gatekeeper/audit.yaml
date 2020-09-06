@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: gatekeeper-audit
+spec:
+  selector:
+    matchLabels:
+      gatekeeper.sh/operation: audit
+  endpoints:
+    - interval: 30s
+      path: /metrics
+      params:
+        format:
+          - prometheus
+      port: metrics
+      scheme: TCP
