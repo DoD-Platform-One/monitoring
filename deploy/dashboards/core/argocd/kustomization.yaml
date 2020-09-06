@@ -10,4 +10,4 @@ commonLabels:
 configMapGenerator:
   - name: argocd
     files:
-      - dashboard.json
+      - argocd-dashboard.json=dashboard.json

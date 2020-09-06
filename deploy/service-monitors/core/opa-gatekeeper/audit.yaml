@@ -5,12 +5,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      gatekeeper.sh/operation: audit
+      gatekeeper.sh/system: "yes"
+      control-plane: audit-controller
   endpoints:
     - interval: 30s
-      path: /metrics
-      params:
-        format:
-          - prometheus
       port: metrics
-      scheme: TCP
