@@ -8,4 +8,30 @@ prometheusoperator:
 #      enabled: false
 
   alertmanager:
-    enabled: false
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: istio
+
+      # https://istio.io/latest/docs/tasks/traffic-management/ingress/kubernetes-ingress/#specifying-path-type
+      paths:
+        - /*
+
+  grafana:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: istio
+
+      # https://istio.io/latest/docs/tasks/traffic-management/ingress/kubernetes-ingress/#specifying-path-type
+      path: /*
+
+  prometheus:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: istio
+
+      # https://istio.io/latest/docs/tasks/traffic-management/ingress/kubernetes-ingress/#specifying-path-type
+      paths:
+        - /*
