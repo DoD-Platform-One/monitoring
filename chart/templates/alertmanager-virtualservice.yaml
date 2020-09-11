@@ -1,0 +1,25 @@
+{{- if .Values.istio.enabled -}}
+{{- $fullName := include "prometheus-operator.fullname" . }}
+{{- $serviceName := printf "%s-%s" $fullName "alertmanager" }}
+{{- $servicePort := .Values.prometheusoperator.alertmanager.service.port -}}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  hosts:
+    {{- if .Values.prometheusoperator.alertmanager.ingress.hosts }}
+    {{- range .Values.prometheusoperator.alertmanager.ingress.hosts }}
+    - host: {{ . }}
+    {{- end }}
+    {{- end }}
+  gateways:
+    - {{ .Values.istio.gateway }}
+  http:
+    - route:
+        - destination:
+            host: {{ $serviceName }}
+            port:
+              number: {{ .Values.prometheusoperator.alertmanager.service.port }}
+  {{- end }}

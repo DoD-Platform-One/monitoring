@@ -1,0 +1,24 @@
+{{- if .Values.istio.enabled -}}
+{{- $fullName := include "grafana.fullname" . }}
+{{- $servicePort := .Values.prometheusoperator.grafana.service.port -}}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $fullName }}
+  namespace: {{ template "grafana.namespace" . }}
+spec:
+  hosts:
+    {{- if .Values.prometheusoperator.grafana.ingress.hosts }}
+    {{- range .Values.prometheusoperator.grafana.ingress.hosts }}
+    - host: {{ . }}
+    {{- end }}
+    {{- end }}
+  gateways:
+    - {{ .Values.istio.gateway }}
+  http:
+    - route:
+        - destination:
+            host: {{ .Release.Name }}-grafana
+            port:
+              number: {{ .Values.prometheusoperator.grafana.service.port }}
+  {{- end }}

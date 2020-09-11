@@ -1,5 +1,12 @@
+istio:
+  enabled: true
+  gateway: istio-ingressgateway.istio-system.svc.cluster.local
+
 prometheusoperator:
   enabled: true
+
+  # Override name so that $fullName can be used across charts
+  nameOverride: "monitoring"
 
   prometheusOperator:
     tlsProxy:
@@ -8,30 +15,13 @@ prometheusoperator:
 #      enabled: false
 
   alertmanager:
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: istio
-
-      # https://istio.io/latest/docs/tasks/traffic-management/ingress/kubernetes-ingress/#specifying-path-type
-      paths:
-        - /*
+    service:
+      port: 9093
 
   grafana:
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: istio
-
-      # https://istio.io/latest/docs/tasks/traffic-management/ingress/kubernetes-ingress/#specifying-path-type
-      path: /*
+    service:
+      port: 80
 
   prometheus:
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: istio
-
-      # https://istio.io/latest/docs/tasks/traffic-management/ingress/kubernetes-ingress/#specifying-path-type
-      paths:
-        - /*
+    service:
+      port: 9090
