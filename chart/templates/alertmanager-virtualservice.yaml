@@ -11,7 +11,7 @@ spec:
   hosts:
     {{- if .Values.prometheusoperator.alertmanager.ingress.hosts }}
     {{- range .Values.prometheusoperator.alertmanager.ingress.hosts }}
-    - host: {{ . }}
+    - {{ . }}
     {{- end }}
     {{- end }}
   gateways:

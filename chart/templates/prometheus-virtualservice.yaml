@@ -11,7 +11,7 @@ spec:
   hosts:
     {{- if .Values.prometheusoperator.prometheus.ingress.hosts }}
     {{- range .Values.prometheusoperator.prometheus.ingress.hosts }}
-    - host: {{ . }}
+    - {{ . }}
     {{- end }}
     {{- end }}
   gateways:
