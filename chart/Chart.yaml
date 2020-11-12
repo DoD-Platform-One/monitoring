@@ -1,9 +1,9 @@
 apiVersion: v2
 name: monitoring
-version: 0.1.0
+version: 0.0.2
 
 dependencies:
-  - name: prometheus-operator
-    version: 9.3.1
-    alias: prometheusoperator
-    condition: prometheusoperator.enabled
+  - name: kube-prometheus-stack
+    version: 11.0.0
+    repository: "file://upstream/kube-prometheus-stack"
+    alias: kubePrometheusStack
