@@ -1,0 +1,18 @@
+{{- if .Values.istio.enabled -}}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: grafana
+  namespace: {{ .Release.Namespace }}
+spec:
+  gateways:
+    - main.istio-system.svc.cluster.local
+  hosts:
+    - "grafana.{{ .Values.hostname }}"
+  http:
+    - route:
+        - destination:
+            port:
+              number: 80
+            host: {{ include "kube-prometheus-stack.fullname" . }}-grafana
+{{- end }}
