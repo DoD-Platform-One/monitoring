@@ -1,0 +1,6 @@
+{
+  "baseUrl": "https://www.toolsqa.com/cypress/cypress-test/",
+  "pluginsFile": false,
+  "supportFile": false,
+  "fixturesFolder": false
+}
