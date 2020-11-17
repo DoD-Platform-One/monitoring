@@ -1,6 +1,6 @@
 describe('Basic prometheus', function() {
     it('Visits the prometheus sign in page', function() {
-      cy.visit(`https://prometheus.fences.dsop.io`)
+      cy.visit(Cypress.env('prometheus_url'))
   
       cy.get('#expr0')
         .type('kube_node_info')

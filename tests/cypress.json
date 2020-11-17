@@ -1,6 +1,10 @@
 {
-  "baseUrl": "https://www.toolsqa.com/cypress/cypress-test/",
+ 
   "pluginsFile": false,
   "supportFile": false,
-  "fixturesFolder": false
+  "fixturesFolder": false,
+  "env": {
+    "prometheus_url": "https://prometheus.fences.dsop.io",
+    "grafana_url": "https://grafana.fences.dsop.io"
+  }
 }
