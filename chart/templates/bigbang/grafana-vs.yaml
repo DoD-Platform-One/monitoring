@@ -16,6 +16,6 @@ spec:
     - route:
         - destination:
             port:
-              number: 80
-            host: {{ include "kube-prometheus-stack.fullname" . }}-grafana
+              number: {{ .Values.grafana.service.port }}
+            host: {{ .Release.Name }}-grafana
 {{- end }}

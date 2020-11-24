@@ -1,4 +1,6 @@
 {{- if .Values.istio.enabled -}}
+{{- $serviceName := printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "alertmanager" }}
+{{- $servicePort := .Values.alertmanager.service.port -}}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -16,6 +18,6 @@ spec:
     - route:
         - destination:
             port:
-              number: 9093
-            host: {{ include "kube-prometheus-stack.fullname" . }}-alertmanager
+              number: {{ $servicePort }}
+            host: {{ $serviceName }}
 {{- end }}
