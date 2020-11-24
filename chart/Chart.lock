@@ -1,6 +1,0 @@
-dependencies:
-- name: kube-prometheus-stack
-  repository: file://upstream/kube-prometheus-stack
-  version: 11.0.0
-digest: sha256:f82f4fca8fcc67e18690f4b404e30a63823239438a51e25da87f273059693422
-generated: "2020-11-11T16:36:01.331732-05:00"
