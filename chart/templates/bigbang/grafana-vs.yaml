@@ -1,4 +1,4 @@
-{{- if .Values.istio.enabled -}}
+{{- if and .Values.grafana.enabled .Values.istio.enabled -}}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -17,5 +17,5 @@ spec:
         - destination:
             port:
               number: {{ .Values.grafana.service.port }}
-            host: {{ .Release.Name }}-grafana
+            host: {{ template "kube-prometheus-stack.name" $ }}-grafana
 {{- end }}
