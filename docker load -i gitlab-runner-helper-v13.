@@ -1,0 +1,48 @@
+docker load -i gitlab-runner-helper-v13.2.2-reports-signature.tar.gz
+
+docker load -i jaeger-all-in-one-1.17.1.tar
+
+docker load -i fluentd-elasticsearch-4.0.9.tar
+
+docker tag  c147b3984b0a  registry.dsop.io/platform-one/apps/fluentd-elasticsearch/fluentd-elasticsearch-ib:4.0.9
+
+docker tag  c147b3984b0a  
+
+
+docker load -i fluentd-kubernetes-daemonset-1.11.2.tar
+
+docker tag    registry.dsop.io/platform-one/apps/fluentd-elasticsearch/fluentd-kubernetes-daemonset-ib:1.11.2
+
+
+docker tag 7211b64caf60  registry.dsop.io/platform-one/apps/istio/jaeger-all-in-one-ib:1.17.1
+
+helm search -l gitlab/gitlab-runner
+helm search repo -l gitlab/gitlab-runnerclea
+
+helm install install/kubernetes/helm/istio --name istio --namespace istio-system
+
+helm repo add ibm-charts https://raw.githubusercontent.com/IBM/charts/master/repo/stable/
+
+helm search -l install/kubernetes/helm/istio
+helm install elasticsearch elastic/elasticsearch
+
+
+helm get manifest elasticsearch > generated.yaml
+
+
+
+
+docker load -i kiali-v1.23.0.tar.gz
+
+
+gitlab/gitlab-runner/gitlab-runner
+docker tag ceff2f45c791 registry.dsop.io/platform-one/apps/kiali/kiali-ib:1.23.0
+
+docker tag ceff2f45c791gitlab-runner-helper:v13.2.2 registry.dsop.io/platform-one/apps/gitlab-runner/gitlab-runner-ib:13.2.2-ib 
+
+13.2.2-ib: digest: sha256:feca197852cfe61aaeb03c6694b1601a347de190ad694607e49db464de1efb65 size: 1161
+
+docker push registry.dsop.io/platform-one/apps/istio/kiali-ib:1.23.0
+
+
+docker tag 
