@@ -3,6 +3,7 @@
 # Table of Contents
 - [Deployment](#deploy-monitoring)
 - [Prerequisites](#pre-requisites)
+- [Monitoring configuration](docs/README.md)
 
 
 # Prerequisites
