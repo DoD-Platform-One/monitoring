@@ -1,4 +1,2 @@
-*.tgz
-!/chart/upstream/**/*.tgz
 ../screenshots
 ../videos
