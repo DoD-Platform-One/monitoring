@@ -4,7 +4,7 @@
   "supportFile": false,
   "fixturesFolder": false,
   "env": {
-    "prometheus_url": "https://prometheus.fences.dsop.io",
-    "grafana_url": "https://grafana.fences.dsop.io"
+    "prometheus_url": "",
+    "grafana_url": ""
   }
 }
