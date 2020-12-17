@@ -17,5 +17,5 @@ spec:
         - destination:
             port:
               number: {{ .Values.grafana.service.port }}
-            host: {{ template "kube-prometheus-stack.name" $ }}-grafana
+            host: {{ .Release.Name }}-grafana
 {{- end }}
