@@ -7,6 +7,19 @@ hostname: bigbang.dev
 istio:
   enable: false
 
+# Add hooks to override backend of virtual services for
+# SSO
+ingress:
+  prometheus:
+    service: ""
+    port: ""
+    namespace: ""
+  alertmanager:
+    service: ""
+    port: ""
+    namespace: ""
+
+
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
 nameOverride: ""

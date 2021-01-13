@@ -4,6 +4,7 @@
 - [Deployment](#deploy-monitoring)
 - [Prerequisites](#pre-requisites)
 - [Monitoring configuration](docs/README.md)
+- [Keycloak configuration](docs/KEYCLOAK.md)
 
 
 # Prerequisites
