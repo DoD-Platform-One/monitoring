@@ -18,6 +18,6 @@ spec:
     - route:
         - destination:
             port:
-              number: {{ .Values.ingress.prometheus.port  | default "{{ $servicePort }}" }}
-            host: {{ .Values.ingress.prometheus.service  | default "{{ $serviceName }}" }}.{{ .Values.ingress.prometheus.namespace | default "{{ .Release.Namespace }}" }}.svc.cluster.local
+              number: {{ .Values.ingress.prometheus.port  | default $servicePort }}
+            host: {{ .Values.ingress.prometheus.service  | default $serviceName }}.{{ .Values.ingress.prometheus.namespace | default .Release.Namespace }}.svc.cluster.local
 {{- end }}
