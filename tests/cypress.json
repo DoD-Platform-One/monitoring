@@ -4,7 +4,7 @@
   "supportFile": false,
   "fixturesFolder": false,
   "env": {
-    "prometheus_url": "",
-    "grafana_url": ""
+    "prometheus_url": "prometheus.bigbang.dev",
+    "grafana_url": "grafana.bigbang.dev"
   }
 }
