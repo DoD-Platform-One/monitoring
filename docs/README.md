@@ -14,7 +14,7 @@ You can find the API Spec for the Prometheus Operator [here](https://github.com/
 Grafana configuration can be done via the secrets/grafana-ini.enc.yaml file. It creates a k8s secret called grafana-ini-config and mounts the inline file to /etc/grafana/grafana.ini within the container.
 OAuth config is done within this file, keycloak auth for example can be configured under the [auth.generic_oauth] section. It must be set to enabled = true to activate.
 Variables to update are "KEYCLOAK_URL", "KEYCLOAK_REALM" within [auth.generic_oauth], "GRAFANA_URL" within [server], signout_redirect_url within [auth] as well as client_secret and client_id within [auth.generic_oauth].
-root_url is a critical variable to make sure matches your full grafana URL eg https://grafana.fences.dsop.io/ .
+root_url is a critical variable to make sure matches your full grafana URL eg https://grafana.fences.dso.mil/ .
 Ensure that Mappers within specific keycloak client have builtin "profile", "username" and "email" mappers added.
 
 ### Pre-requisites
@@ -54,7 +54,7 @@ Updates to Dockerfile from DCCSCR
     * package name should match ARG GRAFANA_PKG value
 
 ### Alertmanager
-The image was being pulled from quay.io/prometheus/alertmanager:v0.18.0.  There was no hardened cotainer so the image was moved to registry.dsop.io/platform-one/apps/monitoring/alertmanager:0.18.0.  This has an open issue to harden.
+The image was being pulled from quay.io/prometheus/alertmanager:v0.18.0.  There was no hardened cotainer so the image was moved to registry.dso.mil/platform-one/apps/monitoring/alertmanager:0.18.0.  This has an open issue to harden.
 
 ## Logs from the monitoring stack
 
@@ -229,10 +229,10 @@ Further filters that can be used are:
 build command
 
 ```
-$ docker build . -t registry.dsop.io/platform-one/apps/monitoring/grafana:6.7.0
+$ docker build . -t registry.dso.mil/platform-one/apps/monitoring/grafana:6.7.0
 ```
 push command
 
 ```
-$ docker push registry.dsop.io/platform-one/apps/monitoring/grafana:6.7.0
+$ docker push registry.dso.mil/platform-one/apps/monitoring/grafana:6.7.0
 ```

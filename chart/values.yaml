@@ -374,7 +374,7 @@ alertmanager:
     ## Image of Alertmanager
     ##
     image:
-      repository: registry1.dsop.io/ironbank/opensource/prometheus/alertmanager
+      repository: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager
       tag: v0.21.0
       sha: ""
 
@@ -533,7 +533,7 @@ grafana:
 
   # use IronBank image
   image:
-    repository: registry1.dsop.io/ironbank/opensource/grafana/grafana
+    repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
     tag: 7.1.3-1
 
   ## Deploy default dashboards.
@@ -1129,7 +1129,7 @@ kube-state-metrics:
 
   # use IronBank image
   image:
-    repository: registry1.dsop.io/ironbank/opensource/coreos/kube-state-metrics
+    repository: registry1.dso.mil/ironbank/opensource/coreos/kube-state-metrics
     tag: v1.9.7
 
   namespaceOverride: ""
@@ -1181,7 +1181,7 @@ prometheus-node-exporter:
 
   # use IronBank image
   image:
-    repository: registry1.dsop.io/ironbank/opensource/prometheus/node-exporter 
+    repository: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter 
     tag: v1.0.1
 
   namespaceOverride: ""
@@ -1391,7 +1391,7 @@ prometheusOperator:
   ## Prometheus-operator image
   ##
   image:
-    repository: registry1.dsop.io/ironbank/opensource/coreos/prometheus-operator
+    repository: registry1.dso.mil/ironbank/opensource/coreos/prometheus-operator
     tag: v0.42.1
     sha: ""
     pullPolicy: IfNotPresent
@@ -1399,7 +1399,7 @@ prometheusOperator:
   ## Configmap-reload image to use for reloading configmaps
   ##
   configmapReloadImage:
-    repository: registry1.dsop.io/ironbank/opensource/jimmidyson/configmap-reload
+    repository: registry1.dso.mil/ironbank/opensource/jimmidyson/configmap-reload
     tag: v0.4.0
     sha: ""
 
@@ -1407,7 +1407,7 @@ prometheusOperator:
   ##
   prometheusConfigReloaderImage:
     # use Iron Bank image
-    repository: registry1.dsop.io/ironbank/opensource/coreos/prometheus-config-reloader
+    repository: registry1.dso.mil/ironbank/opensource/coreos/prometheus-config-reloader
     tag: v0.42.1
     sha: ""
 
@@ -1671,7 +1671,7 @@ prometheus:
     ## Image of Prometheus.
     ##
     image:
-      repository: registry1.dsop.io/ironbank/opensource/prometheus/prometheus
+      repository: registry1.dso.mil/ironbank/opensource/prometheus/prometheus
       tag: v2.22.0
       sha: ""
 

@@ -1,4 +1,4 @@
 repos:
-- repo: https://repo1.dsop.io/platform-one/plugins/pre-commit-bootstraps.git
+- repo: https://repo1.dso.mil/platform-one/plugins/pre-commit-bootstraps.git
   rev: v0.2.0
   hooks: []
