@@ -111,7 +111,7 @@ global:
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   ##
   imagePullSecrets: 
-    - name: "private-registry"
+    - name: "private-registry-mil"
 
 ## Configuration for alertmanager
 ## ref: https://prometheus.io/docs/alerting/alertmanager/
@@ -365,7 +365,7 @@ alertmanager:
       tag: v0.21.0
       sha: ""
     imagePullSecrets: 
-    - name: "private-registry"
+    - name: "private-registry-mil"
     ## If true then the user will be responsible to provide a secret with alertmanager configuration
     ## So when true the config part will be ignored (including templateFiles) and the one in the secret will be used
     ##
@@ -524,7 +524,7 @@ grafana:
     repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
     tag: 7.1.3-1
     pullSecrets:
-    - private-registry
+    - private-registry-mil
 
   ## Deploy default dashboards.
   ##
@@ -572,7 +572,7 @@ grafana:
       repository: registry.dso.mil/platform-one/big-bang/apps/core/monitoring/kiwigrid/k8s-sidecar
       tag: 1.1.0
     imagePullSecrets: 
-    - name: "private-registry"
+    - name: "private-registry-mil"
     dashboards:
       enabled: true
       label: grafana_dashboard
@@ -1123,7 +1123,7 @@ kube-state-metrics:
     repository: registry1.dso.mil/ironbank/opensource/coreos/kube-state-metrics
     tag: v1.9.7
   imagePullSecrets: 
-    - name: "private-registry"   
+    - name: "private-registry-mil"   
   namespaceOverride: ""
   rbac:
     create: true
@@ -1388,7 +1388,7 @@ prometheusOperator:
     sha: ""
     pullPolicy: IfNotPresent
   imagePullSecrets: 
-    - name: "private-registry"
+    - name: "private-registry-mil"
   ## Configmap-reload image to use for reloading configmaps
   ##
   configmapReloadImage:
@@ -1668,7 +1668,7 @@ prometheus:
       tag: v2.22.0
       sha: ""
     imagePullSecrets: 
-    - name: "private-registry"
+    - name: "private-registry-mil"
     ## Tolerations for use with node taints
     ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
     ##
