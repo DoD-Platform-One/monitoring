@@ -50,87 +50,64 @@ These are the items you need to configure after keycloak and Grafana are working
     - Take note of the client secret in the credential tab
 
 ## Grafana Configuration
-Grafana configuration can be set via the editing the following section in the values file to look like:
+Grafana configuration can be set via the editing the following section in the chart's values.
+* It is recommended to utilize BigBang's encrypted helm values support to paste in the client_secret directly.
+* Below config are example BigBang values for enabling and configuring OIDC support:
 ```
-grafana:
-...
-  grafana.ini
-    server:
-      root_url: https://grafana.{{ .Values.hostname }}/
-    auth:
-      signout_redirect_url: https://keycloak.DOMAIN/auth/realms/REALM/protocol/openid-connect/logout
-    auth.generic_oauth:
-      enabled = false
-      client_id = $__file{/etc/secrets/oauthinfo/client_id}
-      client_secret = $__file{/etc/secrets/oauthinfo/client_secret}
-      scopes = openid profile email #Or configured Client Scope within Keycloak
-      auth_url = https://keycloak.DOMAIN/auth/realms/REALM/protocol/openid-connect/auth
-      token_url = https://keycloak.DOMAIN/auth/realms/REALM/protocol/openid-connect/token
-      api_url = https://keycloak.DOMAIN/auth/realms/REALM/protocol/openid-connect/userinfo
-      allow_sign_up = true
-      role_attribute_path = Viewer
+sso:
+  oidc:
+    host: login.dso.mil
+    realm: baby-yoda
+  certificate_authority: ''
+
+monitoring:
+  sso:
+    enabled: true
+    grafana:
+      client_id: ""
+      client_secret: ""
+      scopes: "Grafana" # default 'openid profile email'
+      allow_sign_up: "true" # true/false if Grafana will auto-create users from Keycloak after successful first login
+
 ```
-* The root_url setting DOES NOT need to be edited if you filled in your "hostname" variable in your values file, update for different prefix or if not using HTTPS.
-* Enabled under auth.generic_oauth will need to be set to true to allow for OIDC authentication.
+* The root_url setting DOES NOT need to be edited if you filled in your "hostname" variable in your values file and istio is enabled, update only if desiring a different prefix or if not using HTTPS.
+* Setting monitoring.sso.enabled=true in BigBang values will set Grafana OIDC to enabled.
 * Update role_attribute_path to either "Editor" or "Admin" to allow all OIDC created users to be able to edit dashboards or administer the grafana install.
 
-To set the client_id and client_secret portions of the values file an "extraSecretMounts" portion of the values file will need to be declared under the grafana section:
+### Enabling Grafana OIDC in BigBang
 ```
-grafana:
-...
-  extraSecretMounts:
-    - name: oauthinfo
-      mountPath: /etc/secrets/oauthinfo
-      secretName: grafana-oauthinfo
-      defaultMosde: 0440
-      readOnly: true
+monitoring:
+  sso:
+    enabled: true
+    grafana:
+      client_id: grafana
+      client_secret: secret
 ```
-The above configuration points to a kubernetes secret called "grafana-oauthinfo" which will need to be created with two configured key:value sets:
-* client_id
-* client_secret
-
-The example secret would look like:
-
-        apiVersion: v1
-        kind: Secret
-        metadata:
-          name: grafana-oauthinfo
-          namespace: monitoring
-        stringData:
-          client_id: ...
-          client_secret: ...
-
-* Ensure when using SOPS encryption that only the data or stringData entries are encrypted otherwise Flux will have issues reconciling the secret.
-
 
 ## Prometheus + Alertmanager Configuration
 Configuration of Keycloak/OIDC auth in front of Prometheus+Alertmanager requires the following:
 
-1. [Authservice](https://repo1.dso.mil/platform-one/big-bang/apps/sandbox/authservice) Installed in your cluster and individual chains for Prometheus+Alertmanager configured:
-```
-authservice:
-  enabled: true
-  values:
-    chains:
-      prometheus
-        match:
-          header: ":authority"
-          prefix: "prometheus.DOMAIN"
-        client_id: prometheus
-        client_secret: secret-text
-        callback_uri: https://prometheus.DOMAIN/login/generic_oauth
-        cookie_name_prefix: hello_world
-        logout_path: /logout
-```
-* When used in conjunction with Bigbang Umbrella, you can replace "DOMAIN" with "{{ .Values.hostname }}" and helm will utilize that filled in variable.
-* Alertmanager chain looks identical just with alertmanager specific client_id, client_secret, prefix, and callback_uri.
-
-2. Utilize the sso options for this monitoring package:
 ```
 sso:
-  enabled: false
-  namespace: monitoring-sso
-```
-* Setting sso.enabled to true installs an HAProxy container in the defined namespace which works in conjunction with Authservice to place an OIDC redirect in front of Prometheus+Alertmanager.
-* When sso.enabled is set to true, the Prometheus+Alertmanager VirtualServices are replaced with ones that route to the HAProxy Deployment rather than directly to the services themselves.
+  oidc:
+    host: login.dso.mil
+    realm: baby-yoda
+  certificate_authority: ''
+  jwks: ""
 
+monitoring:
+  sso:
+    enabled: true
+    kiali:
+      client_id: ""
+      client_secret: ""
+    jaeger:
+      client_id: ""
+      client_secret: ""
+
+authservice:
+  enabled: true
+```
+* Configuration above is for BigBang, chains for authservice are automatically populated when above settings are present.
+* Setting monitoring.sso.enabled to true installs an HAProxy container in the authservice namespace which works in conjunction with Authservice itself to place an OIDC redirect in front of Prometheus+Alertmanager.
+* When monitoring.sso.enabled is set to true, the Prometheus+Alertmanager VirtualServices are replaced with ones that route to the HAProxy Deployment rather than directly to the services themselves.

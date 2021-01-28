@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.9]
+### Added
+- Support and outline for configuring Grafana OIDC SSO within the chart values.
+
+### Changed
+- KEYCLOAK.md doc, updating process for how to configure Grafana OIDC and utilizing it with Umbrella.
+- Cleaning up authservice related portions of KEYCLOAK.md
+
 ## [11.0.0-bb.8]
 
 * Added labels and helm values allowing for external podmonitors brought by customers or other packages.
