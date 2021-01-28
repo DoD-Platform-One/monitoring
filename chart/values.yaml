@@ -543,6 +543,27 @@ grafana:
 
   adminPassword: prom-operator
 
+  ## Start of Grafana specific OIDC configuration
+  ## Review docs/KEYCLOAK.md before editing especially when deploying with BigBang
+  ##
+  grafana.ini:
+    # Required if enabling SSO
+    #server:
+      #root_url: https://grafana.{{ .Values.hostname }}/
+      #Block is auto-set when using Umbrella
+    auth:
+      signout_redirect_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/logout
+    auth.generic_oauth:
+      enabled: false
+      client_id: grafana    #this is a sample client_id, review docs/KEYCLOAK.md
+      client_secret: secret #this is a sample secret, review docs/KEYCLOAK.md
+      scopes: Grafana       #this is a sample client scope, review docs/KEYCLOAK.md
+      auth_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/auth
+      token_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/token
+      api_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/userinfo
+      allow_sign_up: true
+      role_attribute_path: Viewer
+
   ingress:
     ## If true, Grafana Ingress will be created
     ##
@@ -1755,7 +1776,7 @@ prometheus:
     ## prometheus resource to be created with selectors based on values in the helm deployment,
     ## which will also match the PrometheusRule resources created
     ##
-    ruleSelectorNilUsesHelmValues: true
+    ruleSelectorNilUsesHelmValues: false
 
     ## PrometheusRules to be selected for target discovery.
     ## If {}, select all ServiceMonitors
@@ -1780,7 +1801,7 @@ prometheus:
     ## prometheus resource to be created with selectors based on values in the helm deployment,
     ## which will also match the servicemonitors created
     ##
-    serviceMonitorSelectorNilUsesHelmValues: true
+    serviceMonitorSelectorNilUsesHelmValues: false
 
     ## ServiceMonitors to be selected for target discovery.
     ## If {}, select all ServiceMonitors
@@ -1800,7 +1821,7 @@ prometheus:
     ## prometheus resource to be created with selectors based on values in the helm deployment,
     ## which will also match the podmonitors created
     ##
-    podMonitorSelectorNilUsesHelmValues: true
+    podMonitorSelectorNilUsesHelmValues: false
 
     ## PodMonitors to be selected for target discovery.
     ## If {}, select all PodMonitors
@@ -1820,7 +1841,7 @@ prometheus:
     ## prometheus resource to be created with selectors based on values in the helm deployment,
     ## which will also match the probes created
     ##
-    probeSelectorNilUsesHelmValues: true
+    probeSelectorNilUsesHelmValues: false
 
     ## Probes to be selected for target discovery.
     ## If {}, select all Probes
