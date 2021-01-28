@@ -110,8 +110,7 @@ global:
   ## Reference to one or more secrets to be used when pulling images
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   ##
-  imagePullSecrets: 
-    - name: "private-registry-mil"
+  imagePullSecrets: [ private-registry-mil ]
 
 ## Configuration for alertmanager
 ## ref: https://prometheus.io/docs/alerting/alertmanager/
@@ -353,6 +352,7 @@ alertmanager:
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#alertmanagerspec
   ##
   alertmanagerSpec:
+
     ## Standard object’s metadata. More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#metadata
     ## Metadata Labels and Annotations gets propagated to the Alertmanager pods.
     ##
@@ -364,8 +364,7 @@ alertmanager:
       repository: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager
       tag: v0.21.0
       sha: ""
-    imagePullSecrets: 
-    - name: "private-registry-mil"
+    
     ## If true then the user will be responsible to provide a secret with alertmanager configuration
     ## So when true the config part will be ignored (including templateFiles) and the one in the secret will be used
     ##
@@ -523,8 +522,7 @@ grafana:
   image:
     repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
     tag: 7.1.3-1
-    pullSecrets:
-    - private-registry-mil
+    pullSecrets: [ private-registry-mil ]
 
   ## Deploy default dashboards.
   ##
@@ -571,8 +569,7 @@ grafana:
     image:
       repository: registry.dso.mil/platform-one/big-bang/apps/core/monitoring/kiwigrid/k8s-sidecar
       tag: 1.1.0
-    imagePullSecrets: 
-    - name: "private-registry-mil"
+    
     dashboards:
       enabled: true
       label: grafana_dashboard
@@ -1117,13 +1114,11 @@ kubeStateMetrics:
 ## Configuration for kube-state-metrics subchart
 ##
 kube-state-metrics:
-
+  imagePullSecrets: [ private-registry-mil ]
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/coreos/kube-state-metrics
     tag: v1.9.7
-  imagePullSecrets: 
-    - name: "private-registry-mil"   
   namespaceOverride: ""
   rbac:
     create: true
@@ -1170,6 +1165,9 @@ nodeExporter:
 ## Configuration for prometheus-node-exporter subchart
 ##
 prometheus-node-exporter:
+
+  serviceAccount:
+    imagePullSecrets: [ private-registry-mil ]
 
   # use IronBank image
   image:
@@ -1387,8 +1385,7 @@ prometheusOperator:
     tag: v0.42.1
     sha: ""
     pullPolicy: IfNotPresent
-  imagePullSecrets: 
-    - name: "private-registry-mil"
+
   ## Configmap-reload image to use for reloading configmaps
   ##
   configmapReloadImage:
@@ -1635,6 +1632,7 @@ prometheus:
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
   ##
   prometheusSpec:
+
     ## If true, pass --storage.tsdb.max-block-duration=2h to prometheus. This is already done if using Thanos
     ##
     disableCompaction: false
@@ -1667,8 +1665,6 @@ prometheus:
       repository: registry1.dso.mil/ironbank/opensource/prometheus/prometheus
       tag: v2.22.0
       sha: ""
-    imagePullSecrets: 
-    - name: "private-registry-mil"
     ## Tolerations for use with node taints
     ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
     ##

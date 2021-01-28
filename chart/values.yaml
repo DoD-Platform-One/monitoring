@@ -123,8 +123,7 @@ global:
   ## Reference to one or more secrets to be used when pulling images
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   ##
-  imagePullSecrets: 
-    - name: "private-registry"
+  imagePullSecrets: [ ]
 
 ## Configuration for alertmanager
 ## ref: https://prometheus.io/docs/alerting/alertmanager/
@@ -366,6 +365,7 @@ alertmanager:
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#alertmanagerspec
   ##
   alertmanagerSpec:
+
     ## Standard object’s metadata. More info: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-architecture/api-conventions.md#metadata
     ## Metadata Labels and Annotations gets propagated to the Alertmanager pods.
     ##
@@ -535,6 +535,7 @@ grafana:
   image:
     repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
     tag: 7.1.3-1
+    pullSecrets: [ ]
 
   ## Deploy default dashboards.
   ##
@@ -1106,15 +1107,11 @@ kubeStateMetrics:
     ##
     interval: ""
 
-    ## 	metric relabel configs to apply to samples before ingestion.
-    ##
     metricRelabelings: []
     # - action: keep
     #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
     #   sourceLabels: [__name__]
 
-    # 	relabel configs to apply to samples before ingestion.
-    ##
     relabelings: []
     # - sourceLabels: [__meta_kubernetes_pod_node_name]
     #   separator: ;
@@ -1126,7 +1123,7 @@ kubeStateMetrics:
 ## Configuration for kube-state-metrics subchart
 ##
 kube-state-metrics:
-
+  imagePullSecrets: [  ]
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/coreos/kube-state-metrics
@@ -1178,6 +1175,9 @@ nodeExporter:
 ## Configuration for prometheus-node-exporter subchart
 ##
 prometheus-node-exporter:
+
+  serviceAccount:
+    imagePullSecrets: [ ]
 
   # use IronBank image
   image:
