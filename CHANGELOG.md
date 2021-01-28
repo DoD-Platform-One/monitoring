@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.10]
+
+* Updating all dsop.io refs to dso.mil
+
 ## [11.0.0-bb.9]
 ### Added
 - Support and outline for configuring Grafana OIDC SSO within the chart values.
