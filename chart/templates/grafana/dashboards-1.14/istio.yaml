@@ -1,5 +1,6 @@
 # taken from https://raw.githubusercontent.com/istio/istio/release-1.8/samples/addons/grafana.yaml
-{{- if and .Values.istio.enabled }}
+# i had to replace starting braces in the files with https://github.com/helm/helm/issues/8236
+{{- if and .Values.istio.enable }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
