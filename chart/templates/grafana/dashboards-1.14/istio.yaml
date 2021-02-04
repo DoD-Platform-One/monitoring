@@ -15,9 +15,9 @@ metadata:
 {{ include "kube-prometheus-stack.labels" $ | indent 4 }}
 data:
   istio-performance-dashboard.json: |
-    {{ .Files.Get "base/istio-dashboards/istio-performance-dashboard.json"  }}
+    {{ .Files.Get "../../../istio-dashboards/istio-performance-dashboard.json"  }}
   pilot-dashboard.json: |
-    {{ .Files.Get "base/istio-dashboards/pilot-dashboard.json"  }}
+    {{ .Files.Get "../../../istio-dashboards/pilot-dashboard.json"  }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -34,11 +34,11 @@ metadata:
 {{ include "kube-prometheus-stack.labels" $ | indent 4 }}
 data:
   istio-extension-dashboard.json: |
-    {{ .Files.Get "base/istio-dashboards/istio-extension-dashboard.json"  }}
+    {{ .Files.Get "../../../istio-dashboards/istio-extension-dashboard.json"  }}
   istio-mesh-dashboard.json: |
-    {{ .Files.Get "base/istio-dashboards/istio-mesh-dashboard.json"  }}
+    {{ .Files.Get "../../../istio-dashboards/istio-mesh-dashboard.json"  }}
   istio-service-dashboard.json: |
-    {{ .Files.Get "base/istio-dashboards/istio-service-dashboard.json"  }}
+    {{ .Files.Get "../../../istio-dashboards/istio-service-dashboard.json"  }}
   istio-workload-dashboard.json: |
-    {{ .Files.Get "base/istio-dashboards/istio-workload-dashboard.json"  }}
+    {{ .Files.Get "../../../istio-dashboards/istio-workload-dashboard.json"  }}
 {{- end }}
