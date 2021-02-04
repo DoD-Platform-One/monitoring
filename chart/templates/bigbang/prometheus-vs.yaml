@@ -13,7 +13,7 @@ spec:
   gateways:
     - main.istio-system.svc.cluster.local
   hosts:
-    - "prometheus.{{ .Values.hostname }}"
+    - "{{ .Values.ingress.prometheus.subdomain }}.{{ .Values.hostname }}"
   http:
     - route:
         - destination:
