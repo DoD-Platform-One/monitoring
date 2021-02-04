@@ -1,5 +1,5 @@
 # taken from https://raw.githubusercontent.com/istio/istio/release-1.8/samples/addons/grafana.yaml
-{{- if .Values.istio.enabled -}}
+{{- if .Values.istio.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
