@@ -7,17 +7,22 @@ hostname: bigbang.dev
 istio:
   enable: false
 
-# Add hooks to override backend of virtual services for
-# SSO
+# Add hooks to override backend of virtual services for SSO
+# This also allows override of the subdomain, for example, if grafana URL needs to be grafana-admin.<URL>.com
 ingress:
   prometheus:
     service: ""
     port: ""
     namespace: ""
+    subdomain: prometheus
   alertmanager:
     service: ""
     port: ""
     namespace: ""
+    subdomain: alertmanager
+  grafana:
+    subdomain: grafana
+
 
 
 ## Provide a name in place of kube-prometheus-stack for `app:` labels

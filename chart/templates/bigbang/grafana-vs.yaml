@@ -11,7 +11,7 @@ spec:
   gateways:
     - main.istio-system.svc.cluster.local
   hosts:
-    - "grafana.{{ .Values.hostname }}"
+    - "{{ .Values.ingress.grafana.subdomain }}.{{ .Values.hostname }}"
   http:
     - route:
         - destination:
