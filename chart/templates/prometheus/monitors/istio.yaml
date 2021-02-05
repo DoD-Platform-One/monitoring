@@ -5,13 +5,11 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: envoy-stats-monitor
-  namespace: {{ .Release.Namespace }}
+  name: {{ template "kube-prometheus-stack.fullname" . }}-istio-envoy
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
   labels:
-    monitoring: istio-proxies
-    {{- with .Values.commonLabels }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
+    app: {{ template "kube-prometheus-stack.name" . }}-prometheus
+{{ include "kube-prometheus-stack.labels" . | indent 4 }}
 spec:
   selector:
     matchExpressions:
@@ -45,13 +43,11 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: istio-component-monitor
-  namespace: {{ .Release.Namespace }}
+  name: {{ template "kube-prometheus-stack.fullname" . }}-istio-pilot
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
   labels:
-    monitoring: istio-components
-    {{- with .Values.commonLabels }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
+    app: {{ template "kube-prometheus-stack.name" . }}-prometheus
+{{ include "kube-prometheus-stack.labels" . | indent 4 }}
 spec:
   jobLabel: istio
   targetLabels: [app]
