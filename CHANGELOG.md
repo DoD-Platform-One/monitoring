@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.11]
+### Added
+* Adding template of grafana configuration values for supplying inline JSON Grafana Dashboards inside the helm chart.
+* Documentation for adding Grafana Dashboards via helm values and externally.
+
+### Changed
+* Initial update of documentation relevant to bigbang fluxv2 strategies.
+
 ## [11.0.0-bb.10]
 
 * Updating all dsop.io refs to dso.mil
