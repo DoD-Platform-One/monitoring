@@ -9,7 +9,7 @@ metadata:
 {{ include "kube-prometheus-stack.labels" . | indent 4 }}
 spec:
   gateways:
-    - main.istio-system.svc.cluster.local
+    - istio-system/main
   hosts:
     - "{{ .Values.ingress.grafana.subdomain }}.{{ .Values.hostname }}"
   http:
