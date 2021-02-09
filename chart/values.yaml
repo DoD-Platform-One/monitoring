@@ -9,7 +9,7 @@ istio:
   enabled: false
   prometheus:
     # Toogle vs creation
-    enabled: false
+    enabled: true
     annotations: {}
     labels: {}
     gateways:
@@ -21,7 +21,7 @@ istio:
     namespace: ""
   alertmanager:
     # Toogle vs creation
-    enabled: false
+    enabled: true
     annotations: {}
     labels: {}
     gateways:
@@ -33,7 +33,7 @@ istio:
     namespace: ""
   grafana:
     # Toogle vs creation
-    enabled: false
+    enabled: true
     annotations: {}
     labels: {}
     gateways:
