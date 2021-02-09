@@ -1,4 +1,4 @@
-{{- if and .Values.istio.enabled .Values.istio.promethues.enabled -}}
+{{- if and .Values.istio.enabled .Values.istio.prometheus.enabled -}}
 {{- $serviceName := printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "prometheus" }}
 {{- $servicePort := .Values.prometheus.service.port -}}
 apiVersion: networking.istio.io/v1beta1
@@ -9,20 +9,20 @@ metadata:
   labels:
     app: {{ template "kube-prometheus-stack.name" . }}-prometheus
   {{- include "kube-prometheus-stack.labels" . | indent 4 }}
-  {{- if .Values.istio.promethues.labels }}
-{{ toYaml .Values.istio.promethues.labels | indent 4 }}
+  {{- if .Values.istio.prometheus.labels }}
+{{ toYaml .Values.istio.prometheus.labels | indent 4 }}
   {{- end }}
-  {{- if .Values.istio.promethues.annotations }}
+  {{- if .Values.istio.prometheus.annotations }}
   annotations:
-{{ toYaml .Values.istio.promethues.annotations | indent 4 }}
+{{ toYaml .Values.istio.prometheus.annotations | indent 4 }}
   {{- end }}
 spec:
   gateways:
-  {{- range .Values.istio.promethues.gateways }}
+  {{- range .Values.istio.prometheus.gateways }}
     - {{ . }}
   {{- end }}
   hosts:
-  {{- range .Values.istio.promethues.hosts }}
+  {{- range .Values.istio.prometheus.hosts }}
     - {{ tpl . $}}
   {{- end }}
   http:

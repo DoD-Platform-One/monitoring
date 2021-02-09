@@ -6,7 +6,7 @@
 hostname: bigbang.dev
 istio:
   enabled: true
-  promethues:
+  prometheus:
     # Toogle vs creation
     enabled: true
   alertmanager:
