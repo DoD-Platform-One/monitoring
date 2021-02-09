@@ -6,6 +6,15 @@
 hostname: bigbang.dev
 istio:
   enabled: true
+  promethues:
+    # Toogle vs creation
+    enabled: true
+  alertmanager:
+    # Toogle vs creation
+    enabled: true
+  grafana:
+    # Toogle vs creation
+    enabled: true
 
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##

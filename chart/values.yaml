@@ -4,26 +4,45 @@
 
 # These values are for the BigBang overrides
 hostname: bigbang.dev
+
 istio:
-  enable: false
-
-# Add hooks to override backend of virtual services for SSO
-# This also allows override of the subdomain, for example, if grafana URL needs to be grafana-admin.<URL>.com
-ingress:
+  enabled: false
   prometheus:
+    # Toogle vs creation
+    enabled: false
+    annotations: {}
+    labels: {}
+    gateways:
+      - istio-system/main
+    hosts:
+      - prometheus.{{ .Values.hostname }}
     service: ""
     port: ""
     namespace: ""
-    subdomain: prometheus
   alertmanager:
+    # Toogle vs creation
+    enabled: false
+    annotations: {}
+    labels: {}
+    gateways:
+      - istio-system/main
+    hosts:
+      - alertmanager.{{ .Values.hostname }}
     service: ""
     port: ""
     namespace: ""
-    subdomain: alertmanager
   grafana:
-    subdomain: grafana
-
-
+    # Toogle vs creation
+    enabled: false
+    annotations: {}
+    labels: {}
+    gateways:
+      - istio-system/main
+    hosts:
+      - grafana.{{ .Values.hostname }}
+    service: ""
+    port: ""
+    namespace: ""
 
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
