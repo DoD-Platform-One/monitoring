@@ -1,4 +1,4 @@
-{{- if and .Values.prometheus.enabled .Values.istio.enabled -}}
+{{- if and .Values.istio.enabled .Values.istio.prometheus.enabled -}}
 {{- $serviceName := printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "prometheus" }}
 {{- $servicePort := .Values.prometheus.service.port -}}
 apiVersion: networking.istio.io/v1beta1
@@ -8,16 +8,27 @@ metadata:
   namespace: {{ template "kube-prometheus-stack.namespace" . }}
   labels:
     app: {{ template "kube-prometheus-stack.name" . }}-prometheus
-{{ include "kube-prometheus-stack.labels" . | indent 4 }}
+  {{- include "kube-prometheus-stack.labels" . | indent 4 }}
+  {{- if .Values.istio.prometheus.labels }}
+{{ toYaml .Values.istio.prometheus.labels | indent 4 }}
+  {{- end }}
+  {{- if .Values.istio.prometheus.annotations }}
+  annotations:
+{{ toYaml .Values.istio.prometheus.annotations | indent 4 }}
+  {{- end }}
 spec:
   gateways:
-    - main.istio-system.svc.cluster.local
+  {{- range .Values.istio.prometheus.gateways }}
+    - {{ . }}
+  {{- end }}
   hosts:
-    - "prometheus.{{ .Values.hostname }}"
+  {{- range .Values.istio.prometheus.hosts }}
+    - {{ tpl . $}}
+  {{- end }}
   http:
     - route:
         - destination:
             port:
-              number: {{ .Values.ingress.prometheus.port  | default $servicePort }}
-            host: {{ .Values.ingress.prometheus.service  | default $serviceName }}.{{ .Values.ingress.prometheus.namespace | default .Release.Namespace }}.svc.cluster.local
+              number: {{ .Values.istio.prometheus.port  | default $servicePort }}
+            host: {{ .Values.istio.prometheus.service  | default $serviceName }}.{{ .Values.istio.prometheus.namespace | default .Release.Namespace }}.svc.cluster.local
 {{- end }}

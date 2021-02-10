@@ -4,21 +4,45 @@
 
 # These values are for the BigBang overrides
 hostname: bigbang.dev
-istio:
-  enable: false
 
-# Add hooks to override backend of virtual services for
-# SSO
-ingress:
+istio:
+  enabled: false
   prometheus:
+    # Toogle vs creation
+    enabled: true
+    annotations: {}
+    labels: {}
+    gateways:
+      - istio-system/main
+    hosts:
+      - prometheus.{{ .Values.hostname }}
     service: ""
     port: ""
     namespace: ""
   alertmanager:
+    # Toogle vs creation
+    enabled: true
+    annotations: {}
+    labels: {}
+    gateways:
+      - istio-system/main
+    hosts:
+      - alertmanager.{{ .Values.hostname }}
     service: ""
     port: ""
     namespace: ""
-
+  grafana:
+    # Toogle vs creation
+    enabled: true
+    annotations: {}
+    labels: {}
+    gateways:
+      - istio-system/main
+    hosts:
+      - grafana.{{ .Values.hostname }}
+    service: ""
+    port: ""
+    namespace: ""
 
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
