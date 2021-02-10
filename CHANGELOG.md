@@ -4,9 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
-## [11.0.0-bb.10]
+## [11.0.0-bb.12]
+### Added
+- Ability to modify full hostname, labels, gateways and destination hosts for all VirtualService Resources.
+### Changed
+- Updating "ingress" value for handling istio virtualservice configuration to wrap under "istio".
 
-* Updating all dsop.io refs to dso.mil
+## [11.0.0-bb.10]
+### Changed
+- Updating all dsop.io refs to dso.mil
 
 ## [11.0.0-bb.9]
 ### Added
