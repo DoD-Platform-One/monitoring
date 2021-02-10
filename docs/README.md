@@ -1,26 +1,16 @@
-# Monitoring - kube-prometheus version 0.4
+# Monitoring - kube-prometheus-stack version 11
 
-This repository is based on [kube-prometheus](https://github.com/coreos/kube-prometheus/tree/release-0.4) version 0.4.
+This repository builds on the following upstream chart [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/charts/kube-prometheus-stack) version 11.
 
 If you are looking to update the resources in this repo, grab the new manifests from the release branch and integrate it.
 
 Be sure to update kustomization.yaml as needed.
 
-## Configuration
-
-You can find the API Spec for the Prometheus Operator [here](https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md)
-
-### Grafana
-Grafana configuration can be done via the secrets/grafana-ini.enc.yaml file. It creates a k8s secret called grafana-ini-config and mounts the inline file to /etc/grafana/grafana.ini within the container.
-OAuth config is done within this file, keycloak auth for example can be configured under the [auth.generic_oauth] section. It must be set to enabled = true to activate.
-Variables to update are "KEYCLOAK_URL", "KEYCLOAK_REALM" within [auth.generic_oauth], "GRAFANA_URL" within [server], signout_redirect_url within [auth] as well as client_secret and client_id within [auth.generic_oauth].
-root_url is a critical variable to make sure matches your full grafana URL eg https://grafana.fences.dso.mil/ .
-Ensure that Mappers within specific keycloak client have builtin "profile", "username" and "email" mappers added.
-
 ### Pre-requisites
 
 * Kubernetes cluster deployed
 * kubectl configuration installed
+* fluxv2 resources and controllers installed
 
 Install kubectl
 
@@ -28,30 +18,71 @@ Install kubectl
 brew install kubectl
 ```
 
-Install kustomize
+Install flux binary from https://github.com/fluxcd/flux2/releases
 
-```
-brew install kustomize
-```
+By default an admin user with username "admin" and the configured password in the chart at "grafana.adminPassword" is created for logging into the Grafana UI.
 
-By default an admin user with username "admin" and password "admin" is created for logging into the Grafana dashboard and you will beprompted to change the passoword after logging in.
+## Configuration
+
+Configuration can be done via editing and supplementing the values for the chart which follows the upstream values for [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml)
+
+You can find the API Spec for the Prometheus Operator [here](https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md)
+
+### Grafana
+
+#### Adding Dashboards
+To supplement the dashboards already provided by the package you can add more dashboards that are automatically loaded into grafana:
+
+##### Via Helm Values
+1. Ensure dasboardProviders values are populated (uncommented from package values in this case):
+```
+monitoring:
+  values:
+    grafana:
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+```
+2. Populate dashboard JSON you can name in dashbords block like so:
+```
+monitoring:
+  values:
+    grafana:
+      dashboards:
+        default:
+          some-dashboard:
+            json: |
+              $JSON_DATA$
+```
+* Helm reconciliation will mount the JSON data to the grafana pod and restart, if not delete the grafana pod.
+
+##### Via Configmap
+1. Download the JSON file for your dashboard, or ensure you have the config in JSON formatting.
+2. Create a secret or configmap like so, where you can include your JSON dashboard configuration inline:
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-custom-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  dashboard-name.json: |
+    ...
+```
+*Any configmap in the monitoring namespace with the "grafana_dashboard" : "#" label will be scanned and imported into grafana automatically. This label can be updated in the helm values: grafana.sidecar.dashboards.label: ...
 
 ## Hardened Containers
-
-### Promethus 
-Updates to Dockerfile from DCCSCR
-* pull registry.access.redhat.com/ubi8/ubi:8.2 and put in your local registry
-* pull docker.io/prom/prometheus@sha256:7ff47b8cce6ecb7b456c6863d42a7f10bcbd040b21d7f1a912eb1b0936e9ad46" 
-  * retag as nexus-docker-secure.levelup-nexus.svc.cluster.local:18082/opensource/istio/prom/prometheus:2.15.1
-  * push to nexus-docker-secure.levelup-nexus.svc.cluster.local:18082/opensource/istio/prom/prometheus:2.15.1
-* change FROM ${BASE_IMAGE}:${BASE_TAG} to FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
-
-### Grafana   
-Updates to Dockerfile from DCCSCR  
- * change line 21 from COPY ${ENTRYPOINT_SCRIPT} / to COPY scripts/run.sh /
- * change COPY ${GRAFANA_PKG} /tmp/grafana-gpg.key to COPY grafana-gpg.key /tmp/grafana-gpg.key
- * Change line 26 to read RUN yum install grafana-6.7.0.rpm -v -y && RUN yum clean all && yum -y upgrade
-    * package name should match ARG GRAFANA_PKG value
 
 ### Alertmanager
 The image was being pulled from quay.io/prometheus/alertmanager:v0.18.0.  There was no hardened cotainer so the image was moved to registry.dso.mil/platform-one/apps/monitoring/alertmanager:0.18.0.  This has an open issue to harden.
@@ -66,7 +97,7 @@ The image was being pulled from quay.io/prometheus/alertmanager:v0.18.0.  There 
 
 - Login to Kibana
   - username: elastic
-  - Password : can be obtained by querying kubectl get secret elasticsearch-es-elastic-user -n elastic -o yaml
+  - Password : can be obtained by querying `kubectl get secret elasticsearch-es-elastic-user -n elastic -o yaml`
 - Create Index by  selecting Management icon from the left menu and  clicking Index patterns under Kibana.  In the Create Index patterns enter <logstash-*> and click create index pattern.  In the the next step Click on the dropdown and select "@timestamp"
 
 - For Search click on Discovery from the side menu

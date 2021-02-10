@@ -650,6 +650,36 @@ grafana:
       createPrometheusReplicasDatasources: false
       label: grafana_datasource
 
+  dashboardProviders: {}
+  #  dashboardproviders.yaml:
+  #    apiVersion: 1
+  #    providers:
+  #    - name: 'default'
+  #      orgId: 1
+  #      folder: ''
+  #      type: file
+  #      disableDeletion: false
+  #      editable: true
+  #      options:
+  #        path: /var/lib/grafana/dashboards/default
+
+  dashboards: {}
+  #  default:
+  #    some-dashboard:
+  #      json: |
+  #        JSON_DATA
+  #   custom-dashboard:
+  #     file: dashboards/custom-dashboard.json
+  #   prometheus-stats:
+  #     gnetId: 2
+  #     revision: 2
+  #     datasource: Prometheus
+  #   local-dashboard:
+  #     url: https://example.com/repository/test.json
+  #   local-dashboard-base64:
+  #     url: https://example.com/repository/test-b64.json
+  #     b64content: true
+
   extraConfigmapMounts: []
   # - name: certs-configmap
   #   mountPath: /etc/grafana/ssl/
