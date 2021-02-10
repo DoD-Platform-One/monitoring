@@ -12,9 +12,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [11.0.0-bb.11]
 ### Added
-- Ability to modify full hostname, labels, gateways and destination hosts for all VirtualService Resources.
+* Adding template of grafana configuration values for supplying inline JSON Grafana Dashboards inside the helm chart.
+* Documentation for adding Grafana Dashboards via helm values and externally.
+
 ### Changed
-- Updating "ingress" value for handling istio virtualservice configuration to wrap under "istio".
+* Initial update of documentation relevant to bigbang fluxv2 strategies.
 
 ## [11.0.0-bb.10]
 ### Changed
