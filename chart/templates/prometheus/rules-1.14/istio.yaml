@@ -1,0 +1,60 @@
+{{- /* Added manually, can be changed in-place. */ -}}
+{{- $kubeTargetVersion := default .Capabilities.KubeVersion.GitVersion .Values.kubeTargetVersionOverride }}
+{{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.defaultRules.create .Values.defaultRules.rules.general .Values.istio.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "istio.rules" | trunc 63 | trimSuffix "-" }}
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+  labels:
+    app: {{ template "kube-prometheus-stack.name" . }}
+{{ include "kube-prometheus-stack.labels" . | indent 4 }}
+{{- if .Values.defaultRules.labels }}
+{{ toYaml .Values.defaultRules.labels | indent 4 }}
+{{- end }}
+{{- if .Values.defaultRules.annotations }}
+  annotations:
+{{ toYaml .Values.defaultRules.annotations | indent 4 }}
+{{- end }}
+spec:
+  groups:
+  - name: "istio.metricsAggregation-rules"
+    interval: 5s
+    rules:
+    - record: "workload:istio_requests_total"
+      expr: "sum without(instance, namespace, pod) (istio_requests_total)"
+    - record: "workload:istio_request_duration_milliseconds_count"
+      expr: "sum without(instance, namespace, pod) (istio_request_duration_milliseconds_count)"
+    - record: "workload:istio_request_duration_milliseconds_sum"
+      expr: "sum without(instance, namespace, pod) (istio_request_duration_milliseconds_sum)"
+    - record: "workload:istio_request_duration_milliseconds_bucket"
+      expr: "sum without(instance, namespace, pod) (istio_request_duration_milliseconds_bucket)"
+    - record: "workload:istio_request_bytes_count"
+      expr: "sum without(instance, namespace, pod) (istio_request_bytes_count)"
+    - record: "workload:istio_request_bytes_sum"
+      expr: "sum without(instance, namespace, pod) (istio_request_bytes_sum)"
+    - record: "workload:istio_request_bytes_bucket"
+      expr: "sum without(instance, namespace, pod) (istio_request_bytes_bucket)"
+    - record: "workload:istio_response_bytes_count"
+      expr: "sum without(instance, namespace, pod) (istio_response_bytes_count)"
+    - record: "workload:istio_response_bytes_sum"
+      expr: "sum without(instance, namespace, pod) (istio_response_bytes_sum)"
+    - record: "workload:istio_response_bytes_bucket"
+      expr: "sum without(instance, namespace, pod) (istio_response_bytes_bucket)"
+    - record: "workload:istio_tcp_connections_opened_total"
+      expr: "sum without(instance, namespace, pod) (istio_tcp_connections_opened_total)"
+    - record: "workload:istio_tcp_connections_closed_total"
+      expr: "sum without(instance, namespace, pod) (istio_tcp_connections_closed_total)"
+    - record: "workload:istio_tcp_sent_bytes_total_count"
+      expr: "sum without(instance, namespace, pod) (istio_tcp_sent_bytes_total_count)"
+    - record: "workload:istio_tcp_sent_bytes_total_sum"
+      expr: "sum without(instance, namespace, pod) (istio_tcp_sent_bytes_total_sum)"
+    - record: "workload:istio_tcp_sent_bytes_total_bucket"
+      expr: "sum without(instance, namespace, pod) (istio_tcp_sent_bytes_total_bucket)"
+    - record: "workload:istio_tcp_received_bytes_total_count"
+      expr: "sum without(instance, namespace, pod) (istio_tcp_received_bytes_total_count)"
+    - record: "workload:istio_tcp_received_bytes_total_sum"
+      expr: "sum without(instance, namespace, pod) (istio_tcp_received_bytes_total_sum)"
+    - record: "workload:istio_tcp_received_bytes_total_bucket"
+      expr: "sum without(instance, namespace, pod) (istio_tcp_received_bytes_total_bucket)"
+{{- end }}
