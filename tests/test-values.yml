@@ -14,7 +14,7 @@ kube-state-metrics:
   imagePullSecrets:
   - name: private-registry-mil
 
-prometheus-node-exporter:
-  serviceAccount:
-    imagePullSecrets:
-    - name: private-registry-mil
+#prometheus-node-exporter:
+#  serviceAccount:
+#    imagePullSecrets:
+#    - name: private-registry-mil
