@@ -13,8 +13,8 @@ describe('Basic prometheus', function() {
     it('Validate prometheus targets', function() {
       // Make sure we have expected targets.  Come targets may have variable number of instances thus we
       // have to allow for a variable number of running instances.
-      cy.wait(90000)
-      cy.visit(`https://prometheus.bigbang.dev/targets`)
+      cy.wait(200)
+      cy.visit(Cypress.env('prometheus_url'/targets))
       cy.contains(/monitoring\/alertmanager\/0 +\(\d+\/\d+ +up\)/)
       cy.contains(/monitoring\/coredns\/0 +\(\d+\/\d+ +up\)/)
       cy.contains(/monitoring\/grafana\/0 +\(\d+\/\d+ +up\)/)
