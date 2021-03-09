@@ -561,6 +561,9 @@ grafana:
     tag: 7.1.3-1
     pullSecrets: [ ]
 
+  testFramework:
+    enabled: false
+
   ## Deploy default dashboards.
   ##
   defaultDashboardsEnabled: true
