@@ -14,9 +14,6 @@ kube-state-metrics:
   imagePullSecrets:
   - name: private-registry-mil
 
-nodeExporter:
-  enabled: false
-
 prometheus-node-exporter:
   serviceAccount:
     imagePullSecrets:
