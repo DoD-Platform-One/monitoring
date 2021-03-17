@@ -4,6 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.14]
+### Changed
+- CI pipeline cypress integration testing configuration for new version of cypress
+
+## [11.0.0-bb.13]
+## Added
+- Prometheus metrics scraping of istio sidecars and components.
+- Istio grafana dashboards.
+
 ## [11.0.0-bb.12]
 ### Added
 - Ability to modify full hostname, labels, gateways and destination hosts for all VirtualService Resources.
