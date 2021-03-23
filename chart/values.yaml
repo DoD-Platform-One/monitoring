@@ -4,6 +4,9 @@
 
 # These values are for the BigBang overrides
 hostname: bigbang.dev
+flux:
+  enabled: false
+  namespace: flux-system
 
 istio:
   enabled: false

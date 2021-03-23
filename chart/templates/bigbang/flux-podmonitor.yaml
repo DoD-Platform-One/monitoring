@@ -1,0 +1,54 @@
+{{- if .Values.flux.enabled }}
+# Creates a pod monitor for flux controllers
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ template "kube-prometheus-stack.fullname" . }}-flux
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+  labels:
+    app: {{ template "kube-prometheus-stack.name" . }}-flux
+    {{- include "kube-prometheus-stack.labels" . | indent 4 }}
+spec:
+  namespaceSelector:
+    matchNames:
+      - {{ .Values.flux.namespace }}
+  selector:
+    matchExpressions:
+    - key: app
+      operator: in
+      values:
+      - helm-controller
+      - kustomize-controller
+      - notification-controller
+      - source-controller
+  podMetricsEndpoints:
+  - port: http-prom
+    # Converted from https://github.com/fluxcd/flux2/blob/main/manifests/monitoring/prometheus/prometheus.yml
+    relabelings:
+      - action: keep
+        regex: "true"
+        sourceLabels:
+        - __meta_kubernetes_pod_annotation_prometheus_io_scrape
+      - action: replace
+        regex: (.+)
+        sourceLabels:
+        - __meta_kubernetes_pod_annotation_prometheus_io_path
+        targetLabel: __metrics_path__
+      - action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:$2
+        sourceLabels:
+        - __address__
+        - __meta_kubernetes_pod_annotation_prometheus_io_port
+        targetLabel: __address__
+      - action: labelmap
+        regex: __meta_kubernetes_pod_label_(.+)
+      - action: replace
+        sourceLabels:
+        - __meta_kubernetes_namespace
+        targetLabel: kubernetes_namespace
+      - action: replace
+        sourceLabels:
+        - __meta_kubernetes_pod_name
+        targetLabel: kubernetes_pod_name
+{{- end -}}

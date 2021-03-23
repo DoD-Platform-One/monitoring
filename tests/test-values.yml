@@ -1,3 +1,6 @@
+flux:
+  enabled: true
+
 istio:
   enabled: true
 
