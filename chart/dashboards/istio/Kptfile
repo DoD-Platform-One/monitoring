@@ -1,0 +1,11 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: istio
+upstream:
+  type: git
+  git:
+    commit: 97e10d79b8b5b32be0f92175586a4e11c466e640
+    repo: https://github.com/istio/istio
+    directory: /manifests/addons/dashboards
+    ref: 1.8.4

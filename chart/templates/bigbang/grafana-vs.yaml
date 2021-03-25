@@ -1,4 +1,6 @@
 {{- if and .Values.istio.enabled .Values.istio.grafana.enabled -}}
+{{- $serviceName := printf "%s-%s" .Release.Name "grafana" }}
+{{- $servicePort := .Values.grafana.service.port -}}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -27,6 +29,6 @@ spec:
     - route:
         - destination:
             port:
-              number: {{ .Values.grafana.service.port }}
-            host: {{ .Release.Name }}-grafana
+              number: {{ .Values.istio.grafana.port  | default $servicePort }}
+            host: {{ .Values.istio.grafana.service  | default $serviceName }}.{{ .Values.istio.grafana.namespace | default .Release.Namespace }}.svc.cluster.local
 {{- end }}
