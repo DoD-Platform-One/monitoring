@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.18]
+### Changed
+- Moved CI testing to new helm test infrastructure.
+
 ## [11.0.0-bb.15]
 ### Changed
 - Using IronBank equivalents for kube-webhook-certgen, kubectl, and bats images within package.
