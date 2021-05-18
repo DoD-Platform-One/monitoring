@@ -150,7 +150,8 @@ global:
   ## Reference to one or more secrets to be used when pulling images
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   ##
-  imagePullSecrets: [ ]
+  imagePullSecrets:
+  - name: private-registry
 
 ## Configuration for alertmanager
 ## ref: https://prometheus.io/docs/alerting/alertmanager/
@@ -562,11 +563,15 @@ grafana:
   image:
     repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
     tag: 7.1.3-1
-    pullSecrets: [ ]
+    pullSecrets:
+    - private-registry
 
   testFramework:
-    image: "registry1.dso.mil/opensource/bats/bats"
+    enabled: false
+    image: "registry1.dso.mil/ironbank/opensource/bats/bats"
     tag: "1.2.1"
+    pullSecrets:
+    - private-registry
     imagePullPolicy: IfNotPresent
     securityContext: {}
 
@@ -1211,7 +1216,8 @@ kubeStateMetrics:
 ## Configuration for kube-state-metrics subchart
 ##
 kube-state-metrics:
-  imagePullSecrets: [  ]
+  imagePullSecrets:
+  - name: private-registry
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/coreos/kube-state-metrics
@@ -1265,7 +1271,8 @@ nodeExporter:
 prometheus-node-exporter:
 
   serviceAccount:
-    imagePullSecrets: [ ]
+    imagePullSecrets:
+    - name: private-registry
 
   # use IronBank image
   image:

@@ -8,5 +8,8 @@ dependencies:
 - name: grafana
   repository: https://grafana.github.io/helm-charts
   version: 5.8.16
-digest: sha256:b31b310b3c4b23d137b54d35bae830b6216930fd63cc9a013040f542cb759081
-generated: "2021-01-05T10:48:55.564632-07:00"
+- name: bb-test-lib
+  repository: oci://registry.dso.mil/platform-one/big-bang/pipeline-templates/pipeline-templates
+  version: 0.5.2
+digest: sha256:e06b9ef121ac0b4c561028b9edcd6fac0f42d57bd0598396684178a171bf24a5
+generated: "2021-05-14T15:41:04.740189-06:00"
