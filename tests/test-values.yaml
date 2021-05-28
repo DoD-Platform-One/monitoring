@@ -1,4 +1,5 @@
 bbtests:
+  enabled: true
   cypress:
     artifacts: true
     envs:
