@@ -1,11 +1,11 @@
-{{- include "bb-test-lib.cypress-configmap.overrides" (list . "kube-prometheus-stack-test.cypress-configmap") }}
+{{- include "gluon.tests.cypress-configmap.overrides" (list . "kube-prometheus-stack-test.cypress-configmap") }}
 {{- define "kube-prometheus-stack-test.cypress-configmap" }}
 metadata:
   labels:
     {{ include "kube-prometheus-stack.labels" $ | indent 4 }}
 {{- end }}
 ---
-{{- include "bb-test-lib.cypress-runner.overrides" (list . "kube-prometheus-stack-test.cypress-runner") -}}
+{{- include "gluon.tests.cypress-runner.overrides" (list . "kube-prometheus-stack-test.cypress-runner") -}}
 {{- define "kube-prometheus-stack-test.cypress-runner" -}}
 metadata:
   labels:
