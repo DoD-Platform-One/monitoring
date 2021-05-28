@@ -5,3 +5,6 @@ bbtests:
       cypress_prometheus_url: 'http://monitoring-kube-prometheus-prometheus:9090'
       cypress_grafana_url: 'http://monitoring-grafana:80'
       cypress_alertmanager_url: 'http://monitoring-kube-prometheus-alertmanager:9093'
+
+networkPolicies:
+  enabled: true
