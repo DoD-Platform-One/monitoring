@@ -8,6 +8,12 @@ flux:
   enabled: false
   namespace: flux-system
 
+networkPolicies:
+  enabled: false
+  ingressLabels:
+    app: istio-ingressgateway
+    istio: ingressgateway
+
 istio:
   enabled: false
   prometheus:
