@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.21]
+### Added
+- Kiali ingress to grafana Network Policy
+
 ## [11.0.0-bb.20]
 ### Changed
 - Migrated tests to gluon library
