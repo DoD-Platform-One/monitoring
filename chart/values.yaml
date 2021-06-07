@@ -573,7 +573,6 @@ grafana:
     - private-registry
 
   testFramework:
-    enabled: false
     image: "registry1.dso.mil/ironbank/opensource/bats/bats"
     tag: "1.2.1"
     pullSecrets:

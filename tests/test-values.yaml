@@ -9,3 +9,7 @@ bbtests:
 
 networkPolicies:
   enabled: true
+
+grafana:
+  testFramework:
+    enabled: false
