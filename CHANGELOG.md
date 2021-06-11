@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.23]
+### Changed
+- kubectlImage.repository value, fixing link to IronBank image
+
 ## [11.0.0-bb.22]
 ### Changed
 - Enabling Grafana testFramework to allow upgrades from previous package versions to succeed.
