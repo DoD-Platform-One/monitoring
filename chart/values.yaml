@@ -1526,7 +1526,7 @@ prometheusOperator:
   ## kubectl image to use when cleaning up
   ##
   kubectlImage:
-    repository: registry1.dso.mil/opensource/kubernetes-1.19/kubectl-1.19
+    repository: registry1.dso.mil/ironbank/opensource/kubernetes-1.19/kubectl-1.19
     tag: v1.19.5
     sha: ""
     pullPolicy: IfNotPresent
