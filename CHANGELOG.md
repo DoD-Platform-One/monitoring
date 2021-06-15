@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [11.0.0-bb.23]
 ### Changed
 - kubectlImage.repository value, fixing link to IronBank image
+- Added OIDC Custom CA fields (commented out), as well as "extraSecretMounts" with example lines (commented out)
 
 ## [11.0.0-bb.22]
 ### Changed

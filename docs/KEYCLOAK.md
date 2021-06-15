@@ -83,6 +83,50 @@ monitoring:
       client_id: grafana
       client_secret: secret
 ```
+### OIDC Custom CA
+
+Grafana can establish trust using a CA cert file with OIDC auth connections.  An example of this when using Big Bang to deploy grafana with a secret named grafana-oidc-secret is below.  This assumes the secret is created in the same namespace (an exampel of secret creation can also be found below):
+
+
+
+```
+monitoring:
+  sso:
+    enabled: true
+    grafana:
+      scopes: "Grafana" #this is a sample client scope, review docs/KEYCLOAK.md
+      allow_sign_up: "true"
+      role_attribute_path: "Viewer"
+      tls_client_cert: ""
+      tls_client_key: ""
+      tls_client_ca : "/etc/oidc/ca.pem"
+      tls_skip_verify_insecure: false
+      client_id: "grafana"    #this is a sample client_id, review docs/KEYCLOAK.md
+      client_secret: "secret" #this is a sample secret, review docs/KEYCLOAK.md
+      auth_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/auth
+      token_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/token
+      api_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/userinfo
+      # allowed_domains: ""
+      # empty_scopes: false
+      
+      
+
+
+monitoring:
+  values:
+    grafana:
+      extraSecretMounts:
+        - name: "oidc-ca-cert"
+          mountPath: "/etc/oidc"
+          secretName: "grafana-oidc-secret"
+          readOnly: true
+          subPath: "ca.pem"
+```
+Secret creation example that works with this example"
+```bash
+kubectl create secret generic grafana-oidc-secret --from-file=ca.pem=/path/to/cert.pem -n monitoring
+```
+
 
 ## Prometheus + Alertmanager Configuration
 Configuration of Keycloak/OIDC auth in front of Prometheus+Alertmanager requires the following:
