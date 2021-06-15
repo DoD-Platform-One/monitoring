@@ -606,6 +606,13 @@ grafana:
       api_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/userinfo
       allow_sign_up: true
       role_attribute_path: Viewer
+      # tls_skip_verify_insecure: false
+      # tls_client_cert: ""
+      # tls_client_key: ""
+      # tls_client_ca : /etc/oidc/ca.pem
+      # allowed_domains: mycompany.com mycompany.org
+      # empty_scopes: false
+
 
   ingress:
     ## If true, Grafana Ingress will be created
@@ -704,6 +711,14 @@ grafana:
   #   mountPath: /etc/grafana/ssl/
   #   configMap: certs-configmap
   #   readOnly: true
+
+  extraSecretMounts: []
+  # - name: oidc-ca-cert
+  #   mountPath: /etc/oidc
+  #   secretName: grafana-oidc-secret
+  #   readOnly: true
+  #   subPath: "ca.pem"
+
 
   ## Configure additional grafana datasources (passed through tpl)
   ## ref: http://docs.grafana.org/administration/provisioning/#datasources
