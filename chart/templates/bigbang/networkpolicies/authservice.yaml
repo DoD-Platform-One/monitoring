@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-from-authservice-pods
+  name: allow-from-authservice-alertmanager
   namespace: {{ .Release.Namespace }}
 spec:
   podSelector:
@@ -20,6 +20,27 @@ spec:
         matchLabels:
           app.kubernetes.io/name: haproxy
     ports:
-      - port: 9090
       - port: 9093
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-authservice-prometheus
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: prometheus
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          app.kubernetes.io/name: authservice
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: haproxy
+    ports:
+      - port: 9090
 {{- end }}
