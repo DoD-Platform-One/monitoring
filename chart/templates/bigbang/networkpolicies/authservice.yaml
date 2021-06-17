@@ -8,7 +8,6 @@ spec:
   podSelector:
     matchLabels:
       app: alertmanager
-      app: prometheus
   policyTypes:
   - Ingress
   ingress:
