@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.24]
+### Changed
+- Syntax error in label selector for authservice related network policy template.
+
 ## [11.0.0-bb.23]
 ### Changed
 - kubectlImage.repository value, fixing link to IronBank image
