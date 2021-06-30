@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.25]
+### Changed
+- Metric path for kubelet From kubernetes 1.18, /metrics/resource/v1alpha1 renamed to /metrics/resource
+
 ## [11.0.0-bb.24]
 ### Changed
 - Syntax error in label selector for authservice related network policy template.
