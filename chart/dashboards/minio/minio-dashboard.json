@@ -948,6 +948,7 @@
           "exemplar": true,
           "expr": "sum by (server) (rate(minio_s3_traffic_received_bytes[$__rate_interval]))",
           "interval": "1m",
+          "rate_interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "Data Received [{{server}}]",
           "refId": "A"
