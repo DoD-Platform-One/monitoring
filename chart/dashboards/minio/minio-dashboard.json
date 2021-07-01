@@ -946,9 +946,8 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum by (server) (rate(minio_s3_traffic_received_bytes[$__rate_interval]))",
+          "expr": "sum by (server) (rate(minio_s3_traffic_received_bytes[$__interval]))",
           "interval": "1m",
-          "rate_interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "Data Received [{{server}}]",
           "refId": "A"
@@ -1047,7 +1046,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum by (server) (rate(minio_s3_traffic_sent_bytes[$__rate_interval]))",
+          "expr": "sum by (server) (rate(minio_s3_traffic_sent_bytes[$__interval]))",
           "interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "Data Sent [{{server}}]",
@@ -1513,7 +1512,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum by (server,api) (rate(minio_s3_requests_total[$__rate_interval]))",
+          "expr": "sum by (server,api) (rate(minio_s3_requests_total[$__interval]))",
           "interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "{{server,api}}",
@@ -1613,7 +1612,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(minio_s3_requests_errors_total[$__rate_interval])",
+          "expr": "rate(minio_s3_requests_errors_total[$__interval])",
           "interval": "1m",
           "intervalFactor": 2,
           "legendFormat": "{{server,api}}",
@@ -1719,7 +1718,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(minio_inter_node_traffic_sent_bytes{job=\"minio-job\"}[$__rate_interval])",
+          "expr": "rate(minio_inter_node_traffic_sent_bytes{job=\"minio-job\"}[$__interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1730,7 +1729,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(minio_inter_node_traffic_received_bytes{job=\"minio-job\"}[$__rate_interval])",
+          "expr": "rate(minio_inter_node_traffic_received_bytes{job=\"minio-job\"}[$__interval])",
           "interval": "",
           "legendFormat": "Internode Bytes Sent [{{server}}]",
           "refId": "B"
@@ -1936,7 +1935,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(minio_node_process_cpu_total_seconds[$__rate_interval])",
+          "expr": "rate(minio_node_process_cpu_total_seconds[$__interval])",
           "interval": "",
           "legendFormat": "CPU Usage Rate [{{server}}]",
           "refId": "A"
@@ -2333,7 +2332,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(minio_node_syscall_read_total[$__rate_interval])",
+          "expr": "rate(minio_node_syscall_read_total[$__interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2344,7 +2343,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(minio_node_syscall_write_total[$__rate_interval])",
+          "expr": "rate(minio_node_syscall_write_total[$__interval])",
           "interval": "",
           "legendFormat": "Write Syscalls [{{server}}]",
           "refId": "B"
@@ -2547,7 +2546,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(minio_node_io_rchar_bytes[$__rate_interval])",
+          "expr": "rate(minio_node_io_rchar_bytes[$__interval])",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -2556,7 +2555,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(minio_node_io_wchar_bytes[$__rate_interval])",
+          "expr": "rate(minio_node_io_wchar_bytes[$__interval])",
           "interval": "",
           "legendFormat": "Node WChar [{{server}}]",
           "refId": "B"
