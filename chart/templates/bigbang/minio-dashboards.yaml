@@ -1,3 +1,4 @@
+{{- if .Values.minioOperator.enabled }}
 {{- /* Added manually, can be changed in-place. */ -}}
 {{- $kubeTargetVersion := default .Capabilities.KubeVersion.GitVersion .Values.kubeTargetVersionOverride }}
 {{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.grafana.enabled .Values.grafana.defaultDashboardsEnabled }}
@@ -17,4 +18,5 @@ metadata:
 data:
   minio-dashboard.json: |
     {{ .Files.Get "dashboards/minio/minio-dashboard.json"  | nindent 4 }}
+{{- end }}
 {{- end }}
