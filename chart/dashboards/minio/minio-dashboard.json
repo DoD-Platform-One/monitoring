@@ -200,7 +200,7 @@
           "format": "table",
           "hide": false,
           "instant": false,
-          "interval": "",
+          "interval": "5s",
           "intervalFactor": 1,
           "legendFormat": "{{instance}}",
           "metric": "process_start_time_seconds",
