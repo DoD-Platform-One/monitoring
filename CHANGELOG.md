@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.26]
+### Added
+- Network Policy for allowing egress to all
+
 ## [11.0.0-bb.25]
 ### Changed
 - Metric path for kubelet From kubernetes 1.18, /metrics/resource/v1alpha1 renamed to /metrics/resource
