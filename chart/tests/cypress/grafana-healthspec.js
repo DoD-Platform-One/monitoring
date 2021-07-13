@@ -15,7 +15,7 @@ before (function() {
 
 describe('Grafana Unit Testing', function() {
     it('Test for grafana Dashboard', function() {
-    cy.visit(Cypress.env('grafana_url'/dashboards))
+    cy.visit(`${Cypress.env('grafana_url')}/dashboards`)
     cy.get('div[tabindex="0"]').click()
      //cy.get(".search-section a.search-item div.search-item__body-title").contains("ArgoCD").click()
      //cy.get("div.navbar-page-btn a").invoke('text').should('eq','ArgoCD ')
