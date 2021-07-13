@@ -2,11 +2,11 @@ describe('Basic prometheus', function() {
     it('Visits the prometheus sign in page', function() {
       cy.visit(Cypress.env('prometheus_url'))
   
-      cy.get('#expr0')
+      cy.get('textarea[id="downshift-0-input"]')
         .type('kube_node_info{}')
   
       // Run a query
-      cy.get('input[name="submit"]')
+      cy.get('button[class="execute-btn btn btn-primary"]')
         .click({waitForAnimations: false})
     })
 
