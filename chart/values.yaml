@@ -2,6 +2,61 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# These values are for the BigBang overrides
+hostname: bigbang.dev
+flux:
+  enabled: false
+  namespace: flux-system
+
+networkPolicies:
+  enabled: false
+  ingressLabels:
+    app: istio-ingressgateway
+    istio: ingressgateway
+
+istio:
+  enabled: false
+  prometheus:
+    # Toggle vs creation
+    enabled: true
+    annotations: {}
+    labels: {}
+    gateways:
+      - istio-system/main
+    hosts:
+      - prometheus.{{ .Values.hostname }}
+    service: ""
+    port: ""
+    namespace: ""
+  alertmanager:
+    # Toggle vs creation
+    enabled: true
+    annotations: {}
+    labels: {}
+    gateways:
+      - istio-system/main
+    hosts:
+      - alertmanager.{{ .Values.hostname }}
+    service: ""
+    port: ""
+    namespace: ""
+  grafana:
+    # Toggle vs creation
+    enabled: true
+    annotations: {}
+    labels: {}
+    gateways:
+      - istio-system/main
+    hosts:
+      - grafana.{{ .Values.hostname }}
+    service: ""
+    port: ""
+    namespace: ""
+
+anchore:
+  # Toggle anchore grafana dashboard creation
+  enabled: false
+
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
 nameOverride: ""
@@ -105,8 +160,8 @@ global:
   ## Reference to one or more secrets to be used when pulling images
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
   ##
-  imagePullSecrets: []
-  # - name: "image-pull-secret"
+  imagePullSecrets:
+  - name: private-registry
 
 ## Configuration for alertmanager
 ## ref: https://prometheus.io/docs/alerting/alertmanager/
@@ -382,8 +437,9 @@ alertmanager:
 
     ## Image of Alertmanager
     ##
+    # use IronBank image
     image:
-      repository: quay.io/prometheus/alertmanager
+      repository: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager
       tag: v0.21.0
       sha: ""
 
@@ -601,11 +657,53 @@ grafana:
   enabled: true
   namespaceOverride: ""
 
+  # use IronBank image
+  image:
+    repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
+    tag: 7.5.2
+    pullSecrets:
+    - private-registry
+
+  testFramework:
+    image: "registry1.dso.mil/ironbank/opensource/bats/bats"
+    tag: "1.2.1"
+    pullSecrets:
+    - private-registry
+    imagePullPolicy: IfNotPresent
+    securityContext: {}
+
   ## Deploy default dashboards.
   ##
   defaultDashboardsEnabled: true
 
   adminPassword: prom-operator
+
+  ## Start of Grafana specific OIDC configuration
+  ## Review docs/KEYCLOAK.md before editing especially when deploying with BigBang
+  ##
+  grafana.ini:
+    # Required if enabling SSO
+    #server:
+      #root_url: https://grafana.{{ .Values.hostname }}/
+      #Block is auto-set when using Umbrella
+    auth:
+      signout_redirect_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/logout
+    auth.generic_oauth:
+      enabled: false
+      client_id: grafana    #this is a sample client_id, review docs/KEYCLOAK.md
+      client_secret: secret #this is a sample secret, review docs/KEYCLOAK.md
+      scopes: Grafana       #this is a sample client scope, review docs/KEYCLOAK.md
+      auth_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/auth
+      token_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/token
+      api_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/userinfo
+      allow_sign_up: true
+      role_attribute_path: Viewer
+      # tls_skip_verify_insecure: false
+      # tls_client_cert: ""
+      # tls_client_key: ""
+      # tls_client_ca : /etc/oidc/ca.pem
+      # allowed_domains: mycompany.com mycompany.org
+      # empty_scopes: false
 
   ingress:
     ## If true, Grafana Ingress will be created
@@ -641,6 +739,12 @@ grafana:
     #   - grafana.example.com
 
   sidecar:
+
+    # use IronBank image
+    image:
+      repository: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar
+      tag: 1.10.6
+
     dashboards:
       enabled: true
       label: grafana_dashboard
@@ -667,11 +771,48 @@ grafana:
       createPrometheusReplicasDatasources: false
       label: grafana_datasource
 
+  dashboardProviders: {}
+  #  dashboardproviders.yaml:
+  #    apiVersion: 1
+  #    providers:
+  #    - name: 'default'
+  #      orgId: 1
+  #      folder: ''
+  #      type: file
+  #      disableDeletion: false
+  #      editable: true
+  #      options:
+  #        path: /var/lib/grafana/dashboards/default
+
+  dashboards: {}
+  #  default:
+  #    some-dashboard:
+  #      json: |
+  #        JSON_DATA
+  #   custom-dashboard:
+  #     file: dashboards/custom-dashboard.json
+  #   prometheus-stats:
+  #     gnetId: 2
+  #     revision: 2
+  #     datasource: Prometheus
+  #   local-dashboard:
+  #     url: https://example.com/repository/test.json
+  #   local-dashboard-base64:
+  #     url: https://example.com/repository/test-b64.json
+  #     b64content: true
+
   extraConfigmapMounts: []
   # - name: certs-configmap
   #   mountPath: /etc/grafana/ssl/
   #   configMap: certs-configmap
   #   readOnly: true
+
+  extraSecretMounts: []
+  # - name: oidc-ca-cert
+  #   mountPath: /etc/oidc
+  #   secretName: grafana-oidc-secret
+  #   readOnly: true
+  #   subPath: "ca.pem"
 
   ## Configure additional grafana datasources (passed through tpl)
   ## ref: http://docs.grafana.org/administration/provisioning/#datasources
@@ -789,7 +930,7 @@ kubelet:
     ##
     resource: false
     # From kubernetes 1.18, /metrics/resource/v1alpha1 renamed to /metrics/resource
-    resourcePath: "/metrics/resource/v1alpha1"
+    resourcePath: "/metrics/resource"
     ## Metric relabellings to apply to samples before ingestion
     ##
     cAdvisorMetricRelabelings: []
@@ -1197,6 +1338,13 @@ kubeStateMetrics:
 ## Configuration for kube-state-metrics subchart
 ##
 kube-state-metrics:
+  imagePullSecrets:
+  - name: private-registry
+  # use IronBank image
+  image:
+    repository: registry1.dso.mil/ironbank/opensource/coreos/kube-state-metrics
+    tag: v1.9.8
+
   namespaceOverride: ""
   rbac:
     create: true
@@ -1243,6 +1391,16 @@ nodeExporter:
 ## Configuration for prometheus-node-exporter subchart
 ##
 prometheus-node-exporter:
+  # set imagePullSecret
+  serviceAccount:
+    imagePullSecrets:
+    - name: private-registry
+
+  # use IronBank image
+  image:
+    repository: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter 
+    tag: v1.0.1
+
   namespaceOverride: ""
   podLabels:
     ## Add the 'node-exporter' label to be used by serviceMonitor to match standard common usage in rules and grafana dashboards
@@ -1281,8 +1439,8 @@ prometheusOperator:
     patch:
       enabled: true
       image:
-        repository: jettech/kube-webhook-certgen
-        tag: v1.5.0
+        repository: registry1.dso.mil/ironbank/opensource/jet/kube-webhook-certgen
+        tag: v1.5.1
         sha: ""
         pullPolicy: IfNotPresent
       resources: {}
@@ -1479,7 +1637,7 @@ prometheusOperator:
   ## Prometheus-operator image
   ##
   image:
-    repository: quay.io/prometheus-operator/prometheus-operator
+    repository: registry1.dso.mil/ironbank/opensource/coreos/prometheus-operator
     tag: v0.46.0
     sha: ""
     pullPolicy: IfNotPresent
@@ -1492,10 +1650,17 @@ prometheusOperator:
   ##
   # alertmanagerDefaultBaseImage: quay.io/prometheus/alertmanager
 
+  ## Configmap-reload image to use for reloading configmaps
+  ##
+  configmapReloadImage:
+    repository: registry1.dso.mil/ironbank/opensource/jimmidyson/configmap-reload
+    tag: v0.5.0
+    sha: ""
+
   ## Prometheus-config-reloader image to use for config and rule reloading
   ##
   prometheusConfigReloaderImage:
-    repository: quay.io/prometheus-operator/prometheus-config-reloader
+    repository: registry1.dso.mil/ironbank/opensource/coreos/prometheus-config-reloader
     tag: v0.46.0
     sha: ""
 
@@ -1510,6 +1675,15 @@ prometheusOperator:
   ## Set a Field Selector to filter watched secrets
   ##
   secretFieldSelector: ""
+
+  ## kubectl image to use when cleaning up
+  ##
+  kubectlImage:
+    repository: registry1.dso.mil/ironbank/opensource/kubernetes-1.20/kubectl-1.20
+    tag: v1.20.8
+    sha: ""
+    pullPolicy: IfNotPresent
+
 
 ## Deploy a Prometheus instance
 ##
@@ -1805,7 +1979,7 @@ prometheus:
     ## Image of Prometheus.
     ##
     image:
-      repository: quay.io/prometheus/prometheus
+      repository: registry1.dso.mil/ironbank/opensource/prometheus/prometheus
       tag: v2.24.0
       sha: ""
 
@@ -1900,7 +2074,7 @@ prometheus:
     ## prometheus resource to be created with selectors based on values in the helm deployment,
     ## which will also match the PrometheusRule resources created
     ##
-    ruleSelectorNilUsesHelmValues: true
+    ruleSelectorNilUsesHelmValues: false
 
     ## PrometheusRules to be selected for target discovery.
     ## If {}, select all ServiceMonitors
@@ -1925,7 +2099,7 @@ prometheus:
     ## prometheus resource to be created with selectors based on values in the helm deployment,
     ## which will also match the servicemonitors created
     ##
-    serviceMonitorSelectorNilUsesHelmValues: true
+    serviceMonitorSelectorNilUsesHelmValues: false
 
     ## ServiceMonitors to be selected for target discovery.
     ## If {}, select all ServiceMonitors
@@ -1948,7 +2122,7 @@ prometheus:
     ## prometheus resource to be created with selectors based on values in the helm deployment,
     ## which will also match the podmonitors created
     ##
-    podMonitorSelectorNilUsesHelmValues: true
+    podMonitorSelectorNilUsesHelmValues: false
 
     ## PodMonitors to be selected for target discovery.
     ## If {}, select all PodMonitors
@@ -1968,7 +2142,7 @@ prometheus:
     ## prometheus resource to be created with selectors based on values in the helm deployment,
     ## which will also match the probes created
     ##
-    probeSelectorNilUsesHelmValues: true
+    probeSelectorNilUsesHelmValues: false
 
     ## Probes to be selected for target discovery.
     ## If {}, select all Probes
