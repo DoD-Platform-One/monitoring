@@ -1637,7 +1637,7 @@ prometheusOperator:
   ## Prometheus-operator image
   ##
   image:
-    repository: registry1.dso.mil/ironbank/opensource/coreos/prometheus-operator
+    repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator
     tag: v0.46.0
     sha: ""
     pullPolicy: IfNotPresent
