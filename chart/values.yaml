@@ -1663,7 +1663,7 @@ prometheusOperator:
   ## Prometheus-config-reloader image to use for config and rule reloading
   ##
   prometheusConfigReloaderImage:
-    repository: registry1.dso.mil/ironbank/opensource/coreos/prometheus-config-reloader
+    repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
     tag: v0.46.0
     sha: ""
 
