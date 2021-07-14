@@ -14,6 +14,13 @@ networkPolicies:
     app: istio-ingressgateway
     istio: ingressgateway
 
+# installCRDs determines whether Custom Resource Definitions (CRD) are installed by the chart.
+# Note that CRDs are global resources and require cluster admin privileges to install.
+# If you are sharing a cluster with other users who may want to install ECK on their own namespaces, setting this to true can have unintended consequences.
+# 1. Upgrades will overwrite the global CRDs and could disrupt the other users of the Monitoring package who may be running a different version.
+# 2. Uninstalling the chart will delete the CRDs and potentially cause Monitoring related resources deployed by other users to be removed as well.
+installCRDs: true
+
 istio:
   enabled: false
   prometheus:
