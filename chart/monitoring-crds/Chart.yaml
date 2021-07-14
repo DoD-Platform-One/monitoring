@@ -1,0 +1,23 @@
+apiVersion: v2
+name: monitoring-crds
+description: "Deployment of mattermost operator crds using Helm"
+home: https://github.com/prometheus-operator/kube-prometheus
+type: application
+version: "14.0.0"
+appVersion: "0.46.0"
+kubeVersion: ">=1.16.0-0"
+keywords: 
+  - kube-prometheus
+  - operator
+  - CRDs
+maintainers:
+  - name: vsliouniaev
+  - name: bismarck
+  - name: gianrubio
+    email: gianrubio@gmail.com
+  - name: gkarthiks
+    email: github.gkarthiks@gmail.com
+  - name: scottrigby
+    email: scott@r6by.com
+  - name: Xtigyro
+    email: miroslav.hadzhiev@gmail.com
