@@ -50,8 +50,4 @@ dependencies:
 - name: gluon
   version: "0.1.1"
   repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
-- name: monitoring-crds
-  version: 14.0.0
-  condition: installCRDs
-  repository: "file://monitoring-crds"
 

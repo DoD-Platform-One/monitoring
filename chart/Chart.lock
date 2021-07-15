@@ -11,8 +11,5 @@ dependencies:
 - name: gluon
   repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
   version: 0.1.1
-- name: monitoring-crds
-  repository: file://monitoring-crds
-  version: 14.0.0
-digest: sha256:a6322c55a754ddb5ac629a243da55e8b31273168488084bf471f4e7d1a6708bd
-generated: "2021-07-14T12:48:06.5890582-06:00"
+digest: sha256:2590f640925e30089aab4fd5c2fef469cdb302ebd470fcd217be7dbb1b9f5559
+generated: "2021-07-15T12:52:04.7871806-06:00"
