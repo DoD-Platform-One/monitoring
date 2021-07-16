@@ -37,7 +37,7 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
   name: bb-{{ .Release.Name }}-upgrade-view
   namespace: {{ .Release.Namespace }}
