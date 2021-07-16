@@ -1,0 +1,108 @@
+{{- if .Values.upgradeJob.enabled }}
+{{- if .Values.networkPolicies.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-egress-upgrade-job
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+spec:
+  egress:
+  - to:
+    - ipBlock:
+        cidr: {{ .Values.networkPolicies.controlPlaneCidr }}
+        {{- if eq .Values.networkPolicies.controlPlaneCidr "0.0.0.0/0" }}
+        # ONLY Block requests to AWS metadata IP
+        except:
+        - 169.254.169.254/32
+        {{- end }}
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: bigbang-monitoring-upgrade-job
+  policyTypes:
+  - Egress
+{{- end }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Release.Name }}-bb-upgrade
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: bb-{{ .Release.Name }}-upgrade-view
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+rules:
+- apiGroups: ["admissionregistration.k8s.io"]
+  resources: ["ValidatingWebhookConfiguration"]
+  verbs: ["get", "list", "patch", "delete"]
+- apiGroups: ["admissionregistration.k8s.io"]
+  resources: ["MutatingWebhookConfiguration"]
+  verbs: ["get", "list", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}-bb-upgrade
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: bb-{{ .Release.Name }}-upgrade-view
+subjects:
+- kind: ServiceAccount
+  name: {{ .Release.Name }}-bb-upgrade
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bb-{{ .Release.Name }}-upgrade
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-5"
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 480
+  template:
+    metadata:
+      name: bb-{{ .Release.Name }}-upgrade
+      annotations:
+        sidecar.istio.io/inject: 'false'
+      labels:
+        app.kubernetes.io/name: bigbang-monitoring-upgrade-job
+    spec:
+      serviceAccountName: {{ .Release.Name }}-bb-upgrade
+      containers:
+        - name: bb-{{ .Release.Name }}-upgrade
+          image: {{ $.Values.upgradeJob.image.repository }}:{{ $.Values.upgradeJob.image.tag }}
+          command:
+            - /bin/bash
+            - -ec
+            - |
+              kubectl delete validatingwebhookconfiguration/{{ .Release.Name }}-kube-admission -A
+              kubectl delete mutatingwebhookconfiguration/{{ .Release.Name }}-kube-admission -A
+      {{- with $.Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: OnFailure
+{{- end }}
