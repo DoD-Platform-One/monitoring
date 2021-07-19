@@ -13,6 +13,7 @@ networkPolicies:
   ingressLabels:
     app: istio-ingressgateway
     istio: ingressgateway
+  controlPlaneCidr: 0.0.0.0/0
 
 istio:
   enabled: false
@@ -52,6 +53,23 @@ istio:
     service: ""
     port: ""
     namespace: ""
+
+upgradeJob:
+  enabled: true
+  image:
+    repository: registry1.dso.mil/ironbank/big-bang/base
+    tag: 8.4
+  resources: {}
+    # requests:
+    #   memory: 400Mi
+
+# installCRDs determines whether Custom Resource Definitions (CRD) are installed by the chart.
+# Note that CRDs are global resources and require cluster admin privileges to install.
+# If you are sharing a cluster with other users who may want to install monitoring related resources on their own namespaces, setting this to true can have unintended consequences.
+# 1. Upgrades will overwrite the global CRDs and could disrupt the other users of the Monitoring package who may be running a different version.
+# 2. Uninstalling the chart will delete the CRDs and potentially cause Monitoring related resources deployed by other users to be removed as well.
+installCRDs: true
+
 
 anchore:
   # Toggle anchore grafana dashboard creation
