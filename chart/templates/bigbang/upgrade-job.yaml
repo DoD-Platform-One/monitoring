@@ -39,19 +39,41 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: bb-{{ .Release.Name }}-upgrade-view
+  name: bb-{{ .Release.Name }}-upgrade
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": pre-upgrade
     "helm.sh/hook-weight": "-10"
     "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
 rules:
-- apiGroups: ["admissionregistration.k8s.io"]
-  resources: ["ValidatingWebhookConfiguration"]
-  verbs: ["get", "list", "patch", "delete"]
-- apiGroups: ["admissionregistration.k8s.io"]
-  resources: ["MutatingWebhookConfiguration"]
-  verbs: ["get", "list", "patch", "delete"]
+- apiGroups:
+  - admissionregistration.k8s.io
+  resourceNames:
+  - {{ .Release.Name }}-kube-admission
+  resources:
+  - validatingwebhookconfigurations
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - admissionregistration.k8s.io
+  resourceNames:
+  - {{ .Release.Name }}-kube-admission
+  resources:
+  - mutatingwebhookconfigurations
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -64,8 +86,8 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: bb-{{ .Release.Name }}-upgrade-view
+  kind: ClusterRole
+  name: bb-{{ .Release.Name }}-upgrade
 subjects:
 - kind: ServiceAccount
   name: {{ .Release.Name }}-bb-upgrade
