@@ -13,14 +13,6 @@ networkPolicies:
   ingressLabels:
     app: istio-ingressgateway
     istio: ingressgateway
-  controlPlaneCidr: 0.0.0.0/0
-
-# Image used for the pre-upgrade job to alleviate webhook issue
-upgradeJob:
-  enabled: true
-  image:
-    repository: registry1.dso.mil/ironbank/big-bang/base
-    tag: 8.4
 
 istio:
   enabled: false
