@@ -56,6 +56,10 @@ istio:
     port: ""
     namespace: ""
 
+anchore:
+  # Toggle anchore grafana dashboard creation
+  enabled: false
+
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
 nameOverride: ""
