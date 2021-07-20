@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Updated upstream chart base to 14.0.0 of kube-prometheus-stack
   - Includes changes for Prometheus-Operator, Prometheus, Grafana, and other images.
-  - Includes updates to CRDs that need to be manally updated via kubectl apply.
+  - Includes updates to CRDs that need to be manually updated via kubectl apply.
 
 ## [11.0.0-bb.28]
 ### Added

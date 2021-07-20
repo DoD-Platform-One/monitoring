@@ -13,7 +13,6 @@ networkPolicies:
   ingressLabels:
     app: istio-ingressgateway
     istio: ingressgateway
-  controlPlaneCidr: 0.0.0.0/0
 
 minioOperator:
   enabled: false
@@ -56,24 +55,6 @@ istio:
     service: ""
     port: ""
     namespace: ""
-
-upgradeJob:
-  enabled: true
-  image:
-    repository: registry1.dso.mil/ironbank/big-bang/base
-    tag: 8.4
-  resources: {}
-    # requests:
-    #   memory: 400Mi
-
-# installCRDs determines whether Custom Resource Definitions (CRD) are installed by the chart.
-# Note that CRDs are global resources and require cluster admin privileges to install.
-# If you are sharing a cluster with other users who may want to install monitoring related resources on their own namespaces, setting this to true can have unintended consequences.
-installCRDs: true
-
-anchore:
-  # Toggle anchore grafana dashboard creation
-  enabled: false
 
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
@@ -1045,6 +1026,7 @@ kubeControllerManager:
   endpoints: []
   # - 10.141.4.22
   # - 10.141.4.23
+  # - 10.141.4.24
 
   ## If using kubeControllerManager.endpoints only the port and targetPort are used
   ##
@@ -1177,6 +1159,7 @@ kubeEtcd:
   endpoints: []
   # - 10.141.4.22
   # - 10.141.4.23
+  # - 10.141.4.24
 
   ## Etcd service. If using kubeEtcd.endpoints only the port and targetPort are used
   ##
@@ -1236,6 +1219,7 @@ kubeScheduler:
   endpoints: []
   # - 10.141.4.22
   # - 10.141.4.23
+  # - 10.141.4.24
 
   ## If using kubeScheduler.endpoints only the port and targetPort are used
   ##
@@ -1288,6 +1272,7 @@ kubeProxy:
   endpoints: []
   # - 10.141.4.22
   # - 10.141.4.23
+  # - 10.141.4.24
 
   service:
     port: 10249
@@ -1688,7 +1673,7 @@ prometheusOperator:
 
   ## Set a Field Selector to filter watched secrets
   ##
-  secretFieldSelector: "type!=helm.sh/release.v1"
+  secretFieldSelector: ""
 
   ## kubectl image to use when cleaning up
   ##
@@ -2448,5 +2433,133 @@ prometheus:
   #    verbs: [ "get", "list", "watch" ]
 
   additionalServiceMonitors: []
+  ## Name of the ServiceMonitor to create
+  ##
+  # - name: ""
+
+    ## Additional labels to set used for the ServiceMonitorSelector. Together with standard labels from
+    ## the chart
+    ##
+    # additionalLabels: {}
+
+    ## Service label for use in assembling a job name of the form <label value>-<port>
+    ## If no label is specified, the service name is used.
+    ##
+    # jobLabel: ""
+
+    ## labels to transfer from the kubernetes service to the target
+    ##
+    # targetLabels: []
+
+    ## labels to transfer from the kubernetes pods to the target
+    ##
+    # podTargetLabels: []
+
+    ## Label selector for services to which this ServiceMonitor applies
+    ##
+    # selector: {}
+
+    ## Namespaces from which services are selected
+    ##
+    # namespaceSelector:
+      ## Match any namespace
+      ##
+      # any: false
+
+      ## Explicit list of namespace names to select
+      ##
+      # matchNames: []
+
+    ## Endpoints of the selected service to be monitored
+    ##
+    # endpoints: []
+      ## Name of the endpoint's service port
+      ## Mutually exclusive with targetPort
+      # - port: ""
+
+      ## Name or number of the endpoint's target port
+      ## Mutually exclusive with port
+      # - targetPort: ""
+
+      ## File containing bearer token to be used when scraping targets
+      ##
+      #   bearerTokenFile: ""
+
+      ## Interval at which metrics should be scraped
+      ##
+      #   interval: 30s
+
+      ## HTTP path to scrape for metrics
+      ##
+      #   path: /metrics
+
+      ## HTTP scheme to use for scraping
+      ##
+      #   scheme: http
+
+      ## TLS configuration to use when scraping the endpoint
+      ##
+      #   tlsConfig:
+
+          ## Path to the CA file
+          ##
+          # caFile: ""
+
+          ## Path to client certificate file
+          ##
+          # certFile: ""
+
+          ## Skip certificate verification
+          ##
+          # insecureSkipVerify: false
+
+          ## Path to client key file
+          ##
+          # keyFile: ""
+
+          ## Server name used to verify host name
+          ##
+          # serverName: ""
 
   additionalPodMonitors: []
+  ## Name of the PodMonitor to create
+  ##
+  # - name: ""
+
+    ## Additional labels to set used for the PodMonitorSelector. Together with standard labels from
+    ## the chart
+    ##
+    # additionalLabels: {}
+
+    ## Pod label for use in assembling a job name of the form <label value>-<port>
+    ## If no label is specified, the pod endpoint name is used.
+    ##
+    # jobLabel: ""
+
+    ## Label selector for pods to which this PodMonitor applies
+    ##
+    # selector: {}
+
+    ## PodTargetLabels transfers labels on the Kubernetes Pod onto the target.
+    ##
+    # podTargetLabels: {}
+
+    ## SampleLimit defines per-scrape limit on number of scraped samples that will be accepted.
+    ##
+    # sampleLimit: 0
+
+    ## Namespaces from which pods are selected
+    ##
+    # namespaceSelector:
+      ## Match any namespace
+      ##
+      # any: false
+
+      ## Explicit list of namespace names to select
+      ##
+      # matchNames: []
+
+    ## Endpoints of the selected pods to be monitored
+    ## https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#podmetricsendpoint
+    ##
+    # podMetricsEndpoints: []
