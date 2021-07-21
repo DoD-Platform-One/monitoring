@@ -4,6 +4,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [11.0.0-bb.27]
+### Added
+- Grafana dashboard and configmap for Anchore
+
+## [11.0.0-bb.26]
+### Added
+- Network Policy for allowing egress to all
+
 ## [11.0.0-bb.25]
 ### Added
 - Dashboard for Minio

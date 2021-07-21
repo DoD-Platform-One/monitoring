@@ -20,7 +20,7 @@ minioOperator:
 istio:
   enabled: false
   prometheus:
-    # Toogle vs creation
+    # Toggle vs creation
     enabled: true
     annotations: {}
     labels: {}
@@ -32,7 +32,7 @@ istio:
     port: ""
     namespace: ""
   alertmanager:
-    # Toogle vs creation
+    # Toggle vs creation
     enabled: true
     annotations: {}
     labels: {}
@@ -44,7 +44,7 @@ istio:
     port: ""
     namespace: ""
   grafana:
-    # Toogle vs creation
+    # Toggle vs creation
     enabled: true
     annotations: {}
     labels: {}
@@ -55,6 +55,10 @@ istio:
     service: ""
     port: ""
     namespace: ""
+
+anchore:
+  # Toggle anchore grafana dashboard creation
+  enabled: false
 
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
