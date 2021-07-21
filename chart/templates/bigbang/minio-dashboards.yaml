@@ -1,11 +1,11 @@
-{{- if .Values.flux.enabled }}
+{{- if .Values.minioOperator.enabled }}
 {{- /* Added manually, can be changed in-place. */ -}}
 {{- $kubeTargetVersion := default .Capabilities.KubeVersion.GitVersion .Values.kubeTargetVersionOverride }}
-{{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.grafana.enabled .Values.grafana.defaultDashboardsEnabled .Values.flux.enabled }}
+{{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.grafana.enabled .Values.grafana.defaultDashboardsEnabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "flux-grafana-dashboards" | trunc 63 | trimSuffix "-" }}
+  name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "minio-grafana-dashboards" | trunc 63 | trimSuffix "-" }}
   namespace: {{ template "kube-prometheus-stack.namespace" . }}
   annotations:
 {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
@@ -16,9 +16,7 @@ metadata:
     app: {{ template "kube-prometheus-stack.name" $ }}-grafana
 {{ include "kube-prometheus-stack.labels" $ | indent 4 }}
 data:
-  flux-cluster-dashboard.json: |
-    {{ .Files.Get "dashboards/flux/cluster.json"  | nindent 4 }}
-  flux-control-plane-dashboard.json: |
-    {{ .Files.Get "dashboards/flux/control-plane.json" | nindent 4 }}
+  minio-dashboard.json: |
+    {{ .Files.Get "dashboards/minio/minio-dashboard.json"  | nindent 4 }}
 {{- end }}
 {{- end }}
