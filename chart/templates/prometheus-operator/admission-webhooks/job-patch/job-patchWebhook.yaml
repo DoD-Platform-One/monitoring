@@ -60,7 +60,6 @@ spec:
 {{ toYaml . | indent 8 }}
       {{- end }}
       securityContext:
-        runAsGroup: 2000
         runAsNonRoot: true
-        runAsUser: 2000
+        runAsUser: 65532
 {{- end }}
