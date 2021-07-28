@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [14.0.0-bb.2]
+### Changed
+- SecurityContext configuration for admission-create job pod
+
 ## [14.0.0-bb.1]
 ### Added
 - Updated chart/crds/ folder from upstream kube-prometheus-stack.
