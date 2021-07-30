@@ -1,0 +1,11 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: prometheus-node-exporter
+upstream:
+  type: git
+  git:
+    commit: a4d4d2e315cb4893d1699c1ab0cbd62c24962c89
+    repo: https://github.com/prometheus-community/helm-charts
+    directory: charts/prometheus-node-exporter
+    ref: prometheus-node-exporter-1.14.2

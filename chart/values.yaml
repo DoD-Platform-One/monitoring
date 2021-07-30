@@ -1357,7 +1357,7 @@ kube-state-metrics:
 ## Deploy node exporter as a daemonset to all nodes
 ##
 nodeExporter:
-  enabled: true
+  enabled: true 
 
   ## Use the value configured in prometheus-node-exporter.podLabels
   ##
@@ -1404,6 +1404,14 @@ prometheus-node-exporter:
     repository: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter 
     tag: v1.0.1
 
+  ## Disable the hostNetwork in order to resolve no-host-namespace violations. If not set, the prometheus-node-exporter default (hostNetwork: true) is used.
+  #
+  hostNetwork: false
+
+  ## Big Bang modification to resolve OPA violations (not available in upstream chart)
+  #
+  hostPID: false
+  
   namespaceOverride: ""
   podLabels:
     ## Add the 'node-exporter' label to be used by serviceMonitor to match standard common usage in rules and grafana dashboards
