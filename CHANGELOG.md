@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [14.0.0-bb.4]
+### Added
+- `docs/BBCHANGES.md` to track modifications from upstream charts
+### Changed
+- pulled in upstream prometheus-node-exporter-1.14.2 chart
+- set `.Values.prometheus-node-exporter.hostNetwork` and `.Values.prometheus-node-exporter.hostPID` to `false` in order to resolve OPA violations with prometheus node exporter daemonset
+
 ## [14.0.0-bb.3]
 ### Changed
 - SecurityContext configuration for create secret admission webhook job pod
@@ -13,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - SecurityContext configuration for admission-create job pod
 
 ## [14.0.0-bb.1]
-### Added
+### Changed
 - Updated chart/crds/ folder from upstream kube-prometheus-stack.
 
 ## [14.0.0-bb.0]
