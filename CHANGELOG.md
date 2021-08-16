@@ -4,7 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
-## [14.0.0-bb.5]
+## [14.0.0-bb.6]
 ### Added
 - Shards value from upstream uncommented to fix intermittent issues with the value not being set
 
