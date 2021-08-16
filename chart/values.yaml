@@ -2240,7 +2240,7 @@ prometheus:
     ## To query globally use Thanos sidecar and Thanos querier or remote write data to a central location.
     ## Sharding is done on the content of the `__address__` target meta-label.
     ##
-    #shards: 1
+    shards: 1
 
     ## Log level for Prometheus be configured in
     ##
