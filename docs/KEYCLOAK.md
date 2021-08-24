@@ -117,7 +117,7 @@ monitoring:
     grafana:
       extraSecretMounts:
         - name: "oidc-ca-cert"
-          mountPath: "/etc/oidc"
+          mountPath: "/etc/oidc/ca.pem"
           secretName: "grafana-oidc-secret"
           readOnly: true
           subPath: "ca.pem"
