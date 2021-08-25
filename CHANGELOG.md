@@ -3,6 +3,9 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [14.0.0-bb.7]
+### Changed
+- Updated resources for kube-state-metrics and kube-prometheus-stack due to OOM errors
 
 ## [14.0.0-bb.6]
 ### Added
