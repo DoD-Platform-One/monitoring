@@ -1372,10 +1372,10 @@ kube-state-metrics:
   resources:
     limits:
       cpu: 100m
-      memory: 64Mi
+      memory: 128Mi
     requests:
       cpu: 100m
-      memory: 64Mi
+      memory: 128Mi
 
   namespaceOverride: ""
   rbac:
@@ -1635,10 +1635,10 @@ prometheusOperator:
   resources:
     limits:
       cpu: 200m
-      memory: 200Mi
+      memory: 512Mi
     requests:
       cpu: 200m
-      memory: 200Mi
+      memory: 512Mi
 
   # Required for use in managed kubernetes clusters (such as AWS EKS) with custom CNI (such as calico),
   # because control-plane managed by AWS cannot communicate with pods' IP CIDR and admission webhooks are not working
@@ -2306,10 +2306,10 @@ prometheus:
     resources:
       limits:
         cpu: 300m
-        memory: 1500Mi
+        memory: 3Gi
       requests:
         cpu: 300m
-        memory: 1500Mi
+        memory: 3Gi
 
     ## Prometheus StorageSpec for persistent data
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/storage.md
