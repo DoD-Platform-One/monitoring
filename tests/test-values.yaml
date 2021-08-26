@@ -13,3 +13,13 @@ networkPolicies:
 grafana:
   testFramework:
     enabled: false
+
+prometheus:
+  prometheusSpec:
+    resources:
+      limits:
+        cpu: 300m
+        memory: 1Gi
+      requests:
+        cpu: 300m
+        memory: 1Gi
