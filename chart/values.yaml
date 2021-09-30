@@ -807,6 +807,9 @@ grafana:
   #      editable: true
   #      options:
   #        path: /var/lib/grafana/dashboards/default
+  downloadDashboardsImage:
+      repository: registry1.dso.mil/ironbank/big-bang/base #curlimages/curl
+      tag: 8.4
 
   dashboards: {}
   #  default:

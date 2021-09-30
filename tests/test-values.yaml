@@ -13,6 +13,12 @@ networkPolicies:
 grafana:
   testFramework:
     enabled: false
+  dashboards:
+   default:
+    prometheus-stats:
+      gnetId: 2
+      revision: 2
+      datasource: Prometheus
 
 prometheus:
   prometheusSpec:
