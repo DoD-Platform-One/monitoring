@@ -807,9 +807,20 @@ grafana:
   #      editable: true
   #      options:
   #        path: /var/lib/grafana/dashboards/default
+
   downloadDashboardsImage:
-      repository: registry1.dso.mil/ironbank/big-bang/base #curlimages/curl
-      tag: 8.4
+    repository: registry1.dso.mil/ironbank/big-bang/base #curlimages/curl
+    tag: 8.4
+  
+  ## Resource settings for above DownloadDashboards container
+  downloadDashboards:
+    resources: 
+      limits:
+        cpu: 20m
+        memory: 20Mi
+      requests:
+        cpu: 20m
+        memory: 20Mi
 
   dashboards: {}
   #  default:
