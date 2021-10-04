@@ -690,8 +690,6 @@ grafana:
   ##
   defaultDashboardsEnabled: true
 
-  
-
   adminPassword: prom-operator
 
   ## Start of Grafana specific OIDC configuration
@@ -1453,8 +1451,7 @@ prometheus-node-exporter:
       memory: 50Mi
     requests:
       cpu: 200m
-      memory: 50Mi
-
+      memory: 50Mi  
   ## Disable the hostNetwork in order to resolve no-host-namespace violations. If not set, the prometheus-node-exporter default (hostNetwork: true) is used.
   #
   hostNetwork: false
@@ -1504,6 +1501,18 @@ prometheusOperator:
         repository: registry1.dso.mil/ironbank/opensource/jet/kube-webhook-certgen
         tag: v1.5.1
         sha: ""
+        pullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: 50m
+          memory: 50Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+    cleanupProxy:
+      image:
+        repository: registry1.dso.mil/ironbank/big-bang/base
+        tag: 8.4
         pullPolicy: IfNotPresent
       resources:
         limits:
@@ -2077,6 +2086,7 @@ prometheus:
     ## Default configuration will connect to the alertmanager deployed as part of this release
     ##
     alertingEndpoints: []
+
     # - name: ""
     #   namespace: ""
     #   port: http
