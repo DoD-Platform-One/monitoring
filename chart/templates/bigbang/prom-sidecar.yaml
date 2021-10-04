@@ -1,0 +1,20 @@
+{{- if and .Values.istio.enabled .Values.alertmanager.enabled -}}
+apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: {{ template "kube-prometheus-stack.name" . }}-prometheus-sidecar
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+spec:
+  workloadSelector:
+    labels:
+      prometheus: {{ template "kube-prometheus-stack.fullname" . }}-prometheus
+  egress:
+  - port:
+      number: {{ .Values.alertmanager.service.port }}
+      protocol: HTTP
+      name: egresshttp
+    hosts:
+    - "{{ template "kube-prometheus-stack.fullname" . }}-alertmanager/*"
+  - hosts:
+    - "istio-system/*"
+{{- end }}
