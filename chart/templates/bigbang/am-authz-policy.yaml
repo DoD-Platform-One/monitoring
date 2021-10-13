@@ -1,0 +1,23 @@
+{{- if and .Values.istio.enabled .Values.sso.enabled -}}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: prometheus-am
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+spec:
+  selector:
+    matchLabels:
+      alertmanager: {{ template "kube-prometheus-stack.fullname" . }}-alertmanager
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: ["{{ template "kube-prometheus-stack.namespace" . }}"]
+    to:
+    - operation:
+        methods: ["GET", "POST"]
+        paths: ["/*"]
+  - to:
+    - operation:
+        ports: ["{{ .Values.alertmanager.service.port }}"]
+{{- end }}
