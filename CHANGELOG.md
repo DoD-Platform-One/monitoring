@@ -184,3 +184,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Prometheus+Alertmanager VirtualServices pointing directly to the UIs will be skipped and not created when "sso.enabled: true"
 
+## [14.0.0-bb.14]
+### Changed
+- Commented out repository and tag for image in values.yaml so that it uses the IB image (registry1.dso.mil/ironbank/opensource/prometheus/node-exporter) instead of quay.io/prometheus/node-exporter.
