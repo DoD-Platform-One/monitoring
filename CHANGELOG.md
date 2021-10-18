@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [14.0.0-bb.16]
+### Changed
+- Commented out quay.io/prometheus/node-exporter so that it uses the IB image registry1.dso.mil/ironbank/opensource/prometheus/node-exporter instead.
+
 ## [14.0.0-bb.15]
 ### Added
 - Added AuthorizationPolicy for kiali to prometheus
@@ -184,3 +188,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Prometheus+Alertmanager VirtualServices pointing directly to the UIs will be skipped and not created when "sso.enabled: true"
 
+## [14.0.0-bb.14]
+### Changed
+- Commented out quay.io/prometheus/node-exporter so that it uses the IB image registry1.dso.mil/ironbank/opensource/prometheus/node-exporter instead.
