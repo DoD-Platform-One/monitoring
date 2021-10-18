@@ -904,6 +904,9 @@ grafana:
     #   replacement: $1
     #   action: replace
 
+kiali:
+  enabled: false
+
 ## Component scraping the kube api server
 ##
 kubeApiServer:
