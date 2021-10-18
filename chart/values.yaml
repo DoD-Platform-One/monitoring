@@ -55,6 +55,7 @@ istio:
     service: ""
     port: ""
     namespace: ""
+  injection: disabled
 
 sso:
   enabled: false
