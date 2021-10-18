@@ -682,8 +682,8 @@ grafana:
       memory: 256Mi
 
   testFramework:
-    image: "registry1.dso.mil/ironbank/opensource/bats/bats"
-    tag: "1.2.1"
+    image: registry1.dso.mil/ironbank/opensource/bats/bats
+    tag: 1.2.1
     pullSecrets:
     - private-registry
     imagePullPolicy: IfNotPresent
