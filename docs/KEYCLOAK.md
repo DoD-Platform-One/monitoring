@@ -10,15 +10,31 @@ These are the items you need to configure after keycloak and Grafana are working
 ## Keycloak Configuration
 
 #### Grafana
-1. Create a grafana client scope with the following mappings
+1. Create a grafana client scope named "Grafana" with the following mappings
 
-  | Name             | Mapper Type       | Mapper Selection Sub | Token Claim Name                   | Claim JSON Type |
-  |------------------|-------------------|----------------------|------------------------------------|-----------------|
-  | profile          | User Attribute    | profile              | profile                            | String          |
-  | email            | User Property     | email                | email                              | String          |
-  | realm_roles      | User Realm Roles  | realm roles          | nickname                           | String          |
-  | client roles     | User Client Roles | client roles         | resource_access.${client_id}.roles | String          |
-  | audience resolve | Audience Resolve  | audience resolve     | N/A                                | N/A             |
+  | Name             | Mapper Type       | Mapper Selection Sub | Token Claim Name                   | Claim JSON Type |        Other            |
+  |------------------|-------------------|----------------------|------------------------------------|-----------------|-------------------------|
+  | profile          | User Attribute    | profile              | profile                            | String          | Add to ID token: on     |
+  |                  |                   |                      |                                    |                 | Add to access token: on | 
+  |                  |                   |                      |                                    |                 | add to userinfo: on     |
+  |                  |                   |                      |                                    |                 | multivalued: off        |
+  |                  |                   |                      |                                    |                 | aggr attrib values: off |
+  | email            | User Property     | email                | email                              | String          | Add to ID token: on     |
+  |                  |                   |                      |                                    |                 | Add to access token: on | 
+  |                  |                   |                      |                                    |                 | add to userinfo: on     |
+  | realm roles      | User Realm Role   | realm roles          | realm_access.roles                 | String          | Add to ID token: off    |
+  |                  |                   |                      |                                    |                 | Add to access token: on | 
+  |                  |                   |                      |                                    |                 | add to userinfo: off    |
+  | client roles     | User Client Role  | N/A                  | resource_access.${client_id}.roles | String          | Add to ID token: off    |
+  |                  |                   |                      |                                    |                 | Add to access token: on | 
+  |                  |                   |                      |                                    |                 | add to userinfo: off    |
+  | username         | User Property     | username             | preferred_username                 | String          | Add to ID token: on     |
+  |                  |                   |                      |                                    |                 | Add to access token: on | 
+  |                  |                   |                      |                                    |                 | add to userinfo: on     |
+  | groups           | Group Membership  | N/A                  | groups                             | N/A             | Full group path: on     |
+  |                  |                   |                      |                                    |                 | Add to ID token: on     | 
+  |                  |                   |                      |                                    |                 | Add to access token: on | 
+  |                  |                   |                      |                                    |                 | add to userinfo: on     |
 
 2. Create a grafana client
    - Change the following configuration items
@@ -27,7 +43,7 @@ These are the items you need to configure after keycloak and Grafana are working
       - Valid Redirect URIs: https://grafana.DOMAIN/login/generic_oauth
       - Base URL: https://grafana.DOMAIN
     - Set Client Scopes
-      - Default Client Scopes: grafana (the client scope you created in the previous step)
+      - Default Client Scopes: Grafana (the client scope you created in the previous step)
       - optional client scopes: N/A
     - Take note of the client secret in the credential tab
 
