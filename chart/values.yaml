@@ -63,6 +63,11 @@ sso:
 anchore:
   # Toggle anchore grafana dashboard creation
   enabled: false
+  
+loki:
+  # Toggle loki grafana dashboard creation -- requires the grafana-piechart-panel plugin
+  # see the grafana.plugins value below 
+  enabled: false  
 
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
@@ -674,6 +679,12 @@ grafana:
     tag: 7.5.2
     pullSecrets:
     - private-registry
+
+  # add plugins to be installed
+  #plugins:
+  #    # grafana-piechart-panel is required for the loki dashboard
+  #  - grafana-piechart-panel
+
   resources: 
     limits:
       cpu: 100m
