@@ -7,6 +7,10 @@ metadata:
   labels:
     app: {{ template "kube-prometheus-stack.name" . }}-alertmanager
 {{ include "kube-prometheus-stack.labels" . | indent 4 }}
+{{- if .Values.alertmanager.annotations }}
+  annotations:
+{{ toYaml .Values.alertmanager.annotations | indent 4 }}
+{{- end }}
 spec:
 {{- if .Values.alertmanager.alertmanagerSpec.image }}
   image: {{ .Values.alertmanager.alertmanagerSpec.image.repository }}:{{ .Values.alertmanager.alertmanagerSpec.image.tag }}
@@ -77,6 +81,7 @@ spec:
 {{- end }}
 {{- if or .Values.alertmanager.alertmanagerSpec.podAntiAffinity .Values.alertmanager.alertmanagerSpec.affinity }}
   affinity:
+{{- end }}
 {{- if .Values.alertmanager.alertmanagerSpec.affinity }}
 {{ toYaml .Values.alertmanager.alertmanagerSpec.affinity | indent 4 }}
 {{- end }}
@@ -87,7 +92,7 @@ spec:
         labelSelector:
           matchExpressions:
             - {key: app, operator: In, values: [alertmanager]}
-            - {key: prometheus, operator: In, values: [{{ template "kube-prometheus-stack.fullname" . }}-alertmanager]}
+            - {key: alertmanager, operator: In, values: [{{ template "kube-prometheus-stack.fullname" . }}-alertmanager]}
 {{- else if eq .Values.alertmanager.alertmanagerSpec.podAntiAffinity "soft" }}
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -97,8 +102,7 @@ spec:
           labelSelector:
             matchExpressions:
               - {key: app, operator: In, values: [alertmanager]}
-              - {key: prometheus, operator: In, values: [{{ template "kube-prometheus-stack.fullname" . }}-alertmanager]}
-{{- end }}
+              - {key: alertmanager, operator: In, values: [{{ template "kube-prometheus-stack.fullname" . }}-alertmanager]}
 {{- end }}
 {{- if .Values.alertmanager.alertmanagerSpec.tolerations }}
   tolerations:
@@ -136,10 +140,10 @@ spec:
 {{ toYaml .Values.alertmanager.alertmanagerSpec.volumeMounts | indent 4 }}
 {{- end }}
   portName: {{ .Values.alertmanager.alertmanagerSpec.portName }}
-{{- end }}
 {{- if .Values.alertmanager.alertmanagerSpec.clusterAdvertiseAddress }}
   clusterAdvertiseAddress: {{ .Values.alertmanager.alertmanagerSpec.clusterAdvertiseAddress }}
 {{- end }}
 {{- if .Values.alertmanager.alertmanagerSpec.forceEnableClusterMode }}
   forceEnableClusterMode: {{ .Values.alertmanager.alertmanagerSpec.forceEnableClusterMode }}
+{{- end }}
 {{- end }}

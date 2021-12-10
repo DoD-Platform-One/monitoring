@@ -13,10 +13,18 @@ spec:
     matchLabels:
       app: prometheus-node-exporter
       release: {{ $.Release.Name }}
+  {{- if ne (include "kube-prometheus-stack.namespace" .) (include "kube-prometheus-stack-prometheus-node-exporter.namespace" .) }}
+  namespaceSelector:
+    matchNames:
+      - {{ printf "%s" (include "kube-prometheus-stack-prometheus-node-exporter.namespace" .) | quote }}
+  {{- end }}
   endpoints:
-  - port: metrics
+  - port: {{ index .Values "prometheus-node-exporter" "service" "portName" }}
     {{- if .Values.nodeExporter.serviceMonitor.interval }}
     interval: {{ .Values.nodeExporter.serviceMonitor.interval }}
+    {{- end }}
+    {{- if .Values.nodeExporter.serviceMonitor.proxyUrl }}
+    proxyUrl: {{ .Values.nodeExporter.serviceMonitor.proxyUrl}}
     {{- end }}
     {{- if .Values.nodeExporter.serviceMonitor.scrapeTimeout }}
     scrapeTimeout: {{ .Values.nodeExporter.serviceMonitor.scrapeTimeout }}
@@ -27,6 +35,6 @@ spec:
 {{- end }}
 {{- if .Values.nodeExporter.serviceMonitor.relabelings }}
     relabelings:
-{{ toYaml .Values.nodeExporter.serviceMonitor.relabelings | indent 4 }}
+{{ tpl (toYaml .Values.nodeExporter.serviceMonitor.relabelings | indent 4) . }}
 {{- end }}
 {{- end }}

@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [23.1.6-bb.0]
+### Changed
+- Updated to latest upstream chart 23.1.6
+- Updated all images to latest IB (G: 8.3.1, P: 2.31.1, A: 0.23.0)
+### Added
+- Clean upgrade job added to handle the kube-state-metrics upgrade (deletion of previous deployment/statefulset)
+- Package update documentation
+
 ## [14.0.0-bb.18]
 ### Added
 - - Grafana dashboard and configmap for Loki
@@ -146,7 +154,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - CI pipeline cypress integration testing configuration for new version of cypress
 
 ## [11.0.0-bb.13]
-## Added
+### Added
 - Prometheus metrics scraping of istio sidecars and components.
 - Istio grafana dashboards.
 
@@ -158,11 +166,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [11.0.0-bb.11]
 ### Added
-* Adding template of grafana configuration values for supplying inline JSON Grafana Dashboards inside the helm chart.
-* Documentation for adding Grafana Dashboards via helm values and externally.
+- Adding template of grafana configuration values for supplying inline JSON Grafana Dashboards inside the helm chart.
+- Documentation for adding Grafana Dashboards via helm values and externally.
 
 ### Changed
-* Initial update of documentation relevant to bigbang fluxv2 strategies.
+- Initial update of documentation relevant to bigbang fluxv2 strategies.
 
 ## [11.0.0-bb.10]
 ### Changed
@@ -177,16 +185,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Cleaning up authservice related portions of KEYCLOAK.md
 
 ## [11.0.0-bb.8]
-
-* Added labels and helm values allowing for external podmonitors brought by customers or other packages.
+### Added
+- Added labels and helm values allowing for external podmonitors brought by customers or other packages.
 
 ## [11.0.0-bb.7]
-
-* Use ironbank version of `kiwigrid/k8s-sidecar`
+### Changed
+- Use ironbank version of `kiwigrid/k8s-sidecar`
 
 ## [11.0.0-bb.6]
-
-* Fixing bug in previous release, supplying default for alertmanager+prometheus virtualservice port configurations.
+### Fixed
+- Fixing bug in previous release, supplying default for alertmanager+prometheus virtualservice port configurations.
 
 ## [11.0.0-bb.5]
 ### Added

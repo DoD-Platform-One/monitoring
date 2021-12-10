@@ -2,7 +2,7 @@
     "baseBranches": ["main"],
     "configWarningReuseIssue": false,
     "dependencyDashboard": true,
-    "dependencyDashboardHeader": "- [ ] Sync upstream helm chart version with updated dependencies.",
+    "dependencyDashboardHeader": "- [ ] Follow steps in [package update docs](./docs/PACKAGE_UPDATES.md) to upgrade the package.",
     "dependencyDashboardTitle": "Renovate: Upgrade Monitoring Package Dependencies",
     "draftPR": true,
     "enabledManagers": ["helm-values","regex"],

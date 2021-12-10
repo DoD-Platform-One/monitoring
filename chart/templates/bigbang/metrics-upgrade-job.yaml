@@ -1,0 +1,127 @@
+{{- if .Values.cleanUpgrade.enabled }}
+{{- if .Values.networkPolicies.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-egress-metrics-upgrade-job
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+spec:
+  egress:
+  - to:
+    - ipBlock:
+        cidr: {{ .Values.networkPolicies.controlPlaneCidr }}
+        {{- if eq .Values.networkPolicies.controlPlaneCidr "0.0.0.0/0" }}
+        # ONLY Block requests to cloud metadata IP
+        except:
+        - 169.254.169.254/32
+        {{- end }}
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: bigbang-metrics-upgrade-job
+  policyTypes:
+  - Egress
+---
+{{- end }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: metrics-upgrade-sa
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: metrics-upgrade-role
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+rules:
+- apiGroups: ["apps"]
+  resources: ["statefulsets"]
+  verbs: ["get", "list", "delete"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: metrics-upgrade-role-binding
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-10"
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed,before-hook-creation
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: metrics-upgrade-role
+subjects:
+- kind: ServiceAccount
+  name: metrics-upgrade-sa
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: metrics-clean-upgrade
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    metadata:
+      name: metrics-clean-upgrade
+      labels:
+        app.kubernetes.io/name: bigbang-metrics-upgrade-job
+    spec:
+      serviceAccountName: metrics-upgrade-sa
+      imagePullSecrets:
+        {{ toYaml .Values.global.imagePullSecrets | nindent 8 }}
+      restartPolicy: OnFailure
+      containers:
+        - name: metrics-clean-upgrade
+          image: "{{ .Values.cleanUpgrade.image }}"
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+
+              if [[ $(kubectl get statefulset -l app.kubernetes.io/name=kube-state-metrics -n {{ .Release.Namespace }} 2> /dev/null | wc -l) -gt 0 ]]; then
+                kubectl delete statefulset -n {{ .Release.Namespace }} -l app.kubernetes.io/name=kube-state-metrics --cascade=orphan
+                echo "Statefulset cleaned up."
+              else
+                echo "No statefulset to clean up."
+              fi
+
+              if [[ $(kubectl get deployment -l app.kubernetes.io/name=kube-state-metrics -n {{ .Release.Namespace }} 2> /dev/null | wc -l) -gt 0 ]]; then
+                kubectl delete deployment -n {{ .Release.Namespace }} -l app.kubernetes.io/name=kube-state-metrics --cascade=orphan
+                echo "Deployment cleaned up."
+              else
+                echo "No deployment to clean up."
+              fi
+
+              echo "Done with upgrade steps."
+
+              {{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") }}
+                until curl -fsI http://localhost:15021/healthz/ready; do echo \"Waiting for Sidecar...\"; sleep 3; done;
+                echo \"Sidecar available. Terminating...\";
+                x=$(echo $?); curl -fsI -X POST http://localhost:15020/quitquitquit && exit $x
+              {{- end }}
+          {{- if .Values.cleanUpgrade.resources }}
+          resources: {{- toYaml .Values.cleanUpgrade.resources | nindent 12 }}
+          {{- end }}
+{{- end }}
