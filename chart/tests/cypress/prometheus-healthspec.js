@@ -2,7 +2,7 @@ describe('Basic prometheus', function() {
     it('Visits the prometheus sign in page', function() {
       cy.visit(Cypress.env('prometheus_url'))
   
-      cy.get('textarea[id="downshift-0-input"]')
+      cy.get('div[class="cm-line"]')
         .type('kube_node_info{}')
   
       // Run a query
