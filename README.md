@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 23.1.6-bb.0](https://img.shields.io/badge/Version-23.1.6--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.52.1](https://img.shields.io/badge/AppVersion-0.52.1-informational?style=flat-square)
+![Version: 23.1.6-bb.1](https://img.shields.io/badge/Version-23.1.6--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.52.1](https://img.shields.io/badge/AppVersion-0.52.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -419,6 +419,9 @@ helm install kube-prometheus-stack chart/
 | kube-state-metrics.namespaceOverride | string | `""` |  |
 | kube-state-metrics.rbac.create | bool | `true` |  |
 | kube-state-metrics.podSecurityPolicy.enabled | bool | `true` |  |
+| kube-state-metrics.securityContext.runAsGroup | int | `65532` |  |
+| kube-state-metrics.securityContext.runAsUser | int | `65532` |  |
+| kube-state-metrics.securityContext.fsGroup | int | `65532` |  |
 | nodeExporter.enabled | bool | `true` |  |
 | nodeExporter.jobLabel | string | `"jobLabel"` |  |
 | nodeExporter.serviceMonitor.interval | string | `""` |  |

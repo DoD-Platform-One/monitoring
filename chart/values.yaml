@@ -1567,6 +1567,11 @@ kube-state-metrics:
   podSecurityPolicy:
     enabled: true
 
+  securityContext:
+    runAsGroup: 65532
+    runAsUser: 65532
+    fsGroup: 65532
+
 ## Deploy node exporter as a daemonset to all nodes
 ##
 nodeExporter:
