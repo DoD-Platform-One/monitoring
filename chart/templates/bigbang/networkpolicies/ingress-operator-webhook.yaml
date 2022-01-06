@@ -11,14 +11,11 @@ spec:
       release: "{{ .Release.Name }}"
   policyTypes:
   - Ingress
-  egress:
+  ingress:
   - from:
-    - namespaceSelector:
-        matchLabels:
-          app.kubernetes.io/instance: flux-system
-      podSelector:
-        matchLabels:
-          app: helm-controller
+    - ipBlock:
+        cidr: 0.0.0.0/0
     ports:
     - port: 10250
+      protocol: TCP
 {{- end }}
