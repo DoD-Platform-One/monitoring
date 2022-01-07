@@ -17,6 +17,9 @@ networkPolicies:
 
 minioOperator:
   enabled: false
+
+gitlabRunner:
+  enabled: false
   
 istio:
   enabled: false
@@ -723,6 +726,8 @@ grafana:
   #plugins:
   #    # grafana-piechart-panel is required for the loki dashboard
   #  - grafana-piechart-panel
+  #    # grafana-polystat-panel is required for the Gitlab CI pipelines dashboard
+  #  - grafana-polystat-panel
 
   resources: 
     limits:
