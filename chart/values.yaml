@@ -1950,7 +1950,7 @@ prometheusOperator:
   ## Thanos side-car image when configured
   ##
   thanosImage:
-    repository: quay.io/thanos/thanos
+    repository: registry1.dso.mil/ironbank/opensource/thanos/thanos
     tag: v0.24.0
     sha: ""
 
