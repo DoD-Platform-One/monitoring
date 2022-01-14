@@ -1917,7 +1917,7 @@ prometheusOperator:
   ## Prometheus-operator image
   ##
   image:
-    repository: quay.io/prometheus-operator/prometheus-operator
+    repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator
     tag: v0.53.1
     sha: ""
     pullPolicy: IfNotPresent
@@ -1934,7 +1934,7 @@ prometheusOperator:
   ##
   prometheusConfigReloader:
     image:
-      repository: quay.io/prometheus-operator/prometheus-config-reloader
+      repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
       tag: v0.53.1
       sha: ""
 
@@ -2359,7 +2359,7 @@ prometheus:
     ## Image of Prometheus.
     ##
     image:
-      repository: quay.io/prometheus/prometheus
+      repository: registry1.dso.mil/ironbank/opensource/prometheus/prometheus
       tag: v2.32.1
       sha: ""
 
