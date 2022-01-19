@@ -1,6 +1,7 @@
 {
-  "pluginsFile": false,
+  "pluginsFile": "/test/cypress/integration/plugins.js",
+  "_pluginsFile": "./plugins.js",
   "supportFile": false,
   "fixturesFolder": false,
-  "videoCompression": 35
+  "videoCompression": 45
 }

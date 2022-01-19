@@ -7,6 +7,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Upgrade Monitoring stack to chart 30.0.1
 
+## [23.1.6-bb.7]
+### Added
+- Added cypress test for istio dashboards in grafana, including tests for charts that contain no data
+
+## [23.1.6-bb.6]
+### Changed
+- Moved bbtest values to values.yaml
+
+## [23.1.6-bb.5]
+### Changed
+- `ingress-operator-webhook` NetworkPolicy conditional on webhook being enabled
+
+## [23.1.6-bb.4]
+### Added
+- `ingress-operator-webhook` NetworkPolicy template to allow flux/kubectl/cluster commands/entities to hit the kube-operator webhook
+
+## [23.1.6-bb.3]
+### Added
+- Added gitlab-runner grafana dashboards
+
+## [23.1.6-bb.2]
+### Changed
+- Changed minio dashboard to use Minio.inc MinIO Dashboard
+
 ## [23.1.6-bb.1]
 ### Changed
 - Updated securityContext for kube-state-metrics
