@@ -1,15 +1,15 @@
 dependencies:
 - name: kube-state-metrics
   repository: https://prometheus-community.github.io/helm-charts
-  version: 4.1.2
+  version: 4.3.0
 - name: prometheus-node-exporter
   repository: https://prometheus-community.github.io/helm-charts
-  version: 2.2.2
+  version: 2.4.1
 - name: grafana
   repository: https://grafana.github.io/helm-charts
-  version: 6.18.2
+  version: 6.20.6
 - name: gluon
   repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
   version: 0.2.5
-digest: sha256:b528dd95cdd70259be084d4e2355b3bc8c966d1f0d2215d0d5fd7b5b6a58b44c
-generated: "2022-01-04T10:51:41.887094-10:00"
+digest: sha256:a0a88ba2341e10969ef80d01f4a31064171eefc07d59163add7a22012e435982
+generated: "2022-01-19T09:04:39.397949-07:00"
