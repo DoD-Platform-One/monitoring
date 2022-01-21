@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [23.1.6-bb.6]
+### Added
+- Added OSCAL component for Monitoring
+
 ## [23.1.6-bb.5]
 ### Changed
 - `ingress-operator-webhook` NetworkPolicy conditional on webhook being enabled
