@@ -71,7 +71,7 @@ istio:
   injection: disabled
 
 sso:
-  enabled: true
+  enabled: false
 
 anchore:
   # Toggle anchore grafana dashboard creation
