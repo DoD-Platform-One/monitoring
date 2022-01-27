@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 30.0.1-bb.1](https://img.shields.io/badge/Version-30.0.1--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.53.1](https://img.shields.io/badge/AppVersion-0.53.1-informational?style=flat-square)
+![Version: 30.0.1-bb.2](https://img.shields.io/badge/Version-30.0.1--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.53.1](https://img.shields.io/badge/AppVersion-0.53.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -420,6 +420,10 @@ helm install kube-prometheus-stack chart/
 | kube-state-metrics.resources.requests.memory | string | `"128Mi"` |  |
 | kube-state-metrics.namespaceOverride | string | `""` |  |
 | kube-state-metrics.rbac.create | bool | `true` |  |
+| kube-state-metrics.podSecurityPolicy.enabled | bool | `true` |  |
+| kube-state-metrics.securityContext.runAsGroup | int | `65532` |  |
+| kube-state-metrics.securityContext.runAsUser | int | `65532` |  |
+| kube-state-metrics.securityContext.fsGroup | int | `65532` |  |
 | kube-state-metrics.releaseLabel | bool | `true` |  |
 | kube-state-metrics.prometheus.monitor.enabled | bool | `true` |  |
 | kube-state-metrics.prometheus.monitor.interval | string | `""` |  |
@@ -431,6 +435,7 @@ helm install kube-prometheus-stack chart/
 | kube-state-metrics.selfMonitor.enabled | bool | `false` |  |
 | nodeExporter.enabled | bool | `true` |  |
 | nodeExporter.serviceMonitor.interval | string | `""` |  |
+| nodeExporter.jobLabel | string | `"jobLabel"` |  |
 | prometheus-node-exporter.serviceAccount.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | prometheus-node-exporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/node-exporter"` |  |
 | prometheus-node-exporter.image.tag | string | `"v1.3.1"` |  |
@@ -442,8 +447,8 @@ helm install kube-prometheus-stack chart/
 | prometheus-node-exporter.hostPID | bool | `false` |  |
 | prometheus-node-exporter.namespaceOverride | string | `""` |  |
 | prometheus-node-exporter.podLabels.jobLabel | string | `"node-exporter"` |  |
-| prometheus-node-exporter.extraArgs[0] | string | `"--collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)"` |  |
-| prometheus-node-exporter.extraArgs[1] | string | `"--collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$"` |  |
+| prometheus-node-exporter.extraArgs[0] | string | `"--collector.filesystem.ignored-mount-points=^/(dev\|proc\|sys\|var/lib/docker/.+\|var/lib/kubelet/.+)($\|/)"` |  |
+| prometheus-node-exporter.extraArgs[1] | string | `"--collector.filesystem.ignored-fs-types=^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$"` |  |
 | prometheus-node-exporter.service.portName | string | `"http-metrics"` |  |
 | prometheus-node-exporter.prometheus.monitor.enabled | bool | `true` |  |
 | prometheus-node-exporter.prometheus.monitor.jobLabel | string | `"jobLabel"` |  |

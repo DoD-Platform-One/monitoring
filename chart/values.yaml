@@ -1557,8 +1557,18 @@ kube-state-metrics:
       memory: 128Mi
 
   namespaceOverride: ""
+
   rbac:
     create: true
+
+  podSecurityPolicy:
+    enabled: false
+
+  securityContext:
+    runAsGroup: 65532
+    runAsUser: 65532
+    fsGroup: 65532
+
   releaseLabel: true
   prometheus:
     monitor:
@@ -1608,6 +1618,7 @@ nodeExporter:
   enabled: true
   serviceMonitor:
     interval: ""
+  jobLabel: jobLabel
 
 ## Configuration for prometheus-node-exporter subchart
 ##
