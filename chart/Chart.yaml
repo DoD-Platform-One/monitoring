@@ -56,6 +56,6 @@ dependencies:
   repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
 annotations:
   bigbang.dev/applicationVersions: |
-    - Prometheus: v0.53.1
+    - Prometheus: v2.32.1
     - Grafana: 8.3.3
     - Alertmanager: v0.23.0
