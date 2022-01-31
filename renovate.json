@@ -49,7 +49,6 @@
         "depNameTemplate": "ironbank/opensource/prometheus/alertmanager",
         "datasourceTemplate": "docker"
         }
-
     ],
     "separateMajorMinor": false
 }
