@@ -21,7 +21,35 @@
                 "(repo|image)\\S*:\\s*(?<depName>\\S+).*\n\\s+tag:\\s*(?<currentValue>.+)"
             ],
             "datasourceTemplate": "docker"
+        },
+        {
+        "fileMatch": ["^chart/Chart\\.yaml$"],
+        "matchStrings": [
+            "- Prometheus:\\s+(?<currentValue>.+)"
+        ],
+        "registryUrlTemplate": "https://registry1.dso.mil",
+        "depNameTemplate": "ironbank/opensource/prometheus/prometheus",
+        "datasourceTemplate": "docker"
+        },
+                {
+        "fileMatch": ["^chart/Chart\\.yaml$"],
+        "matchStrings": [
+            "- Grafana:\\s+(?<currentValue>.+)"
+        ],
+        "registryUrlTemplate": "https://registry1.dso.mil",
+        "depNameTemplate": "ironbank/opensource/grafana/grafana",
+        "datasourceTemplate": "docker"
+        },
+                {
+        "fileMatch": ["^chart/Chart\\.yaml$"],
+        "matchStrings": [
+            "- Alertmanager:\\s+(?<currentValue>.+)"
+        ],
+        "registryUrlTemplate": "https://registry1.dso.mil",
+        "depNameTemplate": "ironbank/opensource/prometheus/alertmanager",
+        "datasourceTemplate": "docker"
         }
+
     ],
     "separateMajorMinor": false
 }
