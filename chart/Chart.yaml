@@ -21,7 +21,7 @@ name: kube-prometheus-stack
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 30.0.1-bb.4
+version: 30.0.1-bb.5
 appVersion: 0.53.1
 kubeVersion: ">=1.16.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
@@ -36,6 +36,10 @@ annotations:
       url: https://github.com/prometheus-community/helm-charts
     - name: Upstream Project
       url: https://github.com/prometheus-operator/kube-prometheus
+  bigbang.dev/applicationVersions: |
+    - Prometheus: v2.32.1
+    - Grafana: 8.3.3
+    - Alertmanager: v0.23.0
 
 dependencies:
 - name: kube-state-metrics
@@ -54,8 +58,3 @@ dependencies:
 - name: gluon
   version: "0.2.5"
   repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
-annotations:
-  bigbang.dev/applicationVersions: |
-    - Prometheus: v2.32.1
-    - Grafana: 8.3.3
-    - Alertmanager: v0.23.0
