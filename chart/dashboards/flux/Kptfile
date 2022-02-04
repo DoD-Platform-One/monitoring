@@ -1,11 +1,11 @@
 apiVersion: kpt.dev/v1alpha1
 kind: Kptfile
 metadata:
-  name: flux
+  name: dashboards
 upstream:
   type: git
   git:
-    commit: ca660b7ba5ade1b0cf178d2c7a16f460bf294401
+    commit: adf5a5278f164834a29453f47d5281d2616c07e5
     repo: https://github.com/fluxcd/flux2
     directory: /manifests/monitoring/grafana/dashboards
-    ref: v0.9.1
+    ref: v0.24.0
