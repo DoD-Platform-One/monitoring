@@ -5,7 +5,7 @@ metadata:
 upstream:
   type: git
   git:
-    commit: adf5a5278f164834a29453f47d5281d2616c07e5
+    commit: 4b4e6b1be3413358654e74f98bac5339aed28868
     repo: https://github.com/fluxcd/flux2
     directory: /manifests/monitoring/grafana/dashboards
-    ref: v0.24.0
+    ref: v0.26.1
