@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [30.0.1-bb.8]
+### Changed
+- Increase thresholds in the istio-grafana-healthspec cypress test to allow for more charts that show "no data"
+
 ## [30.0.1-bb.7]
 ### Changed
 - Update Flux dashboards to upstream v0.26.1 tag
