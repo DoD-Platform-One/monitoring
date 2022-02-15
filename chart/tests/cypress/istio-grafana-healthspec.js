@@ -3,8 +3,13 @@ if (Cypress.env("check_istio_dashboards")) {
 
   // Using two one dimensional arrays to store the dashboard names and their associated threshold values for maximum 
   // allowed "No data" graphs.
+
+  // original values
+  //const dashnames =    ['Istio Control Plane Dashboard', 'Istio Mesh Dashboard', 'Istio Performance Dashboard', 'Istio Service Dashboard' ,'Istio Workload Dashboard', 'Istio Wasm Extension Dashboard']
+  //const allownodatas = ['1',                             '1',                    '1',                            '2',                      '0',                        '5']
+  // breathing room values (+2)
   const dashnames =    ['Istio Control Plane Dashboard', 'Istio Mesh Dashboard', 'Istio Performance Dashboard', 'Istio Service Dashboard' ,'Istio Workload Dashboard', 'Istio Wasm Extension Dashboard']
-  const allownodatas = ['1',                             '1',                    '1',                            '1',                      '0',                        '5']
+  const allownodatas = ['3',                             '3',                    '3',                            '4',                      '2',                        '8']
 
   Cypress.on('uncaught:exception', (err, runnable) => {
     return false
