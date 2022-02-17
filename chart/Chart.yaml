@@ -37,8 +37,8 @@ annotations:
     - name: Upstream Project
       url: https://github.com/prometheus-operator/kube-prometheus
   bigbang.dev/applicationVersions: |
-    - Prometheus: v2.32.1
-    - Grafana: 8.3.3
+    - Prometheus: v2.33.3
+    - Grafana: 8.3.6
     - Alertmanager: v0.23.0
 
 dependencies:
