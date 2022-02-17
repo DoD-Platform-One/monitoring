@@ -5,7 +5,7 @@ metadata:
 upstream:
   type: git
   git:
-    commit: 97246931f7fbbe9492e5b4e50b92490e24de83d6
+    commit: 7286a1d669cf9e493902f38c82204e159e3bf81d
     repo: https://github.com/prometheus-community/helm-charts
     directory: charts/kube-prometheus-stack
-    ref: kube-prometheus-stack-30.0.1
+    ref: kube-prometheus-stack-32.2.1
