@@ -41,14 +41,12 @@ spec:
         - __address__
         - __meta_kubernetes_pod_annotation_prometheus_io_port
         targetLabel: __address__
-      - action: labelmap
-        regex: __meta_kubernetes_pod_label_(.+)
       - action: replace
         sourceLabels:
         - __meta_kubernetes_namespace
-        targetLabel: kubernetes_namespace
+        targetLabel: namespace
       - action: replace
         sourceLabels:
         - __meta_kubernetes_pod_name
-        targetLabel: kubernetes_pod_name
+        targetLabel: pod
 {{- end -}}

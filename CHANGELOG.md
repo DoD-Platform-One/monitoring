@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [32.2.1-bb.0]
+### Changed
+- Updated Monitoring chart to chart 32.2.1
+- Updated image versions to latest in IB (P: v2.33.3 G: 8.3.6 sidecar: 1.15.5, reloader: v0.54.0 operator: v0.54.0)
+
 ## [30.0.1-bb.8]
 ### Changed
 - Increase thresholds in the istio-grafana-healthspec cypress test to allow for more charts that show "no data"
