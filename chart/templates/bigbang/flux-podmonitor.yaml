@@ -26,7 +26,7 @@ spec:
     # Converted from https://github.com/fluxcd/flux2/blob/main/manifests/monitoring/prometheus/prometheus.yml
     relabelings:
       - action: keep
-        regex: true
+        regex: "true"
         sourceLabels:
         - __meta_kubernetes_pod_annotation_prometheus_io_scrape
       - action: replace
