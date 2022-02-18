@@ -26,29 +26,29 @@ spec:
     # Converted from https://github.com/fluxcd/flux2/blob/main/manifests/monitoring/prometheus/prometheus.yml
     relabelings:
       - action: keep
-        regex: "true"
-        sourceLabels:
+        regex: true
+        source_labels:
         - __meta_kubernetes_pod_annotation_prometheus_io_scrape
       - action: replace
         regex: (.+)
-        sourceLabels:
+        source_labels:
         - __meta_kubernetes_pod_annotation_prometheus_io_path
-        targetLabel: __metrics_path__
+        target_label: __metrics_path__
       - action: replace
         regex: ([^:]+)(?::\d+)?;(\d+)
         replacement: $1:$2
-        sourceLabels:
+        source_labels:
         - __address__
         - __meta_kubernetes_pod_annotation_prometheus_io_port
-        targetLabel: __address__
+        target_label: __address__
       - action: labelmap
         regex: __meta_kubernetes_pod_label_(.+)
       - action: replace
-        sourceLabels:
+        source_labels:
         - __meta_kubernetes_namespace
-        targetLabel: kubernetes_namespace
+        target_label: namespace
       - action: replace
-        sourceLabels:
+        source_labels:
         - __meta_kubernetes_pod_name
-        targetLabel: kubernetes_pod_name
+        target_label: pod
 {{- end -}}
