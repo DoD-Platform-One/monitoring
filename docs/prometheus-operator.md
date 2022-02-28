@@ -2,6 +2,20 @@
 
 The Prometheus Operator provides Kubernetes native deployment and management of Prometheus and related monitoring components. The purpose is to simplify and automate the configuration of a Prometheus based monitoring stack for Kubernetes clusters.
 
+## Motivation
+
+As explained in [Kubernetes Monitoring](kubernetes-monitoring.md), application workloads running as Pods need to be monitored in addition to monitoring the kubernetes cluster. This requires metrics collection from kubelet cAdvisor, node-exporter, kube-state-metrics , metrics-server and application Pods. A mechanism is needed not only to automate the deployment of the Prometheus stack, but also node-exporter, kube-state-metrics and metrics-server, but also dynamically configure Prometheus so that it can scrape the endpoints to collect metrics. This is achieved by deploying the [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) helm chart that deploys the [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) project stack, that consists of Kubernetes manifests, Grafana dashboards, and Prometheus rules to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
+
+Prometheus Operator creates the Prometheus server based on user defined Prometheus CRD and achieves dynamic configuration of Prometheus server to scape application pod metrics endpoints by creating an instance of ServiceMonitor CRD mentioned later in this document and configuring its label selector to match that of the Prometheus CRD.
+
+Prometheus Operator also makes it relatively easier for Prometheus to scale horizontally. Consider the use case where a cluster has a large number of applications deployed, and with each new application, new endpoints are scraped for metrics collection. This causes Prometheus to consume more memory and CPU for processing the metrics and would imply that resource limits and requests would continuously need to be adjusted based on observed usage. Rather than vertically scale Prometheus by allocating more resources, a better strategy is to provision horizontal scaling, and that is achieved by creating another instance of Prometheus CRD and creative use of label selector matching with the ServiceMonitor CRD so that the scraping is distributed between Prometheus servers.
+
+## Overview of kube-prometheus-stack
+
+The picture below summarizes workload resources created by kube-prometheus-stack deployment.
+
+![workload resources](prometheus-operator-workload-resources.jpg)
+
 ## Prometheus Operator Features
 
 ### Kubernetes Custom Resources
@@ -28,6 +42,8 @@ Prometheus Server is the core component which performs monitoring. It scrapes an
 
 ### Custom Resource Definitions
 
+**Prometheus**
+
 The Prometheus custom resource definition (CRD) declaratively defines a desired Prometheus setup to run in a Kubernetes cluster. It provides options to configure replication, persistent storage, and Alertmanagers to which the deployed Prometheus instances send alerts to.
 
 [Refer to operator design document for interaction between the custom resource definitions](https://prometheus-operator.dev/docs/operator/design/)
@@ -47,6 +63,7 @@ Further information can also be found in the Thanos doc.
 The ServiceMonitor custom resource definition (CRD) allows to declaratively define how a dynamic set of services should be monitored. Which services are selected to be monitored with the desired configuration is defined using label selections.  
 
 For Prometheus to monitor any application within Kubernetes an Endpoints object needs to exist. Endpoints objects are essentially lists of IP addresses. Typically an Endpoints object is populated by a Service object. A Service object discovers Pods by a label selector and adds those to the Endpoints object.
+
 
 **Probe**
 
@@ -74,13 +91,9 @@ Prometheus web UI
 
 Prometheus web UI is graphical User Interface that enables users to view graphs, Prometheus configurations and rules, and endpoints.
 
-[TODO: web ui access point]
-
 ### Alert Manager
 
 AlertManager manages alerts received from the Prometheus server then routes them through the appropriate channel.
-
-[TODO: channel configuration setup]
 
 ## Exposing Prometheus and Grafana to users
 
@@ -99,10 +112,6 @@ Thanos is a set of components that can be composed into a highly available, mult
 Before continuing with Prometheus Operator Thanos integration, it is recommended to read more about Thanos in the [documentation](https://thanos.io/tip/thanos/getting-started.md/).
 
 The **Prometheus Operator** operates Prometheus and optionally ThanosRuler components. Other Thanos components, such as the querier and store gateway, must be configured separately. The Thanos system integrates with Prometheus by adding a Thanos sidecar to each Prometheus instance. The Thanos sidecar can be configured directly in the Prometheus CRD. This Sidecar can hook into the Thanos querying system as well as optionally back up your data in object storage.
-
-### Thanos architecture
-
-[TODO]
 
 ## Additional links
 

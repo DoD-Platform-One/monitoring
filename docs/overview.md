@@ -7,12 +7,13 @@ and works to identify potential problems.  It allows critical thresholds to be s
 
 We will also take a look at the following topics:
 
-- [Prometheus Operator](https://repo1.dso.mil/platform-one/big-bang/apps/core/monitoring/-/blob/documentation-standard/docs/prometheus-operator.md)
-- [Visualizations](https://repo1.dso.mil/platform-one/big-bang/apps/core/monitoring/-/blob/documentation-standard/docs/visualization.md)
-- [Security](https://repo1.dso.mil/platform-one/big-bang/apps/core/monitoring/-/blob/documentation-standard/docs/prometheus-security.md)
-- [Node Affinity & Anti-Affinity with Monitoring](https://repo1.dso.mil/platform-one/big-bang/apps/core/monitoring/-/blob/documentation-standard/docs/AFFINITY.md)  
-- [Backup & Recovery](https://repo1.dso.mil/platform-one/big-bang/apps/core/monitoring/-/blob/documentation-standard/docs/prometheus-backup-recovery.md)
-- [Best Practices](https://repo1.dso.mil/platform-one/big-bang/apps/core/monitoring/-/blob/documentation-standard/docs/prometheus-best-practices.md)
+- [Kubernetes Monitoring](kubernetes-monitoring.md)
+- [Prometheus Operator](prometheus-operator.md)
+- [Visualizations](visualization.md)
+- [Security](prometheus-security.md)
+- [Node Affinity & Anti-Affinity with Monitoring](AFFINITY.md)  
+- [Backup & Recovery](prometheus-backup-recovery.md)
+- [Best Practices](prometheus-best-practices.md)
 
 ### Additional links
 
