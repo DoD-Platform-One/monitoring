@@ -28,7 +28,7 @@ persistence:
 
 ## Database
 
-To configure Grafana to utlize a Database:
+To configure Grafana to utilize a Database:
 
 Create a secret within the monitoring namespace named "postgres-creds" with keys for `username` and `password`.
 
