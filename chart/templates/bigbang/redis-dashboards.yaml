@@ -1,11 +1,11 @@
-{{- if .Values.gitlabRunner.enabled }}
+{{- if .Values.redis.enabled -}}
 {{- /* Added manually, can be changed in-place. */ -}}
 {{- $kubeTargetVersion := default .Capabilities.KubeVersion.GitVersion .Values.kubeTargetVersionOverride }}
 {{- if and (semverCompare ">=1.14.0-0" $kubeTargetVersion) (semverCompare "<9.9.9-9" $kubeTargetVersion) .Values.grafana.enabled .Values.grafana.defaultDashboardsEnabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "gitlab-runner-grafana-dashboards" | trunc 63 | trimSuffix "-" }}
+  name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "redis-dashboards" | trunc 63 | trimSuffix "-" }}
   namespace: {{ template "kube-prometheus-stack.namespace" . }}
   annotations:
 {{ toYaml .Values.grafana.sidecar.dashboards.annotations | indent 4 }}
@@ -16,9 +16,11 @@ metadata:
     app: {{ template "kube-prometheus-stack.name" $ }}-grafana
 {{ include "kube-prometheus-stack.labels" $ | indent 4 }}
 data:
-  gitlab-ci-pipelines_rev1.json: |
-    {{ .Files.Get "dashboards/gitlab-runner/gitlab-ci-pipelines_rev1.json"  | nindent 4 }}
-  gitlab-ci-metrics_rev1.json: |
-    {{ .Files.Get "dashboards/gitlab-runner/gitlab-runner-metrics_rev1.json"  | nindent 4 }}
+  redis-general-dashbooard.json: |
+    {{ .Files.Get "dashboards/redis/redis-general-dashboard.json" | nindent 4 }}
+  redis-streaming-dashbooard.json: |
+    {{ .Files.Get "dashboards/redis/redis-streaming-dashboard.json" | nindent 4 }}    
+  redis-prometheus-dashbooard.json: |
+    {{ .Files.Get "dashboards/redis/redis-prometheus-dashboard.json" | nindent 4 }}    
 {{- end }}
 {{- end }}

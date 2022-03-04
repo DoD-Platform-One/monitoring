@@ -77,6 +77,11 @@ anchore:
   # Toggle anchore grafana dashboard creation
   enabled: false
   
+redis:
+  # Toggle redis grafana dashboard creation -- requires the redis-datasource datasource
+  # see the grafana.plugins value below 
+  enabled: false   
+
 loki:
   # Toggle loki grafana dashboard creation -- requires the grafana-piechart-panel plugin
   # see the grafana.plugins value below 
@@ -753,6 +758,8 @@ grafana:
   #  - grafana-piechart-panel
   #    # grafana-polystat-panel is required for the Gitlab CI pipelines dashboard
   #  - grafana-polystat-panel
+  #    # redis-datasource is required for the Redis Dasboards
+  #  - redis-datasource
 
   resources: 
     limits:
