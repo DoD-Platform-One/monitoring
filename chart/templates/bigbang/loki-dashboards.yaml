@@ -17,6 +17,6 @@ metadata:
 {{ include "kube-prometheus-stack.labels" $ | indent 4 }}
 data:
   grafana-loki-general.json: |
-    {{ .Files.Get "dashboards/loki/logging-dashboard-via-loki.json" | nindent 4 }}
+    {{ .Files.Get "dashboards/loki/loki-dashboard-quick-search.json" | nindent 4 }}
 {{- end }}
 {{- end }}
