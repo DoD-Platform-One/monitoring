@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [32.2.1-bb.1]
+### Added
+- Added initial set of Redis dashboards
+- Added support for the Redis datasource
+
+### Removed
+- Removed gitlab dashboards to reduce overall helm chart size -- they now live in the gitlab package
+
 ## [32.2.1-bb.0]
 ### Changed
 - Updated Monitoring chart to chart 32.2.1
