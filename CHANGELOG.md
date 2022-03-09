@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Updated Monitoring chart to chart 32.2.1
 - Updated image versions to latest in IB (P: v2.33.4 G: 8.4.2 sidecar: 1.15.7, reloader: v0.54.1 operator: v0.54.1)
 
+## [32.2.1-bb.2]
+### Changed
+- Removed "Universal and flexible dashboard for logging" dashboard
+- Added "Loki Dashboard quick search"
+
 ## [32.2.1-bb.1]
 ### Added
 - Added initial set of Redis dashboards
