@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 32.2.1-bb.1](https://img.shields.io/badge/Version-32.2.1--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.54.0](https://img.shields.io/badge/AppVersion-0.54.0-informational?style=flat-square)
+![Version: 33.2.0-bb.0](https://img.shields.io/badge/Version-33.2.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.54.1](https://img.shields.io/badge/AppVersion-0.54.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -241,14 +241,14 @@ helm install kube-prometheus-stack chart/
 | grafana.enabled | bool | `true` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/opensource/grafana/grafana"` |  |
-| grafana.image.tag | string | `"8.3.6"` |  |
+| grafana.image.tag | string | `"8.4.2"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
 | grafana.resources.limits.memory | string | `"256Mi"` |  |
 | grafana.resources.requests.cpu | string | `"100m"` |  |
 | grafana.resources.requests.memory | string | `"256Mi"` |  |
 | grafana.testFramework.image | string | `"registry1.dso.mil/ironbank/opensource/bats/bats"` |  |
-| grafana.testFramework.tag | string | `"1.5.0"` |  |
+| grafana.testFramework.tag | string | `"1.6.0"` |  |
 | grafana.testFramework.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.testFramework.imagePullPolicy | string | `"IfNotPresent"` |  |
 | grafana.testFramework.securityContext | object | `{}` |  |
@@ -275,7 +275,7 @@ helm install kube-prometheus-stack chart/
 | grafana.ingress.path | string | `"/"` |  |
 | grafana.ingress.tls | list | `[]` |  |
 | grafana.sidecar.image.repository | string | `"registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar"` |  |
-| grafana.sidecar.image.tag | string | `"1.15.5"` |  |
+| grafana.sidecar.image.tag | string | `"1.15.7"` |  |
 | grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
 | grafana.sidecar.resources.requests.cpu | string | `"100m"` |  |
@@ -421,7 +421,7 @@ helm install kube-prometheus-stack chart/
 | kubeStateMetrics.serviceMonitor.selfMonitor.enabled | bool | `false` |  |
 | kube-state-metrics.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | kube-state-metrics.image.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics"` |  |
-| kube-state-metrics.image.tag | string | `"v2.3.0"` |  |
+| kube-state-metrics.image.tag | string | `"v2.4.1"` |  |
 | kube-state-metrics.resources.limits.cpu | string | `"100m"` |  |
 | kube-state-metrics.resources.limits.memory | string | `"128Mi"` |  |
 | kube-state-metrics.resources.requests.cpu | string | `"100m"` |  |
@@ -455,8 +455,8 @@ helm install kube-prometheus-stack chart/
 | prometheus-node-exporter.hostPID | bool | `false` |  |
 | prometheus-node-exporter.namespaceOverride | string | `""` |  |
 | prometheus-node-exporter.podLabels.jobLabel | string | `"node-exporter"` |  |
-| prometheus-node-exporter.extraArgs[0] | string | `"--collector.filesystem.mount-points-exclude=^/(dev\|proc\|sys\|var/lib/docker/.+\|var/lib/kubelet/.+)($\|/)"` |  |
-| prometheus-node-exporter.extraArgs[1] | string | `"--collector.filesystem.fs-types-exclude=^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$"` |  |
+| prometheus-node-exporter.extraArgs[0] | string | `"--collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)"` |  |
+| prometheus-node-exporter.extraArgs[1] | string | `"--collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$"` |  |
 | prometheus-node-exporter.service.portName | string | `"http-metrics"` |  |
 | prometheus-node-exporter.prometheus.monitor.enabled | bool | `true` |  |
 | prometheus-node-exporter.prometheus.monitor.jobLabel | string | `"jobLabel"` |  |
@@ -543,19 +543,21 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.securityContext.runAsGroup | int | `65534` |  |
 | prometheusOperator.securityContext.runAsNonRoot | bool | `true` |  |
 | prometheusOperator.securityContext.runAsUser | int | `65534` |  |
+| prometheusOperator.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
+| prometheusOperator.containerSecurityContext.readOnlyRootFilesystem | bool | `true` |  |
 | prometheusOperator.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.54.0"` |  |
+| prometheusOperator.image.tag | string | `"v0.54.1"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.54.0"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.54.1"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.resources.requests.cpu | string | `"100m"` |  |
 | prometheusOperator.prometheusConfigReloader.resources.requests.memory | string | `"50Mi"` |  |
 | prometheusOperator.prometheusConfigReloader.resources.limits.cpu | string | `"100m"` |  |
 | prometheusOperator.prometheusConfigReloader.resources.limits.memory | string | `"50Mi"` |  |
 | prometheusOperator.thanosImage.repository | string | `"registry1.dso.mil/ironbank/opensource/thanos/thanos"` |  |
-| prometheusOperator.thanosImage.tag | string | `"v0.24.0"` |  |
+| prometheusOperator.thanosImage.tag | string | `"v0.25.0"` |  |
 | prometheusOperator.thanosImage.sha | string | `""` |  |
 | prometheusOperator.secretFieldSelector | string | `""` |  |
 | prometheusOperator.kubectlImage.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes-1.20/kubectl-1.20"` |  |
@@ -673,7 +675,7 @@ helm install kube-prometheus-stack chart/
 | prometheus.prometheusSpec.web | object | `{}` |  |
 | prometheus.prometheusSpec.enableFeatures | list | `[]` |  |
 | prometheus.prometheusSpec.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/prometheus"` |  |
-| prometheus.prometheusSpec.image.tag | string | `"v2.33.3"` |  |
+| prometheus.prometheusSpec.image.tag | string | `"v2.33.4"` |  |
 | prometheus.prometheusSpec.image.sha | string | `""` |  |
 | prometheus.prometheusSpec.tolerations | list | `[]` |  |
 | prometheus.prometheusSpec.topologySpreadConstraints | list | `[]` |  |
