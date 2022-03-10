@@ -29,7 +29,7 @@ Kubernetes exposes metrics in Prometheus format using cAdvisor that runs as an a
 To get some insights into what metrics are available, let's consider a simple cluster with a master node and a single worker node.
 
 ```
-controlplane $ kubectl get nodes
+$ kubectl get nodes
 NAME           STATUS   ROLES    AGE   VERSION
 controlplane   Ready    master   65m   v1.18.0
 node01         Ready    <none>   64m   v1.18.0
@@ -37,7 +37,7 @@ node01         Ready    <none>   64m   v1.18.0
 The metrics for the worker node can be queried by making a request to the Kube API Server as follows. Note that only a subset of the result is shown here. For this given instant in time, it took 5s or less for 12 pods to get into a running state, the remaining 4 pods took sometime between 5s to 10s to get into a running state.
 
 ```
-controlplane $ kubectl get --raw /api/v1/nodes/node01/proxy/metrics 
+$ kubectl get --raw /api/v1/nodes/node01/proxy/metrics 
 # HELP kubelet_pod_start_duration_seconds [ALPHA] Duration in seconds for a single pod to go from pending to running.
 # TYPE kubelet_pod_start_duration_seconds histogram
 kubelet_pod_start_duration_seconds_bucket{le="1"} 8
@@ -51,7 +51,7 @@ kubelet_pod_start_duration_seconds_count 16
 Aggregated cluster metrics are available at /metrics endpoint. Note that only a subset of the result is shown here. Looking at the kubernetes config database etcd, there are 2 nodes in the cluster with a total of 15 pods
 
 ```
-controlplane $ kubectl get --raw /metrics 
+$ kubectl get --raw /metrics 
 # HELP etcd_object_counts [ALPHA] Number of stored objects at the time of last check split by kind.
 # TYPE etcd_object_counts gauge
 etcd_object_counts{resource="apiservices.apiregistration.k8s.io"} 31
@@ -123,10 +123,10 @@ Metrics Server collects resource metrics from Kubelets and exposes them in Kuber
 ☞ Metrics Server is used exclusively for the implementation of [HPA](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)/[VPA](https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler#readme) and kubectl top command and is not designed to be used for collection of metrics by monitoring solutions like Prometheus. 
 ☞ Metrics Server may not be available in a k8s cluster out of the box and in such a case needs to be explicitly deployed within the kube-system namespace. 
 
-The metrics for pod cpu and memory can be queried by making a request to the Kube API Server as follows.
+The metrics for pod cpu and memory can be queried by making a request to the Kube API Server as follows by substituting pod-name with the name of one of the pods running in kube-system namespace:
 
 ```
-controlplane $ kubectl get --raw /apis/metrics.k8s.io/v1beta1/namespaces/kube-system/pods/etcd-controlplane | jq
+$ kubectl get --raw /apis/metrics.k8s.io/v1beta1/namespaces/kube-system/pods/<pod-name> | jq
 {
   "kind": "PodMetrics",
   "apiVersion": "metrics.k8s.io/v1beta1",
@@ -148,10 +148,10 @@ controlplane $ kubectl get --raw /apis/metrics.k8s.io/v1beta1/namespaces/kube-sy
 }
 ```
 
-Likewise, node cpu and memory usage can be queried as follows:
+Likewise, node cpu and memory usage can be queried as follows by substituting node-name with name of one of the nodes in the cluster:
 
 ```
-controlplane $ kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes/node01 | jq
+$ kubectl get --raw /apis/metrics.k8s.io/v1beta1/nodes/<node-name> | jq
 {
   "kind": "NodeMetrics",
   "apiVersion": "metrics.k8s.io/v1beta1",
@@ -176,22 +176,22 @@ Git Repo: https://github.com/kubernetes/kube-state-metrics
 The kube-state-metrics is an addon to ​​generate and expose cluster-level metrics. This service interfaces with Kube API Server to keep a full in-memory representation of all Kubernetes objects of a given cluster and provides /metrics endpoint to expose metrics for Kubernetes objects in prometheus metrics format.
 
 ```
-controlplane $ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
  
-controlplane $ helm install kube-state-metrics prometheus-community/kube-state-metrics
+$ helm install kube-state-metrics prometheus-community/kube-state-metrics
  
-controlplane $ kubectl get service
+$ kubectl get service
  
 NAME                      TYPE         CLUSTER-IP       EXTERNAL-IP   PORT(S)    kube-state-metrics   ClusterIP   10.103.231.129    <none>              8080/TCP   
 kubernetes               ClusterIP   10.96.0.1              <none>              443/TCP    
  
-controlplane $ curl http://10.103.231.129:8080/metrics | grep kube_pod_info
+$ curl http://10.103.231.129:8080/metrics | grep kube_pod_info
  
 # HELP kube_pod_info Information about pod.
 # TYPE kube_pod_info gauge
 kube_pod_info{namespace="kube-system",pod="kube-proxy-zrdvq",uid="3d50f3a8-899f-4ff6-8ea2-2523daa3da8e",host_ip="172.17.0.10",pod_ip="172.17.0.10",node="controlplane",created_by_kind="DaemonSet",created_by_name="kube-proxy",priority_class="system-node-critical",host_network="true"} 1
  
-controlplane $ curl http://10.103.231.129:8080/metrics | grep kube_deployment_created
+$ curl http://10.103.231.129:8080/metrics | grep kube_deployment_created
  
 # HELP kube_deployment_created Unix creation timestamp
 # TYPE kube_deployment_created gauge
