@@ -22,16 +22,18 @@ Monitoring is a modified/customized version of an upstream chart. The below deta
 
 10. Perform the steps below for manual testing. CI provides a good set of basic smoke tests but it is beneficial to run some additional checks.
 
-# Manual Testing for Updates
+## Manual Testing for Updates
 
 NOTE: For these testing steps it is good to do them on both a clean install and an upgrade. For clean install, point monitoring to your branch. For an upgrade do an install with monitoring pointing to the latest tag, then perform a helm upgrade with monitoring pointing to your branch.
 
 You will want to install with:
+
 - Monitoring, Jaeger, Kiali, and Authservice packages enabled
 - Istio enabled
 - [Dev SSO values](https://repo1.dso.mil/platform-one/big-bang/bigbang/-/blob/master/chart/dev-sso-values.yaml) for Kiali, Monitoring, and Jaeger
 
 Testing Steps:
+
 - Login with SSO to Prometheus (if you are not prompted for an SSO login, this could indicate a problem with the authservice connection), check the Status -> Targets page and validate that all targets show as up
 - Login with SSO to Alertmanager and validate that alerts are firing (if the main page shows no alert groups check the Prometheus logs and see if there are errors with that connection)
 - Login with SSO to Grafana and take a look at some dashboards, validate that data is loaded
