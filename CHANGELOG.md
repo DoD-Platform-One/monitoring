@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Updated Monitoring chart to chart 32.2.1
 - Updated image versions to latest in IB (P: v2.33.4 G: 8.4.2 sidecar: 1.15.7, reloader: v0.54.1 operator: v0.54.1)
 
+## [32.2.1-bb.3]
+### Changed
+- Added Prometheus Monitoring Document 
+- Updated Prometheus Operator document
+
+
 ## [32.2.1-bb.2]
 ### Changed
 - Removed "Universal and flexible dashboard for logging" dashboard
@@ -121,7 +127,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Istio based Conditional for the webhook jobs
 ### Added
 - istio.injection value for passthrough from BigBang
-
+  
 ## [14.0.0-bb.13]
 ### Changed
 - Remove prometheus sidecar config
@@ -292,6 +298,3 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Prometheus+Alertmanager VirtualServices pointing directly to the UIs will be skipped and not created when "sso.enabled: true"
 
-## [14.0.0-bb.14]
-### Changed
-- Commented out quay.io/prometheus/node-exporter so that it uses the IB image registry1.dso.mil/ironbank/opensource/prometheus/node-exporter instead.
