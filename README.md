@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 33.2.0-bb.0](https://img.shields.io/badge/Version-33.2.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.54.1](https://img.shields.io/badge/AppVersion-0.54.1-informational?style=flat-square)
+![Version: 33.2.0-bb.1](https://img.shields.io/badge/Version-33.2.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.54.1](https://img.shields.io/badge/AppVersion-0.54.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -85,6 +85,7 @@ helm install kube-prometheus-stack chart/
 | anchore.enabled | bool | `false` |  |
 | redis.enabled | bool | `false` |  |
 | loki.enabled | bool | `false` |  |
+| vault.enabled | bool | `false` |  |
 | cleanUpgrade.enabled | bool | `true` |  |
 | cleanUpgrade.image | string | `"registry1.dso.mil/ironbank/big-bang/base:1.0.0"` |  |
 | cleanUpgrade.resources.requests.memory | string | `"256Mi"` |  |
