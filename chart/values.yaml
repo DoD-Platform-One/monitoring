@@ -85,6 +85,10 @@ redis:
 loki:
   # Toggle loki grafana dashboard creation -- requires the grafana-piechart-panel plugin
   # see the grafana.plugins value below 
+  enabled: false
+
+vault:
+  # Toggle creating the vault resources
   enabled: false  
 
 # Deletes previous kube-state-metrics deployment/statefulset before attempting an upgrade

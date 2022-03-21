@@ -1,0 +1,24 @@
+{{- if .Values.vault.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "kube-prometheus-stack.fullname" . }}-vault
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+  labels:
+    app: {{ template "kube-prometheus-stack.name" . }}-vault
+{{ include "kube-prometheus-stack.labels" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      prometheus-metrics: "true"
+  namespaceSelector:
+    matchNames:
+      - "vault"
+  endpoints:
+  - port: http
+    path: /v1/sys/metrics
+    bearerTokenFile: /vault/secrets/token  
+    scheme: http    
+    params:
+      format: ['prometheus']  
+{{- end }}
