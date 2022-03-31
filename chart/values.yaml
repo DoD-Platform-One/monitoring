@@ -752,7 +752,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
-    tag: 8.4.2
+    tag: 8.4.4
     pullSecrets:
     - private-registry
 
@@ -867,7 +867,7 @@ grafana:
     # use IronBank image
     image:
       repository: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar
-      tag: 1.15.7
+      tag: 1.15.9
 
     resources:
       limits:
@@ -1570,7 +1570,7 @@ kube-state-metrics:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics
-    tag: v2.4.1
+    tag: v2.4.2
 
   resources:
     limits:
@@ -2002,7 +2002,7 @@ prometheusOperator:
   ##
   image:
     repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.54.1
+    tag: v0.55.1
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2019,7 +2019,7 @@ prometheusOperator:
   prometheusConfigReloader:
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.54.1
+      tag: v0.55.0
       sha: ""
 
     # resource config for prometheusConfigReloader
@@ -2035,7 +2035,7 @@ prometheusOperator:
   ##
   thanosImage:
     repository: registry1.dso.mil/ironbank/opensource/thanos/thanos
-    tag: v0.25.0
+    tag: v0.25.2
     sha: ""
 
   ## Set a Field Selector to filter watched secrets
@@ -2462,7 +2462,7 @@ prometheus:
     ##
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus/prometheus
-      tag: v2.33.4
+      tag: v2.34.0
       sha: ""
 
     ## Tolerations for use with node taints
