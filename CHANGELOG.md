@@ -14,6 +14,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - prometheus-config-reloader -> `v0.55.0`
   - prometheus-operator -> `v0.55.1`
   - thanos -> `v0.25.2`
+  
+## [33.2.0-bb.3]
+### Added
+- Added Tempo Zipkin Egress Policy
 
 ## [33.2.0-bb.2]
 ### Removed
