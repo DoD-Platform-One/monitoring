@@ -204,6 +204,10 @@ additionalPrometheusRulesMap: {}
 global:
   rbac:
     create: true
+
+    ## Create ClusterRoles that extend the existing view, edit and admin ClusterRoles to interact with prometheus-operator CRDs
+    ## Ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#aggregated-clusterroles
+    createAggregateClusterRoles: false
     pspEnabled: false
     pspAnnotations: {}
       ## Specify pod annotations
@@ -577,6 +581,11 @@ alertmanager:
     #   matchLabels:
     #     alertmanagerconfig: enabled
 
+    ## AlermanagerConfig to be used as top level configuration
+    ##
+    alertmanagerConfiguration: {}
+    # - name: global-alertmanager-Configuration
+
     ## Define Log Format
     # Use logfmt (default) or json logging
     logFormat: logfmt
@@ -752,7 +761,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
-    tag: 8.4.2
+    tag: 8.4.4
     pullSecrets:
     - private-registry
 
@@ -834,6 +843,11 @@ grafana:
     ##
     enabled: false
 
+    ## IngressClassName for Grafana Ingress.
+    ## Should be provided if Ingress is enable.
+    ##
+    # ingressClassName: nginx
+
     ## Annotations for Grafana Ingress
     ##
     annotations: {}
@@ -867,7 +881,7 @@ grafana:
     # use IronBank image
     image:
       repository: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar
-      tag: 1.15.7
+      tag: 1.15.9
 
     resources:
       limits:
@@ -895,6 +909,8 @@ grafana:
     datasources:
       enabled: true
       defaultDatasourceEnabled: true
+
+      uid: prometheus
 
       ## URL of prometheus datasource
       ##
@@ -1570,7 +1586,7 @@ kube-state-metrics:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics
-    tag: v2.4.1
+    tag: v2.4.2
 
   resources:
     limits:
@@ -2002,7 +2018,7 @@ prometheusOperator:
   ##
   image:
     repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.54.1
+    tag: v0.55.1
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2019,23 +2035,23 @@ prometheusOperator:
   prometheusConfigReloader:
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.54.1
+      tag: v0.55.0
       sha: ""
 
     # resource config for prometheusConfigReloader
     resources:
       requests:
-        cpu: 100m
+        cpu: 200m
         memory: 50Mi
       limits:
-        cpu: 100m
+        cpu: 200m
         memory: 50Mi
 
   ## Thanos side-car image when configured
   ##
   thanosImage:
     repository: registry1.dso.mil/ironbank/opensource/thanos/thanos
-    tag: v0.25.0
+    tag: v0.25.2
     sha: ""
 
   ## Set a Field Selector to filter watched secrets
@@ -2462,7 +2478,7 @@ prometheus:
     ##
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus/prometheus
-      tag: v2.33.4
+      tag: v2.34.0
       sha: ""
 
     ## Tolerations for use with node taints
@@ -2778,6 +2794,7 @@ prometheus:
     ## appended, the user is responsible to make sure it is valid. Note that using this feature may expose the possibility
     ## to break upgrades of Prometheus. It is advised to review Prometheus release notes to ensure that no incompatible
     ## scrape configs are going to break Prometheus after the upgrade.
+    ## AdditionalScrapeConfigs can be defined as a list or as a templated string.
     ##
     ## The scrape configuration example below will find master nodes, provided they have the name .*mst.*, relabel the
     ## port to 2379 and allow etcd scraping provided it is running on all Kubernetes master nodes
@@ -2810,6 +2827,20 @@ prometheus:
     #   metric_relabel_configs:
     #   - regex: (kubernetes_io_hostname|failure_domain_beta_kubernetes_io_region|beta_kubernetes_io_os|beta_kubernetes_io_arch|beta_kubernetes_io_instance_type|failure_domain_beta_kubernetes_io_zone)
     #     action: labeldrop
+    #
+    ## If scrape config contains a repetitive section, you may want to use a template.
+    ## In the following example, you can see how to define `gce_sd_configs` for multiple zones
+    # additionalScrapeConfigs: |
+    #  - job_name: "node-exporter"
+    #    gce_sd_configs:
+    #    {{range $zone := .Values.gcp_zones}}
+    #    - project: "project1"
+    #      zone: "{{$zone}}"
+    #      port: 9100
+    #    {{end}}
+    #    relabel_configs:
+    #    ...
+
 
     ## If additional scrape configurations are already deployed in a single secret file you can use this section.
     ## Expected values are the secret name and key

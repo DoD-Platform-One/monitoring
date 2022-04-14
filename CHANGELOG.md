@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [34.8.0-bb.0]
+### Changed
+- Updated Monitoring chart version to `34.8.0`
+- Updated image versions to latest in IB:
+  - prometheus -> `v2.34.0`
+  - grafana -> `8.4.4`
+  - k8s-sidecar -> `1.15.9`
+  - kube-state-metrics -> `v2.4.2`
+  - prometheus-config-reloader -> `v0.55.0`
+  - prometheus-operator -> `v0.55.1`
+  - thanos -> `v0.25.2`
+  
 ## [33.2.0-bb.3]
 ### Added
 - Added Tempo Zipkin Egress Policy
