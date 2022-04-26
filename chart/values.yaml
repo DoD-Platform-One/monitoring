@@ -96,7 +96,6 @@ vault:
 # REQUIRED for Chart v23.x upgrade
 cleanUpgrade:
   enabled: true
-  # image: "registry1.dso.mil/ironbank/big-bang/base:1.0.0"
   image:
     repository: registry1.dso.mil/ironbank/big-bang/base
     tag: 1.0.0
