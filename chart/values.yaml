@@ -98,7 +98,7 @@ cleanUpgrade:
   enabled: true
   image:
     repository: registry1.dso.mil/ironbank/big-bang/base
-    tag: 1.0.0
+    tag: 1.1.0
   resources:
     requests:
       memory: 256Mi
