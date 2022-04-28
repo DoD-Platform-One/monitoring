@@ -207,8 +207,8 @@
       {
         "current": {
           "selected": false,
-          "text": "level=warn",
-          "value": "level=warn"
+          "text": "",
+          "value": ""
         },
         "hide": 0,
         "label": null,
@@ -216,11 +216,11 @@
         "options": [
           {
             "selected": true,
-            "text": "level=warn",
-            "value": "level=warn"
+            "text": "",
+            "value": ""
           }
         ],
-        "query": "level=warn",
+        "query": "",
         "skipUrlSync": false,
         "type": "textbox"
       }
