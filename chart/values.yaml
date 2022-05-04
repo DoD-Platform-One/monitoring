@@ -98,7 +98,7 @@ cleanUpgrade:
   enabled: true
   image:
     repository: registry1.dso.mil/ironbank/big-bang/base
-    tag: 1.1.0
+    tag: 1.2.0
   resources:
     requests:
       memory: 256Mi
@@ -524,7 +524,7 @@ alertmanager:
     # use IronBank image
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager
-      tag: v0.23.0
+      tag: v0.24.0
       sha: ""
 
     ## If true then the user will be responsible to provide a secret with alertmanager configuration
@@ -763,7 +763,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
-    tag: 8.4.4
+    tag: 8.5.1
     pullSecrets:
     - private-registry
 
@@ -883,7 +883,7 @@ grafana:
     # use IronBank image
     image:
       repository: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar
-      tag: 1.15.9
+      tag: 1.17.0
 
     resources:
       limits:
@@ -948,7 +948,7 @@ grafana:
 
   downloadDashboardsImage:
     repository: registry1.dso.mil/ironbank/big-bang/base #curlimages/curl
-    tag: 1.0.0
+    tag: 1.2.0
   
   ## Resource settings for above DownloadDashboards container
   downloadDashboards:
@@ -1789,7 +1789,7 @@ prometheusOperator:
     cleanupProxy:
       image:
         repository: registry1.dso.mil/ironbank/big-bang/base
-        tag: 1.0.0
+        tag: 1.2.0
         pullPolicy: IfNotPresent
       resources:
         limits:

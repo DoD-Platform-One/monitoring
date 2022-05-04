@@ -39,9 +39,9 @@ annotations:
     - name: Upstream Project
       url: https://github.com/prometheus-operator/kube-prometheus
   bigbang.dev/applicationVersions: |
-    - Prometheus: v2.34.0
-    - Grafana: 8.4.4
-    - Alertmanager: v0.23.0
+    - Prometheus: v2.35.0
+    - Grafana: 8.5.1
+    - Alertmanager: v0.24.0
 
 dependencies:
 - name: kube-state-metrics
