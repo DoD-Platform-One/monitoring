@@ -167,15 +167,16 @@ sso:
     host: login.dso.mil
     realm: baby-yoda
   certificate_authority: ''
+  # JWKS value is different for each Keycloak instance, will need to be retrieved after deployment. Can be found with: $ curl https://$KEYCLOAK_URL$/auth/realms/$KEYCLOAK_REALM$ /protocol/openid-connect/certs
   jwks: ""
 
 monitoring:
   sso:
     enabled: true
-    kiali:
+    prometheus:
       client_id: ""
       client_secret: ""
-    jaeger:
+    alertmanager:
       client_id: ""
       client_secret: ""
 
