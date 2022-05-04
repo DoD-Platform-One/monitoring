@@ -5,7 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ---
 ## [35.0.2-bb.0]
 ### Changed
-- Updated Monitoring chart version to `34.8.0`
+- Updated Monitoring chart version to `35.0.2`
+- Updated image versions to latest in IB:
+  - prometheus -> `v2.35.0`
+  - grafana -> `v8.5.1`
+  - base -> `1.2.0`
+  - alertmanager -> `v0.24.0`
+  - k8s-sidecar -> `v1.17.0`
+  - prometheus-config-reloader -> `v0.56.0`
+  - prometheus-operator -> `v0.56.0`
 
 ## [34.8.0-bb.2]
 ### Changed
