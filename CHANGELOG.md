@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ---
 ## [34.8.0-bb.2]
 ### Changed
+- Updated Monitoring chart version to `34.8.0`
+
+## [34.8.0-bb.2]
+### Changed
 - Removed default search terms on Loki dashboard
 
 ## [34.8.0-bb.1]
