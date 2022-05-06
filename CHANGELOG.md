@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - k8s-sidecar -> `v1.17.0`
   - prometheus-config-reloader -> `v0.56.0`
   - prometheus-operator -> `v0.56.0`
+- Fixed OSCAL formatting
 
 ## [34.8.0-bb.2]
 ### Changed
