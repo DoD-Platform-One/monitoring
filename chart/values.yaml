@@ -763,7 +763,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
-    tag: 8.5.1
+    tag: 8.5.2
     pullSecrets:
     - private-registry
 
@@ -2053,7 +2053,7 @@ prometheusOperator:
   ##
   thanosImage:
     repository: registry1.dso.mil/ironbank/opensource/thanos/thanos
-    tag: v0.25.2
+    tag: v0.26.0
     sha: ""
 
   ## Set a Field Selector to filter watched secrets

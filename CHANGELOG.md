@@ -3,12 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
-## [35.0.2-bb.0]
+## [35.0.3-bb.0]
 ### Changed
-- Updated Monitoring chart version to `35.0.2`
+- Updated Monitoring chart version to `35.0.3`
 - Updated image versions to latest in IB:
   - prometheus -> `v2.35.0`
-  - grafana -> `v8.5.1`
+  - grafana -> `v8.5.2`
   - base -> `1.2.0`
   - alertmanager -> `v0.24.0`
   - k8s-sidecar -> `v1.17.0`
@@ -34,7 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
   - kube-state-metrics -> `v2.4.2`
   - prometheus-config-reloader -> `v0.55.0`
   - prometheus-operator -> `v0.55.1`
-  - thanos -> `v0.25.2`
+  - thanos -> `v0.26.0`
   
 ## [33.2.0-bb.3]
 ### Added
