@@ -1580,6 +1580,23 @@ kubeStateMetrics:
     interval: ""
     selfMonitor:
       enabled: false
+
+### job-createSecret configuration for security - initially created for setting non-root
+##
+job-createSecret:
+  securityContext:
+    runAsUser: 7711
+    runAsGroup: 7711
+    fsGroup: 7711
+
+### metrics-clean-upgrade configuration for security - initially created for setting non-root; referenced metrics-upgrade-job
+##
+metrics-clean-upgrade:
+  securityContext:
+    runAsUser: 7711
+    runAsGroup: 7711
+    fsGroup: 7711
+
 ## Configuration for kube-state-metrics subchart
 ##
 kube-state-metrics:
