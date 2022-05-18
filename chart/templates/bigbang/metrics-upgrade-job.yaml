@@ -121,8 +121,8 @@ spec:
                 echo \"Sidecar available. Terminating...\";
                 x=$(echo $?); curl -fsI -X POST http://localhost:15020/quitquitquit && exit $x
               {{- end }}
+          securityContext: {{- toYaml .Values.metricsCleanUpgrade.securityContext | nindent 12 }}
           {{- if .Values.cleanUpgrade.resources }}
-{{ toYaml .Values.metrics-clean-upgrade | indent 10 }}
           resources: {{- toYaml .Values.cleanUpgrade.resources | nindent 12 }}
           {{- end }}
 {{- end }}
