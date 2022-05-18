@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 35.0.3-bb.0](https://img.shields.io/badge/Version-35.0.3--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.56.0](https://img.shields.io/badge/AppVersion-0.56.0-informational?style=flat-square)
+![Version: 35.0.3-bb.1](https://img.shields.io/badge/Version-35.0.3--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.56.0](https://img.shields.io/badge/AppVersion-0.56.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -424,6 +424,12 @@ helm install kube-prometheus-stack chart/
 | kubeStateMetrics.enabled | bool | `true` |  |
 | kubeStateMetrics.serviceMonitor.interval | string | `""` |  |
 | kubeStateMetrics.serviceMonitor.selfMonitor.enabled | bool | `false` |  |
+| jobCreateSecret.securityContext.runAsUser | int | `7711` |  |
+| jobCreateSecret.securityContext.runAsGroup | int | `7711` |  |
+| jobCreateSecret.securityContext.runAsNonRoot | bool | `true` |  |
+| metricsCleanUpgrade.securityContext.runAsUser | int | `7711` |  |
+| metricsCleanUpgrade.securityContext.runAsGroup | int | `7711` |  |
+| metricsCleanUpgrade.securityContext.runAsNonRoot | bool | `true` |  |
 | kube-state-metrics.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | kube-state-metrics.image.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics"` |  |
 | kube-state-metrics.image.tag | string | `"v2.4.2"` |  |
@@ -488,7 +494,8 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.admissionWebhooks.patch.resources.requests.cpu | string | `"50m"` |  |
 | prometheusOperator.admissionWebhooks.patch.resources.requests.memory | string | `"50Mi"` |  |
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsNonRoot | bool | `true` |  |
-| prometheusOperator.admissionWebhooks.patch.securityContext.runAsUser | int | `65532` |  |
+| prometheusOperator.admissionWebhooks.patch.securityContext.runAsUser | int | `7711` |  |
+| prometheusOperator.admissionWebhooks.patch.securityContext.runAsGroup | int | `7811` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.tag | string | `"1.2.0"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.pullPolicy | string | `"IfNotPresent"` |  |
