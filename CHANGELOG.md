@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [35.0.3-bb.1]
+### Changed
+- Changed job-createSecret and metrics-upgrade-job containers and jobs to run as nonroot
+
 ## [35.0.3-bb.0]
 ### Changed
 - Updated Monitoring chart version to `35.0.3`
