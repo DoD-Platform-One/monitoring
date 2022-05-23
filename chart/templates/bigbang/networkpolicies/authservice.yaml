@@ -1,4 +1,5 @@
-{{ if .Values.networkPolicies.enabled }}
+{{ if and .Values.istio.enabled .Values.networkPolicies.enabled .Values.sso.enabled }}
+{{- if (eq .Values.istio.injection "disabled") -}}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -7,7 +8,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: alertmanager
+      app.kubernetes.io/name: alertmanager
   policyTypes:
   - Ingress
   ingress:
@@ -42,4 +43,27 @@ spec:
           app.kubernetes.io/name: haproxy
     ports:
       - port: 9090
+{{- else }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-authservice-alertmanager
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: alertmanager
+  policyTypes:
+  - Egress
+  egress:
+  - ports:
+    - port: 10003
+    to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: authservice
+      namespaceSelector:
+        matchLabels:
+          app.kubernetes.io/name: authservice
+{{- end }}
 {{- end }}

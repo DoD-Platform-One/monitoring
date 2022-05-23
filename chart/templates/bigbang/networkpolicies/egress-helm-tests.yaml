@@ -1,18 +1,19 @@
-{{- if .Values.networkPolicies.enabled }}
+{{- if and .Values.networkPolicies.enabled .Values.bbtests.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-all-egress
+  name: allow-monitoring-test-egress
   namespace: {{ .Release.Namespace }}
 spec:
-  podSelector: {}
-  policyTypes:
-  - Egress
+  podSelector:
+    matchLabels:
+      helm-test: enabled
   egress:
   - to:
     - ipBlock:
         cidr: 0.0.0.0/0
-        # ONLY Block requests to AWS metadata IP
         except:
         - 169.254.169.254/32
+  policyTypes:
+  - Egress
 {{- end }}

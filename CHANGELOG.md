@@ -3,17 +3,16 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [35.2.0-bb.0]
+### Changed
+- Switched Grafana image to IB-BB image with plugins
+- Tightened up network policies (less egress anywhere, lock down kube-api access)
+- Updated to latest upstream chart + latest IB images
+
 ## [35.0.3-bb.0]
 ### Changed
 - Updated Monitoring chart version to `35.0.3`
-- Updated image versions to latest in IB:
-  - prometheus -> `v2.35.0`
-  - grafana -> `v8.5.2`
-  - base -> `1.2.0`
-  - alertmanager -> `v0.24.0`
-  - k8s-sidecar -> `v1.17.0`
-  - prometheus-config-reloader -> `v0.56.0`
-  - prometheus-operator -> `v0.56.0`
+- Updated image versions to latest in IB: prometheus -> `v2.35.0`, grafana -> `v8.5.2`, base -> `1.2.0`, alertmanager -> `v0.24.0`, k8s-sidecar -> `v1.17.0`, prometheus-config-reloader -> `v0.56.0`, prometheus-operator -> `v0.56.0`
 - Fixed OSCAL formatting
 
 ## [34.8.0-bb.2]
