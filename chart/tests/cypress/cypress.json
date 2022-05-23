@@ -3,5 +3,5 @@
   "_pluginsFile": "./plugins.js",
   "supportFile": false,
   "fixturesFolder": false,
-  "videoCompression": 45
+  "videoCompression": 20
 }

@@ -15,6 +15,9 @@ networkPolicies:
     app: istio-ingressgateway
     istio: ingressgateway
 
+# Toggles networkpolicy needed for openshift
+openshift: false
+
 bbtests:
   enabled: false
   cypress:
@@ -95,10 +98,10 @@ vault:
 # May be required on some monitoring chart updates due to upstream breaking changes
 # REQUIRED for Chart v23.x upgrade
 cleanUpgrade:
-  enabled: true
+  enabled: false
   image:
     repository: registry1.dso.mil/ironbank/big-bang/base
-    tag: 1.2.0
+    tag: 1.17.0
   resources:
     requests:
       memory: 256Mi
@@ -762,12 +765,12 @@ grafana:
 
   # use IronBank image
   image:
-    repository: registry1.dso.mil/ironbank/opensource/grafana/grafana
-    tag: 8.5.2
+    repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
+    tag: 8.6.2
     pullSecrets:
     - private-registry
 
-  # add plugins to be installed
+  # add plugins to be installed (only works in non-airgap, pulls directly from the internet)
   #plugins:
   #    # grafana-piechart-panel is required for the loki dashboard
   #  - grafana-piechart-panel
@@ -786,7 +789,7 @@ grafana:
 
   testFramework:
     image: registry1.dso.mil/ironbank/opensource/bats/bats
-    tag: 1.6.0
+    tag: 1.7.0
     pullSecrets:
     - private-registry
     imagePullPolicy: IfNotPresent
@@ -834,6 +837,12 @@ grafana:
       # tls_client_ca : /etc/oidc/ca.pem
       # allowed_domains: mycompany.com mycompany.org
       # empty_scopes: false
+    plugin.grafana-piechart-panel:
+      path: /var/lib/bb-plugins/piechart-panel
+    plugin.grafana-polystat-panel:
+      path: /var/lib/bb-plugins/polystat-panel
+    plugin.redis-datasource:
+      path: /var/lib/bb-plugins/redis-datasource
 
   rbac:
     ## If true, Grafana PSPs will be created
@@ -948,7 +957,7 @@ grafana:
 
   downloadDashboardsImage:
     repository: registry1.dso.mil/ironbank/big-bang/base #curlimages/curl
-    tag: 1.2.0
+    tag: 1.17.0
   
   ## Resource settings for above DownloadDashboards container
   downloadDashboards:
@@ -2020,7 +2029,7 @@ prometheusOperator:
   ##
   image:
     repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.56.0
+    tag: v0.56.2
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2037,7 +2046,7 @@ prometheusOperator:
   prometheusConfigReloader:
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.56.0
+      tag: v0.56.2
       sha: ""
 
     # resource config for prometheusConfigReloader
@@ -2063,8 +2072,8 @@ prometheusOperator:
   ## kubectl image to use when cleaning up
   ##
   kubectlImage:
-    repository: registry1.dso.mil/ironbank/opensource/kubernetes-1.20/kubectl-1.20
-    tag: v1.20.11
+    repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
+    tag: v1.22.2
     sha: ""
     pullPolicy: IfNotPresent
 
