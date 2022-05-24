@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 35.2.0-bb.0](https://img.shields.io/badge/Version-35.2.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.56.2](https://img.shields.io/badge/AppVersion-0.56.2-informational?style=flat-square)
+![Version: 35.2.0-bb.1](https://img.shields.io/badge/Version-35.2.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.56.2](https://img.shields.io/badge/AppVersion-0.56.2-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -283,7 +283,7 @@ helm install kube-prometheus-stack chart/
 | grafana.ingress.path | string | `"/"` |  |
 | grafana.ingress.tls | list | `[]` |  |
 | grafana.sidecar.image.repository | string | `"registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar"` |  |
-| grafana.sidecar.image.tag | string | `"1.17.0"` |  |
+| grafana.sidecar.image.tag | string | `"1.18.0"` |  |
 | grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
 | grafana.sidecar.resources.requests.cpu | string | `"100m"` |  |
@@ -494,7 +494,7 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsNonRoot | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsUser | int | `65532` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.image.tag | string | `"1.2.0"` |  |
+| prometheusOperator.admissionWebhooks.cleanupProxy.image.tag | string | `"1.17.0"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.resources.limits.cpu | string | `"50m"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.resources.limits.memory | string | `"50Mi"` |  |
