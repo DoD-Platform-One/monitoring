@@ -1811,8 +1811,8 @@ prometheusOperator:
           memory: 50Mi
       securityContext:
         runAsNonRoot: true
-        runAsUser: 7711
-        runAsGroup: 7811
+        runAsUser: 65532
+        runAsGroup: 65532
     cleanupProxy:
       image:
         repository: registry1.dso.mil/ironbank/big-bang/base
