@@ -1,0 +1,27 @@
+{{- if and .Values.monitoring.enabled (.Capabilities.APIVersions.Has "monitoring.coreos.com/v1") }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: istio-sidecar-heap-memory
+  namespace: {{ .Release.Namespace }}
+spec:
+  groups:
+  - name: istio.rules
+    rules:
+    - alert: IstioSidecarMemModerate
+      annotations:
+        description: Istio Sidecar Memory is above 50MB for {{`{{`}} $labels.pod_name {{`}}`}}
+        summary: Istio Sidecar Memory usage is above average
+      expr: istio_agent_go_memstats_heap_sys_bytes{} * 0.00000095357432 > 50
+      for: 1h
+      labels:
+        severity: warning
+    - alert: IstioSidecarMemHigh
+      annotations:
+        description: Istio Sidecar Memory is above 100MB for {{`{{`}} $labels.pod_name {{`}}`}}
+        summary: Istio Sidecar Memory usage is very high
+      expr: istio_agent_go_memstats_heap_sys_bytes{} * 0.00000095357432 > 100
+      for: 1h
+      labels:
+        severity: critical
+{{- end }}
