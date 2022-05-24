@@ -109,6 +109,10 @@ cleanUpgrade:
     limits:
       memory: 256Mi
       cpu: 100m
+  securityContext:
+    runAsUser: 7711
+    runAsGroup: 7711
+    runAsNonRoot: true
 
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
@@ -1589,14 +1593,6 @@ kubeStateMetrics:
     interval: ""
     selfMonitor:
       enabled: false
-
-### metrics-clean-upgrade configuration for security - initially created for setting non-root; referenced metrics-upgrade-job
-##
-metricsCleanUpgrade:
-  securityContext:
-    runAsUser: 7711
-    runAsGroup: 7711
-    runAsNonRoot: true
 
 ## Configuration for kube-state-metrics subchart
 ##
