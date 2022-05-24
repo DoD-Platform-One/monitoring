@@ -1594,8 +1594,8 @@ kubeStateMetrics:
 ##
 jobCreateSecret:
   securityContext:
-    runAsUser: 7711
-    runAsGroup: 7711
+    runAsUser: 65532
+    runAsGroup: 65532
     runAsNonRoot: true
 
 ### metrics-clean-upgrade configuration for security - initially created for setting non-root; referenced metrics-upgrade-job
