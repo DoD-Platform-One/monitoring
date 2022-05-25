@@ -109,6 +109,10 @@ cleanUpgrade:
     limits:
       memory: 256Mi
       cpu: 100m
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
 
 ## Provide a name in place of kube-prometheus-stack for `app:` labels
 ##
@@ -1589,6 +1593,7 @@ kubeStateMetrics:
     interval: ""
     selfMonitor:
       enabled: false
+
 ## Configuration for kube-state-metrics subchart
 ##
 kube-state-metrics:
@@ -1795,6 +1800,7 @@ prometheusOperator:
       securityContext:
         runAsNonRoot: true
         runAsUser: 65532
+        runAsGroup: 65532
     cleanupProxy:
       image:
         repository: registry1.dso.mil/ironbank/big-bang/base
