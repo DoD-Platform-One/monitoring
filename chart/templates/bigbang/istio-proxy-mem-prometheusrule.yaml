@@ -12,6 +12,7 @@ spec:
       annotations:
         description: Istio Sidecar Memory is above 50MB for {{`{{`}} $labels.pod_name {{`}}`}}
         summary: Istio Sidecar Memory usage is above average
+      # "0.00000095357432" multiplier used to convert Bytes to Megabytes to make human readable
       expr: istio_agent_go_memstats_heap_sys_bytes{} * 0.00000095357432 > 50
       for: 1h
       labels:
@@ -20,6 +21,7 @@ spec:
       annotations:
         description: Istio Sidecar Memory is above 100MB for {{`{{`}} $labels.pod_name {{`}}`}}
         summary: Istio Sidecar Memory usage is very high
+      # "0.00000095357432" multiplier used to convert Bytes to Megabytes to make human readable
       expr: istio_agent_go_memstats_heap_sys_bytes{} * 0.00000095357432 > 100
       for: 1h
       labels:
