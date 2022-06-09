@@ -16,6 +16,14 @@
     ],
     "regexManagers": [
         {
+            "fileMatch": ["^chart/Chart\\.yaml$"],
+            "matchStrings": [
+                "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)"
+            ],
+            "depNameTemplate": "registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator",
+            "datasourceTemplate": "docker"
+        },
+        {
             "fileMatch": ["^chart/values\\.yaml$"],
             "matchStrings": [
                 "(repo|image)\\S*:\\s*(?<depName>\\S+).*\n\\s+tag:\\s*(?<currentValue>.+)"
