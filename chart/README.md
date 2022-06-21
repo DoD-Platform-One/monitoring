@@ -1,781 +1,638 @@
 # kube-prometheus-stack
 
-![Version: 35.5.1-bb.0](https://img.shields.io/badge/Version-35.5.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.57.0](https://img.shields.io/badge/AppVersion-0.57.0-informational?style=flat-square)
+Installs the [kube-prometheus stack](https://github.com/prometheus-operator/kube-prometheus), a collection of Kubernetes manifests, [Grafana](http://grafana.com/) dashboards, and [Prometheus rules](https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/) combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with [Prometheus](https://prometheus.io/) using the [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator).
 
-kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
+See the [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus) README for details about components, dashboards, and alerts.
 
-## Upstream References
-* <https://github.com/prometheus-operator/kube-prometheus>
+_Note: This chart was formerly named `prometheus-operator` chart, now renamed to more clearly reflect that it installs the `kube-prometheus` project stack, within which Prometheus Operator is only one component._
 
-* <https://github.com/prometheus-community/helm-charts>
-* <https://github.com/prometheus-operator/kube-prometheus>
+## Prerequisites
 
-## Learn More
-* [Application Overview](docs/overview.md)
-* [Other Documentation](docs/)
+- Kubernetes 1.16+
+- Helm 3+
 
-## Pre-Requisites
+## Get Helm Repository Info
 
-* Kubernetes Cluster deployed
-* Kubernetes config installed in `~/.kube/config`
-* Helm installed
-
-Kubernetes: `>=1.16.0-0`
-
-Install Helm
-
-https://helm.sh/docs/intro/install/
-
-## Deployment
-
-* Clone down the repository
-* cd into directory
-```bash
-helm install kube-prometheus-stack chart/
+```console
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
 ```
 
-## Values
+_See [`helm repo`](https://helm.sh/docs/helm/helm_repo/) for command documentation._
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| hostname | string | `"bigbang.dev"` |  |
-| flux.enabled | bool | `false` |  |
-| flux.namespace | string | `"flux-system"` |  |
-| networkPolicies.enabled | bool | `false` |  |
-| networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
-| networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
-| networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
-| openshift | bool | `false` |  |
-| bbtests.enabled | bool | `false` |  |
-| bbtests.cypress.artifacts | bool | `true` |  |
-| bbtests.cypress.envs.cypress_prometheus_url | string | `"http://monitoring-kube-prometheus-prometheus:9090"` |  |
-| bbtests.cypress.envs.cypress_grafana_url | string | `"http://monitoring-grafana:80"` |  |
-| bbtests.cypress.envs.cypress_alertmanager_url | string | `"http://monitoring-kube-prometheus-alertmanager:9093"` |  |
-| minioOperator.enabled | bool | `false` |  |
-| gitlabRunner.enabled | bool | `false` |  |
-| istio.enabled | bool | `false` |  |
-| istio.prometheus.enabled | bool | `true` |  |
-| istio.prometheus.annotations | object | `{}` |  |
-| istio.prometheus.labels | object | `{}` |  |
-| istio.prometheus.gateways[0] | string | `"istio-system/main"` |  |
-| istio.prometheus.hosts[0] | string | `"prometheus.{{ .Values.hostname }}"` |  |
-| istio.prometheus.service | string | `""` |  |
-| istio.prometheus.port | string | `""` |  |
-| istio.prometheus.namespace | string | `""` |  |
-| istio.alertmanager.enabled | bool | `true` |  |
-| istio.alertmanager.annotations | object | `{}` |  |
-| istio.alertmanager.labels | object | `{}` |  |
-| istio.alertmanager.gateways[0] | string | `"istio-system/main"` |  |
-| istio.alertmanager.hosts[0] | string | `"alertmanager.{{ .Values.hostname }}"` |  |
-| istio.alertmanager.service | string | `""` |  |
-| istio.alertmanager.port | string | `""` |  |
-| istio.alertmanager.namespace | string | `""` |  |
-| istio.grafana.enabled | bool | `true` |  |
-| istio.grafana.annotations | object | `{}` |  |
-| istio.grafana.labels | object | `{}` |  |
-| istio.grafana.gateways[0] | string | `"istio-system/main"` |  |
-| istio.grafana.hosts[0] | string | `"grafana.{{ .Values.hostname }}"` |  |
-| istio.grafana.service | string | `""` |  |
-| istio.grafana.port | string | `""` |  |
-| istio.grafana.namespace | string | `""` |  |
-| istio.injection | string | `"disabled"` |  |
-| sso.enabled | bool | `false` |  |
-| anchore.enabled | bool | `false` |  |
-| redis.enabled | bool | `false` |  |
-| loki.enabled | bool | `false` |  |
-| vault.enabled | bool | `false` |  |
-| cleanUpgrade.enabled | bool | `false` |  |
-| cleanUpgrade.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
-| cleanUpgrade.image.tag | string | `"1.17.0"` |  |
-| cleanUpgrade.resources.requests.memory | string | `"256Mi"` |  |
-| cleanUpgrade.resources.requests.cpu | string | `"100m"` |  |
-| cleanUpgrade.resources.limits.memory | string | `"256Mi"` |  |
-| cleanUpgrade.resources.limits.cpu | string | `"100m"` |  |
-| cleanUpgrade.securityContext.runAsUser | int | `1000` |  |
-| cleanUpgrade.securityContext.runAsGroup | int | `1000` |  |
-| cleanUpgrade.securityContext.runAsNonRoot | bool | `true` |  |
-| nameOverride | string | `""` |  |
-| namespaceOverride | string | `""` |  |
-| kubeTargetVersionOverride | string | `""` |  |
-| kubeVersionOverride | string | `""` |  |
-| fullnameOverride | string | `""` |  |
-| commonLabels | object | `{}` |  |
-| defaultRules.create | bool | `true` |  |
-| defaultRules.rules.alertmanager | bool | `true` |  |
-| defaultRules.rules.etcd | bool | `true` |  |
-| defaultRules.rules.configReloaders | bool | `true` |  |
-| defaultRules.rules.general | bool | `true` |  |
-| defaultRules.rules.k8s | bool | `true` |  |
-| defaultRules.rules.kubeApiserverAvailability | bool | `true` |  |
-| defaultRules.rules.kubeApiserverBurnrate | bool | `true` |  |
-| defaultRules.rules.kubeApiserverHistogram | bool | `true` |  |
-| defaultRules.rules.kubeApiserverSlos | bool | `true` |  |
-| defaultRules.rules.kubelet | bool | `true` |  |
-| defaultRules.rules.kubeProxy | bool | `true` |  |
-| defaultRules.rules.kubePrometheusGeneral | bool | `true` |  |
-| defaultRules.rules.kubePrometheusNodeRecording | bool | `true` |  |
-| defaultRules.rules.kubernetesApps | bool | `true` |  |
-| defaultRules.rules.kubernetesResources | bool | `true` |  |
-| defaultRules.rules.kubernetesStorage | bool | `true` |  |
-| defaultRules.rules.kubernetesSystem | bool | `true` |  |
-| defaultRules.rules.kubeScheduler | bool | `true` |  |
-| defaultRules.rules.kubeStateMetrics | bool | `true` |  |
-| defaultRules.rules.network | bool | `true` |  |
-| defaultRules.rules.node | bool | `true` |  |
-| defaultRules.rules.nodeExporterAlerting | bool | `true` |  |
-| defaultRules.rules.nodeExporterRecording | bool | `true` |  |
-| defaultRules.rules.prometheus | bool | `true` |  |
-| defaultRules.rules.prometheusOperator | bool | `true` |  |
-| defaultRules.appNamespacesTarget | string | `".*"` |  |
-| defaultRules.labels | object | `{}` |  |
-| defaultRules.annotations | object | `{}` |  |
-| defaultRules.additionalRuleLabels | object | `{}` |  |
-| defaultRules.runbookUrl | string | `"https://runbooks.prometheus-operator.dev/runbooks"` |  |
-| defaultRules.disabled | object | `{}` |  |
-| additionalPrometheusRulesMap | object | `{}` |  |
-| global.rbac.create | bool | `true` |  |
-| global.rbac.createAggregateClusterRoles | bool | `false` |  |
-| global.rbac.pspEnabled | bool | `false` |  |
-| global.rbac.pspAnnotations | object | `{}` |  |
-| global.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| alertmanager.enabled | bool | `true` |  |
-| alertmanager.annotations | object | `{}` |  |
-| alertmanager.apiVersion | string | `"v2"` |  |
-| alertmanager.serviceAccount.create | bool | `true` |  |
-| alertmanager.serviceAccount.name | string | `""` |  |
-| alertmanager.serviceAccount.annotations | object | `{}` |  |
-| alertmanager.podDisruptionBudget.enabled | bool | `false` |  |
-| alertmanager.podDisruptionBudget.minAvailable | int | `1` |  |
-| alertmanager.podDisruptionBudget.maxUnavailable | string | `""` |  |
-| alertmanager.config.global.resolve_timeout | string | `"5m"` |  |
-| alertmanager.config.route.group_by[0] | string | `"job"` |  |
-| alertmanager.config.route.group_wait | string | `"30s"` |  |
-| alertmanager.config.route.group_interval | string | `"5m"` |  |
-| alertmanager.config.route.repeat_interval | string | `"12h"` |  |
-| alertmanager.config.route.receiver | string | `"null"` |  |
-| alertmanager.config.route.routes[0].receiver | string | `"null"` |  |
-| alertmanager.config.route.routes[0].matchers[0] | string | `"alertname =~ \"InfoInhibitor|Watchdog\""` |  |
-| alertmanager.config.receivers[0].name | string | `"null"` |  |
-| alertmanager.config.templates[0] | string | `"/etc/alertmanager/config/*.tmpl"` |  |
-| alertmanager.tplConfig | bool | `false` |  |
-| alertmanager.templateFiles | object | `{}` |  |
-| alertmanager.ingress.enabled | bool | `false` |  |
-| alertmanager.ingress.annotations | object | `{}` |  |
-| alertmanager.ingress.labels | object | `{}` |  |
-| alertmanager.ingress.hosts | list | `[]` |  |
-| alertmanager.ingress.paths | list | `[]` |  |
-| alertmanager.ingress.tls | list | `[]` |  |
-| alertmanager.secret.annotations | object | `{}` |  |
-| alertmanager.ingressPerReplica.enabled | bool | `false` |  |
-| alertmanager.ingressPerReplica.annotations | object | `{}` |  |
-| alertmanager.ingressPerReplica.labels | object | `{}` |  |
-| alertmanager.ingressPerReplica.hostPrefix | string | `""` |  |
-| alertmanager.ingressPerReplica.hostDomain | string | `""` |  |
-| alertmanager.ingressPerReplica.paths | list | `[]` |  |
-| alertmanager.ingressPerReplica.tlsSecretName | string | `""` |  |
-| alertmanager.ingressPerReplica.tlsSecretPerReplica.enabled | bool | `false` |  |
-| alertmanager.ingressPerReplica.tlsSecretPerReplica.prefix | string | `"alertmanager"` |  |
-| alertmanager.service.annotations | object | `{}` |  |
-| alertmanager.service.labels | object | `{}` |  |
-| alertmanager.service.clusterIP | string | `""` |  |
-| alertmanager.service.port | int | `9093` |  |
-| alertmanager.service.targetPort | int | `9093` |  |
-| alertmanager.service.nodePort | int | `30903` |  |
-| alertmanager.service.additionalPorts | list | `[]` |  |
-| alertmanager.service.externalIPs | list | `[]` |  |
-| alertmanager.service.loadBalancerIP | string | `""` |  |
-| alertmanager.service.loadBalancerSourceRanges | list | `[]` |  |
-| alertmanager.service.externalTrafficPolicy | string | `"Cluster"` |  |
-| alertmanager.service.type | string | `"ClusterIP"` |  |
-| alertmanager.servicePerReplica.enabled | bool | `false` |  |
-| alertmanager.servicePerReplica.annotations | object | `{}` |  |
-| alertmanager.servicePerReplica.port | int | `9093` |  |
-| alertmanager.servicePerReplica.targetPort | int | `9093` |  |
-| alertmanager.servicePerReplica.nodePort | int | `30904` |  |
-| alertmanager.servicePerReplica.loadBalancerSourceRanges | list | `[]` |  |
-| alertmanager.servicePerReplica.externalTrafficPolicy | string | `"Cluster"` |  |
-| alertmanager.servicePerReplica.type | string | `"ClusterIP"` |  |
-| alertmanager.serviceMonitor.interval | string | `""` |  |
-| alertmanager.serviceMonitor.selfMonitor | bool | `true` |  |
-| alertmanager.serviceMonitor.proxyUrl | string | `""` |  |
-| alertmanager.serviceMonitor.scheme | string | `""` |  |
-| alertmanager.serviceMonitor.tlsConfig | object | `{}` |  |
-| alertmanager.serviceMonitor.bearerTokenFile | string | `nil` |  |
-| alertmanager.serviceMonitor.metricRelabelings | list | `[]` |  |
-| alertmanager.serviceMonitor.relabelings | list | `[]` |  |
-| alertmanager.alertmanagerSpec.podMetadata | object | `{}` |  |
-| alertmanager.alertmanagerSpec.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/alertmanager"` |  |
-| alertmanager.alertmanagerSpec.image.tag | string | `"v0.24.0"` |  |
-| alertmanager.alertmanagerSpec.image.sha | string | `""` |  |
-| alertmanager.alertmanagerSpec.useExistingSecret | bool | `false` |  |
-| alertmanager.alertmanagerSpec.secrets | list | `[]` |  |
-| alertmanager.alertmanagerSpec.configMaps | list | `[]` |  |
-| alertmanager.alertmanagerSpec.alertmanagerConfigSelector | object | `{}` |  |
-| alertmanager.alertmanagerSpec.alertmanagerConfigNamespaceSelector | object | `{}` |  |
-| alertmanager.alertmanagerSpec.alertmanagerConfiguration | object | `{}` |  |
-| alertmanager.alertmanagerSpec.logFormat | string | `"logfmt"` |  |
-| alertmanager.alertmanagerSpec.logLevel | string | `"info"` |  |
-| alertmanager.alertmanagerSpec.replicas | int | `1` |  |
-| alertmanager.alertmanagerSpec.retention | string | `"120h"` |  |
-| alertmanager.alertmanagerSpec.storage | object | `{}` |  |
-| alertmanager.alertmanagerSpec.externalUrl | string | `nil` |  |
-| alertmanager.alertmanagerSpec.routePrefix | string | `"/"` |  |
-| alertmanager.alertmanagerSpec.paused | bool | `false` |  |
-| alertmanager.alertmanagerSpec.nodeSelector | object | `{}` |  |
-| alertmanager.alertmanagerSpec.resources.limits.cpu | string | `"100m"` |  |
-| alertmanager.alertmanagerSpec.resources.limits.memory | string | `"100Mi"` |  |
-| alertmanager.alertmanagerSpec.resources.requests.cpu | string | `"100m"` |  |
-| alertmanager.alertmanagerSpec.resources.requests.memory | string | `"100Mi"` |  |
-| alertmanager.alertmanagerSpec.podAntiAffinity | string | `""` |  |
-| alertmanager.alertmanagerSpec.podAntiAffinityTopologyKey | string | `"kubernetes.io/hostname"` |  |
-| alertmanager.alertmanagerSpec.affinity | object | `{}` |  |
-| alertmanager.alertmanagerSpec.tolerations | list | `[]` |  |
-| alertmanager.alertmanagerSpec.topologySpreadConstraints | list | `[]` |  |
-| alertmanager.alertmanagerSpec.securityContext.runAsGroup | int | `2000` |  |
-| alertmanager.alertmanagerSpec.securityContext.runAsNonRoot | bool | `true` |  |
-| alertmanager.alertmanagerSpec.securityContext.runAsUser | int | `1000` |  |
-| alertmanager.alertmanagerSpec.securityContext.fsGroup | int | `2000` |  |
-| alertmanager.alertmanagerSpec.listenLocal | bool | `false` |  |
-| alertmanager.alertmanagerSpec.containers | list | `[]` |  |
-| alertmanager.alertmanagerSpec.volumes | list | `[]` |  |
-| alertmanager.alertmanagerSpec.volumeMounts | list | `[]` |  |
-| alertmanager.alertmanagerSpec.initContainers | list | `[]` |  |
-| alertmanager.alertmanagerSpec.priorityClassName | string | `""` |  |
-| alertmanager.alertmanagerSpec.additionalPeers | list | `[]` |  |
-| alertmanager.alertmanagerSpec.portName | string | `"http-web"` |  |
-| alertmanager.alertmanagerSpec.clusterAdvertiseAddress | bool | `false` |  |
-| alertmanager.alertmanagerSpec.forceEnableClusterMode | bool | `false` |  |
-| alertmanager.extraSecret.annotations | object | `{}` |  |
-| alertmanager.extraSecret.data | object | `{}` |  |
-| grafana.enabled | bool | `true` |  |
-| grafana.namespaceOverride | string | `""` |  |
-| grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"8.6.2"` |  |
-| grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
-| grafana.resources.limits.cpu | string | `"100m"` |  |
-| grafana.resources.limits.memory | string | `"256Mi"` |  |
-| grafana.resources.requests.cpu | string | `"100m"` |  |
-| grafana.resources.requests.memory | string | `"256Mi"` |  |
-| grafana.testFramework.image | string | `"registry1.dso.mil/ironbank/opensource/bats/bats"` |  |
-| grafana.testFramework.tag | string | `"1.7.0"` |  |
-| grafana.testFramework.pullSecrets[0] | string | `"private-registry"` |  |
-| grafana.testFramework.imagePullPolicy | string | `"IfNotPresent"` |  |
-| grafana.testFramework.securityContext | object | `{}` |  |
-| grafana.forceDeployDatasources | bool | `false` |  |
-| grafana.forceDeployDashboards | bool | `false` |  |
-| grafana.defaultDashboardsEnabled | bool | `true` |  |
-| grafana.defaultDashboardsTimezone | string | `"utc"` |  |
-| grafana.adminPassword | string | `"prom-operator"` |  |
-| grafana."grafana.ini".auth.signout_redirect_url | string | `"https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/logout"` |  |
-| grafana."grafana.ini"."auth.generic_oauth".enabled | bool | `false` |  |
-| grafana."grafana.ini"."auth.generic_oauth".client_id | string | `"grafana"` |  |
-| grafana."grafana.ini"."auth.generic_oauth".client_secret | string | `"secret"` |  |
-| grafana."grafana.ini"."auth.generic_oauth".scopes | string | `"Grafana"` |  |
-| grafana."grafana.ini"."auth.generic_oauth".auth_url | string | `"https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/auth"` |  |
-| grafana."grafana.ini"."auth.generic_oauth".token_url | string | `"https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/token"` |  |
-| grafana."grafana.ini"."auth.generic_oauth".api_url | string | `"https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/userinfo"` |  |
-| grafana."grafana.ini"."auth.generic_oauth".allow_sign_up | bool | `true` |  |
-| grafana."grafana.ini"."auth.generic_oauth".role_attribute_path | string | `"Viewer"` |  |
-| grafana."grafana.ini"."plugin.grafana-piechart-panel".path | string | `"/var/lib/bb-plugins/piechart-panel"` |  |
-| grafana."grafana.ini"."plugin.grafana-polystat-panel".path | string | `"/var/lib/bb-plugins/polystat-panel"` |  |
-| grafana."grafana.ini"."plugin.redis-datasource".path | string | `"/var/lib/bb-plugins/redis-datasource"` |  |
-| grafana.rbac.pspEnabled | bool | `false` |  |
-| grafana.ingress.enabled | bool | `false` |  |
-| grafana.ingress.annotations | object | `{}` |  |
-| grafana.ingress.labels | object | `{}` |  |
-| grafana.ingress.hosts | list | `[]` |  |
-| grafana.ingress.path | string | `"/"` |  |
-| grafana.ingress.tls | list | `[]` |  |
-| grafana.sidecar.image.repository | string | `"registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar"` |  |
-| grafana.sidecar.image.tag | string | `"1.19.0"` |  |
-| grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
-| grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
-| grafana.sidecar.resources.requests.cpu | string | `"100m"` |  |
-| grafana.sidecar.resources.requests.memory | string | `"100Mi"` |  |
-| grafana.sidecar.dashboards.enabled | bool | `true` |  |
-| grafana.sidecar.dashboards.label | string | `"grafana_dashboard"` |  |
-| grafana.sidecar.dashboards.labelValue | string | `"1"` |  |
-| grafana.sidecar.dashboards.annotations | object | `{}` |  |
-| grafana.sidecar.dashboards.multicluster.global.enabled | bool | `false` |  |
-| grafana.sidecar.dashboards.multicluster.etcd.enabled | bool | `false` |  |
-| grafana.sidecar.dashboards.provider.allowUiUpdates | bool | `false` |  |
-| grafana.sidecar.datasources.enabled | bool | `true` |  |
-| grafana.sidecar.datasources.defaultDatasourceEnabled | bool | `true` |  |
-| grafana.sidecar.datasources.uid | string | `"prometheus"` |  |
-| grafana.sidecar.datasources.annotations | object | `{}` |  |
-| grafana.sidecar.datasources.createPrometheusReplicasDatasources | bool | `false` |  |
-| grafana.sidecar.datasources.label | string | `"grafana_datasource"` |  |
-| grafana.sidecar.datasources.labelValue | string | `"1"` |  |
-| grafana.dashboardProviders | object | `{}` |  |
-| grafana.downloadDashboardsImage.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
-| grafana.downloadDashboardsImage.tag | string | `"1.17.0"` |  |
-| grafana.downloadDashboards.resources.limits.cpu | string | `"20m"` |  |
-| grafana.downloadDashboards.resources.limits.memory | string | `"20Mi"` |  |
-| grafana.downloadDashboards.resources.requests.cpu | string | `"20m"` |  |
-| grafana.downloadDashboards.resources.requests.memory | string | `"20Mi"` |  |
-| grafana.dashboards | object | `{}` |  |
-| grafana.extraConfigmapMounts | list | `[]` |  |
-| grafana.extraSecretMounts | list | `[]` |  |
-| grafana.deleteDatasources | list | `[]` |  |
-| grafana.additionalDataSources | list | `[]` |  |
-| grafana.service.portName | string | `"http-web"` |  |
-| grafana.serviceMonitor.enabled | bool | `true` |  |
-| grafana.serviceMonitor.path | string | `"/metrics"` |  |
-| grafana.serviceMonitor.labels | object | `{}` |  |
-| grafana.serviceMonitor.interval | string | `""` |  |
-| grafana.serviceMonitor.scheme | string | `"http"` |  |
-| grafana.serviceMonitor.tlsConfig | object | `{}` |  |
-| grafana.serviceMonitor.scrapeTimeout | string | `"30s"` |  |
-| grafana.serviceMonitor.relabelings | list | `[]` |  |
-| kiali.enabled | bool | `false` |  |
-| kubeApiServer.enabled | bool | `true` |  |
-| kubeApiServer.tlsConfig.serverName | string | `"kubernetes"` |  |
-| kubeApiServer.tlsConfig.insecureSkipVerify | bool | `false` |  |
-| kubeApiServer.serviceMonitor.interval | string | `""` |  |
-| kubeApiServer.serviceMonitor.proxyUrl | string | `""` |  |
-| kubeApiServer.serviceMonitor.jobLabel | string | `"component"` |  |
-| kubeApiServer.serviceMonitor.selector.matchLabels.component | string | `"apiserver"` |  |
-| kubeApiServer.serviceMonitor.selector.matchLabels.provider | string | `"kubernetes"` |  |
-| kubeApiServer.serviceMonitor.metricRelabelings | list | `[]` |  |
-| kubeApiServer.serviceMonitor.relabelings | list | `[]` |  |
-| kubelet.enabled | bool | `true` |  |
-| kubelet.namespace | string | `"kube-system"` |  |
-| kubelet.serviceMonitor.interval | string | `""` |  |
-| kubelet.serviceMonitor.proxyUrl | string | `""` |  |
-| kubelet.serviceMonitor.https | bool | `true` |  |
-| kubelet.serviceMonitor.cAdvisor | bool | `true` |  |
-| kubelet.serviceMonitor.probes | bool | `true` |  |
-| kubelet.serviceMonitor.resource | bool | `false` |  |
-| kubelet.serviceMonitor.resourcePath | string | `"/metrics/resource/v1alpha1"` |  |
-| kubelet.serviceMonitor.cAdvisorMetricRelabelings | list | `[]` |  |
-| kubelet.serviceMonitor.probesMetricRelabelings | list | `[]` |  |
-| kubelet.serviceMonitor.cAdvisorRelabelings[0].sourceLabels[0] | string | `"__metrics_path__"` |  |
-| kubelet.serviceMonitor.cAdvisorRelabelings[0].targetLabel | string | `"metrics_path"` |  |
-| kubelet.serviceMonitor.probesRelabelings[0].sourceLabels[0] | string | `"__metrics_path__"` |  |
-| kubelet.serviceMonitor.probesRelabelings[0].targetLabel | string | `"metrics_path"` |  |
-| kubelet.serviceMonitor.resourceRelabelings[0].sourceLabels[0] | string | `"__metrics_path__"` |  |
-| kubelet.serviceMonitor.resourceRelabelings[0].targetLabel | string | `"metrics_path"` |  |
-| kubelet.serviceMonitor.metricRelabelings | list | `[]` |  |
-| kubelet.serviceMonitor.relabelings[0].sourceLabels[0] | string | `"__metrics_path__"` |  |
-| kubelet.serviceMonitor.relabelings[0].targetLabel | string | `"metrics_path"` |  |
-| kubeControllerManager.enabled | bool | `true` |  |
-| kubeControllerManager.endpoints | list | `[]` |  |
-| kubeControllerManager.service.enabled | bool | `true` |  |
-| kubeControllerManager.service.port | string | `nil` |  |
-| kubeControllerManager.service.targetPort | string | `nil` |  |
-| kubeControllerManager.serviceMonitor.enabled | bool | `true` |  |
-| kubeControllerManager.serviceMonitor.interval | string | `""` |  |
-| kubeControllerManager.serviceMonitor.proxyUrl | string | `""` |  |
-| kubeControllerManager.serviceMonitor.https | string | `nil` |  |
-| kubeControllerManager.serviceMonitor.insecureSkipVerify | string | `nil` |  |
-| kubeControllerManager.serviceMonitor.serverName | string | `nil` |  |
-| kubeControllerManager.serviceMonitor.metricRelabelings | list | `[]` |  |
-| kubeControllerManager.serviceMonitor.relabelings | list | `[]` |  |
-| coreDns.enabled | bool | `true` |  |
-| coreDns.service.port | int | `9153` |  |
-| coreDns.service.targetPort | int | `9153` |  |
-| coreDns.serviceMonitor.interval | string | `""` |  |
-| coreDns.serviceMonitor.proxyUrl | string | `""` |  |
-| coreDns.serviceMonitor.metricRelabelings | list | `[]` |  |
-| coreDns.serviceMonitor.relabelings | list | `[]` |  |
-| kubeDns.enabled | bool | `false` |  |
-| kubeDns.service.dnsmasq.port | int | `10054` |  |
-| kubeDns.service.dnsmasq.targetPort | int | `10054` |  |
-| kubeDns.service.skydns.port | int | `10055` |  |
-| kubeDns.service.skydns.targetPort | int | `10055` |  |
-| kubeDns.serviceMonitor.interval | string | `""` |  |
-| kubeDns.serviceMonitor.proxyUrl | string | `""` |  |
-| kubeDns.serviceMonitor.metricRelabelings | list | `[]` |  |
-| kubeDns.serviceMonitor.relabelings | list | `[]` |  |
-| kubeDns.serviceMonitor.dnsmasqMetricRelabelings | list | `[]` |  |
-| kubeDns.serviceMonitor.dnsmasqRelabelings | list | `[]` |  |
-| kubeEtcd.enabled | bool | `true` |  |
-| kubeEtcd.endpoints | list | `[]` |  |
-| kubeEtcd.service.enabled | bool | `true` |  |
-| kubeEtcd.service.port | int | `2379` |  |
-| kubeEtcd.service.targetPort | int | `2379` |  |
-| kubeEtcd.serviceMonitor.enabled | bool | `true` |  |
-| kubeEtcd.serviceMonitor.interval | string | `""` |  |
-| kubeEtcd.serviceMonitor.proxyUrl | string | `""` |  |
-| kubeEtcd.serviceMonitor.scheme | string | `"http"` |  |
-| kubeEtcd.serviceMonitor.insecureSkipVerify | bool | `false` |  |
-| kubeEtcd.serviceMonitor.serverName | string | `""` |  |
-| kubeEtcd.serviceMonitor.caFile | string | `""` |  |
-| kubeEtcd.serviceMonitor.certFile | string | `""` |  |
-| kubeEtcd.serviceMonitor.keyFile | string | `""` |  |
-| kubeEtcd.serviceMonitor.metricRelabelings | list | `[]` |  |
-| kubeEtcd.serviceMonitor.relabelings | list | `[]` |  |
-| kubeScheduler.enabled | bool | `true` |  |
-| kubeScheduler.endpoints | list | `[]` |  |
-| kubeScheduler.service.enabled | bool | `true` |  |
-| kubeScheduler.service.port | string | `nil` |  |
-| kubeScheduler.service.targetPort | string | `nil` |  |
-| kubeScheduler.serviceMonitor.enabled | bool | `true` |  |
-| kubeScheduler.serviceMonitor.interval | string | `""` |  |
-| kubeScheduler.serviceMonitor.proxyUrl | string | `""` |  |
-| kubeScheduler.serviceMonitor.https | string | `nil` |  |
-| kubeScheduler.serviceMonitor.insecureSkipVerify | string | `nil` |  |
-| kubeScheduler.serviceMonitor.serverName | string | `nil` |  |
-| kubeScheduler.serviceMonitor.metricRelabelings | list | `[]` |  |
-| kubeScheduler.serviceMonitor.relabelings | list | `[]` |  |
-| kubeProxy.enabled | bool | `true` |  |
-| kubeProxy.endpoints | list | `[]` |  |
-| kubeProxy.service.enabled | bool | `true` |  |
-| kubeProxy.service.port | int | `10249` |  |
-| kubeProxy.service.targetPort | int | `10249` |  |
-| kubeProxy.serviceMonitor.enabled | bool | `true` |  |
-| kubeProxy.serviceMonitor.interval | string | `""` |  |
-| kubeProxy.serviceMonitor.proxyUrl | string | `""` |  |
-| kubeProxy.serviceMonitor.https | bool | `false` |  |
-| kubeProxy.serviceMonitor.metricRelabelings | list | `[]` |  |
-| kubeProxy.serviceMonitor.relabelings | list | `[]` |  |
-| kubeStateMetrics.enabled | bool | `true` |  |
-| kubeStateMetrics.serviceMonitor.interval | string | `""` |  |
-| kubeStateMetrics.serviceMonitor.selfMonitor.enabled | bool | `false` |  |
-| kube-state-metrics.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| kube-state-metrics.image.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics"` |  |
-| kube-state-metrics.image.tag | string | `"v2.5.0"` |  |
-| kube-state-metrics.resources.limits.cpu | string | `"100m"` |  |
-| kube-state-metrics.resources.limits.memory | string | `"128Mi"` |  |
-| kube-state-metrics.resources.requests.cpu | string | `"100m"` |  |
-| kube-state-metrics.resources.requests.memory | string | `"128Mi"` |  |
-| kube-state-metrics.namespaceOverride | string | `""` |  |
-| kube-state-metrics.rbac.create | bool | `true` |  |
-| kube-state-metrics.podSecurityPolicy.enabled | bool | `false` |  |
-| kube-state-metrics.securityContext.runAsGroup | int | `65532` |  |
-| kube-state-metrics.securityContext.runAsUser | int | `65532` |  |
-| kube-state-metrics.securityContext.fsGroup | int | `65532` |  |
-| kube-state-metrics.releaseLabel | bool | `true` |  |
-| kube-state-metrics.prometheus.monitor.enabled | bool | `true` |  |
-| kube-state-metrics.prometheus.monitor.interval | string | `""` |  |
-| kube-state-metrics.prometheus.monitor.scrapeTimeout | string | `""` |  |
-| kube-state-metrics.prometheus.monitor.proxyUrl | string | `""` |  |
-| kube-state-metrics.prometheus.monitor.honorLabels | bool | `true` |  |
-| kube-state-metrics.prometheus.monitor.metricRelabelings | list | `[]` |  |
-| kube-state-metrics.prometheus.monitor.relabelings | list | `[]` |  |
-| kube-state-metrics.selfMonitor.enabled | bool | `false` |  |
-| nodeExporter.enabled | bool | `true` |  |
-| nodeExporter.serviceMonitor.interval | string | `""` |  |
-| nodeExporter.jobLabel | string | `"jobLabel"` |  |
-| prometheus-node-exporter.serviceAccount.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| prometheus-node-exporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/node-exporter"` |  |
-| prometheus-node-exporter.image.tag | string | `"v1.3.1"` |  |
-| prometheus-node-exporter.resources.limits.cpu | string | `"200m"` |  |
-| prometheus-node-exporter.resources.limits.memory | string | `"50Mi"` |  |
-| prometheus-node-exporter.resources.requests.cpu | string | `"200m"` |  |
-| prometheus-node-exporter.resources.requests.memory | string | `"50Mi"` |  |
-| prometheus-node-exporter.hostNetwork | bool | `false` |  |
-| prometheus-node-exporter.hostPID | bool | `false` |  |
-| prometheus-node-exporter.namespaceOverride | string | `""` |  |
-| prometheus-node-exporter.podLabels.jobLabel | string | `"node-exporter"` |  |
-| prometheus-node-exporter.extraArgs[0] | string | `"--collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)"` |  |
-| prometheus-node-exporter.extraArgs[1] | string | `"--collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$"` |  |
-| prometheus-node-exporter.service.portName | string | `"http-metrics"` |  |
-| prometheus-node-exporter.prometheus.monitor.enabled | bool | `true` |  |
-| prometheus-node-exporter.prometheus.monitor.jobLabel | string | `"jobLabel"` |  |
-| prometheus-node-exporter.prometheus.monitor.interval | string | `""` |  |
-| prometheus-node-exporter.prometheus.monitor.scrapeTimeout | string | `""` |  |
-| prometheus-node-exporter.prometheus.monitor.proxyUrl | string | `""` |  |
-| prometheus-node-exporter.prometheus.monitor.metricRelabelings | list | `[]` |  |
-| prometheus-node-exporter.prometheus.monitor.relabelings | list | `[]` |  |
-| prometheus-node-exporter.rbac.pspEnabled | bool | `false` |  |
-| prometheusOperator.enabled | bool | `true` |  |
-| prometheusOperator.tls.enabled | bool | `true` |  |
-| prometheusOperator.tls.tlsMinVersion | string | `"VersionTLS13"` |  |
-| prometheusOperator.tls.internalPort | int | `10250` |  |
-| prometheusOperator.admissionWebhooks.failurePolicy | string | `"Fail"` |  |
-| prometheusOperator.admissionWebhooks.enabled | bool | `true` |  |
-| prometheusOperator.admissionWebhooks.caBundle | string | `""` |  |
-| prometheusOperator.admissionWebhooks.patch.enabled | bool | `true` |  |
-| prometheusOperator.admissionWebhooks.patch.image.repository | string | `"registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen"` |  |
-| prometheusOperator.admissionWebhooks.patch.image.tag | string | `"v1.1.1"` |  |
-| prometheusOperator.admissionWebhooks.patch.image.sha | string | `""` |  |
-| prometheusOperator.admissionWebhooks.patch.image.pullPolicy | string | `"IfNotPresent"` |  |
-| prometheusOperator.admissionWebhooks.patch.resources.limits.cpu | string | `"50m"` |  |
-| prometheusOperator.admissionWebhooks.patch.resources.limits.memory | string | `"50Mi"` |  |
-| prometheusOperator.admissionWebhooks.patch.resources.requests.cpu | string | `"50m"` |  |
-| prometheusOperator.admissionWebhooks.patch.resources.requests.memory | string | `"50Mi"` |  |
-| prometheusOperator.admissionWebhooks.patch.securityContext.runAsNonRoot | bool | `true` |  |
-| prometheusOperator.admissionWebhooks.patch.securityContext.runAsUser | int | `65532` |  |
-| prometheusOperator.admissionWebhooks.patch.securityContext.runAsGroup | int | `65532` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.image.tag | string | `"1.17.0"` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.image.pullPolicy | string | `"IfNotPresent"` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.resources.limits.cpu | string | `"50m"` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.resources.limits.memory | string | `"50Mi"` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.resources.requests.cpu | string | `"50m"` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.resources.requests.memory | string | `"50Mi"` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.priorityClassName | string | `""` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.podAnnotations | object | `{}` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.nodeSelector | object | `{}` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.affinity | object | `{}` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.tolerations | list | `[]` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.securityContext.runAsGroup | int | `2000` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.securityContext.runAsNonRoot | bool | `true` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.securityContext.runAsUser | int | `2000` |  |
-| prometheusOperator.admissionWebhooks.certManager.enabled | bool | `false` |  |
-| prometheusOperator.admissionWebhooks.certManager.rootCert.duration | string | `""` |  |
-| prometheusOperator.admissionWebhooks.certManager.admissionCert.duration | string | `""` |  |
-| prometheusOperator.namespaces | object | `{}` |  |
-| prometheusOperator.denyNamespaces | list | `[]` |  |
-| prometheusOperator.alertmanagerInstanceNamespaces | list | `[]` |  |
-| prometheusOperator.prometheusInstanceNamespaces | list | `[]` |  |
-| prometheusOperator.thanosRulerInstanceNamespaces | list | `[]` |  |
-| prometheusOperator.serviceAccount.create | bool | `true` |  |
-| prometheusOperator.serviceAccount.name | string | `""` |  |
-| prometheusOperator.service.annotations | object | `{}` |  |
-| prometheusOperator.service.labels | object | `{}` |  |
-| prometheusOperator.service.clusterIP | string | `""` |  |
-| prometheusOperator.service.nodePort | int | `30080` |  |
-| prometheusOperator.service.nodePortTls | int | `30443` |  |
-| prometheusOperator.service.additionalPorts | list | `[]` |  |
-| prometheusOperator.service.loadBalancerIP | string | `""` |  |
-| prometheusOperator.service.loadBalancerSourceRanges | list | `[]` |  |
-| prometheusOperator.service.externalTrafficPolicy | string | `"Cluster"` |  |
-| prometheusOperator.service.type | string | `"ClusterIP"` |  |
-| prometheusOperator.service.externalIPs | list | `[]` |  |
-| prometheusOperator.podLabels | object | `{}` |  |
-| prometheusOperator.podAnnotations | object | `{}` |  |
-| prometheusOperator.kubeletService.enabled | bool | `true` |  |
-| prometheusOperator.kubeletService.namespace | string | `"kube-system"` |  |
-| prometheusOperator.kubeletService.name | string | `""` |  |
-| prometheusOperator.serviceMonitor.interval | string | `""` |  |
-| prometheusOperator.serviceMonitor.scrapeTimeout | string | `""` |  |
-| prometheusOperator.serviceMonitor.selfMonitor | bool | `true` |  |
-| prometheusOperator.serviceMonitor.metricRelabelings | list | `[]` |  |
-| prometheusOperator.serviceMonitor.relabelings | list | `[]` |  |
-| prometheusOperator.resources.limits.cpu | string | `"200m"` |  |
-| prometheusOperator.resources.limits.memory | string | `"512Mi"` |  |
-| prometheusOperator.resources.requests.cpu | string | `"200m"` |  |
-| prometheusOperator.resources.requests.memory | string | `"512Mi"` |  |
-| prometheusOperator.hostNetwork | bool | `false` |  |
-| prometheusOperator.nodeSelector | object | `{}` |  |
-| prometheusOperator.tolerations | list | `[]` |  |
-| prometheusOperator.affinity | object | `{}` |  |
-| prometheusOperator.dnsConfig | object | `{}` |  |
-| prometheusOperator.securityContext.fsGroup | int | `65534` |  |
-| prometheusOperator.securityContext.runAsGroup | int | `65534` |  |
-| prometheusOperator.securityContext.runAsNonRoot | bool | `true` |  |
-| prometheusOperator.securityContext.runAsUser | int | `65534` |  |
-| prometheusOperator.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| prometheusOperator.containerSecurityContext.readOnlyRootFilesystem | bool | `true` |  |
-| prometheusOperator.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.57.0"` |  |
-| prometheusOperator.image.sha | string | `""` |  |
-| prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
-| prometheusOperator.prometheusConfigReloader.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.57.0"` |  |
-| prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
-| prometheusOperator.prometheusConfigReloader.resources.requests.cpu | string | `"200m"` |  |
-| prometheusOperator.prometheusConfigReloader.resources.requests.memory | string | `"50Mi"` |  |
-| prometheusOperator.prometheusConfigReloader.resources.limits.cpu | string | `"200m"` |  |
-| prometheusOperator.prometheusConfigReloader.resources.limits.memory | string | `"50Mi"` |  |
-| prometheusOperator.thanosImage.repository | string | `"registry1.dso.mil/ironbank/opensource/thanos/thanos"` |  |
-| prometheusOperator.thanosImage.tag | string | `"v0.26.0"` |  |
-| prometheusOperator.thanosImage.sha | string | `""` |  |
-| prometheusOperator.secretFieldSelector | string | `""` |  |
-| prometheusOperator.kubectlImage.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl"` |  |
-| prometheusOperator.kubectlImage.tag | string | `"v1.22.2"` |  |
-| prometheusOperator.kubectlImage.sha | string | `""` |  |
-| prometheusOperator.kubectlImage.pullPolicy | string | `"IfNotPresent"` |  |
-| prometheus.enabled | bool | `true` |  |
-| prometheus.annotations | object | `{}` |  |
-| prometheus.serviceAccount.create | bool | `true` |  |
-| prometheus.serviceAccount.name | string | `""` |  |
-| prometheus.serviceAccount.annotations | object | `{}` |  |
-| prometheus.thanosService.enabled | bool | `false` |  |
-| prometheus.thanosService.annotations | object | `{}` |  |
-| prometheus.thanosService.labels | object | `{}` |  |
-| prometheus.thanosService.externalTrafficPolicy | string | `"Cluster"` |  |
-| prometheus.thanosService.type | string | `"ClusterIP"` |  |
-| prometheus.thanosService.portName | string | `"grpc"` |  |
-| prometheus.thanosService.port | int | `10901` |  |
-| prometheus.thanosService.targetPort | string | `"grpc"` |  |
-| prometheus.thanosService.httpPortName | string | `"http"` |  |
-| prometheus.thanosService.httpPort | int | `10902` |  |
-| prometheus.thanosService.targetHttpPort | string | `"http"` |  |
-| prometheus.thanosService.clusterIP | string | `"None"` |  |
-| prometheus.thanosService.nodePort | int | `30901` |  |
-| prometheus.thanosService.httpNodePort | int | `30902` |  |
-| prometheus.thanosServiceMonitor.enabled | bool | `false` |  |
-| prometheus.thanosServiceMonitor.interval | string | `""` |  |
-| prometheus.thanosServiceMonitor.scheme | string | `""` |  |
-| prometheus.thanosServiceMonitor.tlsConfig | object | `{}` |  |
-| prometheus.thanosServiceMonitor.bearerTokenFile | string | `nil` |  |
-| prometheus.thanosServiceMonitor.metricRelabelings | list | `[]` |  |
-| prometheus.thanosServiceMonitor.relabelings | list | `[]` |  |
-| prometheus.thanosServiceExternal.enabled | bool | `false` |  |
-| prometheus.thanosServiceExternal.annotations | object | `{}` |  |
-| prometheus.thanosServiceExternal.labels | object | `{}` |  |
-| prometheus.thanosServiceExternal.loadBalancerIP | string | `""` |  |
-| prometheus.thanosServiceExternal.loadBalancerSourceRanges | list | `[]` |  |
-| prometheus.thanosServiceExternal.portName | string | `"grpc"` |  |
-| prometheus.thanosServiceExternal.port | int | `10901` |  |
-| prometheus.thanosServiceExternal.targetPort | string | `"grpc"` |  |
-| prometheus.thanosServiceExternal.httpPortName | string | `"http"` |  |
-| prometheus.thanosServiceExternal.httpPort | int | `10902` |  |
-| prometheus.thanosServiceExternal.targetHttpPort | string | `"http"` |  |
-| prometheus.thanosServiceExternal.externalTrafficPolicy | string | `"Cluster"` |  |
-| prometheus.thanosServiceExternal.type | string | `"LoadBalancer"` |  |
-| prometheus.thanosServiceExternal.nodePort | int | `30901` |  |
-| prometheus.thanosServiceExternal.httpNodePort | int | `30902` |  |
-| prometheus.service.annotations | object | `{}` |  |
-| prometheus.service.labels | object | `{}` |  |
-| prometheus.service.clusterIP | string | `""` |  |
-| prometheus.service.port | int | `9090` |  |
-| prometheus.service.targetPort | int | `9090` |  |
-| prometheus.service.externalIPs | list | `[]` |  |
-| prometheus.service.nodePort | int | `30090` |  |
-| prometheus.service.loadBalancerIP | string | `""` |  |
-| prometheus.service.loadBalancerSourceRanges | list | `[]` |  |
-| prometheus.service.externalTrafficPolicy | string | `"Cluster"` |  |
-| prometheus.service.type | string | `"ClusterIP"` |  |
-| prometheus.service.additionalPorts | list | `[]` |  |
-| prometheus.service.publishNotReadyAddresses | bool | `false` |  |
-| prometheus.service.sessionAffinity | string | `""` |  |
-| prometheus.servicePerReplica.enabled | bool | `false` |  |
-| prometheus.servicePerReplica.annotations | object | `{}` |  |
-| prometheus.servicePerReplica.port | int | `9090` |  |
-| prometheus.servicePerReplica.targetPort | int | `9090` |  |
-| prometheus.servicePerReplica.nodePort | int | `30091` |  |
-| prometheus.servicePerReplica.loadBalancerSourceRanges | list | `[]` |  |
-| prometheus.servicePerReplica.externalTrafficPolicy | string | `"Cluster"` |  |
-| prometheus.servicePerReplica.type | string | `"ClusterIP"` |  |
-| prometheus.podDisruptionBudget.enabled | bool | `false` |  |
-| prometheus.podDisruptionBudget.minAvailable | int | `1` |  |
-| prometheus.podDisruptionBudget.maxUnavailable | string | `""` |  |
-| prometheus.thanosIngress.enabled | bool | `false` |  |
-| prometheus.thanosIngress.annotations | object | `{}` |  |
-| prometheus.thanosIngress.labels | object | `{}` |  |
-| prometheus.thanosIngress.servicePort | int | `10901` |  |
-| prometheus.thanosIngress.nodePort | int | `30901` |  |
-| prometheus.thanosIngress.hosts | list | `[]` |  |
-| prometheus.thanosIngress.paths | list | `[]` |  |
-| prometheus.thanosIngress.tls | list | `[]` |  |
-| prometheus.extraSecret.annotations | object | `{}` |  |
-| prometheus.extraSecret.data | object | `{}` |  |
-| prometheus.ingress.enabled | bool | `false` |  |
-| prometheus.ingress.annotations | object | `{}` |  |
-| prometheus.ingress.labels | object | `{}` |  |
-| prometheus.ingress.hosts | list | `[]` |  |
-| prometheus.ingress.paths | list | `[]` |  |
-| prometheus.ingress.tls | list | `[]` |  |
-| prometheus.ingressPerReplica.enabled | bool | `false` |  |
-| prometheus.ingressPerReplica.annotations | object | `{}` |  |
-| prometheus.ingressPerReplica.labels | object | `{}` |  |
-| prometheus.ingressPerReplica.hostPrefix | string | `""` |  |
-| prometheus.ingressPerReplica.hostDomain | string | `""` |  |
-| prometheus.ingressPerReplica.paths | list | `[]` |  |
-| prometheus.ingressPerReplica.tlsSecretName | string | `""` |  |
-| prometheus.ingressPerReplica.tlsSecretPerReplica.enabled | bool | `false` |  |
-| prometheus.ingressPerReplica.tlsSecretPerReplica.prefix | string | `"prometheus"` |  |
-| prometheus.podSecurityPolicy.allowedCapabilities | list | `[]` |  |
-| prometheus.podSecurityPolicy.allowedHostPaths | list | `[]` |  |
-| prometheus.podSecurityPolicy.volumes | list | `[]` |  |
-| prometheus.serviceMonitor.interval | string | `""` |  |
-| prometheus.serviceMonitor.selfMonitor | bool | `true` |  |
-| prometheus.serviceMonitor.scheme | string | `""` |  |
-| prometheus.serviceMonitor.tlsConfig | object | `{}` |  |
-| prometheus.serviceMonitor.bearerTokenFile | string | `nil` |  |
-| prometheus.serviceMonitor.metricRelabelings | list | `[]` |  |
-| prometheus.serviceMonitor.relabelings | list | `[]` |  |
-| prometheus.prometheusSpec.disableCompaction | bool | `false` |  |
-| prometheus.prometheusSpec.apiserverConfig | object | `{}` |  |
-| prometheus.prometheusSpec.scrapeInterval | string | `""` |  |
-| prometheus.prometheusSpec.scrapeTimeout | string | `""` |  |
-| prometheus.prometheusSpec.evaluationInterval | string | `""` |  |
-| prometheus.prometheusSpec.listenLocal | bool | `false` |  |
-| prometheus.prometheusSpec.enableAdminAPI | bool | `false` |  |
-| prometheus.prometheusSpec.web | object | `{}` |  |
-| prometheus.prometheusSpec.enableFeatures | list | `[]` |  |
-| prometheus.prometheusSpec.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/prometheus"` |  |
-| prometheus.prometheusSpec.image.tag | string | `"v2.36.0"` |  |
-| prometheus.prometheusSpec.image.sha | string | `""` |  |
-| prometheus.prometheusSpec.tolerations | list | `[]` |  |
-| prometheus.prometheusSpec.topologySpreadConstraints | list | `[]` |  |
-| prometheus.prometheusSpec.alertingEndpoints | list | `[]` |  |
-| prometheus.prometheusSpec.externalLabels | object | `{}` |  |
-| prometheus.prometheusSpec.enableRemoteWriteReceiver | bool | `false` |  |
-| prometheus.prometheusSpec.replicaExternalLabelName | string | `""` |  |
-| prometheus.prometheusSpec.replicaExternalLabelNameClear | bool | `false` |  |
-| prometheus.prometheusSpec.prometheusExternalLabelName | string | `""` |  |
-| prometheus.prometheusSpec.prometheusExternalLabelNameClear | bool | `false` |  |
-| prometheus.prometheusSpec.externalUrl | string | `""` |  |
-| prometheus.prometheusSpec.nodeSelector | object | `{}` |  |
-| prometheus.prometheusSpec.secrets | list | `[]` |  |
-| prometheus.prometheusSpec.configMaps | list | `[]` |  |
-| prometheus.prometheusSpec.query | object | `{}` |  |
-| prometheus.prometheusSpec.ruleNamespaceSelector | object | `{}` |  |
-| prometheus.prometheusSpec.ruleSelectorNilUsesHelmValues | bool | `false` |  |
-| prometheus.prometheusSpec.ruleSelector | object | `{}` |  |
-| prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues | bool | `false` |  |
-| prometheus.prometheusSpec.serviceMonitorSelector | object | `{}` |  |
-| prometheus.prometheusSpec.serviceMonitorNamespaceSelector | object | `{}` |  |
-| prometheus.prometheusSpec.podMonitorSelectorNilUsesHelmValues | bool | `false` |  |
-| prometheus.prometheusSpec.podMonitorSelector | object | `{}` |  |
-| prometheus.prometheusSpec.podMonitorNamespaceSelector | object | `{}` |  |
-| prometheus.prometheusSpec.probeSelectorNilUsesHelmValues | bool | `false` |  |
-| prometheus.prometheusSpec.probeSelector | object | `{}` |  |
-| prometheus.prometheusSpec.probeNamespaceSelector | object | `{}` |  |
-| prometheus.prometheusSpec.retention | string | `"10d"` |  |
-| prometheus.prometheusSpec.retentionSize | string | `""` |  |
-| prometheus.prometheusSpec.walCompression | bool | `false` |  |
-| prometheus.prometheusSpec.paused | bool | `false` |  |
-| prometheus.prometheusSpec.replicas | int | `1` |  |
-| prometheus.prometheusSpec.shards | int | `1` |  |
-| prometheus.prometheusSpec.logLevel | string | `"info"` |  |
-| prometheus.prometheusSpec.logFormat | string | `"logfmt"` |  |
-| prometheus.prometheusSpec.routePrefix | string | `"/"` |  |
-| prometheus.prometheusSpec.podMetadata.labels.app | string | `"prometheus"` |  |
-| prometheus.prometheusSpec.podAntiAffinity | string | `""` |  |
-| prometheus.prometheusSpec.podAntiAffinityTopologyKey | string | `"kubernetes.io/hostname"` |  |
-| prometheus.prometheusSpec.affinity | object | `{}` |  |
-| prometheus.prometheusSpec.remoteRead | list | `[]` |  |
-| prometheus.prometheusSpec.additionalRemoteRead | list | `[]` |  |
-| prometheus.prometheusSpec.remoteWrite | list | `[]` |  |
-| prometheus.prometheusSpec.additionalRemoteWrite | list | `[]` |  |
-| prometheus.prometheusSpec.remoteWriteDashboards | bool | `false` |  |
-| prometheus.prometheusSpec.resources.limits.cpu | string | `"300m"` |  |
-| prometheus.prometheusSpec.resources.limits.memory | string | `"5Gi"` |  |
-| prometheus.prometheusSpec.resources.requests.cpu | string | `"300m"` |  |
-| prometheus.prometheusSpec.resources.requests.memory | string | `"5Gi"` |  |
-| prometheus.prometheusSpec.storageSpec | object | `{}` |  |
-| prometheus.prometheusSpec.volumes | list | `[]` |  |
-| prometheus.prometheusSpec.volumeMounts | list | `[]` |  |
-| prometheus.prometheusSpec.additionalScrapeConfigs | list | `[]` |  |
-| prometheus.prometheusSpec.additionalScrapeConfigsSecret | object | `{}` |  |
-| prometheus.prometheusSpec.additionalPrometheusSecretsAnnotations | object | `{}` |  |
-| prometheus.prometheusSpec.additionalAlertManagerConfigs | list | `[]` |  |
-| prometheus.prometheusSpec.additionalAlertManagerConfigsSecret | object | `{}` |  |
-| prometheus.prometheusSpec.additionalAlertRelabelConfigs | list | `[]` |  |
-| prometheus.prometheusSpec.additionalAlertRelabelConfigsSecret | object | `{}` |  |
-| prometheus.prometheusSpec.securityContext.runAsGroup | int | `2000` |  |
-| prometheus.prometheusSpec.securityContext.runAsNonRoot | bool | `true` |  |
-| prometheus.prometheusSpec.securityContext.runAsUser | int | `1000` |  |
-| prometheus.prometheusSpec.securityContext.fsGroup | int | `2000` |  |
-| prometheus.prometheusSpec.priorityClassName | string | `""` |  |
-| prometheus.prometheusSpec.thanos | object | `{}` |  |
-| prometheus.prometheusSpec.containers | list | `[]` |  |
-| prometheus.prometheusSpec.initContainers | list | `[]` |  |
-| prometheus.prometheusSpec.portName | string | `"http-web"` |  |
-| prometheus.prometheusSpec.arbitraryFSAccessThroughSMs | bool | `false` |  |
-| prometheus.prometheusSpec.overrideHonorLabels | bool | `false` |  |
-| prometheus.prometheusSpec.overrideHonorTimestamps | bool | `false` |  |
-| prometheus.prometheusSpec.ignoreNamespaceSelectors | bool | `false` |  |
-| prometheus.prometheusSpec.enforcedNamespaceLabel | string | `""` |  |
-| prometheus.prometheusSpec.prometheusRulesExcludedFromEnforce | list | `[]` |  |
-| prometheus.prometheusSpec.excludedFromEnforcement | list | `[]` |  |
-| prometheus.prometheusSpec.queryLogFile | bool | `false` |  |
-| prometheus.prometheusSpec.enforcedSampleLimit | bool | `false` |  |
-| prometheus.prometheusSpec.enforcedTargetLimit | bool | `false` |  |
-| prometheus.prometheusSpec.enforcedLabelLimit | bool | `false` |  |
-| prometheus.prometheusSpec.enforcedLabelNameLengthLimit | bool | `false` |  |
-| prometheus.prometheusSpec.enforcedLabelValueLengthLimit | bool | `false` |  |
-| prometheus.prometheusSpec.allowOverlappingBlocks | bool | `false` |  |
-| prometheus.additionalRulesForClusterRole | list | `[]` |  |
-| prometheus.additionalServiceMonitors | list | `[]` |  |
-| prometheus.additionalPodMonitors | list | `[]` |  |
+## Install Helm Chart
 
-## Contributing
+```console
+helm install [RELEASE_NAME] prometheus-community/kube-prometheus-stack
+```
 
-Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+_See [configuration](#configuration) below._
+
+_See [helm install](https://helm.sh/docs/helm/helm_install/) for command documentation._
+
+## Dependencies
+
+By default this chart installs additional, dependent charts:
+
+- [prometheus-community/kube-state-metrics](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-state-metrics)
+- [prometheus-community/prometheus-node-exporter](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-node-exporter)
+- [grafana/grafana](https://github.com/grafana/helm-charts/tree/main/charts/grafana)
+
+To disable dependencies during installation, see [multiple releases](#multiple-releases) below.
+
+_See [helm dependency](https://helm.sh/docs/helm/helm_dependency/) for command documentation._
+
+## Uninstall Helm Chart
+
+```console
+helm uninstall [RELEASE_NAME]
+```
+
+This removes all the Kubernetes components associated with the chart and deletes the release.
+
+_See [helm uninstall](https://helm.sh/docs/helm/helm_uninstall/) for command documentation._
+
+CRDs created by this chart are not removed by default and should be manually cleaned up:
+
+```console
+kubectl delete crd alertmanagerconfigs.monitoring.coreos.com
+kubectl delete crd alertmanagers.monitoring.coreos.com
+kubectl delete crd podmonitors.monitoring.coreos.com
+kubectl delete crd probes.monitoring.coreos.com
+kubectl delete crd prometheuses.monitoring.coreos.com
+kubectl delete crd prometheusrules.monitoring.coreos.com
+kubectl delete crd servicemonitors.monitoring.coreos.com
+kubectl delete crd thanosrulers.monitoring.coreos.com
+```
+
+## Upgrading Chart
+
+```console
+helm upgrade [RELEASE_NAME] prometheus-community/kube-prometheus-stack
+```
+
+With Helm v3, CRDs created by this chart are not updated by default and should be manually updated.
+Consult also the [Helm Documentation on CRDs](https://helm.sh/docs/chart_best_practices/custom_resource_definitions).
+
+_See [helm upgrade](https://helm.sh/docs/helm/helm_upgrade/) for command documentation._
+
+### Upgrading an existing Release to a new major version
+
+A major chart version change (like v1.2.3 -> v2.0.0) indicates that there is an incompatible breaking change needing manual actions.
+
+### From 34.x to 35.x
+
+This upgraded prometheus-operator to v0.56.0 and prometheus to v2.35.0
+
+Run these commands to update the CRDs before applying the upgrade.
+
+```console
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.56.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.56.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.56.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.56.0/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.56.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.56.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.56.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.56.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+```
+
+### From 33.x to 34.x
+
+This upgrades to prometheus-operator to v0.55.0 and prometheus to v2.33.5.
+
+Run these commands to update the CRDs before applying the upgrade.
+
+```console
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.55.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.55.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.55.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.55.0/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.55.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.55.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.55.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.55.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+```
+
+### From 32.x to 33.x
+
+This upgrades the prometheus-node-exporter Chart to v3.0.0. Please review the changes to this subchart if you make customizations to hostMountPropagation.
+
+### From 31.x to 32.x
+
+This upgrades to prometheus-operator to v0.54.0 and prometheus to v2.33.1. It also changes the default for `grafana.serviceMonitor.enabled` to `true.
+
+Run these commands to update the CRDs before applying the upgrade.
+
+```console
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.54.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+```
+
+### From 30.x to 31.x
+
+This version removes the built-in grafana ServiceMonitor and instead relies on the ServiceMonitor of the sub-chart.
+`grafana.serviceMonitor.enabled` must be set instead of `grafana.serviceMonitor.selfMonitor` and the old ServiceMonitor may
+need to be manually cleaned up after deploying the new release.
+
+### From 29.x to 30.x
+
+This version updates kube-state-metrics to 4.3.0 and uses the new option `kube-state-metrics.releaseLabel=true` which adds the "release" label to kube-state-metrics labels, making scraping of the metrics by kube-prometheus-stack work out of the box again, independent of the used kube-prometheus-stack release name. If you already set the "release" label via `kube-state-metrics.customLabels` you might have to remove that and use it via the new option.
+
+### From 28.x to 29.x
+
+This version makes scraping port for kube-controller-manager and kube-scheduler dynamic to reflect changes to default serving ports
+for those components in Kubernetes versions v1.22 and v1.23 respectively.
+
+If you deploy on clusters using version v1.22+, kube-controller-manager will be scraped over HTTPS on port 10257.
+
+If you deploy on clusters running version v1.23+, kube-scheduler will be scraped over HTTPS on port 10259.
+
+### From 27.x to 28.x
+
+This version disables PodSecurityPolicies by default because they are deprecated in Kubernetes 1.21 and will be removed in Kubernetes 1.25.
+
+If you are using PodSecurityPolicies you can enable the previous behaviour by setting `kube-state-metrics.podSecurityPolicy.enabled`, `prometheus-node-exporter.rbac.pspEnabled`, `grafana.rbac.pspEnabled` and `global.rbac.pspEnabled` to `true`.
+
+### From 26.x to 27.x
+
+This version splits prometheus-node-exporter chart recording and altering rules in separate config values.
+Instead of `defaultRules.rules.node` the 2 new variables `defaultRules.rules.nodeExporterAlerting` and `defaultRules.rules.nodeExporterRecording` are used.
+
+Also the following defaultRules.rules has been removed as they had no effect: `kubeApiserverError`, `kubePrometheusNodeAlerting`, `kubernetesAbsent`, `time`.
+
+The ability to set a rubookUrl via `defaultRules.rules.rubookUrl` was reintroduced.
+
+### From 25.x to 26.x
+
+This version enables the prometheus-node-exporter subchart servicemonitor by default again, by setting `prometheus-node-exporter.prometheus.monitor.enabled` to `true`.
+
+### From 24.x to 25.x
+
+This version upgrade to prometheus-operator v0.53.1. It removes support for setting a runbookUrl, since the upstream format for runbooks changed.
+
+```console
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.53.1/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.53.1/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.53.1/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.53.1/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.53.1/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.53.1/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.53.1/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.53.1/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+```
+
+### From 23.x to 24.x
+
+The custom `ServiceMonitor` for the _kube-state-metrics_ & _prometheus-node-exporter_ charts have been removed in favour of the built-in sub-chart `ServiceMonitor`; for both sub-charts this means that `ServiceMonitor` customisations happen via the values passed to the chart. If you haven't directly customised this behaviour then there are no changes required to upgrade, but if you have please read the following.
+
+For _kube-state-metrics_ the `ServiceMonitor` customisation is now set via `kube-state-metrics.prometheus.monitor` and the `kubeStateMetrics.serviceMonitor.selfMonitor.enabled` value has moved to `kube-state-metrics.selfMonitor.enabled`.
+
+For _prometheus-node-exporter_ the `ServiceMonitor` customisation is now set via `prometheus-node-exporter.prometheus.monitor` and the `nodeExporter.jobLabel` values has moved to `prometheus-node-exporter.prometheus.monitor.jobLabel`.
+
+### From 22.x to 23.x
+
+Port names have been renamed for Istio's
+[explicit protocol selection](https://istio.io/latest/docs/ops/configuration/traffic-management/protocol-selection/#explicit-protocol-selection).
+
+| | old value | new value |
+|-|-----------|-----------|
+| `alertmanager.alertmanagerSpec.portName` | `web` | `http-web` |
+| `grafana.service.portName` | `service` | `http-web` |
+| `prometheus-node-exporter.service.portName` | `metrics` (hardcoded) | `http-metrics` |
+| `prometheus.prometheusSpec.portName` | `web` | `http-web` |
+
+### From 21.x to 22.x
+
+Due to the upgrade of the `kube-state-metrics` chart, removal of its deployment/stateful needs to done manually prior to upgrading:
+
+```console
+kubectl delete deployments.apps -l app.kubernetes.io/instance=prometheus-operator,app.kubernetes.io/name=kube-state-metrics --cascade=orphan
+```
+
+or if you use autosharding:
+
+```console
+kubectl delete statefulsets.apps -l app.kubernetes.io/instance=prometheus-operator,app.kubernetes.io/name=kube-state-metrics --cascade=orphan
+```
+
+### From 20.x to 21.x
+
+The config reloader values have been refactored. All the values have been moved to the key `prometheusConfigReloader` and the limits and requests can now be set separately.
+
+### From 19.x to 20.x
+
+Version 20 upgrades prometheus-operator from 0.50.x to 0.52.x. Helm does not automatically upgrade or install new CRDs on a chart upgrade, so you have to install the CRDs manually before updating:
+
+```console
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.52.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+```
+
+### From 18.x to 19.x
+
+`kubeStateMetrics.serviceMonitor.namespaceOverride` was removed.
+Please use `kube-state-metrics.namespaceOverride` instead.
+
+### From 17.x to 18.x
+
+Version 18 upgrades prometheus-operator from 0.49.x to 0.50.x. Helm does not automatically upgrade or install new CRDs on a chart upgrade, so you have to install the CRDs manually before updating:
+
+```console
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.50.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.50.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.50.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.50.0/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.50.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.50.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.50.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.50.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+```
+
+### From 16.x to 17.x
+
+Version 17 upgrades prometheus-operator from 0.48.x to 0.49.x. Helm does not automatically upgrade or install new CRDs on a chart upgrade, so you have to install the CRDs manually before updating:
+
+```console
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.49.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.49.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.49.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.49.0/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.49.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.49.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.49.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.49.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+```
+
+### From 15.x to 16.x
+
+Version 16 upgrades kube-state-metrics to v2.0.0. This includes changed command-line arguments and removed metrics, see this [blog post](https://kubernetes.io/blog/2021/04/13/kube-state-metrics-v-2-0/). This version also removes Grafana dashboards that supported Kubernetes 1.14 or earlier.
+
+### From 14.x to 15.x
+
+Version 15 upgrades prometheus-operator from 0.46.x to 0.47.x. Helm does not automatically upgrade or install new CRDs on a chart upgrade, so you have to install the CRDs manually before updating:
+
+```console
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.47.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.47.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.47.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.47.0/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.47.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.47.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.47.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+```
+
+### From 13.x to 14.x
+
+Version 14 upgrades prometheus-operator from 0.45.x to 0.46.x. Helm does not automatically upgrade or install new CRDs on a chart upgrade, so you have to install the CRDs manually before updating:
+
+```console
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.46.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.46.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.46.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.46.0/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.46.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.46.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.46.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+```
+
+### From 12.x to 13.x
+
+Version 13 upgrades prometheus-operator from 0.44.x to 0.45.x. Helm does not automatically upgrade or install new CRDs on a chart upgrade, so you have to install the CRD manually before updating:
+
+```console
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.45.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.45.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.45.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+```
+
+### From 11.x to 12.x
+
+Version 12 upgrades prometheus-operator from 0.43.x to 0.44.x. Helm does not automatically upgrade or install new CRDs on a chart upgrade, so you have to install the CRD manually before updating:
+
+```console
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/release-0.44/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+```
+
+The chart was migrated to support only helm v3 and later.
+
+### From 10.x to 11.x
+
+Version 11 upgrades prometheus-operator from 0.42.x to 0.43.x. Starting with 0.43.x an additional `AlertmanagerConfigs` CRD is introduced. Helm does not automatically upgrade or install new CRDs on a chart upgrade, so you have to install the CRD manually before updating:
+
+```console
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/release-0.43/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+```
+
+Version 11 removes the deprecated tlsProxy via ghostunnel in favor of native TLS support the prometheus-operator gained with v0.39.0.
+
+### From 9.x to 10.x
+
+Version 10 upgrades prometheus-operator from 0.38.x to 0.42.x. Starting with 0.40.x an additional `Probes` CRD is introduced. Helm does not automatically upgrade or install new CRDs on a chart upgrade, so you have to install the CRD manually before updating:
+
+```console
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/release-0.42/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+```
+
+### From 8.x to 9.x
+
+Version 9 of the helm chart removes the existing `additionalScrapeConfigsExternal` in favour of `additionalScrapeConfigsSecret`. This change lets users specify the secret name and secret key to use for the additional scrape configuration of prometheus. This is useful for users that have prometheus-operator as a subchart and also have a template that creates the additional scrape configuration.
+
+### From 7.x to 8.x
+
+Due to new template functions being used in the rules in version 8.x.x of the chart, an upgrade to Prometheus Operator and Prometheus is necessary in order to support them. First, upgrade to the latest version of 7.x.x
+
+```console
+helm upgrade [RELEASE_NAME] prometheus-community/kube-prometheus-stack --version 7.5.0
+```
+
+Then upgrade to 8.x.x
+
+```console
+helm upgrade [RELEASE_NAME] prometheus-community/kube-prometheus-stack --version [8.x.x]
+```
+
+Minimal recommended Prometheus version for this chart release is `2.12.x`
+
+### From 6.x to 7.x
+
+Due to a change in grafana subchart, version 7.x.x now requires Helm >= 2.12.0.
+
+### From 5.x to 6.x
+
+Due to a change in deployment labels of kube-state-metrics, the upgrade requires `helm upgrade --force` in order to re-create the deployment. If this is not done an error will occur indicating that the deployment cannot be modified:
+
+```console
+invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/name":"kube-state-metrics"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
+```
+
+If this error has already been encountered, a `helm history` command can be used to determine which release has worked, then `helm rollback` to the release, then `helm upgrade --force` to this new one
+
+## Configuration
+
+See [Customizing the Chart Before Installing](https://helm.sh/docs/intro/using_helm/#customizing-the-chart-before-installing). To see all configurable options with detailed comments:
+
+```console
+helm show values prometheus-community/kube-prometheus-stack
+```
+
+You may also `helm show values` on this chart's [dependencies](#dependencies) for additional options.
+
+### Multiple releases
+
+The same chart can be used to run multiple Prometheus instances in the same cluster if required. To achieve this, it is necessary to run only one instance of prometheus-operator and a pair of alertmanager pods for an HA configuration, while all other components need to be disabled. To disable a dependency during installation, set `kubeStateMetrics.enabled`, `nodeExporter.enabled` and `grafana.enabled` to `false`.
+
+## Work-Arounds for Known Issues
+
+### Running on private GKE clusters
+
+When Google configure the control plane for private clusters, they automatically configure VPC peering between your Kubernetes cluster’s network and a separate Google managed project. In order to restrict what Google are able to access within your cluster, the firewall rules configured restrict access to your Kubernetes pods. This means that in order to use the webhook component with a GKE private cluster, you must configure an additional firewall rule to allow the GKE control plane access to your webhook pod.
+
+You can read more information on how to add firewall rules for the GKE control plane nodes in the [GKE docs](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters#add_firewall_rules)
+
+Alternatively, you can disable the hooks by setting `prometheusOperator.admissionWebhooks.enabled=false`.
+
+## PrometheusRules Admission Webhooks
+
+With Prometheus Operator version 0.30+, the core Prometheus Operator pod exposes an endpoint that will integrate with the `validatingwebhookconfiguration` Kubernetes feature to prevent malformed rules from being added to the cluster.
+
+### How the Chart Configures the Hooks
+
+A validating and mutating webhook configuration requires the endpoint to which the request is sent to use TLS. It is possible to set up custom certificates to do this, but in most cases, a self-signed certificate is enough. The setup of this component requires some more complex orchestration when using helm. The steps are created to be idempotent and to allow turning the feature on and off without running into helm quirks.
+
+1. A pre-install hook provisions a certificate into the same namespace using a format compatible with provisioning using end user certificates. If the certificate already exists, the hook exits.
+2. The prometheus operator pod is configured to use a TLS proxy container, which will load that certificate.
+3. Validating and Mutating webhook configurations are created in the cluster, with their failure mode set to Ignore. This allows rules to be created by the same chart at the same time, even though the webhook has not yet been fully set up - it does not have the correct CA field set.
+4. A post-install hook reads the CA from the secret created by step 1 and patches the Validating and Mutating webhook configurations. This process will allow a custom CA provisioned by some other process to also be patched into the webhook configurations. The chosen failure policy is also patched into the webhook configurations
+
+### Alternatives
+
+It should be possible to use [jetstack/cert-manager](https://github.com/jetstack/cert-manager) if a more complete solution is required, but it has not been tested.
+
+You can enable automatic self-signed TLS certificate provisioning via cert-manager by setting the `prometheusOperator.admissionWebhooks.certManager.enabled` value to true.
+
+### Limitations
+
+Because the operator can only run as a single pod, there is potential for this component failure to cause rule deployment failure. Because this risk is outweighed by the benefit of having validation, the feature is enabled by default.
+
+## Developing Prometheus Rules and Grafana Dashboards
+
+This chart Grafana Dashboards and Prometheus Rules are just a copy from [prometheus-operator/prometheus-operator](https://github.com/prometheus-operator/prometheus-operator) and other sources, synced (with alterations) by scripts in [hack](hack) folder. In order to introduce any changes you need to first [add them to the original repository](https://github.com/prometheus-operator/kube-prometheus/blob/master/docs/developing-prometheus-rules-and-grafana-dashboards.md) and then sync there by scripts.
+
+## Further Information
+
+For more in-depth documentation of configuration options meanings, please see
+
+- [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator)
+- [Prometheus](https://prometheus.io/docs/introduction/overview/)
+- [Grafana](https://github.com/grafana/helm-charts/tree/main/charts/grafana#grafana-helm-chart)
+
+## prometheus.io/scrape
+
+The prometheus operator does not support annotation-based discovery of services, using the `PodMonitor` or `ServiceMonitor` CRD in its place as they provide far more configuration options.
+For information on how to use PodMonitors/ServiceMonitors, please see the documentation on the `prometheus-operator/prometheus-operator` documentation here:
+
+- [ServiceMonitors](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/getting-started.md#include-servicemonitors)
+- [PodMonitors](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/getting-started.md#include-podmonitors)
+- [Running Exporters](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/running-exporters.md)
+
+By default, Prometheus discovers PodMonitors and ServiceMonitors within its namespace, that are labeled with the same release tag as the prometheus-operator release.
+Sometimes, you may need to discover custom PodMonitors/ServiceMonitors, for example used to scrape data from third-party applications.
+An easy way of doing this, without compromising the default PodMonitors/ServiceMonitors discovery, is allowing Prometheus to discover all PodMonitors/ServiceMonitors within its namespace, without applying label filtering.
+To do so, you can set `prometheus.prometheusSpec.podMonitorSelectorNilUsesHelmValues` and `prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues` to `false`.
+
+## Migrating from stable/prometheus-operator chart
+
+## Zero downtime
+
+Since `kube-prometheus-stack` is fully compatible with the `stable/prometheus-operator` chart, a migration without downtime can be achieved.
+However, the old name prefix needs to be kept. If you want the new name please follow the step by step guide below (with downtime).
+
+You can override the name to achieve this:
+
+```console
+helm upgrade prometheus-operator prometheus-community/kube-prometheus-stack -n monitoring --reuse-values --set nameOverride=prometheus-operator
+```
+
+**Note**: It is recommended to run this first with `--dry-run --debug`.
+
+## Redeploy with new name (downtime)
+
+If the **prometheus-operator** values are compatible with the new **kube-prometheus-stack** chart, please follow the below steps for migration:
+
+> The guide presumes that chart is deployed in `monitoring` namespace and the deployments are running there. If in other namespace, please replace the `monitoring` to the deployed namespace.
+
+1. Patch the PersistenceVolume created/used by the prometheus-operator chart to `Retain` claim policy:
+
+    ```console
+    kubectl patch pv/<PersistentVolume name> -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'
+    ```
+
+    **Note:** To execute the above command, the user must have a cluster wide permission. Please refer [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+
+2. Uninstall the **prometheus-operator** release and delete the existing PersistentVolumeClaim, and verify PV become Released.
+
+    ```console
+    helm uninstall prometheus-operator -n monitoring
+    kubectl delete pvc/<PersistenceVolumeClaim name> -n monitoring
+    ```
+
+    Additionally, you have to manually remove the remaining `prometheus-operator-kubelet` service.
+
+    ```console
+    kubectl delete service/prometheus-operator-kubelet -n kube-system
+    ```
+
+    You can choose to remove all your existing CRDs (ServiceMonitors, Podmonitors, etc.) if you want to.
+
+3. Remove current `spec.claimRef` values to change the PV's status from Released to Available.
+
+    ```console
+    kubectl patch pv/<PersistentVolume name> --type json -p='[{"op": "remove", "path": "/spec/claimRef"}]' -n monitoring
+    ```
+
+**Note:** To execute the above command, the user must have a cluster wide permission. Please refer to [Kubernetes RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)
+
+After these steps, proceed to a fresh **kube-prometheus-stack** installation and make sure the current release of **kube-prometheus-stack** matching the `volumeClaimTemplate` values in the `values.yaml`.
+
+The binding is done via matching a specific amount of storage requested and with certain access modes.
+
+For example, if you had storage specified as this with **prometheus-operator**:
+
+```yaml
+volumeClaimTemplate:
+  spec:
+    storageClassName: gp2
+    accessModes: ["ReadWriteOnce"]
+    resources:
+     requests:
+       storage: 50Gi
+```
+
+You have to specify matching `volumeClaimTemplate` with 50Gi storage and `ReadWriteOnce` access mode.
+
+Additionally, you should check the current AZ of your legacy installation's PV, and configure the fresh release to use the same AZ as the old one. If the pods are in a different AZ than the PV, the release will fail to bind the existing one, hence creating a new PV.
+
+This can be achieved either by specifying the labels through `values.yaml`, e.g. setting `prometheus.prometheusSpec.nodeSelector` to:
+
+```yaml
+nodeSelector:
+  failure-domain.beta.kubernetes.io/zone: east-west-1a
+```
+
+or passing these values as `--set` overrides during installation.
+
+The new release should now re-attach your previously released PV with its content.
+
+## Migrating from coreos/prometheus-operator chart
+
+The multiple charts have been combined into a single chart that installs prometheus operator, prometheus, alertmanager, grafana as well as the multitude of exporters necessary to monitor a cluster.
+
+There is no simple and direct migration path between the charts as the changes are extensive and intended to make the chart easier to support.
+
+The capabilities of the old chart are all available in the new chart, including the ability to run multiple prometheus instances on a single cluster - you will need to disable the parts of the chart you do not wish to deploy.
+
+You can check out the tickets for this change [here](https://github.com/prometheus-operator/prometheus-operator/issues/592) and [here](https://github.com/helm/charts/pull/6765).
+
+### High-level overview of Changes
+
+#### Added dependencies
+
+The chart has added 3 [dependencies](#dependencies).
+
+- Node-Exporter, Kube-State-Metrics: These components are loaded as dependencies into the chart, and are relatively simple components
+- Grafana: The Grafana chart is more feature-rich than this chart - it contains a sidecar that is able to load data sources and dashboards from configmaps deployed into the same cluster. For more information check out the [documentation for the chart](https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md)
+
+#### Kubelet Service
+
+Because the kubelet service has a new name in the chart, make sure to clean up the old kubelet service in the `kube-system` namespace to prevent counting container metrics twice.
+
+#### Persistent Volumes
+
+If you would like to keep the data of the current persistent volumes, it should be possible to attach existing volumes to new PVCs and PVs that are created using the conventions in the new chart. For example, in order to use an existing Azure disk for a helm release called `prometheus-migration` the following resources can be created:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pvc-prometheus-migration-prometheus-0
+spec:
+  accessModes:
+  - ReadWriteOnce
+  azureDisk:
+    cachingMode: None
+    diskName: pvc-prometheus-migration-prometheus-0
+    diskURI: /subscriptions/f5125d82-2622-4c50-8d25-3f7ba3e9ac4b/resourceGroups/sample-migration-resource-group/providers/Microsoft.Compute/disks/pvc-prometheus-migration-prometheus-0
+    fsType: ""
+    kind: Managed
+    readOnly: false
+  capacity:
+    storage: 1Gi
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: prometheus
+  volumeMode: Filesystem
+```
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app.kubernetes.io/name: prometheus
+    prometheus: prometheus-migration-prometheus
+  name: prometheus-prometheus-migration-prometheus-db-prometheus-prometheus-migration-prometheus-0
+  namespace: monitoring
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: prometheus
+  volumeMode: Filesystem
+  volumeName: pvc-prometheus-migration-prometheus-0
+```
+
+The PVC will take ownership of the PV and when you create a release using a persistent volume claim template it will use the existing PVCs as they match the naming convention used by the chart. For other cloud providers similar approaches can be used.
+
+#### KubeProxy
+
+The metrics bind address of kube-proxy is default to `127.0.0.1:10249` that prometheus instances **cannot** access to. You should expose metrics by changing `metricsBindAddress` field value to `0.0.0.0:10249` if you want to collect them.
+
+Depending on the cluster, the relevant part `config.conf` will be in ConfigMap `kube-system/kube-proxy` or `kube-system/kube-proxy-config`. For example:
+
+```console
+kubectl -n kube-system edit cm kube-proxy
+```
+
+```yaml
+apiVersion: v1
+data:
+  config.conf: |-
+    apiVersion: kubeproxy.config.k8s.io/v1alpha1
+    kind: KubeProxyConfiguration
+    # ...
+    # metricsBindAddress: 127.0.0.1:10249
+    metricsBindAddress: 0.0.0.0:10249
+    # ...
+  kubeconfig.conf: |-
+    # ...
+kind: ConfigMap
+metadata:
+  labels:
+    app: kube-proxy
+  name: kube-proxy
+  namespace: kube-system
+```
