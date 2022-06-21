@@ -150,8 +150,9 @@ defaultRules:
     configReloaders: true
     general: true
     k8s: true
-    kubeApiserver: true
     kubeApiserverAvailability: true
+    kubeApiserverBurnrate: true
+    kubeApiserverHistogram: true
     kubeApiserverSlos: true
     kubelet: true
     kubeProxy: true
@@ -283,9 +284,9 @@ alertmanager:
       repeat_interval: 12h
       receiver: 'null'
       routes:
-      - match:
-          alertname: Watchdog
-        receiver: 'null'
+      - receiver: 'null'
+        matchers:
+          - alertname =~ "InfoInhibitor|Watchdog"
     receivers:
     - name: 'null'
     templates:
@@ -593,7 +594,9 @@ alertmanager:
     ## AlermanagerConfig to be used as top level configuration
     ##
     alertmanagerConfiguration: {}
-    # - name: global-alertmanager-Configuration
+    ## Example with select a global alertmanagerconfig
+    # alertmanagerConfiguration:
+    #   name: global-alertmanager-Configuration
 
     ## Define Log Format
     # Use logfmt (default) or json logging
@@ -896,7 +899,7 @@ grafana:
     # use IronBank image
     image:
       repository: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar
-      tag: 1.18.0
+      tag: 1.18.1
 
     resources:
       limits:
@@ -1602,7 +1605,7 @@ kube-state-metrics:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics
-    tag: v2.4.2
+    tag: v2.5.0
 
   resources:
     limits:
@@ -2035,7 +2038,7 @@ prometheusOperator:
   ##
   image:
     repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.56.2
+    tag: v0.57.0
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2052,7 +2055,7 @@ prometheusOperator:
   prometheusConfigReloader:
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.56.2
+      tag: v0.57.0
       sha: ""
 
     # resource config for prometheusConfigReloader
@@ -2495,7 +2498,7 @@ prometheus:
     ##
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus/prometheus
-      tag: v2.35.0
+      tag: v2.36.0
       sha: ""
 
     ## Tolerations for use with node taints
@@ -2537,6 +2540,10 @@ prometheus:
     ## External labels to add to any time series or alerts when communicating with external systems
     ##
     externalLabels: {}
+
+    ## enable --web.enable-remote-write-receiver flag on prometheus-server
+    ##
+    enableRemoteWriteReceiver: false
 
     ## Name of the external label used to denote replica name
     ##
@@ -2978,7 +2985,14 @@ prometheus:
 
     ## PrometheusRulesExcludedFromEnforce - list of prometheus rules to be excluded from enforcing of adding namespace labels.
     ## Works only if enforcedNamespaceLabel set to true. Make sure both ruleNamespace and ruleName are set for each pair
+    ## Deprecated, use `excludedFromEnforcement` instead
     prometheusRulesExcludedFromEnforce: []
+
+    ## ExcludedFromEnforcement - list of object references to PodMonitor, ServiceMonitor, Probe and PrometheusRule objects
+    ## to be excluded from enforcing a namespace label of origin.
+    ## Works only if enforcedNamespaceLabel set to true.
+    ## See https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#objectreference
+    excludedFromEnforcement: []
 
     ## QueryLogFile specifies the file to which PromQL queries are logged. Note that this location must be writable,
     ## and can be persisted using an attached volume. Alternatively, the location can be set to a stdout location such

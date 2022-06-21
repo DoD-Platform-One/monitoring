@@ -30,7 +30,7 @@ You will want to install with:
 
 - Monitoring, Jaeger, Kiali, and Authservice packages enabled
 - Istio enabled
-- [Dev SSO values](https://repo1.dso.mil/platform-one/big-bang/bigbang/-/blob/master/chart/dev-sso-values.yaml) for Kiali, Monitoring, and Jaeger
+- [Dev SSO values](https://repo1.dso.mil/platform-one/big-bang/bigbang/-/blob/master/docs/example_configs/dev-sso-values.yaml) for Kiali, Monitoring, and Jaeger
 
 Testing Steps:
 
