@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [35.5.1-bb.0]
+### Changed
+- Updated Monitoring chart version to `35.5.1`
+- Updated image versions to latest in IB: prometheus -> `v2.36.0`, grafana -> `v8.6.2`, base -> `1.17.0`, k8s-sidecar -> `v1.19.0`, prometheus-config-reloader -> `v0.57.0`, prometheus-operator -> `v0.57.0`
+
 ## [35.2.0-bb.3]
 ### Added
 - PrometheusRule resource for istio sidecar heap Memory alerts

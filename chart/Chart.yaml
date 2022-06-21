@@ -23,8 +23,8 @@ name: kube-prometheus-stack
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 35.2.0-bb.3
-appVersion: 0.56.2
+version: 35.5.1-bb.0
+appVersion: 0.57.0
 kubeVersion: ">=1.16.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -39,7 +39,7 @@ annotations:
     - name: Upstream Project
       url: https://github.com/prometheus-operator/kube-prometheus
   bigbang.dev/applicationVersions: |
-    - Prometheus: v2.35.0
+    - Prometheus: v2.36.0
     - Grafana: 8.6.2
     - Alertmanager: v0.24.0
 
