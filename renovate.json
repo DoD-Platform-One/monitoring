@@ -35,8 +35,7 @@
             "matchStrings": [
                 "- Prometheus:\\s+(?<currentValue>.+)"
             ],
-            "registryUrlTemplate": "https://registry1.dso.mil",
-            "depNameTemplate": "ironbank/opensource/prometheus/prometheus",
+            "depNameTemplate": "registry1.dso.mil/ironbank/opensource/prometheus/prometheus",
             "datasourceTemplate": "docker"
         },
         {
@@ -44,8 +43,7 @@
             "matchStrings": [
                 "- Grafana:\\s+(?<currentValue>.+)"
             ],
-            "registryUrlTemplate": "https://registry1.dso.mil",
-            "depNameTemplate": "ironbank/opensource/grafana/grafana",
+            "depNameTemplate": "registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins",
             "datasourceTemplate": "docker"
         },
         {
@@ -53,8 +51,7 @@
             "matchStrings": [
                 "- Alertmanager:\\s+(?<currentValue>.+)"
             ],
-            "registryUrlTemplate": "https://registry1.dso.mil",
-            "depNameTemplate": "ironbank/opensource/prometheus/alertmanager",
+            "depNameTemplate": "registry1.dso.mil/ironbank/opensource/prometheus/alertmanager",
             "datasourceTemplate": "docker"
         }
     ],
