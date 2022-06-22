@@ -21,6 +21,9 @@ spec:
   - path: /stats/prometheus
     interval: 15s
     relabelings:
+    - sourceLabels: [__meta_kubernetes_pod_phase]
+      action: keep
+      regex: Running
     - action: keep
       sourceLabels: [__meta_kubernetes_pod_container_name]
       regex: "istio-proxy"
