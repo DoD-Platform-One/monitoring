@@ -15,10 +15,21 @@ spec:
     matchNames:
       - "vault"
   endpoints:
+  {{- if not .Values.vault.tlsDisable }}
+  - port: https
+    path: /v1/sys/metrics
+    bearerTokenFile: /vault/secrets/token
+    scheme: https
+    params:
+      format: ['prometheus']
+    tlsConfig:
+      insecureSkipVerify: true
+  {{- else }}
   - port: http
     path: /v1/sys/metrics
-    bearerTokenFile: /vault/secrets/token  
-    scheme: http    
+    bearerTokenFile: /vault/secrets/token
+    scheme: http
     params:
-      format: ['prometheus']  
+      format: ['prometheus']
+  {{- end }}
 {{- end }}
