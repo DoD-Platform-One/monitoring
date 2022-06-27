@@ -92,7 +92,9 @@ loki:
 
 vault:
   # Toggle creating the vault resources
-  enabled: false  
+  enabled: false
+  # -- TLS Toggle inherited from Vault Chart and Big Bang
+  tlsDisable: true
 
 # Deletes previous kube-state-metrics deployment/statefulset before attempting an upgrade
 # May be required on some monitoring chart updates due to upstream breaking changes
