@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 35.5.1-bb.2](https://img.shields.io/badge/Version-35.5.1--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.57.0](https://img.shields.io/badge/AppVersion-0.57.0-informational?style=flat-square)
+![Version: 35.5.1-bb.3](https://img.shields.io/badge/Version-35.5.1--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.57.0](https://img.shields.io/badge/AppVersion-0.57.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -84,10 +84,10 @@ helm install kube-prometheus-stack chart/
 | redis.enabled | bool | `false` |  |
 | loki.enabled | bool | `false` |  |
 | vault.enabled | bool | `false` |  |
-| vault.tlsDisabled | bool | `true` |  |
+| vault.tlsDisable | bool | `true` | TLS Toggle inherited from Vault Chart and Big Bang |
 | cleanUpgrade.enabled | bool | `false` |  |
 | cleanUpgrade.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
-| cleanUpgrade.image.tag | string | `"1.17.0"` |  |
+| cleanUpgrade.image.tag | string | `"2.0.0"` |  |
 | cleanUpgrade.resources.requests.memory | string | `"256Mi"` |  |
 | cleanUpgrade.resources.requests.cpu | string | `"100m"` |  |
 | cleanUpgrade.resources.limits.memory | string | `"256Mi"` |  |
@@ -309,7 +309,7 @@ helm install kube-prometheus-stack chart/
 | grafana.sidecar.datasources.labelValue | string | `"1"` |  |
 | grafana.dashboardProviders | object | `{}` |  |
 | grafana.downloadDashboardsImage.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
-| grafana.downloadDashboardsImage.tag | string | `"1.17.0"` |  |
+| grafana.downloadDashboardsImage.tag | string | `"2.0.0"` |  |
 | grafana.downloadDashboards.resources.limits.cpu | string | `"20m"` |  |
 | grafana.downloadDashboards.resources.limits.memory | string | `"20Mi"` |  |
 | grafana.downloadDashboards.resources.requests.cpu | string | `"20m"` |  |
@@ -500,7 +500,7 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsUser | int | `65532` |  |
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsGroup | int | `65532` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.image.tag | string | `"1.17.0"` |  |
+| prometheusOperator.admissionWebhooks.cleanupProxy.image.tag | string | `"2.0.0"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.resources.limits.cpu | string | `"50m"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.resources.limits.memory | string | `"50Mi"` |  |

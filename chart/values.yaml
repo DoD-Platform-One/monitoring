@@ -103,7 +103,7 @@ cleanUpgrade:
   enabled: false
   image:
     repository: registry1.dso.mil/ironbank/big-bang/base
-    tag: 1.17.0
+    tag: 2.0.0
   resources:
     requests:
       memory: 256Mi
@@ -966,7 +966,7 @@ grafana:
 
   downloadDashboardsImage:
     repository: registry1.dso.mil/ironbank/big-bang/base #curlimages/curl
-    tag: 1.17.0
+    tag: 2.0.0
   
   ## Resource settings for above DownloadDashboards container
   downloadDashboards:
@@ -1809,7 +1809,7 @@ prometheusOperator:
     cleanupProxy:
       image:
         repository: registry1.dso.mil/ironbank/big-bang/base
-        tag: 1.17.0
+        tag: 2.0.0
         pullPolicy: IfNotPresent
       resources:
         limits:
