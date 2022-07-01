@@ -1697,10 +1697,10 @@ prometheus-node-exporter:
   resources:
     limits:
       cpu: 200m
-      memory: 50Mi
+      memory: 250Mi
     requests:
       cpu: 200m
-      memory: 50Mi  
+      memory: 250Mi  
   ## Disable the hostNetwork in order to resolve no-host-namespace violations. If not set, the prometheus-node-exporter default (hostNetwork: true) is used.
   #
   hostNetwork: false
