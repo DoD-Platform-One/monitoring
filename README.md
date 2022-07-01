@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 35.5.1-bb.3](https://img.shields.io/badge/Version-35.5.1--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.57.0](https://img.shields.io/badge/AppVersion-0.57.0-informational?style=flat-square)
+![Version: 35.5.1-bb.4](https://img.shields.io/badge/Version-35.5.1--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.57.0](https://img.shields.io/badge/AppVersion-0.57.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -462,9 +462,9 @@ helm install kube-prometheus-stack chart/
 | prometheus-node-exporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/node-exporter"` |  |
 | prometheus-node-exporter.image.tag | string | `"v1.3.1"` |  |
 | prometheus-node-exporter.resources.limits.cpu | string | `"200m"` |  |
-| prometheus-node-exporter.resources.limits.memory | string | `"50Mi"` |  |
+| prometheus-node-exporter.resources.limits.memory | string | `"250Mi"` |  |
 | prometheus-node-exporter.resources.requests.cpu | string | `"200m"` |  |
-| prometheus-node-exporter.resources.requests.memory | string | `"50Mi"` |  |
+| prometheus-node-exporter.resources.requests.memory | string | `"250Mi"` |  |
 | prometheus-node-exporter.hostNetwork | bool | `false` |  |
 | prometheus-node-exporter.hostPID | bool | `false` |  |
 | prometheus-node-exporter.namespaceOverride | string | `""` |  |
