@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 35.5.1-bb.4](https://img.shields.io/badge/Version-35.5.1--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.57.0](https://img.shields.io/badge/AppVersion-0.57.0-informational?style=flat-square)
+![Version: 36.2.1-bb.0](https://img.shields.io/badge/Version-36.2.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.57.0](https://img.shields.io/badge/AppVersion-0.57.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -131,6 +131,7 @@ helm install kube-prometheus-stack chart/
 | defaultRules.labels | object | `{}` |  |
 | defaultRules.annotations | object | `{}` |  |
 | defaultRules.additionalRuleLabels | object | `{}` |  |
+| defaultRules.additionalRuleAnnotations | object | `{}` |  |
 | defaultRules.runbookUrl | string | `"https://runbooks.prometheus-operator.dev/runbooks"` |  |
 | defaultRules.disabled | object | `{}` |  |
 | additionalPrometheusRulesMap | object | `{}` |  |
@@ -149,7 +150,18 @@ helm install kube-prometheus-stack chart/
 | alertmanager.podDisruptionBudget.minAvailable | int | `1` |  |
 | alertmanager.podDisruptionBudget.maxUnavailable | string | `""` |  |
 | alertmanager.config.global.resolve_timeout | string | `"5m"` |  |
-| alertmanager.config.route.group_by[0] | string | `"job"` |  |
+| alertmanager.config.inhibit_rules[0].source_matchers[0] | string | `"severity = critical"` |  |
+| alertmanager.config.inhibit_rules[0].target_matchers[0] | string | `"severity =~ warning\|info"` |  |
+| alertmanager.config.inhibit_rules[0].equal[0] | string | `"namespace"` |  |
+| alertmanager.config.inhibit_rules[0].equal[1] | string | `"alertname"` |  |
+| alertmanager.config.inhibit_rules[1].source_matchers[0] | string | `"severity = warning"` |  |
+| alertmanager.config.inhibit_rules[1].target_matchers[0] | string | `"severity = info"` |  |
+| alertmanager.config.inhibit_rules[1].equal[0] | string | `"namespace"` |  |
+| alertmanager.config.inhibit_rules[1].equal[1] | string | `"alertname"` |  |
+| alertmanager.config.inhibit_rules[2].source_matchers[0] | string | `"alertname = InfoInhibitor"` |  |
+| alertmanager.config.inhibit_rules[2].target_matchers[0] | string | `"severity = info"` |  |
+| alertmanager.config.inhibit_rules[2].equal[0] | string | `"namespace"` |  |
+| alertmanager.config.route.group_by[0] | string | `"namespace"` |  |
 | alertmanager.config.route.group_wait | string | `"30s"` |  |
 | alertmanager.config.route.group_interval | string | `"5m"` |  |
 | alertmanager.config.route.repeat_interval | string | `"12h"` |  |
@@ -251,7 +263,7 @@ helm install kube-prometheus-stack chart/
 | grafana.enabled | bool | `true` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"8.6.2"` |  |
+| grafana.image.tag | string | `"9.0.1"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
 | grafana.resources.limits.memory | string | `"256Mi"` |  |
@@ -288,7 +300,7 @@ helm install kube-prometheus-stack chart/
 | grafana.ingress.path | string | `"/"` |  |
 | grafana.ingress.tls | list | `[]` |  |
 | grafana.sidecar.image.repository | string | `"registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar"` |  |
-| grafana.sidecar.image.tag | string | `"1.18.1"` |  |
+| grafana.sidecar.image.tag | string | `"1.19.2"` |  |
 | grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
 | grafana.sidecar.resources.requests.cpu | string | `"100m"` |  |
@@ -690,7 +702,7 @@ helm install kube-prometheus-stack chart/
 | prometheus.prometheusSpec.web | object | `{}` |  |
 | prometheus.prometheusSpec.enableFeatures | list | `[]` |  |
 | prometheus.prometheusSpec.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/prometheus"` |  |
-| prometheus.prometheusSpec.image.tag | string | `"v2.36.0"` |  |
+| prometheus.prometheusSpec.image.tag | string | `"v2.36.2"` |  |
 | prometheus.prometheusSpec.image.sha | string | `""` |  |
 | prometheus.prometheusSpec.tolerations | list | `[]` |  |
 | prometheus.prometheusSpec.topologySpreadConstraints | list | `[]` |  |
@@ -776,6 +788,75 @@ helm install kube-prometheus-stack chart/
 | prometheus.additionalRulesForClusterRole | list | `[]` |  |
 | prometheus.additionalServiceMonitors | list | `[]` |  |
 | prometheus.additionalPodMonitors | list | `[]` |  |
+| thanosRuler.enabled | bool | `false` |  |
+| thanosRuler.annotations | object | `{}` |  |
+| thanosRuler.serviceAccount.create | bool | `true` |  |
+| thanosRuler.serviceAccount.name | string | `""` |  |
+| thanosRuler.serviceAccount.annotations | object | `{}` |  |
+| thanosRuler.podDisruptionBudget.enabled | bool | `false` |  |
+| thanosRuler.podDisruptionBudget.minAvailable | int | `1` |  |
+| thanosRuler.podDisruptionBudget.maxUnavailable | string | `""` |  |
+| thanosRuler.ingress.enabled | bool | `false` |  |
+| thanosRuler.ingress.annotations | object | `{}` |  |
+| thanosRuler.ingress.labels | object | `{}` |  |
+| thanosRuler.ingress.hosts | list | `[]` |  |
+| thanosRuler.ingress.paths | list | `[]` |  |
+| thanosRuler.ingress.tls | list | `[]` |  |
+| thanosRuler.service.annotations | object | `{}` |  |
+| thanosRuler.service.labels | object | `{}` |  |
+| thanosRuler.service.clusterIP | string | `""` |  |
+| thanosRuler.service.port | int | `10902` |  |
+| thanosRuler.service.targetPort | int | `10902` |  |
+| thanosRuler.service.nodePort | int | `30905` |  |
+| thanosRuler.service.additionalPorts | list | `[]` |  |
+| thanosRuler.service.externalIPs | list | `[]` |  |
+| thanosRuler.service.loadBalancerIP | string | `""` |  |
+| thanosRuler.service.loadBalancerSourceRanges | list | `[]` |  |
+| thanosRuler.service.externalTrafficPolicy | string | `"Cluster"` |  |
+| thanosRuler.service.type | string | `"ClusterIP"` |  |
+| thanosRuler.serviceMonitor.interval | string | `""` |  |
+| thanosRuler.serviceMonitor.selfMonitor | bool | `true` |  |
+| thanosRuler.serviceMonitor.proxyUrl | string | `""` |  |
+| thanosRuler.serviceMonitor.scheme | string | `""` |  |
+| thanosRuler.serviceMonitor.tlsConfig | object | `{}` |  |
+| thanosRuler.serviceMonitor.bearerTokenFile | string | `nil` |  |
+| thanosRuler.serviceMonitor.metricRelabelings | list | `[]` |  |
+| thanosRuler.serviceMonitor.relabelings | list | `[]` |  |
+| thanosRuler.thanosRulerSpec.podMetadata | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.image.repository | string | `"quay.io/thanos/thanos"` |  |
+| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.24.0"` |  |
+| thanosRuler.thanosRulerSpec.image.sha | string | `""` |  |
+| thanosRuler.thanosRulerSpec.ruleNamespaceSelector | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.ruleSelectorNilUsesHelmValues | bool | `true` |  |
+| thanosRuler.thanosRulerSpec.ruleSelector | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.logFormat | string | `"logfmt"` |  |
+| thanosRuler.thanosRulerSpec.logLevel | string | `"info"` |  |
+| thanosRuler.thanosRulerSpec.replicas | int | `1` |  |
+| thanosRuler.thanosRulerSpec.retention | string | `"24h"` |  |
+| thanosRuler.thanosRulerSpec.storage | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.externalPrefix | string | `nil` |  |
+| thanosRuler.thanosRulerSpec.routePrefix | string | `"/"` |  |
+| thanosRuler.thanosRulerSpec.paused | bool | `false` |  |
+| thanosRuler.thanosRulerSpec.nodeSelector | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.resources | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.podAntiAffinity | string | `""` |  |
+| thanosRuler.thanosRulerSpec.podAntiAffinityTopologyKey | string | `"kubernetes.io/hostname"` |  |
+| thanosRuler.thanosRulerSpec.affinity | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.tolerations | list | `[]` |  |
+| thanosRuler.thanosRulerSpec.topologySpreadConstraints | list | `[]` |  |
+| thanosRuler.thanosRulerSpec.securityContext.runAsGroup | int | `2000` |  |
+| thanosRuler.thanosRulerSpec.securityContext.runAsNonRoot | bool | `true` |  |
+| thanosRuler.thanosRulerSpec.securityContext.runAsUser | int | `1000` |  |
+| thanosRuler.thanosRulerSpec.securityContext.fsGroup | int | `2000` |  |
+| thanosRuler.thanosRulerSpec.listenLocal | bool | `false` |  |
+| thanosRuler.thanosRulerSpec.containers | list | `[]` |  |
+| thanosRuler.thanosRulerSpec.volumes | list | `[]` |  |
+| thanosRuler.thanosRulerSpec.volumeMounts | list | `[]` |  |
+| thanosRuler.thanosRulerSpec.initContainers | list | `[]` |  |
+| thanosRuler.thanosRulerSpec.priorityClassName | string | `""` |  |
+| thanosRuler.thanosRulerSpec.portName | string | `"web"` |  |
+| thanosRuler.extraSecret.annotations | object | `{}` |  |
+| thanosRuler.extraSecret.data | object | `{}` |  |
 
 ## Contributing
 
