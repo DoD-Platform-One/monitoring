@@ -852,8 +852,6 @@ grafana:
     #server:
       #root_url: https://grafana.{{ .Values.hostname }}/
       #Block is auto-set when using Umbrella
-    auth:
-      signout_redirect_url: https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/logout
     auth.generic_oauth:
       enabled: false
       client_id: grafana    #this is a sample client_id, review docs/KEYCLOAK.md
