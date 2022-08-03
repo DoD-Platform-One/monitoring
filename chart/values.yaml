@@ -367,6 +367,9 @@ alertmanager:
 
     labels: {}
 
+    ## Redirect ingress to an additional defined port on the service
+    # servicePort: 8081
+
     ## Hosts must be provided if Ingress is enabled.
     ##
     hosts: []
@@ -461,6 +464,10 @@ alertmanager:
 
     ## Additional ports to open for Alertmanager service
     additionalPorts: []
+    # additionalPorts:
+    # - name: authenticated
+    #   port: 8081
+    #   targetPort: 8081
 
     externalIPs: []
     loadBalancerIP: ""
@@ -580,6 +587,10 @@ alertmanager:
     ## this Alertmanager instance. Defaults to 'alertmanager-' The secret is mounted into /etc/alertmanager/config.
     ##
     # configSecret:
+
+    ## WebTLSConfig defines the TLS parameters for HTTPS
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#alertmanagerwebspec
+    web: {}
 
     ## AlertmanagerConfigs to be selected to merge and configure Alertmanager with.
     ##
@@ -748,6 +759,18 @@ alertmanager:
     ## Containers allows injecting additional containers. This is meant to allow adding an authentication proxy to an Alertmanager pod.
     ##
     containers: []
+    # containers:
+    # - name: oauth-proxy
+    #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0
+    #   args:
+    #   - --upstream=http://127.0.0.1:9093
+    #   - --http-address=0.0.0.0:8081
+    #   - ...
+    #   ports:
+    #   - containerPort: 8081
+    #     name: oauth-proxy
+    #     protocol: TCP
+    #   resources: {}
 
     # Additional volumes on the output StatefulSet definition.
     volumes: []
@@ -799,7 +822,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 9.0.1
+    tag: 9.0.4
     pullSecrets:
     - private-registry
 
@@ -1016,6 +1039,11 @@ grafana:
   #   local-dashboard-base64:
   #     url: https://example.com/repository/test-b64.json
   #     b64content: true
+  # ## Field with internal link pointing to existing data source in Grafana.
+  # ## Can be provisioned via additionalDataSources
+  # exemplarTraceIdDestinations: {}
+  #   # datasourceUid: Jaeger
+  #   # traceIdLabelName: trace_id
 
   extraConfigmapMounts: []
   # - name: certs-configmap
@@ -1115,7 +1143,13 @@ kubeApiServer:
     ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
     ##
-    metricRelabelings: []
+    metricRelabelings:
+      # Drop excessively noisy apiserver buckets.
+      - action: drop
+        regex: apiserver_request_duration_seconds_bucket;(0.15|0.2|0.3|0.35|0.4|0.45|0.6|0.7|0.8|0.9|1.25|1.5|1.75|2|3|3.5|4|4.5|6|7|8|9|15|25|40|50)
+        sourceLabels:
+          - __name__
+          - le
     # - action: keep
     #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
     #   sourceLabels: [__name__]
@@ -1132,6 +1166,11 @@ kubeApiServer:
     #   regex: default;kubernetes;https
     # - targetLabel: __address__
     #   replacement: kubernetes.default.svc:443
+
+    ## Additional labels
+    ##
+    additionalLabels: {}
+    #  foo: bar
 
 ## Component scraping the kubelet and kubelet-hosted cAdvisor
 ##
@@ -1171,7 +1210,31 @@ kubelet:
     ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
     ##
-    cAdvisorMetricRelabelings: []
+    cAdvisorMetricRelabelings:
+      # Drop less useful container CPU metrics.
+      - sourceLabels: [__name__]
+        action: drop
+        regex: 'container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)'
+      # Drop less useful container / always zero filesystem metrics.
+      - sourceLabels: [__name__]
+        action: drop
+        regex: 'container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)'
+      # Drop less useful / always zero container memory metrics.
+      - sourceLabels: [__name__]
+        action: drop
+        regex: 'container_memory_(mapped_file|swap)'
+      # Drop less useful container process metrics.
+      - sourceLabels: [__name__]
+        action: drop
+        regex: 'container_(file_descriptors|tasks_state|threads_max)'
+      # Drop container spec metrics that overlap with kube-state-metrics.
+      - sourceLabels: [__name__]
+        action: drop
+        regex: 'container_spec.*'
+      # Drop cgroup metrics with no pod.
+      - sourceLabels: [id, pod]
+        action: drop
+        regex: '.+;'
     # - sourceLabels: [__name__, image]
     #   separator: ;
     #   regex: container_([a-z_]+);
@@ -1267,6 +1330,11 @@ kubelet:
     #   replacement: $1
     #   action: replace
 
+    ## Additional labels
+    ##
+    additionalLabels: {}
+    #  foo: bar
+
 ## Component scraping the kube controller manager
 ##
 kubeControllerManager:
@@ -1332,6 +1400,11 @@ kubeControllerManager:
     #   replacement: $1
     #   action: replace
 
+    ## Additional labels
+    ##
+    additionalLabels: {}
+    #  foo: bar
+
 ## Component scraping coreDns. Use either this or kubeDns
 ##
 coreDns:
@@ -1368,6 +1441,11 @@ coreDns:
     #   targetLabel: nodename
     #   replacement: $1
     #   action: replace
+
+    ## Additional labels
+    ##
+    additionalLabels: {}
+    #  foo: bar
 
 ## Component scraping kubeDns. Use either this or coreDns
 ##
@@ -1428,6 +1506,11 @@ kubeDns:
     #   targetLabel: nodename
     #   replacement: $1
     #   action: replace
+
+    ## Additional labels
+    ##
+    additionalLabels: {}
+    #  foo: bar
 
 ## Component scraping etcd
 ##
@@ -1495,6 +1578,10 @@ kubeEtcd:
     #   replacement: $1
     #   action: replace
 
+    ## Additional labels
+    ##
+    additionalLabels: {}
+    #  foo: bar
 
 ## Component scraping kube scheduler
 ##
@@ -1559,6 +1646,10 @@ kubeScheduler:
     #   replacement: $1
     #   action: replace
 
+    ## Additional labels
+    ##
+    additionalLabels: {}
+    #  foo: bar
 
 ## Component scraping kube proxy
 ##
@@ -1610,6 +1701,10 @@ kubeProxy:
     #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
     #   sourceLabels: [__name__]
 
+    ## Additional labels
+    ##
+    additionalLabels: {}
+    #  foo: bar
 
 ## Component scraping kube state metrics
 ##
@@ -1939,6 +2034,10 @@ prometheusOperator:
     ##
     externalIPs: []
 
+  ## Annotations to add to the operator deployment
+  ##
+  annotations: {}
+
   ## Labels to add to the operator pod
   ##
   podLabels: {}
@@ -2062,7 +2161,7 @@ prometheusOperator:
   ##
   image:
     repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.57.0
+    tag: v0.58.0
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2079,7 +2178,7 @@ prometheusOperator:
   prometheusConfigReloader:
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.57.0
+      tag: v0.58.0
       sha: ""
 
     # resource config for prometheusConfigReloader
@@ -2095,7 +2194,7 @@ prometheusOperator:
   ##
   thanosImage:
     repository: registry1.dso.mil/ironbank/opensource/thanos/thanos
-    tag: v0.26.0
+    tag: v0.27.0
     sha: ""
 
   ## Set a Field Selector to filter watched secrets
@@ -2258,6 +2357,10 @@ prometheus:
 
     ## Additional port to define in the Service
     additionalPorts: []
+    # additionalPorts:
+    # - name: authenticated
+    #   port: 8081
+    #   targetPort: 8081
 
     ## Consider that all endpoints are considered "ready" even if the Pods themselves are not
     ## Ref: https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/#ServiceSpec
@@ -2365,6 +2468,9 @@ prometheus:
 
     annotations: {}
     labels: {}
+
+    ## Redirect ingress to an additional defined port on the service
+    # servicePort: 8081
 
     ## Hostnames.
     ## Must be provided if Ingress is enabled.
@@ -2522,7 +2628,7 @@ prometheus:
     ##
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus/prometheus
-      tag: v2.36.2
+      tag: v2.37.0
       sha: ""
 
     ## Tolerations for use with node taints
@@ -2925,6 +3031,7 @@ prometheus:
     additionalAlertManagerConfigsSecret: {}
       # name:
       # key:
+      # optional: false
 
     ## AdditionalAlertRelabelConfigs allows specifying Prometheus alert relabel configurations. Alert relabel configurations specified are appended
     ## to the configurations generated by the Prometheus Operator. Alert relabel configurations specified must have the form as specified in the
@@ -2978,6 +3085,18 @@ prometheus:
     ## Containers allows injecting additional containers. This is meant to allow adding an authentication proxy to a Prometheus pod.
     ## if using proxy extraContainer update targetPort with proxy container port
     containers: []
+    # containers:
+    # - name: oauth-proxy
+    #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0
+    #   args:
+    #   - --upstream=http://127.0.0.1:9093
+    #   - --http-address=0.0.0.0:8081
+    #   - ...
+    #   ports:
+    #   - containerPort: 8081
+    #     name: oauth-proxy
+    #     protocol: TCP
+    #   resources: {}
 
     ## InitContainers allows injecting additional initContainers. This is meant to allow doing some changes
     ## (permissions, dir tree) on mounted volumes before starting prometheus
@@ -3346,7 +3465,7 @@ thanosRuler:
     ##
     image:
       repository: quay.io/thanos/thanos
-      tag: v0.24.0
+      tag: v0.27.0
       sha: ""
 
     ## Namespaces to be selected for PrometheusRules discovery.
@@ -3419,6 +3538,19 @@ thanosRuler:
     ## but the server serves requests under a different route prefix. For example for use with kubectl proxy.
     ##
     routePrefix: /
+
+    ## ObjectStorageConfig configures object storage in Thanos. Alternative to
+    ## ObjectStorageConfigFile, and lower order priority.
+    objectStorageConfig: {}
+
+    ## ObjectStorageConfigFile specifies the path of the object storage configuration file.
+    ## When used alongside with ObjectStorageConfig, ObjectStorageConfigFile takes precedence.
+    objectStorageConfigFile: ""
+
+    ## Labels configure the external label pairs to ThanosRuler. A default replica
+    ## label `thanos_ruler_replica` will be always added as a label with the value
+    ## of the pod's name and it will be dropped in the alerts.
+    labels: {}
 
     ## If set to true all actions on the underlying managed objects are not going to be performed, except for delete actions.
     ##
@@ -3529,3 +3661,7 @@ thanosRuler:
   #   auth: |
   #     foo:$apr1$OFG3Xybp$ckL0FHDAkoXYIlH9.cysT0
   #     someoneelse:$apr1$DMZX2Z4q$6SbQIfyuLQd.xmo/P0m2c.
+
+## Setting to true produces cleaner resource names, but requires a data migration because the name of the persistent volume changes. Therefore this should only be set once on initial installation.
+##
+cleanPrometheusOperatorObjectNames: false
