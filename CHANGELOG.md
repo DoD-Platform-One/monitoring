@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [39.2.1-bb.0]
+### Changed
+- Updated to upstream helm chart version 39.2.1
+- Updated images to latest IB image versions: prometheus -> `v2.37.0`, thanos -> `v0.27.0`, grafan-plugins -> `9.0.4`, -> prometheus-config-reloader/prometheus-operator -> `v0.58.0`
+
 ## [36.2.1-bb.2]
 ### Changed
 - Removed override of `signout_redirect_url` to allow Grafana to handle the URL on its own
