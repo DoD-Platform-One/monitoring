@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 39.2.1-bb.1](https://img.shields.io/badge/Version-39.2.1--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58.0](https://img.shields.io/badge/AppVersion-0.58.0-informational?style=flat-square)
+![Version: 39.2.1-bb.2](https://img.shields.io/badge/Version-39.2.1--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58.0](https://img.shields.io/badge/AppVersion-0.58.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -266,6 +266,7 @@ helm install kube-prometheus-stack chart/
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
 | grafana.image.tag | string | `"9.0.4"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
+| grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
 | grafana.resources.limits.memory | string | `"256Mi"` |  |
 | grafana.resources.requests.cpu | string | `"100m"` |  |
@@ -500,6 +501,7 @@ helm install kube-prometheus-stack chart/
 | nodeExporter.serviceMonitor.interval | string | `""` |  |
 | nodeExporter.jobLabel | string | `"jobLabel"` |  |
 | prometheus-node-exporter.serviceAccount.imagePullSecrets[0].name | string | `"private-registry"` |  |
+| prometheus-node-exporter.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | prometheus-node-exporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/node-exporter"` |  |
 | prometheus-node-exporter.image.tag | string | `"v1.3.1"` |  |
 | prometheus-node-exporter.resources.limits.cpu | string | `"200m"` |  |
@@ -602,6 +604,7 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.securityContext.runAsUser | int | `65534` |  |
 | prometheusOperator.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
 | prometheusOperator.containerSecurityContext.readOnlyRootFilesystem | bool | `true` |  |
+| prometheusOperator.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | prometheusOperator.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
 | prometheusOperator.image.tag | string | `"v0.58.0"` |  |
 | prometheusOperator.image.sha | string | `""` |  |

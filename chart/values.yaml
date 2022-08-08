@@ -825,6 +825,12 @@ grafana:
     tag: 9.0.4
     pullSecrets:
     - private-registry
+  
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+    
 
   # add plugins to be installed (only works in non-airgap, pulls directly from the internet)
   #plugins:
@@ -849,7 +855,10 @@ grafana:
     pullSecrets:
     - private-registry
     imagePullPolicy: IfNotPresent
-    securityContext: {}
+    securityContext:
+      capabilites:
+        drop:
+          - ALL
 
   ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
   ##
@@ -955,6 +964,11 @@ grafana:
       requests:
         cpu: 100m
         memory: 100Mi
+    
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
 
     dashboards:
       enabled: true
@@ -1747,6 +1761,11 @@ kube-state-metrics:
     runAsUser: 65532
     fsGroup: 65532
 
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+
   releaseLabel: true
   prometheus:
     monitor:
@@ -1805,6 +1824,12 @@ prometheus-node-exporter:
   serviceAccount:
     imagePullSecrets:
     - name: private-registry
+  
+  # set container SecurityContext
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
 
   # use IronBank image
   image:
@@ -1905,6 +1930,10 @@ prometheusOperator:
     ## On chart upgrades (or if the secret exists) the cert will not be re-generated. You can use this to provide your own
     ## certs ahead of time if you wish.
     ##
+    containerSecurityContext:
+      capabilities:
+        drop:
+          - ALL
     patch:
       enabled: true
       image:
@@ -1919,6 +1948,10 @@ prometheusOperator:
         requests:
           cpu: 50m
           memory: 50Mi
+      containerSecurityContext:
+        capabilities:
+          drop:
+            - ALL
       securityContext:
         runAsNonRoot: true
         runAsUser: 65532
@@ -2156,6 +2189,9 @@ prometheusOperator:
   containerSecurityContext:
     allowPrivilegeEscalation: false
     readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
 
   ## Prometheus-operator image
   ##
