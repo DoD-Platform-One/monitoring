@@ -31,6 +31,10 @@ spec:
       {{- end }}
       containers:
         - name: patch
+          {{- if .Values.prometheusOperator.admissionWebhooks.containerSecurityContext }}
+          securityContext:
+{{ toYaml .Values.prometheusOperator.admissionWebhooks.containerSecurityContext | indent 12 }}
+          {{- end }}
           {{- if .Values.prometheusOperator.admissionWebhooks.patch.image.sha }}
           image: {{ .Values.prometheusOperator.admissionWebhooks.patch.image.repository }}:{{ .Values.prometheusOperator.admissionWebhooks.patch.image.tag }}@sha256:{{ .Values.prometheusOperator.admissionWebhooks.patch.image.sha }}
           {{- else }}
@@ -49,6 +53,10 @@ spec:
         - name: cleanup-proxy
           image: {{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.repository }}:{{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.tag }}
           imagePullPolicy: {{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.pullPolicy }}
+{{- if .Values.prometheusOperator.admissionWebhooks.containerSecurityContext }}
+          securityContext:
+{{ toYaml .Values.prometheusOperator.admissionWebhooks.containerSecurityContext | indent 12 }}
+          {{- end }}
           command:
           - /bin/sh
           - -c
