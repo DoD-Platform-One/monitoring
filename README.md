@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 39.2.1-bb.2](https://img.shields.io/badge/Version-39.2.1--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58.0](https://img.shields.io/badge/AppVersion-0.58.0-informational?style=flat-square)
+![Version: 39.2.1-bb.3](https://img.shields.io/badge/Version-39.2.1--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58.0](https://img.shields.io/badge/AppVersion-0.58.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -264,7 +264,7 @@ helm install kube-prometheus-stack chart/
 | grafana.enabled | bool | `true` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"9.0.4"` |  |
+| grafana.image.tag | string | `"9.0.6"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
@@ -275,7 +275,7 @@ helm install kube-prometheus-stack chart/
 | grafana.testFramework.tag | string | `"1.7.0"` |  |
 | grafana.testFramework.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.testFramework.imagePullPolicy | string | `"IfNotPresent"` |  |
-| grafana.testFramework.securityContext | object | `{}` |  |
+| grafana.testFramework.securityContext.capabilites.drop[0] | string | `"ALL"` |  |
 | grafana.forceDeployDatasources | bool | `false` |  |
 | grafana.forceDeployDashboards | bool | `false` |  |
 | grafana.defaultDashboardsEnabled | bool | `true` |  |
@@ -301,11 +301,12 @@ helm install kube-prometheus-stack chart/
 | grafana.ingress.path | string | `"/"` |  |
 | grafana.ingress.tls | list | `[]` |  |
 | grafana.sidecar.image.repository | string | `"registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar"` |  |
-| grafana.sidecar.image.tag | string | `"1.19.2"` |  |
+| grafana.sidecar.image.tag | string | `"1.19.4"` |  |
 | grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
 | grafana.sidecar.resources.requests.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.requests.memory | string | `"100Mi"` |  |
+| grafana.sidecar.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.sidecar.dashboards.enabled | bool | `true` |  |
 | grafana.sidecar.dashboards.label | string | `"grafana_dashboard"` |  |
 | grafana.sidecar.dashboards.labelValue | string | `"1"` |  |
@@ -488,6 +489,7 @@ helm install kube-prometheus-stack chart/
 | kube-state-metrics.securityContext.runAsGroup | int | `65532` |  |
 | kube-state-metrics.securityContext.runAsUser | int | `65532` |  |
 | kube-state-metrics.securityContext.fsGroup | int | `65532` |  |
+| kube-state-metrics.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | kube-state-metrics.releaseLabel | bool | `true` |  |
 | kube-state-metrics.prometheus.monitor.enabled | bool | `true` |  |
 | kube-state-metrics.prometheus.monitor.interval | string | `""` |  |
@@ -530,15 +532,17 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.admissionWebhooks.failurePolicy | string | `"Fail"` |  |
 | prometheusOperator.admissionWebhooks.enabled | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.caBundle | string | `""` |  |
+| prometheusOperator.admissionWebhooks.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | prometheusOperator.admissionWebhooks.patch.enabled | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.patch.image.repository | string | `"registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen"` |  |
-| prometheusOperator.admissionWebhooks.patch.image.tag | string | `"v1.1.1"` |  |
+| prometheusOperator.admissionWebhooks.patch.image.tag | string | `"v1.3.0"` |  |
 | prometheusOperator.admissionWebhooks.patch.image.sha | string | `""` |  |
 | prometheusOperator.admissionWebhooks.patch.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.admissionWebhooks.patch.resources.limits.cpu | string | `"50m"` |  |
 | prometheusOperator.admissionWebhooks.patch.resources.limits.memory | string | `"50Mi"` |  |
 | prometheusOperator.admissionWebhooks.patch.resources.requests.cpu | string | `"50m"` |  |
 | prometheusOperator.admissionWebhooks.patch.resources.requests.memory | string | `"50Mi"` |  |
+| prometheusOperator.admissionWebhooks.patch.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsNonRoot | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsUser | int | `65532` |  |
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsGroup | int | `65532` |  |
