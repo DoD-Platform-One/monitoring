@@ -822,7 +822,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 9.0.4
+    tag: 9.0.6
     pullSecrets:
     - private-registry
   
@@ -955,7 +955,7 @@ grafana:
     # use IronBank image
     image:
       repository: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar
-      tag: 1.19.2
+      tag: 1.19.4
 
     resources:
       limits:
@@ -1938,7 +1938,7 @@ prometheusOperator:
       enabled: true
       image:
         repository: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen
-        tag: v1.1.1
+        tag: v1.3.0
         sha: ""
         pullPolicy: IfNotPresent
       resources:
