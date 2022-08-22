@@ -72,6 +72,10 @@ istio:
     port: ""
     namespace: ""
   injection: disabled
+  mtls:
+    # Note that setting this to STRICT requires additional configuration for Prometheus and monitors.
+    # Review `./docs/istio-mtls-metrics.md` for additional information.
+    mode: STRICT
 
 sso:
   enabled: false

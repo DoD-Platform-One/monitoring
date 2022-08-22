@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [39.2.1-bb.4]
+### Added
+- Strict mTLS for monitoring
+
 ## [39.2.1-bb.3]
 ### Changed
 - Updated images to latest IB image versions: kube-webhook-certgen -> `v1.3.0`, grafan-plugins -> `9.0.6`, -> k8s sidecar -> `v1.19.4`

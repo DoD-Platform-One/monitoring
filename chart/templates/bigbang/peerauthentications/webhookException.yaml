@@ -1,0 +1,16 @@
+{{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") (eq .Values.istio.mtls.mode "STRICT") }}
+apiVersion: "security.istio.io/v1beta1"
+kind: PeerAuthentication
+metadata:
+  name: monitoring-webhook-exception
+  namespace: {{ .Release.Namespace }}
+spec:
+  mtls:
+    mode: {{ .Values.istio.mtls.mode }}
+  selector:
+    matchLabels:
+      app: kube-prometheus-stack-operator
+  portLevelMtls:
+    "10250":
+      mode: PERMISSIVE
+{{- end }}
