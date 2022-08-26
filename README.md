@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 39.2.1-bb.5](https://img.shields.io/badge/Version-39.2.1--bb.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58.0](https://img.shields.io/badge/AppVersion-0.58.0-informational?style=flat-square)
+![Version: 39.9.0-bb.0](https://img.shields.io/badge/Version-39.9.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58.0](https://img.shields.io/badge/AppVersion-0.58.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -112,6 +112,7 @@ helm install kube-prometheus-stack chart/
 | defaultRules.rules.kubeApiserverBurnrate | bool | `true` |  |
 | defaultRules.rules.kubeApiserverHistogram | bool | `true` |  |
 | defaultRules.rules.kubeApiserverSlos | bool | `true` |  |
+| defaultRules.rules.kubeControllerManager | bool | `true` |  |
 | defaultRules.rules.kubelet | bool | `true` |  |
 | defaultRules.rules.kubeProxy | bool | `true` |  |
 | defaultRules.rules.kubePrometheusGeneral | bool | `true` |  |
@@ -265,7 +266,7 @@ helm install kube-prometheus-stack chart/
 | grafana.enabled | bool | `true` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"9.0.6"` |  |
+| grafana.image.tag | string | `"9.1.0"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
@@ -531,6 +532,7 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.tls.tlsMinVersion | string | `"VersionTLS13"` |  |
 | prometheusOperator.tls.internalPort | int | `10250` |  |
 | prometheusOperator.admissionWebhooks.failurePolicy | string | `"Fail"` |  |
+| prometheusOperator.admissionWebhooks.timeoutSeconds | int | `10` |  |
 | prometheusOperator.admissionWebhooks.enabled | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.caBundle | string | `""` |  |
 | prometheusOperator.admissionWebhooks.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
@@ -568,6 +570,7 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.namespaces | object | `{}` |  |
 | prometheusOperator.denyNamespaces | list | `[]` |  |
 | prometheusOperator.alertmanagerInstanceNamespaces | list | `[]` |  |
+| prometheusOperator.alertmanagerConfigNamespaces | list | `[]` |  |
 | prometheusOperator.prometheusInstanceNamespaces | list | `[]` |  |
 | prometheusOperator.thanosRulerInstanceNamespaces | list | `[]` |  |
 | prometheusOperator.serviceAccount.create | bool | `true` |  |
@@ -626,7 +629,7 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.thanosImage.sha | string | `""` |  |
 | prometheusOperator.secretFieldSelector | string | `""` |  |
 | prometheusOperator.kubectlImage.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl"` |  |
-| prometheusOperator.kubectlImage.tag | string | `"v1.22.2"` |  |
+| prometheusOperator.kubectlImage.tag | string | `"v1.24.3"` |  |
 | prometheusOperator.kubectlImage.sha | string | `""` |  |
 | prometheusOperator.kubectlImage.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheus.enabled | bool | `true` |  |
@@ -738,9 +741,10 @@ helm install kube-prometheus-stack chart/
 | prometheus.prometheusSpec.listenLocal | bool | `false` |  |
 | prometheus.prometheusSpec.enableAdminAPI | bool | `false` |  |
 | prometheus.prometheusSpec.web | object | `{}` |  |
+| prometheus.prometheusSpec.exemplars | string | `""` |  |
 | prometheus.prometheusSpec.enableFeatures | list | `[]` |  |
 | prometheus.prometheusSpec.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/prometheus"` |  |
-| prometheus.prometheusSpec.image.tag | string | `"v2.37.0"` |  |
+| prometheus.prometheusSpec.image.tag | string | `"v2.38.0"` |  |
 | prometheus.prometheusSpec.image.sha | string | `""` |  |
 | prometheus.prometheusSpec.tolerations | list | `[]` |  |
 | prometheus.prometheusSpec.topologySpreadConstraints | list | `[]` |  |
@@ -871,7 +875,9 @@ helm install kube-prometheus-stack chart/
 | thanosRuler.thanosRulerSpec.logLevel | string | `"info"` |  |
 | thanosRuler.thanosRulerSpec.replicas | int | `1` |  |
 | thanosRuler.thanosRulerSpec.retention | string | `"24h"` |  |
+| thanosRuler.thanosRulerSpec.evaluationInterval | string | `""` |  |
 | thanosRuler.thanosRulerSpec.storage | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.alertmanagersConfig | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.externalPrefix | string | `nil` |  |
 | thanosRuler.thanosRulerSpec.routePrefix | string | `"/"` |  |
 | thanosRuler.thanosRulerSpec.objectStorageConfig | object | `{}` |  |

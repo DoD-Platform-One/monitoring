@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [39.9.0-bb.0]
+### Changed
+- Updated Monitoring chart version to `39.9.0`
+- Updated images to latest IB image versions: kubectl -> `v1.24.3`, grafana-plugins -> `9.1.0`, ->prometheus -> `v2.38.0`
+
 ## [39.2.1-bb.5]
 ### Changed
 - Helm dependency update for Grafana subchart
