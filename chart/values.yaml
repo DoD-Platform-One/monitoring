@@ -160,6 +160,7 @@ defaultRules:
     kubeApiserverBurnrate: true
     kubeApiserverHistogram: true
     kubeApiserverSlos: true
+    kubeControllerManager: true
     kubelet: true
     kubeProxy: true
     kubePrometheusGeneral: true
@@ -826,7 +827,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 9.0.6
+    tag: 9.1.0
     pullSecrets:
     - private-registry
   
@@ -1926,6 +1927,8 @@ prometheusOperator:
   ## rules from making their way into prometheus and potentially preventing the container from starting
   admissionWebhooks:
     failurePolicy: Fail
+    ## The default timeoutSeconds is 10 and the maximum value is 30.
+    timeoutSeconds: 10
     enabled: true
     ## A PEM encoded CA bundle which will be used to validate the webhook's server certificate.
     ## If unspecified, system trust roots on the apiserver are used.
@@ -2016,6 +2019,7 @@ prometheusOperator:
   ## Filter namespaces to look for prometheus-operator custom resources
   ##
   alertmanagerInstanceNamespaces: []
+  alertmanagerConfigNamespaces: []
   prometheusInstanceNamespaces: []
   thanosRulerInstanceNamespaces: []
 
@@ -2245,7 +2249,7 @@ prometheusOperator:
   ##
   kubectlImage:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
-    tag: v1.22.2
+    tag: v1.24.3
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2659,6 +2663,14 @@ prometheus:
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#webtlsconfig
     web: {}
 
+    ## Exemplars related settings that are runtime reloadable.
+    ## It requires to enable the exemplar storage feature to be effective.
+    exemplars: ""
+      ## Maximum number of exemplars stored in memory for all series.
+      ## If not set, Prometheus uses its default value.
+      ## A value of zero or less than zero disables the storage.
+      # maxSize: 100000
+
     # EnableFeatures API enables access to Prometheus disabled features.
     # ref: https://prometheus.io/docs/prometheus/latest/disabled_features/
     enableFeatures: []
@@ -2668,7 +2680,7 @@ prometheus:
     ##
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus/prometheus
-      tag: v2.37.0
+      tag: v2.38.0
       sha: ""
 
     ## Tolerations for use with node taints
@@ -3556,6 +3568,10 @@ thanosRuler:
     ##
     retention: 24h
 
+    ## Interval between consecutive evaluations.
+    ##
+    evaluationInterval: ""
+
     ## Storage is the definition of how storage will be used by the ThanosRuler instances.
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
     ##
@@ -3569,6 +3585,22 @@ thanosRuler:
     #         storage: 50Gi
     #   selector: {}
 
+    ## AlertmanagerConfig define configuration for connecting to alertmanager.
+    ## Only available with Thanos v0.10.0 and higher. Maps to the alertmanagers.config Thanos Ruler arg.
+    alertmanagersConfig: {}
+    #   - api_version: v2
+    #     http_config:
+    #       basic_auth:
+    #         username: some_user
+    #         password: some_pass
+    #     static_configs:
+    #       - alertmanager.thanos.io
+    #     scheme: http
+    #     timeout: 10s
+
+    ## DEPRECATED. Define URLs to send alerts to Alertmanager. For Thanos v0.10.0 and higher, alertmanagersConfig should be used instead.
+    ## Note: this field will be ignored if alertmanagersConfig is specified. Maps to the alertmanagers.url Thanos Ruler arg.
+    # alertmanagersUrl:
 
     ## The external URL the Thanos Ruler instances will be available under. This is necessary to generate correct URLs. This is necessary if Thanos Ruler is not served from root of a DNS name. string false
     ##
