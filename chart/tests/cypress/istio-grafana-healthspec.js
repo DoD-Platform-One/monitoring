@@ -15,12 +15,23 @@ if (Cypress.env("check_istio_dashboards")) {
     return false
   })
 
+  function expandMenu() {
+    cy.get('.pointer > button[id^="collapse-button-"]').invoke('attr', 'aria-expanded').then(($expanded) => {
+      if ($expanded === 'false') {
+        cy.get('.pointer > button[id^="collapse-button-"]').click({multiple: true})
+      }
+    })
+  }
+
   function dashboard_menu () {
     cy.task('log','Loading the dashboard menu...')
     cy.wait(500)
     cy.visit(`${Cypress.env('grafana_url')}/dashboards`)
     cy.get('.page-header__title').contains('Dashboards')
     cy.task('log','Dashboard menu is loaded')
+    // Wait for all buttons to load
+    cy.wait(1000)
+    expandMenu()
   }
 
   function enter_dashboard (dashname, allownodata) {
