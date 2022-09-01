@@ -62,7 +62,7 @@ if (Cypress.env("check_istio_dashboards")) {
       cy.get('body').then($body => {
         // .datapoints-warning are instances where "No data" appears overlaid on a chart
         cy.task('log', 'Charts with no data: ' + $body.find('.datapoints-warning').length  + ' of threshold: ' + allownodata )
-        if ($body.find('.datapoints-warning').length > allownodata) {
+        if ($body.find('.datapoints-warning').length > 0) {
           cy.get('.datapoints-warning', {timeout: 10000}).should('have.length.lte', parseFloat(allownodata))
         } 
       })
