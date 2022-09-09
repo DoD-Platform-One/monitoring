@@ -1134,6 +1134,43 @@ grafana:
     #   targetLabel: nodename
     #   replacement: $1
     #   action: replace
+  
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  persistence:
+    type: pvc
+    enabled: false
+    # storageClassName: default
+    accessModes:
+      - ReadWriteOnce
+    size: 10Gi
+    # annotations: {}
+
+  initChownData:
+    ## If false, data ownership will not be reset at startup
+    ## This allows the prometheus-server to be run with an arbitrary user
+    ## Is not required for BigBang monitoring installations since permission/owership is fully stated
+    enabled: false
+  
+    ## initChownData container image
+    ##
+    image:
+      repository: registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal
+      tag: "8.6"
+      sha: ""
+      pullPolicy: IfNotPresent
+  
+    ## initChownData resource requests and limits
+    ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+    ##
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
 
 kiali:
   enabled: false
