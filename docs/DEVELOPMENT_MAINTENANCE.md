@@ -10,6 +10,46 @@ Monitoring is a modified/customized version of an upstream chart. The below deta
 
 4. From the root of the repo run `kpt pkg update chart@kube-prometheus-stack-23.1.6 --strategy alpha-git-patch` replacing `kube-prometheus-stack-23.1.6` with the version tag you got in step 1. You may be prompted to resolve some conflicts - choose what makes sense (if there are BB additions/changes keep them, if there are upstream additions/changes keep them).
 
+```chart/values.yaml```
+- We want to ensure that `grafana.persistence.enabled=false` and initChownData is using a registry1 ubiX-minimal image:
+```
+grafana:
+  ...
+  persistence:
+    type: pvc
+    enabled: false
+    # storageClassName: default
+    accessModes:
+      - ReadWriteOnce
+    size: 10Gi
+    # annotations: {}
+
+  initChownData:
+    ## If false, data ownership will not be reset at startup
+    ## This allows the prometheus-server to be run with an arbitrary user
+    ##
+    enabled: false
+  
+    ## initChownData container image
+    ##
+    image:
+      repository: registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal
+      tag: "8.6"
+      sha: ""
+      pullPolicy: IfNotPresent
+  
+    ## initChownData resource requests and limits
+    ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+    ##
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+```
+
 5. Modify the `version` in `Chart.yaml` - you will want to append `-bb.0` to the chart version from upstream.
 
 6. Update `CHANGELOG.md` adding an entry for the new version and noting all changes (at minimum should include `Updated Monitoring chart to x.x.x` and `Updated image versions to latest in IB (P: x.x.x G: x.x.x A: x.x.x)` with the versions for Prometheus, Grafana, Alertmanager).
