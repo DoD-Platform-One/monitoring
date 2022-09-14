@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: istio-sidecar-heap-memory
+  name: istio-prometheus-rules
   namespace: {{ .Release.Namespace }}
 spec:
   groups:
@@ -26,4 +26,36 @@ spec:
       for: 1h
       labels:
         severity: critical
+    - alert: IstioConfigValidationFailed
+      annotations:
+        description: Istio Configuration Validation Error
+        summary: Istio's Galley Reports a Configuration Validation Error
+      expr: sum(rate(galley_validation_failed[2m]))
+      for: 2m
+      labels:
+        severity: critical
+    - alert: Istio5XXResponseCode
+      annotations:
+        description: Multiple {{`{{`}} $labels.reponse_code {{`}}`}} Errors for pod {{`{{`}} $labels.pod_name {{`}}`}}
+        summary: Istio Mesh is Reporting 5XX Errors from Applications in-mesh
+      expr: istio_requests_total{reporter="source",response_code=~"5.*"} >= 1
+      for: 10m
+      labels:
+        severity: critical
+    - alert: IstioSidecarEndpointError
+      annotations:
+        description: Istio Sidecar Agent Not Ready for pod {{`{{`}} $labels.pod_name {{`}}`}} in namespace {{`{{`}} $labels.namespace {{`}}`}}
+        summary: One or more Istio Sidecars are Not Ready
+      expr: istio_agent_pilot_endpoint_not_ready{} >= 1
+      for: 10m
+      labels:
+        severity: critical
+    - alert: IstioSidecarListenerConflict
+      annotations:
+        description: Istio Sidecar Agent Has Listener Conflict for pod {{`{{`}} $labels.pod_name {{`}}`}} in namespace {{`{{`}} $labels.namespace {{`}}`}}
+        summary: One or more Istio Sidecars have a Listener Conflict
+      expr: istio_agent_pilot_conflict_inbound_listener{} >= 1
+      for: 10m
+      labels:
+        severity: warning
 {{- end }}
