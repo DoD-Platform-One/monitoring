@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 39.9.0-bb.3](https://img.shields.io/badge/Version-39.9.0--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58.0](https://img.shields.io/badge/AppVersion-0.58.0-informational?style=flat-square)
+![Version: 40.0.0-bb.0](https://img.shields.io/badge/Version-40.0.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.59.1](https://img.shields.io/badge/AppVersion-v0.59.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -153,7 +153,7 @@ helm install kube-prometheus-stack chart/
 | alertmanager.podDisruptionBudget.maxUnavailable | string | `""` |  |
 | alertmanager.config.global.resolve_timeout | string | `"5m"` |  |
 | alertmanager.config.inhibit_rules[0].source_matchers[0] | string | `"severity = critical"` |  |
-| alertmanager.config.inhibit_rules[0].target_matchers[0] | string | `"severity =~ warning|info"` |  |
+| alertmanager.config.inhibit_rules[0].target_matchers[0] | string | `"severity =~ warning\|info"` |  |
 | alertmanager.config.inhibit_rules[0].equal[0] | string | `"namespace"` |  |
 | alertmanager.config.inhibit_rules[0].equal[1] | string | `"alertname"` |  |
 | alertmanager.config.inhibit_rules[1].source_matchers[0] | string | `"severity = warning"` |  |
@@ -169,7 +169,7 @@ helm install kube-prometheus-stack chart/
 | alertmanager.config.route.repeat_interval | string | `"12h"` |  |
 | alertmanager.config.route.receiver | string | `"null"` |  |
 | alertmanager.config.route.routes[0].receiver | string | `"null"` |  |
-| alertmanager.config.route.routes[0].matchers[0] | string | `"alertname =~ \"InfoInhibitor|Watchdog\""` |  |
+| alertmanager.config.route.routes[0].matchers[0] | string | `"alertname =~ \"InfoInhibitor\|Watchdog\""` |  |
 | alertmanager.config.receivers[0].name | string | `"null"` |  |
 | alertmanager.config.templates[0] | string | `"/etc/alertmanager/config/*.tmpl"` |  |
 | alertmanager.tplConfig | bool | `false` |  |
@@ -266,7 +266,7 @@ helm install kube-prometheus-stack chart/
 | grafana.enabled | bool | `true` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"9.1.0"` |  |
+| grafana.image.tag | string | `"9.1.3"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
@@ -367,7 +367,7 @@ helm install kube-prometheus-stack chart/
 | kubeApiServer.serviceMonitor.selector.matchLabels.component | string | `"apiserver"` |  |
 | kubeApiServer.serviceMonitor.selector.matchLabels.provider | string | `"kubernetes"` |  |
 | kubeApiServer.serviceMonitor.metricRelabelings[0].action | string | `"drop"` |  |
-| kubeApiServer.serviceMonitor.metricRelabelings[0].regex | string | `"apiserver_request_duration_seconds_bucket;(0.15|0.2|0.3|0.35|0.4|0.45|0.6|0.7|0.8|0.9|1.25|1.5|1.75|2|3|3.5|4|4.5|6|7|8|9|15|25|40|50)"` |  |
+| kubeApiServer.serviceMonitor.metricRelabelings[0].regex | string | `"apiserver_request_duration_seconds_bucket;(0.15\|0.2\|0.3\|0.35\|0.4\|0.45\|0.6\|0.7\|0.8\|0.9\|1.25\|1.5\|1.75\|2\|3\|3.5\|4\|4.5\|6\|7\|8\|9\|15\|25\|40\|50)"` |  |
 | kubeApiServer.serviceMonitor.metricRelabelings[0].sourceLabels[0] | string | `"__name__"` |  |
 | kubeApiServer.serviceMonitor.metricRelabelings[0].sourceLabels[1] | string | `"le"` |  |
 | kubeApiServer.serviceMonitor.relabelings | list | `[]` |  |
@@ -383,16 +383,16 @@ helm install kube-prometheus-stack chart/
 | kubelet.serviceMonitor.resourcePath | string | `"/metrics/resource/v1alpha1"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[0].sourceLabels[0] | string | `"__name__"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[0].action | string | `"drop"` |  |
-| kubelet.serviceMonitor.cAdvisorMetricRelabelings[0].regex | string | `"container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)"` |  |
+| kubelet.serviceMonitor.cAdvisorMetricRelabelings[0].regex | string | `"container_cpu_(cfs_throttled_seconds_total\|load_average_10s\|system_seconds_total\|user_seconds_total)"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[1].sourceLabels[0] | string | `"__name__"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[1].action | string | `"drop"` |  |
-| kubelet.serviceMonitor.cAdvisorMetricRelabelings[1].regex | string | `"container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)"` |  |
+| kubelet.serviceMonitor.cAdvisorMetricRelabelings[1].regex | string | `"container_fs_(io_current\|io_time_seconds_total\|io_time_weighted_seconds_total\|reads_merged_total\|sector_reads_total\|sector_writes_total\|writes_merged_total)"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[2].sourceLabels[0] | string | `"__name__"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[2].action | string | `"drop"` |  |
-| kubelet.serviceMonitor.cAdvisorMetricRelabelings[2].regex | string | `"container_memory_(mapped_file|swap)"` |  |
+| kubelet.serviceMonitor.cAdvisorMetricRelabelings[2].regex | string | `"container_memory_(mapped_file\|swap)"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[3].sourceLabels[0] | string | `"__name__"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[3].action | string | `"drop"` |  |
-| kubelet.serviceMonitor.cAdvisorMetricRelabelings[3].regex | string | `"container_(file_descriptors|tasks_state|threads_max)"` |  |
+| kubelet.serviceMonitor.cAdvisorMetricRelabelings[3].regex | string | `"container_(file_descriptors\|tasks_state\|threads_max)"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[4].sourceLabels[0] | string | `"__name__"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[4].action | string | `"drop"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[4].regex | string | `"container_spec.*"` |  |
@@ -493,7 +493,7 @@ helm install kube-prometheus-stack chart/
 | kubeStateMetrics.serviceMonitor.selfMonitor.enabled | bool | `false` |  |
 | kube-state-metrics.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | kube-state-metrics.image.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics"` |  |
-| kube-state-metrics.image.tag | string | `"v2.5.0"` |  |
+| kube-state-metrics.image.tag | string | `"v2.6.0"` |  |
 | kube-state-metrics.resources.limits.cpu | string | `"100m"` |  |
 | kube-state-metrics.resources.limits.memory | string | `"128Mi"` |  |
 | kube-state-metrics.resources.requests.cpu | string | `"100m"` |  |
@@ -529,8 +529,8 @@ helm install kube-prometheus-stack chart/
 | prometheus-node-exporter.hostPID | bool | `false` |  |
 | prometheus-node-exporter.namespaceOverride | string | `""` |  |
 | prometheus-node-exporter.podLabels.jobLabel | string | `"node-exporter"` |  |
-| prometheus-node-exporter.extraArgs[0] | string | `"--collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)"` |  |
-| prometheus-node-exporter.extraArgs[1] | string | `"--collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$"` |  |
+| prometheus-node-exporter.extraArgs[0] | string | `"--collector.filesystem.mount-points-exclude=^/(dev\|proc\|sys\|var/lib/docker/.+\|var/lib/kubelet/.+)($\|/)"` |  |
+| prometheus-node-exporter.extraArgs[1] | string | `"--collector.filesystem.fs-types-exclude=^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$"` |  |
 | prometheus-node-exporter.service.portName | string | `"http-metrics"` |  |
 | prometheus-node-exporter.prometheus.monitor.enabled | bool | `true` |  |
 | prometheus-node-exporter.prometheus.monitor.jobLabel | string | `"jobLabel"` |  |
@@ -577,6 +577,8 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.admissionWebhooks.cleanupProxy.securityContext.runAsGroup | int | `2000` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.securityContext.runAsNonRoot | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.securityContext.runAsUser | int | `2000` |  |
+| prometheusOperator.admissionWebhooks.createSecretJob.securityContext | object | `{}` |  |
+| prometheusOperator.admissionWebhooks.patchWebhookJob.securityContext | object | `{}` |  |
 | prometheusOperator.admissionWebhooks.certManager.enabled | bool | `false` |  |
 | prometheusOperator.admissionWebhooks.certManager.rootCert.duration | string | `""` |  |
 | prometheusOperator.admissionWebhooks.certManager.admissionCert.duration | string | `""` |  |
@@ -627,22 +629,22 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.containerSecurityContext.readOnlyRootFilesystem | bool | `true` |  |
 | prometheusOperator.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | prometheusOperator.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.58.0"` |  |
+| prometheusOperator.image.tag | string | `"v0.59.1"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.58.0"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.59.1"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.resources.requests.cpu | string | `"200m"` |  |
 | prometheusOperator.prometheusConfigReloader.resources.requests.memory | string | `"50Mi"` |  |
 | prometheusOperator.prometheusConfigReloader.resources.limits.cpu | string | `"200m"` |  |
 | prometheusOperator.prometheusConfigReloader.resources.limits.memory | string | `"50Mi"` |  |
 | prometheusOperator.thanosImage.repository | string | `"registry1.dso.mil/ironbank/opensource/thanos/thanos"` |  |
-| prometheusOperator.thanosImage.tag | string | `"v0.27.0"` |  |
+| prometheusOperator.thanosImage.tag | string | `"v0.28.0"` |  |
 | prometheusOperator.thanosImage.sha | string | `""` |  |
 | prometheusOperator.secretFieldSelector | string | `""` |  |
 | prometheusOperator.kubectlImage.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl"` |  |
-| prometheusOperator.kubectlImage.tag | string | `"v1.24.3"` |  |
+| prometheusOperator.kubectlImage.tag | string | `"v1.25.0"` |  |
 | prometheusOperator.kubectlImage.sha | string | `""` |  |
 | prometheusOperator.kubectlImage.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheus.enabled | bool | `true` |  |
@@ -787,7 +789,7 @@ helm install kube-prometheus-stack chart/
 | prometheus.prometheusSpec.probeNamespaceSelector | object | `{}` |  |
 | prometheus.prometheusSpec.retention | string | `"10d"` |  |
 | prometheus.prometheusSpec.retentionSize | string | `""` |  |
-| prometheus.prometheusSpec.walCompression | bool | `false` |  |
+| prometheus.prometheusSpec.walCompression | bool | `true` |  |
 | prometheus.prometheusSpec.paused | bool | `false` |  |
 | prometheus.prometheusSpec.replicas | int | `1` |  |
 | prometheus.prometheusSpec.shards | int | `1` |  |
@@ -879,7 +881,7 @@ helm install kube-prometheus-stack chart/
 | thanosRuler.serviceMonitor.relabelings | list | `[]` |  |
 | thanosRuler.thanosRulerSpec.podMetadata | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.image.repository | string | `"quay.io/thanos/thanos"` |  |
-| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.27.0"` |  |
+| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.28.0"` |  |
 | thanosRuler.thanosRulerSpec.image.sha | string | `""` |  |
 | thanosRuler.thanosRulerSpec.ruleNamespaceSelector | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.ruleSelectorNilUsesHelmValues | bool | `true` |  |

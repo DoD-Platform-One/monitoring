@@ -30,7 +30,7 @@ spec:
       annotations:
         description: Istio Configuration Validation Error
         summary: Istio's Galley Reports a Configuration Validation Error
-      expr: sum(rate(galley_validation_failed[2m]))
+      expr: sum(rate(galley_validation_failed[5m])) > 0
       for: 2m
       labels:
         severity: critical

@@ -827,7 +827,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 9.1.0
+    tag: 9.1.3
     pullSecrets:
     - private-registry
   
@@ -1780,7 +1780,7 @@ kube-state-metrics:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics
-    tag: v2.5.0
+    tag: v2.6.0
 
   resources:
     limits:
@@ -1898,6 +1898,7 @@ prometheus-node-exporter:
     ## Add the 'node-exporter' label to be used by serviceMonitor to match standard common usage in rules and grafana dashboards
     ##
     jobLabel: node-exporter
+  releaseLabel: true
   extraArgs:
     - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
     - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
@@ -2028,6 +2029,14 @@ prometheusOperator:
         runAsGroup: 2000
         runAsNonRoot: true
         runAsUser: 2000
+
+    # Security context for create job container
+    createSecretJob:
+      securityContext: {}
+
+      # Security context for patch job container
+    patchWebhookJob:
+      securityContext: {}
 
     # Use certmanager to generate webhook certs
     certManager:
@@ -2240,9 +2249,10 @@ prometheusOperator:
 
   ## Prometheus-operator image
   ##
+  # get image from ironbank
   image:
     repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.58.0
+    tag: v0.59.1
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2259,7 +2269,7 @@ prometheusOperator:
   prometheusConfigReloader:
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.58.0
+      tag: v0.59.1
       sha: ""
 
     # resource config for prometheusConfigReloader
@@ -2275,7 +2285,7 @@ prometheusOperator:
   ##
   thanosImage:
     repository: registry1.dso.mil/ironbank/opensource/thanos/thanos
-    tag: v0.27.0
+    tag: v0.28.0
     sha: ""
 
   ## Set a Field Selector to filter watched secrets
@@ -2286,7 +2296,7 @@ prometheusOperator:
   ##
   kubectlImage:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
-    tag: v1.24.3
+    tag: v1.25.0
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2910,7 +2920,7 @@ prometheus:
 
     ## Enable compression of the write-ahead log using Snappy.
     ##
-    walCompression: false
+    walCompression: true
 
     ## If true, the Operator won't process any Prometheus configuration changes
     ##
@@ -3554,7 +3564,7 @@ thanosRuler:
     ##
     image:
       repository: quay.io/thanos/thanos
-      tag: v0.27.0
+      tag: v0.28.0
       sha: ""
 
     ## Namespaces to be selected for PrometheusRules discovery.

@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [40.0.0-bb.0]
+### Fixed
+- Updated Monitoring chart version to `40.0.0`
+- Updated images to latest IB image versions: thanos -> `v0.28.0`, grafana-plugins -> `9.1.3`, kube-state-metrics -> `v2.6.0`
+- Updated images to latest IB image versions: kubectl -> `v1.25.0`, prometheus-config-reloader -> `v0.59.0`, prometheus-operator -> `v0.59.0`
+
 ## [39.9.0-bb.3]
 ### Added
 - More PrometheusRule resource rule templates for istio ControlPlane and Proxy Alerts
@@ -18,7 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [39.9.0-bb.0]
 ### Changed
 - Updated Monitoring chart version to `39.9.0`
-- Updated images to latest IB image versions: kubectl -> `v1.24.3`, grafana-plugins -> `9.1.0`, ->prometheus -> `v2.38.0`
+- Updated images to latest IB image versions: kubectl -> `v1.24.3`, grafana-plugins -> `9.1.0`, prometheus -> `v2.38.0`
 
 ## [39.2.1-bb.5]
 ### Changed
