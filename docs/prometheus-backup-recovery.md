@@ -9,7 +9,7 @@ To back up a Prometheus deployment on Kubernetes, back up the persistent volumes
 
 ## Recovery
 
-To restore a Prometheus deployment on Kubernetes, use Veloro's backed-up PVs on the destination cluster. Create new deployment on the destination cluster with the same chart, deployment name, credentials and other parameters as the original.
+To restore a Prometheus deployment on Kubernetes, use Velero's backed-up PVs on the destination cluster. Create new deployment on the destination cluster with the same chart, deployment name, credentials and other parameters as the original.
 The new deployment will use the restored PVs which will give the original data.
 
 ## Additional links

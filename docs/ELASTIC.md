@@ -15,7 +15,7 @@
 
 * For Search click on Discovery from the side menu
 
-* In KQL textbox enter `kubernets.namespace.name : monitoring`
+* In KQL textbox enter `kubernetes.namespace.name : monitoring`
 
 * Click Refresh/Update
 
@@ -75,7 +75,7 @@ kube-state-metrics-646c899496-h4lqk   3/3     Running   0          156m
 
 #### Node-exporter
 
-There is 1 pod for each node exporter.  
+There is 1 pod for each node exporter.
 On a default installations there are 4 exporters
 
 ```console
@@ -142,12 +142,12 @@ log: "error"
 ```
 
 ```plaintext
-log: F 
-level=error 
-ts=2020-07-10T20:34:13.738Z 
-caller=klog.go:94 
-component=k8s_client_runtime 
-func=ErrorDepth 
+log: F
+level=error
+ts=2020-07-10T20:34:13.738Z
+caller=klog.go:94
+component=k8s_client_runtime
+func=ErrorDepth
 msg="/app/discovery/kubernetes/kubernetes.go:261: Failed to list *v1.Endpoints: endpoints is forbidden: User \"system:serviceaccount:monitoring:prometheus-k8s\" cannot list resource \"endpoints\" in API group \"\" in the namespace \"default\"" stream:stderr docker.container_id:280f9823382dcfa60ea539079b9511432fdf2c1a214a84e4ee51954ddd05da61 kubernetes.container_name:prometheus kubernetes.namespace_name:monitoring kubernetes.pod_name:prometheus-k8s-1
 ```
 
