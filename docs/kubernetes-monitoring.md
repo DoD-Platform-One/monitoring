@@ -38,7 +38,7 @@ node01         Ready    <none>   64m   v1.18.0
 The metrics for the worker node can be queried by making a request to the Kube API Server as follows by substituting node-name with name of one of the nodes. Note that only a subset of the result is shown here. For this given instant in time, it took 5s or less for 12 pods to get into a running state, the remaining 4 pods took sometime between 5s to 10s to get into a running state.
 
 ```
-$ kubectl get --raw /api/v1/nodes/<node-name>/proxy/metrics 
+$ kubectl get --raw /api/v1/nodes/<node-name>/proxy/metrics
 # HELP kubelet_pod_start_duration_seconds [ALPHA] Duration in seconds for a single pod to go from pending to running.
 # TYPE kubelet_pod_start_duration_seconds histogram
 kubelet_pod_start_duration_seconds_bucket{le="1"} 8
@@ -52,7 +52,7 @@ kubelet_pod_start_duration_seconds_count 16
 Aggregated cluster metrics are available at /metrics endpoint. Note that only a subset of the result is shown here. Looking at the kubernetes config database etcd, there are 2 nodes in the cluster with a total of 15 pods
 
 ```shell
-$ kubectl get --raw /metrics 
+$ kubectl get --raw /metrics
 # HELP etcd_object_counts [ALPHA] Number of stored objects at the time of last check split by kind.
 # TYPE etcd_object_counts gauge
 etcd_object_counts{resource="apiservices.apiregistration.k8s.io"} 31
@@ -178,24 +178,24 @@ The kube-state-metrics is an addon to ​​generate and expose cluster-level me
 
 ```
 $ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
- 
+
 $ helm install kube-state-metrics prometheus-community/kube-state-metrics
- 
+
 $ kubectl get service
- 
-NAME                      TYPE         CLUSTER-IP       EXTERNAL-IP   PORT(S)    kube-state-metrics   ClusterIP   10.103.231.129    <none>              8080/TCP   
-kubernetes               ClusterIP   10.96.0.1              <none>              443/TCP    
- 
+
+NAME                      TYPE         CLUSTER-IP       EXTERNAL-IP   PORT(S)    kube-state-metrics   ClusterIP   10.103.231.129    <none>              8080/TCP
+kubernetes               ClusterIP   10.96.0.1              <none>              443/TCP
+
 Use the CLUSTER-IP address from the response to the previous command to get the metrics as shows below:
 
 $ curl http://10.103.231.129:8080/metrics | grep kube_pod_info
- 
+
 # HELP kube_pod_info Information about pod.
 # TYPE kube_pod_info gauge
 kube_pod_info{namespace="kube-system",pod="kube-proxy-zrdvq",uid="3d50f3a8-899f-4ff6-8ea2-2523daa3da8e",host_ip="172.17.0.10",pod_ip="172.17.0.10",node="controlplane",created_by_kind="DaemonSet",created_by_name="kube-proxy",priority_class="system-node-critical",host_network="true"} 1
- 
+
 $ curl http://10.103.231.129:8080/metrics | grep kube_deployment_created
- 
+
 # HELP kube_deployment_created Unix creation timestamp
 # TYPE kube_deployment_created gauge
 kube_deployment_created{namespace="kube-system",deployment="coredns"} 1.644618879e+09
@@ -258,10 +258,10 @@ The markup below shows a very basic configuration that is used to scrape endpoin
 ```yaml
 global:
   scrape_interval: 30s
- 
+
 scrape_configs:
   - job_name: 'prometheus'
- 
+
     static_configs:
       - targets: ['127.0.0.1:9100']
         labels:
@@ -270,7 +270,7 @@ scrape_configs:
 
 For monitoring the entire kubernetes cluster, that comprises node_exporter, cAdvisor, kube_state_metrics and the prometheus instance itself, all such endpoints need to be defined in a configmap that is referenced by the Prometheus Pod.
 
-☞ At the point, it is worth mentioning that in addition to monitoring kubernetes cluster, application workloads running as Pods need to be monitored as well, as the whole reason kubernetes exists is to to orchestrate the application containers. The mechanism of metrics collection remains the same and all the additional endpoints exposed by applications for metrics need to be defined in Prometheus configuration. Making updates to the configmap everytime there is a change does not scale well operationally due to the decentralized nature of application deployment in a cluster. The solution to this problem is a service discovery mechanism so that prometheus configuration can automatically be updated by discovery of new endpoints when an application is deployed. This is done using service monitors and this is the prime driver for the Prometheus operator. The architecture of the Prometheus operator [Prometheus operator](prometheus-operator.md) is described in a separate document.
+☞ At the point, it is worth mentioning that in addition to monitoring kubernetes cluster, application workloads running as Pods need to be monitored as well, as the whole reason kubernetes exists is to to orchestrate the application containers. The mechanism of metrics collection remains the same and all the additional endpoints exposed by applications for metrics need to be defined in Prometheus configuration. Making updates to the configmap every time there is a change does not scale well operationally due to the decentralized nature of application deployment in a cluster. The solution to this problem is a service discovery mechanism so that prometheus configuration can automatically be updated by discovery of new endpoints when an application is deployed. This is done using service monitors and this is the prime driver for the Prometheus operator. The architecture of the Prometheus operator [Prometheus operator](prometheus-operator.md) is described in a separate document.
 
 ## Metrics Visualization
 
@@ -288,7 +288,7 @@ You can navigate to `http://<prometheus-host>:9090/graph` and use the "Graph" ta
 
 Prometheus evaluates this expression for each sample collected for the user specified duration and then creates a line chart of each node from which metrics are available. As mentioned earlier, this is good for prototyping an expression, however, there are two downsides to use complex expressions in this manner:
 
-① Prometheus does not maintain a history of previously executed expressions, so everytime the console is opened in a browser, the expression needs to be entered again. Time series queries can quickly become quite complicated to remember and type using the expression browser in the default Prometheus UI.
+① Prometheus does not maintain a history of previously executed expressions, so every time the console is opened in a browser, the expression needs to be entered again. Time series queries can quickly become quite complicated to remember and type using the expression browser in the default Prometheus UI.
 
 ② The expression is evaluated per sample in the time interval specified by the user for each of the time series. As such, the computation time and the resource usage increases with the number of data points that impacts Prometheus performance.
 Prometheus Recording Rules
@@ -301,7 +301,7 @@ groups:
   - name: custom_rules
     rules:
       - record: namespace:container_cpu_usage_seconds_total:sum_rate
-        expr: sum(rate(container_cpu_usage_seconds_total{ job="kubelet", image!="", container_name!="" }[5m])) by (namespace) 
+        expr: sum(rate(container_cpu_usage_seconds_total{ job="kubelet", image!="", container_name!="" }[5m])) by (namespace)
       - record: namespace:container_memory_usage_bytes:sum
         expr: sum(container_memory_usage_bytes{ job="kubelet", image!="", container_name!="" }) by (namespace)
 ```
@@ -340,7 +340,7 @@ The Alert Manager configuration below shows how to send the alert notification v
 route:
   group_by: ['alertname']
   receiver: alert-emailer
- 
+
 receivers:
 - name: alert-emailer
   email_configs:
