@@ -17,7 +17,7 @@ alertmanager:
       resolve_timeout: 5m
     route:
       # Keeping the default of 'job' but 'alertname' is also used often
-      group_by: ['job']
+      group_by: ['namespace']
       group_wait: 30s
       group_interval: 5m
       # repeat_interval upped from default of 12h
@@ -25,15 +25,15 @@ alertmanager:
       # receiver updated from 'null' to 'smtp-email' so it becomes the default
       receiver: 'smtp-email'
       routes:
-      - match:
-          alertname: Watchdog
+      - matchers:
+          alertname: "InfoInhibitor|Watchdog"
         receiver: 'null'
     receivers:
     - name: 'null'
     # Adding a new receiver below the default 'null' receiver
     - name: 'smtp-email'
       email_configs:
-      - to: it@example.org
+      - to: `it@example.org, ops.example.org`
         from: no-reply@example.org
         smarthost: smtp.office365.org:587
         auth_username:
