@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 40.0.0-bb.0](https://img.shields.io/badge/Version-40.0.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.59.1](https://img.shields.io/badge/AppVersion-v0.59.1-informational?style=flat-square)
+![Version: 40.0.0-bb.1](https://img.shields.io/badge/Version-40.0.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.59.1](https://img.shields.io/badge/AppVersion-v0.59.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -529,6 +529,7 @@ helm install kube-prometheus-stack chart/
 | prometheus-node-exporter.hostPID | bool | `false` |  |
 | prometheus-node-exporter.namespaceOverride | string | `""` |  |
 | prometheus-node-exporter.podLabels.jobLabel | string | `"node-exporter"` |  |
+| prometheus-node-exporter.releaseLabel | bool | `true` |  |
 | prometheus-node-exporter.extraArgs[0] | string | `"--collector.filesystem.mount-points-exclude=^/(dev\|proc\|sys\|var/lib/docker/.+\|var/lib/kubelet/.+)($\|/)"` |  |
 | prometheus-node-exporter.extraArgs[1] | string | `"--collector.filesystem.fs-types-exclude=^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$"` |  |
 | prometheus-node-exporter.service.portName | string | `"http-metrics"` |  |
