@@ -217,7 +217,7 @@ spec:
 {{- end }}
 {{- if .Values.prometheus.prometheusSpec.storageSpec }}
   storage:
-{{ toYaml .Values.prometheus.prometheusSpec.storageSpec | indent 4 }}
+{{ tpl (toYaml .Values.prometheus.prometheusSpec.storageSpec | indent 4) . }}
 {{- end }}
 {{- if .Values.prometheus.prometheusSpec.podMetadata }}
   podMetadata:
@@ -379,5 +379,8 @@ spec:
 {{- end }}
 {{- if .Values.prometheus.prometheusSpec.allowOverlappingBlocks }}
   allowOverlappingBlocks: {{ .Values.prometheus.prometheusSpec.allowOverlappingBlocks }}
+{{- end }}
+{{- if .Values.prometheus.prometheusSpec.minReadySeconds }}
+  minReadySeconds: {{ .Values.prometheus.prometheusSpec.minReadySeconds }}
 {{- end }}
 {{- end }}

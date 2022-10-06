@@ -22,8 +22,8 @@ name: kube-prometheus-stack
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 40.0.0-bb.2
-appVersion: v0.59.1
+version: 40.4.0-bb.0
+appVersion: v0.59.2
 kubeVersion: ">=1.16.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -38,21 +38,21 @@ annotations:
     - name: Upstream Project
       url: https://github.com/prometheus-operator/kube-prometheus
   bigbang.dev/applicationVersions: |
-    - Prometheus: v2.38.0
-    - Grafana: 9.1.3
+    - Prometheus: v2.39.0
+    - Grafana: 9.1.6
     - Alertmanager: v0.24.0
 
 dependencies:
   - name: kube-state-metrics
-    version: "4.18.*"
+    version: "4.20.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: kubeStateMetrics.enabled
   - name: prometheus-node-exporter
-    version: "4.2.*"
+    version: "4.3.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: nodeExporter.enabled
   - name: grafana
-    version: "6.38.*"
+    version: "6.40.*"
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
