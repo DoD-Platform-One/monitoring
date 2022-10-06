@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [40.4.0-bb.0]
+### Changed
+- Updated Monitoring chart version to `40.4.0`
+- Updated images to latest IB image versions: grafana-plugins -> `9.1.6`, k8s-sidecar -> `1.19.5`, bats -> `1.8.0`, kubectl -> `v1.25.2`, prometheus-config-reloader -> `v0.59.2`, node-exporter -> `v1.4.0`, prometheus -> `v2.39.0`
+
 ## [40.0.0-bb.2]
 ### Changed
 - Added Istio Operator Service Monitor
