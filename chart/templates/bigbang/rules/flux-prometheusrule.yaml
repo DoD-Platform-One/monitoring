@@ -1,0 +1,32 @@
+{{- if .Capabilities.APIVersions.Has "monitoring.coreos.com/v1" }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: fluxv2-alerts
+  namespace: {{ .Release.Namespace }}
+spec:
+  groups:
+  - name: flux.rules
+    rules:
+    - alert: GitRepoReconciliationFailure
+      expr: max(gotk_reconcile_condition{status="False",type="Ready",kind="GitRepository"}) by (exported_namespace, name, kind) + on(exported_namespace, name, kind) (max(gotk_reconcile_condition{status="Deleted",kind="GitRepository"}) by (exported_namespace, name, kind)) * 2 == 1
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: GitRepository reconciliation has been failing for more than five minutes.
+    - alert: HelmReleaseReconciliationFailure
+      expr: max(gotk_reconcile_condition{status="False",type="Ready",kind="HelmRelease"}) by (exported_namespace, name, kind) + on(exported_namespace, name, kind) (max(gotk_reconcile_condition{status="Deleted",kind="HelmRelease"}) by (exported_namespace, name, kind)) * 2 == 1
+      for: 20m
+      labels:
+        severity: warning
+      annotations:
+        summary: HelmRelease reconciliation has been failing for more than five minutes.
+    - alert: ReplicaFailure
+      expr: kube_deployment_status_replicas_available{namespace="flux-system"} < 1
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: Expected number of deployment replicas has not been met for more than five minutes.
+{{- end }}
