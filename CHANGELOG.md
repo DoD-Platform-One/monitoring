@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [41.5.0-bb.0]
+### Added
+- Updated Gluon to `3.1.0`
+- Updated Monitoring chart version to `41.5.0`
+- Updated images to latest IB image versions: thanos -> `v0.28.1`, grafana-plugins -> `9.2.0`, kubectl -> `v1.25.3`, prometheus-config-reloader -> `v0.60.1`, prometheus-operator -> `v0.60.1`
+
 ## [40.4.0-bb.1]
 ### Added
 - Prometheus rule for flux alerts
