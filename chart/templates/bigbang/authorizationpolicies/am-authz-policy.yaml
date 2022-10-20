@@ -20,4 +20,13 @@ spec:
   - to:
     - operation:
         ports: ["{{ .Values.alertmanager.service.port }}"]
+  - from:
+    - source:
+        namespaces: ["{{ template "kube-prometheus-stack.namespace" . }}"]
+    to:
+    - operation:
+        methods: ["POST"]
+  - to:
+    - operation:
+        ports: ["9094"]
 {{- end }}
