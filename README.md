@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 41.5.0-bb.0](https://img.shields.io/badge/Version-41.5.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.60.1](https://img.shields.io/badge/AppVersion-0.60.1-informational?style=flat-square)
+![Version: 41.5.0-bb.1](https://img.shields.io/badge/Version-41.5.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.60.1](https://img.shields.io/badge/AppVersion-0.60.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -594,6 +594,7 @@ helm install kube-prometheus-stack chart/
 | prometheusOperator.alertmanagerConfigNamespaces | list | `[]` |  |
 | prometheusOperator.prometheusInstanceNamespaces | list | `[]` |  |
 | prometheusOperator.thanosRulerInstanceNamespaces | list | `[]` |  |
+| prometheusOperator.clusterDomain | string | `"cluster.local"` |  |
 | prometheusOperator.networkPolicy.enabled | bool | `false` |  |
 | prometheusOperator.serviceAccount.create | bool | `true` |  |
 | prometheusOperator.serviceAccount.name | string | `""` |  |
