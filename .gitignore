@@ -1,3 +1,22 @@
 ../screenshots
 .idea/*
 ../videos
+
+.DS_Store
+
+# ignore developer specific files
+# (used frequently in deployments)
+patch.yaml
+notes
+ignore/*
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
