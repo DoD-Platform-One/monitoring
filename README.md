@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 41.5.0-bb.1](https://img.shields.io/badge/Version-41.5.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.60.1](https://img.shields.io/badge/AppVersion-0.60.1-informational?style=flat-square)
+![Version: 41.7.3-bb.0](https://img.shields.io/badge/Version-41.7.3--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.60.1](https://img.shields.io/badge/AppVersion-0.60.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -215,7 +215,7 @@ helm install kube-prometheus-stack chart/
 | alertmanager.serviceMonitor.selfMonitor | bool | `true` |  |
 | alertmanager.serviceMonitor.proxyUrl | string | `""` |  |
 | alertmanager.serviceMonitor.scheme | string | `""` |  |
-| alertmanager.serviceMonitor.enableHttp2 | bool | `false` |  |
+| alertmanager.serviceMonitor.enableHttp2 | bool | `true` |  |
 | alertmanager.serviceMonitor.tlsConfig | object | `{}` |  |
 | alertmanager.serviceMonitor.bearerTokenFile | string | `nil` |  |
 | alertmanager.serviceMonitor.metricRelabelings | list | `[]` |  |
@@ -269,7 +269,7 @@ helm install kube-prometheus-stack chart/
 | grafana.enabled | bool | `true` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"9.2.0"` |  |
+| grafana.image.tag | string | `"9.2.2"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
@@ -277,7 +277,7 @@ helm install kube-prometheus-stack chart/
 | grafana.resources.requests.cpu | string | `"100m"` |  |
 | grafana.resources.requests.memory | string | `"256Mi"` |  |
 | grafana.testFramework.image | string | `"registry1.dso.mil/ironbank/opensource/bats/bats"` |  |
-| grafana.testFramework.tag | string | `"1.8.0"` |  |
+| grafana.testFramework.tag | string | `"1.8.2"` |  |
 | grafana.testFramework.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.testFramework.imagePullPolicy | string | `"IfNotPresent"` |  |
 | grafana.testFramework.securityContext.capabilites.drop[0] | string | `"ALL"` |  |

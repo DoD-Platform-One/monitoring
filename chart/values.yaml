@@ -534,7 +534,7 @@ alertmanager:
 
     ## enableHttp2: Whether to enable HTTP2.
     ## See https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#endpoint
-    enableHttp2: false
+    enableHttp2: true
 
     ## tlsConfig: TLS configuration to use when scraping the endpoint. For example if using istio mTLS.
     ## Of type: https://github.com/coreos/prometheus-operator/blob/main/Documentation/api.md#tlsconfig
@@ -836,7 +836,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 9.2.0
+    tag: 9.2.2
     pullSecrets:
     - private-registry
   
@@ -865,7 +865,7 @@ grafana:
 
   testFramework:
     image: registry1.dso.mil/ironbank/opensource/bats/bats
-    tag: 1.8.0
+    tag: 1.8.2
     pullSecrets:
     - private-registry
     imagePullPolicy: IfNotPresent
