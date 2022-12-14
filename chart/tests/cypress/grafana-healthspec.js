@@ -1,12 +1,8 @@
+import './login.js'
+
 before (function() {
-  cy.log(Cypress.env('grafana_url'))
   cy.visit(Cypress.env('grafana_url'))
-  cy.get('input[name="user"]')
-    .type('admin')
-  cy.get('input[name="password"]')
-    .type('prom-operator')
-  cy.contains("Log in").click()
-  cy.contains('Welcome to Grafana') 
+  cy.login()
 })
 
 describe('Grafana Unit Testing', function() {

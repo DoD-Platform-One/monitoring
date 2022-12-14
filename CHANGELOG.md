@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [41.7.3-bb.1]
+### Added
+- Grafana and prometheus cypress tests can now log in with keycloak SSO
+- Added cypress test for the alertmanager UI w/SSO login
 ## [41.7.3-bb.0]
 ### Added
 - Updated Monitoring chart version to `41.7.3`

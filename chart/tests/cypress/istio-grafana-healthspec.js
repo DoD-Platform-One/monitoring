@@ -1,3 +1,5 @@
+import './login.js'
+
 // Allow this test to be skipped with an env variable
 if (Cypress.env("check_istio_dashboards")) {
 
@@ -71,14 +73,8 @@ if (Cypress.env("check_istio_dashboards")) {
 
   // Log in once at the beginning
   before (function() {
-    cy.task('log','Loading the dashboard menu...')
     cy.visit(Cypress.env('grafana_url'))
-    cy.get('input[name="user"]')
-      .type('admin')
-    cy.get('input[name="password"]')
-      .type('prom-operator')
-    cy.contains("Log in").click()
-    cy.get('.page-toolbar').contains('General', {timeout: 30000})
+    cy.login()
   })
 
   // Save the cookies so we don't have to log in again for each test
