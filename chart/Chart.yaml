@@ -39,6 +39,58 @@ annotations:
     - Prometheus: v2.39.1
     - Grafana: 9.2.2
     - Alertmanager: v0.24.0
+  # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
+  # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
+  helm.sh/images: |
+    - name: alertmanager
+      image: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager:v0.24.0
+      condition: alertmanager.enabled
+    - name: base
+      image: registry1.dso.mil/ironbank/big-bang/base:2.0.0
+    - name: grafana
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:9.2.2
+      condition: grafana.enabled
+      dependency: grafana
+    - name: init-chown-data
+      image: registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal:8.6
+      condition: grafana.initChownData.enabled
+    - name: k8s-sidecar
+      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.19.5
+      condition: grafana.enabled
+      dependency: grafana
+    - name: kubectl
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.25.3
+      condition: prometheusOperator.enabled
+    - name: kube-state-metrics
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.6.0
+      condition: kubeStateMetrics.enabled
+      dependency: kube-state-metrics
+    - name: kube-webhook-certgen
+      image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.3.0
+      condition: prometheusOperator.admissionWebhooks.patch.enabled
+    - name: prometheus
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v2.39.1
+      condition: prometheus.enabled
+    - name: prometheus-config-reloader
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.60.1
+      condition: prometheusOperator.enabled
+    - name: prometheus-operator
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.60.1
+      condition: prometheusOperator.enabled
+    - name: prometheus-node-exporter
+      image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.4.0
+      condition: nodeExporter.enabled
+      dependency: prometheus-node-exporter
+    - name: test-framework
+      image: registry1.dso.mil/ironbank/opensource/bats/bats:1.8.2
+      condition: grafana.enabled
+      dependency: grafana
+    - name: thanos
+      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.28.1
+      condition: prometheusOperator.enabled
+    - name: thanos-ruler
+      image: quay.io/thanos/thanos
+      condition: thanosRuler.enabled
 
 dependencies:
   - name: kube-state-metrics
