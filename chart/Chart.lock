@@ -7,9 +7,9 @@ dependencies:
   version: 4.8.1
 - name: grafana
   repository: https://grafana.github.io/helm-charts
-  version: 6.48.0
+  version: 6.48.2
 - name: gluon
-  repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
-  version: 0.3.1
-digest: sha256:510e04949185816568e4ad3b907fdf2bc0d1b7f9fecbaf7121bd5a2f0a4dc0cb
-generated: "2022-12-21T21:35:10.314372-06:00"
+  repository: oci://registry1.dso.mil/bigbang
+  version: 0.3.2
+digest: sha256:421f37c606e2c1607c2dafc41a9522a9694bfc735fd56ae54fae1f4ffc07eb1a
+generated: "2023-01-17T12:04:53.451547-07:00"

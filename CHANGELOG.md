@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [43.1.2-bb.1] - 2022-01-17
+### Changed
+- Update gluon to new registry1 location + latest version (0.3.2)
+
 ## [43.1.2-bb.0]
 ### Changed
 - Updated Monitoring chart to 43.1.2 and Updated image versions to latest in IB
