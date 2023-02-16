@@ -21,7 +21,7 @@ name: kube-prometheus-stack
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 43.1.2-bb.1
+version: 43.1.2-bb.2
 appVersion: 0.61.1
 kubeVersion: ">=1.16.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
@@ -70,7 +70,7 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.3.0
       condition: prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
-      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v2.40.7
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v2.40.5
       condition: prometheus.enabled
     - name: prometheus-config-reloader
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.61.1
@@ -90,7 +90,7 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.29.0
       condition: prometheusOperator.enabled
     - name: thanos-ruler
-      image: quay.io/thanos/thanos
+      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.29.0
       condition: thanosRuler.enabled
 
 dependencies:
