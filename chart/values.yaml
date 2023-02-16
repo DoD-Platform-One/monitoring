@@ -3646,8 +3646,8 @@ thanosRuler:
     ## Image of ThanosRuler
     ##
     image:
-      registry: quay.io
-      repository: thanos/thanos
+      registry: registry1.dso.mil
+      repository: ironbank/opensource/thanos/thanos
       tag: v0.29.0
       sha: ""
 

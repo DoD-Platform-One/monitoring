@@ -1,6 +1,6 @@
 # kube-prometheus-stack
 
-![Version: 43.1.2-bb.1](https://img.shields.io/badge/Version-43.1.2--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.61.1](https://img.shields.io/badge/AppVersion-0.61.1-informational?style=flat-square)
+![Version: 43.1.2-bb.2](https://img.shields.io/badge/Version-43.1.2--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.61.1](https://img.shields.io/badge/AppVersion-0.61.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -909,8 +909,8 @@ helm install kube-prometheus-stack chart/
 | thanosRuler.serviceMonitor.metricRelabelings | list | `[]` |  |
 | thanosRuler.serviceMonitor.relabelings | list | `[]` |  |
 | thanosRuler.thanosRulerSpec.podMetadata | object | `{}` |  |
-| thanosRuler.thanosRulerSpec.image.registry | string | `"quay.io"` |  |
-| thanosRuler.thanosRulerSpec.image.repository | string | `"thanos/thanos"` |  |
+| thanosRuler.thanosRulerSpec.image.registry | string | `"registry1.dso.mil"` |  |
+| thanosRuler.thanosRulerSpec.image.repository | string | `"ironbank/opensource/thanos/thanos"` |  |
 | thanosRuler.thanosRulerSpec.image.tag | string | `"v0.29.0"` |  |
 | thanosRuler.thanosRulerSpec.image.sha | string | `""` |  |
 | thanosRuler.thanosRulerSpec.ruleNamespaceSelector | object | `{}` |  |
