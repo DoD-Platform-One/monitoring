@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [43.1.2-bb.4] - 2022-03-15
+### Added
+- Updated chart name to monitoring
+
 ## [43.1.2-bb.3] - 2022-02-28
 ### Added
 - NetworkPolicy template for tempo ingress to facilitate remote metrics write publishing
