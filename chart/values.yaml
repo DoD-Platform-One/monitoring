@@ -120,9 +120,9 @@ cleanUpgrade:
     runAsGroup: 1000
     runAsNonRoot: true
 
-## Provide a name in place of kube-prometheus-stack for `app:` labels
+## Provide a name in place of monitoring for `app:` labels
 ##
-nameOverride: ""
+nameOverride: "kube-prometheus-stack"
 
 ## Override the deployment namespace
 ##

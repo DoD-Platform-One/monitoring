@@ -80,3 +80,36 @@ Testing Steps:
 - Login to Kiali and go to applications, pick monitoring namespace and prometheus for the application, validate that there is data in some of the inbound/outbound metrics fields - also validate Kiali is showing no red bells on the top bar (this could indicate connection issues with Prometheus/Grafana)
 
 When in doubt with any testing or upgrade steps ask one of the CODEOWNERS for assistance.
+
+# Upstream changes needed for Big Bang
+
+Due to how Big Bang is making use of Monitoring, there were values and chart changes that needed to be made.
+
+This provides a log of these changes to make updates from upstream faster.
+
+## Big Bang Modifications
+
+### Change chart name
+Change chart name to monitoring to match BB values
+
+Add nameOverride to `chart/values.yaml` to keep resource names from changing
+```yaml
+nameOverride: "kube-prometheus-stack"
+```
+
+### Prometheus Node Exporter
+
+In `chart/values.yaml`, an additional value was created to resolve OPA violations with the prometheus node exporter daemonset:
+
+```yaml
+prometheus-node-exporter:
+  hostPID: false
+```
+
+The corresponding hard-coded values in the templates were then updated to dynamically utilize the value:
+
+```yaml
+# chart/deps/prometheus-node-exporter/templates/psp.yaml
+# chart/deps/prometheus-node-exporter/templates/daemonset.yaml
+hostPID: {{ .Values.hostPID }}
+```
