@@ -27,9 +27,10 @@
         {
             "fileMatch": ["^chart/values\\.yaml$"],
             "matchStrings": [
-                "(repo|image)\\S*:\\s*(?<depName>\\S+).*\n\\s+tag:\\s*(?<currentValue>.+)"
+                "image:\\s+registry:\\s+repository:\\s+[^/]+/(?<depName>.+)\\s+tag:\\s+(?<currentValue>.+)"
             ],
-            "datasourceTemplate": "docker"
+            "datasourceTemplate": "docker",
+	    "registryUrlTemplate": "https://registry1.dso.mil"
         },
         {
             "fileMatch": ["^chart/Chart\\.yaml$"],
