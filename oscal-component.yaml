@@ -11,7 +11,7 @@ component-definition:
       type: organization
       name: Platform One
       links:
-      - href: <https://p1.dso.mil>
+      - href: https://p1.dso.mil
         rel: website
   components: # for BB, this would be all the pieces of big bang
   - uuid: 4045FB97-C11A-4F3B-A021-FD94538F0356
