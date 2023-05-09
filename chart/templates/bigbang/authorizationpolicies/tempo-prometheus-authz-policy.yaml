@@ -1,0 +1,27 @@
+{{- if and .Values.istio.enabled .Values.sso.enabled .Values.tempo.enabled (eq .Values.istio.injection "enabled") -}}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: tempo-prometheus-authz-policy
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces:
+        - tempo
+    - source:
+        principals:
+        - cluster.local/ns/tempo/sa/tempo-tempo
+    to:
+    - operation:
+        methods:
+        - GET
+        - POST
+        paths:
+        - /*
+{{- end }}
