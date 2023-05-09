@@ -94,6 +94,10 @@ loki:
   # see the grafana.plugins value below 
   enabled: false
 
+tempo:
+  # Toggle tempo AuthorizationPolicy creation 
+  enabled: false
+
 vault:
   # Toggle creating the vault resources
   enabled: false
