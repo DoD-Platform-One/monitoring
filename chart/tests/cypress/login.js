@@ -62,7 +62,7 @@ Cypress.Commands.add('login', () => {
           cy.get('input[name="password"]')
             .type('prom-operator')
           cy.contains("Log in").click()
-          cy.get('.page-toolbar')
+          cy.get('.page-dashboard')
           cy.task('log', 'app homepage has loaded successfully...')
         }
       })
