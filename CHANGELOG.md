@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [45.27.2-bb.0] - 2023-05-11
+### Added
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins minor 9.3.2 -> 9.5.1
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar minor 1.21.0 -> 1.23.3
+- registry1.dso.mil/ironbank/opensource/bats/bats minor 1.8.2 -> 1.9.0
+- registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics minor v2.7.0 -> v2.8.2
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl minor v1.25.5 -> v1.26.4
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader minor v0.61.1 -> v0.65.1
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator minor v0.61.1 -> v0.65.1
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator minor 0.61.1 -> v0.65.1
+- registry1.dso.mil/ironbank/opensource/prometheus/alertmanager minor v0.24.0 -> v0.25.0
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus minor v2.40.5 -> v2.42.0
+- registry1.dso.mil/ironbank/opensource/thanos/thanos minor v0.29.0 -> v0.30.2
+
 ## [43.1.2-bb.5] - 2022-05-08
 ### Added
 - Added AuthorizationPolicy for tempo to prometheus
