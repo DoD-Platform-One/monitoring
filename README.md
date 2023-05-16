@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 45.27.2-bb.0](https://img.shields.io/badge/Version-45.27.2--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.65.1](https://img.shields.io/badge/AppVersion-v0.65.1-informational?style=flat-square)
+![Version: 45.27.2-bb.1](https://img.shields.io/badge/Version-45.27.2--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.65.1](https://img.shields.io/badge/AppVersion-0.65.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -555,7 +555,8 @@ helm install monitoring chart/
 | kubeStateMetrics.serviceMonitor.interval | string | `""` |  |
 | kubeStateMetrics.serviceMonitor.selfMonitor.enabled | bool | `false` |  |
 | kube-state-metrics.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| kube-state-metrics.image.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics"` |  |
+| kube-state-metrics.image.registry | string | `"registry1.dso.mil"` |  |
+| kube-state-metrics.image.repository | string | `"ironbank/opensource/kubernetes/kube-state-metrics"` |  |
 | kube-state-metrics.image.tag | string | `"v2.8.2"` |  |
 | kube-state-metrics.resources.limits.cpu | string | `"100m"` |  |
 | kube-state-metrics.resources.limits.memory | string | `"128Mi"` |  |
@@ -587,7 +588,8 @@ helm install monitoring chart/
 | nodeExporter.jobLabel | string | `"jobLabel"` |  |
 | prometheus-node-exporter.serviceAccount.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | prometheus-node-exporter.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| prometheus-node-exporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/node-exporter"` |  |
+| prometheus-node-exporter.image.registry | string | `"registry1.dso.mil"` |  |
+| prometheus-node-exporter.image.repository | string | `"ironbank/opensource/prometheus/node-exporter"` |  |
 | prometheus-node-exporter.image.tag | string | `"v1.5.0"` |  |
 | prometheus-node-exporter.resources.limits.cpu | string | `"200m"` |  |
 | prometheus-node-exporter.resources.limits.memory | string | `"250Mi"` |  |
