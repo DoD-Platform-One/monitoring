@@ -18,9 +18,9 @@ if (Cypress.env("check_istio_dashboards")) {
   })
 
   function expandMenu() {
-    cy.get('.pointer > button[id^="collapse-button-"]').invoke('attr', 'aria-expanded').then(($expanded) => {
+    cy.get('button[id^="collapse-button-"]').invoke('attr', 'aria-expanded').then(($expanded) => {
       if ($expanded === 'false') {
-        cy.get('.pointer > button[id^="collapse-button-"]').click({multiple: true})
+        cy.get('button[id^="collapse-button-"]').click({multiple: true})
       }
     })
   }
@@ -29,7 +29,7 @@ if (Cypress.env("check_istio_dashboards")) {
     cy.task('log','Loading the dashboard menu...')
     cy.wait(500)
     cy.visit(`${Cypress.env('grafana_url')}/dashboards`)
-    cy.get('.page-header__title').contains('Dashboards')
+    cy.get('h1').contains('Dashboards')
     cy.task('log','Dashboard menu is loaded')
     // Wait for all buttons to load
     cy.wait(1000)
@@ -39,7 +39,7 @@ if (Cypress.env("check_istio_dashboards")) {
   function enter_dashboard (dashname, allownodata) {
     cy.task('log','Clicking on the ' + dashname + ' item...')
     cy.get('[data-testid="data-testid Dashboard search item ' + dashname + '"]').contains(dashname).click()
-    cy.get('.page-toolbar').contains(dashname)
+    cy.get('.page-dashboard').contains(dashname)
     cy.task('log', dashname + ' has loaded')
     // This is to intercept the API requests so they can be waited on to finish a few lines down (see cy.wait).
     // It ensures that all the charts have loaded before it checks them. This is also what scrollTo does. 

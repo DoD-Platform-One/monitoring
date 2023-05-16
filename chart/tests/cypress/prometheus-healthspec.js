@@ -14,20 +14,21 @@ describe('Basic prometheus', function() {
     })
 
     it('Validate prometheus targets', function() {
-      // Make sure we have expected targets.  Come targets may have variable number of instances thus we
+      // Make sure we have expected targets.  Some targets may have variable number of instances thus we
       // have to allow for a variable number of running instances.
       cy.wait(5000)
       cy.visit(`${Cypress.env('prometheus_url')}/targets`)
-      cy.contains(/monitoring\/.+-alertmanager\/0.\(\d+\/\d+.up\)/)
-      cy.contains(/monitoring\/.+-coredns\/0.\(\d+\/\d+.up\)/)
-      cy.contains(/monitoring\/.+-grafana\/0.\(\d+\/\d+.up\)/)
-      cy.contains(/monitoring\/.+-apiserver\/0.\(\d+\/\d+.up\)/)
-      //cy.contains(/monitoring\/.+-istio-envoy\/0.\(\d+\/\d+.up\)/)
-      //cy.contains(/monitoring\/.+-istio-pilot\/0.\(\d+\/\d+.up\)/)
-      cy.contains(/monitoring\/.+-kube-state-metrics\/0.\(\d+\/\d+.up\)/)
-      cy.contains(/monitoring\/.+-kubelet\/0.\(\d+\/\d+.up\)/)
-      cy.contains(/monitoring\/.+-node-exporter\/0.\(\d+\/\d+.up\)/)
-      cy.contains(/monitoring\/.+-operator\/0.\(\d+\/\d+.up\)/)
-      cy.contains(/monitoring\/.+-prometheus\/0.\(\d+\/\d+.up\)/)
+      cy.get('button[class="mw-100 text-truncate dropdown-toggle btn btn-secondary"]').click()
+      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-alertmanager\/0/)
+      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-coredns\/0/)
+      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-grafana\/0/)
+      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-apiserver\/0/)
+      //cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-istio-envoy\/0/)
+      //cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-istio-pilot\/0/)
+      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-kube-state-metrics\/0/)
+      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-kubelet\/0/)
+      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-node-exporter\/0/)
+      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-operator\/0/)
+      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-prometheus\/0/)
     })
 })

@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [45.27.2-bb.1] - 2023-05-16
+### Added
+- updated cypress tests 
+
 ## [45.27.2-bb.0] - 2023-05-11
 ### Added
 - registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins minor 9.3.2 -> 9.5.1

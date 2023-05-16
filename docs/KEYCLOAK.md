@@ -92,7 +92,7 @@ monitoring:
     grafana:
       client_id: ""
       client_secret: ""
-      scopes: "Grafana" # default 'openid profile email'
+      scopes: "openid Grafana" # default 'openid profile email'
       allow_sign_up: "true" # true/false if Grafana will auto-create users from Keycloak after successful first login
 
 ```
@@ -122,7 +122,7 @@ monitoring:
   sso:
     enabled: true
     grafana:
-      scopes: "Grafana" #this is a sample client scope, review docs/KEYCLOAK.md
+      scopes: "openid Grafana" #this is a sample client scope, review docs/KEYCLOAK.md
       allow_sign_up: "true"
       role_attribute_path: "Viewer"
       tls_client_cert: ""
