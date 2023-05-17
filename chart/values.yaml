@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # These values are for the BigBang overrides
-hostname: bigbang.dev
+domain: bigbang.dev
 flux:
   enabled: false
   namespace: flux-system
@@ -43,7 +43,7 @@ istio:
     gateways:
       - istio-system/main
     hosts:
-      - prometheus.{{ .Values.hostname }}
+      - prometheus.{{ .Values.domain }}
     service: ""
     port: ""
     namespace: ""
@@ -55,7 +55,7 @@ istio:
     gateways:
       - istio-system/main
     hosts:
-      - alertmanager.{{ .Values.hostname }}
+      - alertmanager.{{ .Values.domain }}
     service: ""
     port: ""
     namespace: ""
@@ -67,7 +67,7 @@ istio:
     gateways:
       - istio-system/main
     hosts:
-      - grafana.{{ .Values.hostname }}
+      - grafana.{{ .Values.domain }}
     service: ""
     port: ""
     namespace: ""
@@ -944,7 +944,7 @@ grafana:
   grafana.ini:
     # Required if enabling SSO
     #server:
-      #root_url: https://grafana.{{ .Values.hostname }}/
+      #root_url: https://grafana.{{ .Values.domain }}/
       #Block is auto-set when using Umbrella
     auth.generic_oauth:
       enabled: false
