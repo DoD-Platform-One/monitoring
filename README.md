@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 45.27.2-bb.1](https://img.shields.io/badge/Version-45.27.2--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.65.1](https://img.shields.io/badge/AppVersion-0.65.1-informational?style=flat-square)
+![Version: 45.27.2-bb.2](https://img.shields.io/badge/Version-45.27.2--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.65.1](https://img.shields.io/badge/AppVersion-0.65.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -38,7 +38,7 @@ helm install monitoring chart/
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| hostname | string | `"bigbang.dev"` |  |
+| domain | string | `"bigbang.dev"` |  |
 | flux.enabled | bool | `false` |  |
 | flux.namespace | string | `"flux-system"` |  |
 | networkPolicies.enabled | bool | `false` |  |
@@ -58,7 +58,7 @@ helm install monitoring chart/
 | istio.prometheus.annotations | object | `{}` |  |
 | istio.prometheus.labels | object | `{}` |  |
 | istio.prometheus.gateways[0] | string | `"istio-system/main"` |  |
-| istio.prometheus.hosts[0] | string | `"prometheus.{{ .Values.hostname }}"` |  |
+| istio.prometheus.hosts[0] | string | `"prometheus.{{ .Values.domain }}"` |  |
 | istio.prometheus.service | string | `""` |  |
 | istio.prometheus.port | string | `""` |  |
 | istio.prometheus.namespace | string | `""` |  |
@@ -66,7 +66,7 @@ helm install monitoring chart/
 | istio.alertmanager.annotations | object | `{}` |  |
 | istio.alertmanager.labels | object | `{}` |  |
 | istio.alertmanager.gateways[0] | string | `"istio-system/main"` |  |
-| istio.alertmanager.hosts[0] | string | `"alertmanager.{{ .Values.hostname }}"` |  |
+| istio.alertmanager.hosts[0] | string | `"alertmanager.{{ .Values.domain }}"` |  |
 | istio.alertmanager.service | string | `""` |  |
 | istio.alertmanager.port | string | `""` |  |
 | istio.alertmanager.namespace | string | `""` |  |
@@ -74,7 +74,7 @@ helm install monitoring chart/
 | istio.grafana.annotations | object | `{}` |  |
 | istio.grafana.labels | object | `{}` |  |
 | istio.grafana.gateways[0] | string | `"istio-system/main"` |  |
-| istio.grafana.hosts[0] | string | `"grafana.{{ .Values.hostname }}"` |  |
+| istio.grafana.hosts[0] | string | `"grafana.{{ .Values.domain }}"` |  |
 | istio.grafana.service | string | `""` |  |
 | istio.grafana.port | string | `""` |  |
 | istio.grafana.namespace | string | `""` |  |
