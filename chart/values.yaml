@@ -2121,6 +2121,9 @@ nodeExporter:
 ## Configuration for prometheus-node-exporter subchart
 ##
 prometheus-node-exporter:
+  ## Service Monitor attach metadata
+  serviceMonitor:
+    attachMetadata: {}
   # set imagePullSecret
   serviceAccount:
     imagePullSecrets:

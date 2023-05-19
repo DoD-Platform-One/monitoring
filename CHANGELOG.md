@@ -4,6 +4,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [45.27.2-bb.3] - 2023-05-19
+### Added
+- Fix attachMetadata section in node exporter
 ## [45.27.2-bb.2] - 2023-05-17
 ### Added
 - updated cypress tests 
