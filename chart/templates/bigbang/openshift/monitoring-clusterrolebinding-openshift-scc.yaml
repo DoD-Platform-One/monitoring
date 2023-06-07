@@ -1,0 +1,41 @@
+{{- if .Values.openshift }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: '{{ template "kube-prometheus-stack.name" . }}'
+    chart: '{{ template "kube-prometheus-stack.name" . }}'
+    heritage: '{{ .Release.Service }}'
+    release: '{{ .Release.Name }}'
+  name: prometheus-clusterrolebinding-openshift-scc
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-20"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: 'system:openshift:scc:nonroot-v2'
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: 'system:serviceaccounts:{{ .Release.Namespace }}'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app: '{{ template "kube-prometheus-stack.name" . }}'
+    chart: '{{ template "kube-prometheus-stack.name" . }}'
+    heritage: '{{ .Release.Service }}'
+    release: '{{ .Release.Name }}'
+  name: nodeexporter-rolebinding-openshift-scc
+  namespace: '{{ .Release.Namespace }}'
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: node-exporter
+subjects:
+  - kind: ServiceAccount
+    namespace: {{ .Release.Namespace }}
+    name: monitoring-monitoring-prometheus-node-exporter
+{{- end }}
