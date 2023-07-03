@@ -157,7 +157,6 @@ defaultRules:
   rules:
     alertmanager: true
     etcd: true
-    configReloaders: true
     general: true
     k8s: true
     kubeApiserverAvailability: true
@@ -196,6 +195,66 @@ defaultRules:
 
   ## Additional annotations for PrometheusRule alerts
   additionalRuleAnnotations: {}
+
+  ## Additional labels for specific PrometheusRule alert groups
+  additionalRuleGroupLabels:
+    alertmanager: {}
+    etcd: {}
+    configReloaders: {}
+    general: {}
+    k8s: {}
+    kubeApiserverAvailability: {}
+    kubeApiserverBurnrate: {}
+    kubeApiserverHistogram: {}
+    kubeApiserverSlos: {}
+    kubeControllerManager: {}
+    kubelet: {}
+    kubeProxy: {}
+    kubePrometheusGeneral: {}
+    kubePrometheusNodeRecording: {}
+    kubernetesApps: {}
+    kubernetesResources: {}
+    kubernetesStorage: {}
+    kubernetesSystem: {}
+    kubeSchedulerAlerting: {}
+    kubeSchedulerRecording: {}
+    kubeStateMetrics: {}
+    network: {}
+    node: {}
+    nodeExporterAlerting: {}
+    nodeExporterRecording: {}
+    prometheus: {}
+    prometheusOperator: {}
+
+  ## Additional annotations for specific PrometheusRule alerts groups
+  additionalRuleGroupAnnotations:
+    alertmanager: {}
+    etcd: {}
+    configReloaders: {}
+    general: {}
+    k8s: {}
+    kubeApiserverAvailability: {}
+    kubeApiserverBurnrate: {}
+    kubeApiserverHistogram: {}
+    kubeApiserverSlos: {}
+    kubeControllerManager: {}
+    kubelet: {}
+    kubeProxy: {}
+    kubePrometheusGeneral: {}
+    kubePrometheusNodeRecording: {}
+    kubernetesApps: {}
+    kubernetesResources: {}
+    kubernetesStorage: {}
+    kubernetesSystem: {}
+    kubeSchedulerAlerting: {}
+    kubeSchedulerRecording: {}
+    kubeStateMetrics: {}
+    network: {}
+    node: {}
+    nodeExporterAlerting: {}
+    nodeExporterRecording: {}
+    prometheus: {}
+    prometheusOperator: {}
 
   ## Prefix for runbook URLs. Use this to override the first part of the runbookURLs that is common to all rules.
   runbookUrl: "https://runbooks.prometheus-operator.dev/runbooks"
@@ -272,7 +331,6 @@ alertmanager:
   apiVersion: v2
 
   ## Service account for Alertmanager to use.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
   ##
   serviceAccount:
     create: true
@@ -389,8 +447,11 @@ alertmanager:
 
     labels: {}
 
-    ## Redirect ingress to an additional defined port on the service
+    ## Override ingress to a different defined port on the service
     # servicePort: 8081
+    ## Override ingress to a different service then the default, this is useful if you need to
+    ## point to a specific instance of the alertmanager (eg kube-prometheus-stack-alertmanager-0)
+    # serviceName: kube-prometheus-stack-alertmanager-0
 
     ## Hosts must be provided if Ingress is enabled.
     ##
@@ -498,6 +559,11 @@ alertmanager:
     ## Denotes if this Service desires to route external traffic to node-local or cluster-wide endpoints
     ##
     externalTrafficPolicy: Cluster
+
+    ## If you want to make sure that connections from a particular client are passed to the same Pod each time
+    ## Accepts 'ClientIP' or ''
+    ##
+    sessionAffinity: ""
 
     ## Service type
     ##
@@ -733,6 +799,13 @@ alertmanager:
     ##
     routePrefix: /
 
+    ## scheme: HTTP scheme to use. Can be used with `tlsConfig` for example if using istio mTLS.
+    scheme: ""
+
+    ## tlsConfig: TLS configuration to use when connect to the endpoint. For example if using istio mTLS.
+    ## Of type: https://github.com/coreos/prometheus-operator/blob/main/Documentation/api.md#tlsconfig
+    tlsConfig: {}
+
     ## If set to true all actions on the underlying managed objects are not going to be performed, except for delete actions.
     ##
     paused: false
@@ -808,6 +881,8 @@ alertmanager:
       runAsNonRoot: true
       runAsUser: 1000
       fsGroup: 2000
+      seccompProfile:
+        type: RuntimeDefault
 
     ## ListenLocal makes the Alertmanager server listen on loopback, so that it does not bind against the Pod IP.
     ## Note this is only for the Alertmanager UI, not the gossip communication.
@@ -856,6 +931,18 @@ alertmanager:
     ##
     clusterAdvertiseAddress: false
 
+    ## clusterGossipInterval determines interval between gossip attempts.
+    ## Needs to be specified as GoDuration, a time duration that can be parsed by Go’s time.ParseDuration() (e.g. 45ms, 30s, 1m, 1h20m15s)
+    clusterGossipInterval: ""
+
+    ## clusterPeerTimeout determines timeout for cluster peering.
+    ## Needs to be specified as GoDuration, a time duration that can be parsed by Go’s time.ParseDuration() (e.g. 45ms, 30s, 1m, 1h20m15s)
+    clusterPeerTimeout: ""
+
+    ## clusterPushpullInterval determines interval between pushpull attempts.
+    ## Needs to be specified as GoDuration, a time duration that can be parsed by Go’s time.ParseDuration() (e.g. 45ms, 30s, 1m, 1h20m15s)
+    clusterPushpullInterval: ""
+
     ## ForceEnableClusterMode ensures Alertmanager does not deactivate the cluster mode when running with a single replica.
     ## Use case is e.g. spanning an Alertmanager cluster across Kubernetes clusters with a single replica in each.
     forceEnableClusterMode: false
@@ -884,7 +971,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 9.5.1
+    tag: 9.5.3
     pullSecrets:
     - private-registry
   
@@ -1017,7 +1104,7 @@ grafana:
     # use IronBank image
     image:
       repository: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar
-      tag: 1.23.3
+      tag: 1.24.4
 
     resources:
       limits:
@@ -1080,6 +1167,17 @@ grafana:
       createPrometheusReplicasDatasources: false
       label: grafana_datasource
       labelValue: "1"
+
+      ## Field with internal link pointing to existing data source in Grafana.
+      ## Can be provisioned via additionalDataSources
+      exemplarTraceIdDestinations: {}
+        # datasourceUid: Jaeger
+        # traceIdLabelName: trace_id
+      alertmanager:
+        enabled: true
+        uid: alertmanager
+        handleGrafanaManagedAlerts: false
+        implementation: prometheus
 
   dashboardProviders: {}
   #  dashboardproviders.yaml:
@@ -1223,7 +1321,7 @@ grafana:
     ##
     image:
       repository: registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal
-      tag: "8.7"
+      tag: "8.8"
       sha: ""
       pullPolicy: IfNotPresent
   
@@ -2139,7 +2237,7 @@ prometheus-node-exporter:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus/node-exporter 
-    tag: v1.5.0
+    tag: v1.6.0
 
   resources:
     limits:
@@ -2247,7 +2345,9 @@ prometheusOperator:
   ## Admission webhook support for PrometheusRules resources added in Prometheus Operator 0.30 can be enabled to prevent incorrectly formatted
   ## rules from making their way into prometheus and potentially preventing the container from starting
   admissionWebhooks:
-    failurePolicy:
+    ## Valid values: Fail, Ignore, IgnoreOnInstallOnly
+    ## IgnoreOnInstallOnly - If Release.IsInstall returns "true", set "Ignore" otherwise "Fail"
+    failurePolicy: ""
     ## The default timeoutSeconds is 10 and the maximum value is 30.
     timeoutSeconds: 10
     enabled: true
@@ -2319,14 +2419,26 @@ prometheusOperator:
         runAsGroup: 2000
         runAsNonRoot: true
         runAsUser: 2000
+        seccompProfile:
+          type: RuntimeDefault
 
     # Security context for create job container
     createSecretJob:
-      securityContext: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop:
+          - ALL
 
       # Security context for patch job container
     patchWebhookJob:
-      securityContext: {}
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities:
+          drop:
+          - ALL
 
     # Use certmanager to generate webhook certs
     certManager:
@@ -2568,6 +2680,8 @@ prometheusOperator:
     runAsGroup: 65534
     runAsNonRoot: true
     runAsUser: 65534
+    seccompProfile:
+      type: RuntimeDefault
 
   ## Container-specific security context configuration
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -2605,7 +2719,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.65.1
+    tag: v0.66.0
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2631,7 +2745,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.65.1
+      tag: v0.66.0
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
@@ -2651,7 +2765,7 @@ prometheusOperator:
   thanosImage:
     registry: registry1.dso.mil
     repository: ironbank/opensource/thanos/thanos
-    tag: v0.30.2
+    tag: v0.31.0
     sha: ""
 
   ## Set a Label Selector to filter watched prometheus and prometheusAgent
@@ -2667,13 +2781,13 @@ prometheusOperator:
 
   ## Set a Field Selector to filter watched secrets
   ##
-  secretFieldSelector: ""
+  secretFieldSelector: "type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1"
 
   ## kubectl image to use when cleaning up
   ##
   kubectlImage:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
-    tag: v1.26.4
+    tag: 1.27.3
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3163,7 +3277,7 @@ prometheus:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus/prometheus
-      tag: v2.42.0
+      tag: v2.45.0
       sha: ""
 
     ## Tolerations for use with node taints
@@ -3348,6 +3462,28 @@ prometheus:
     probeNamespaceSelector: {}
     ## Example which selects Probe in namespaces with label "prometheus" set to "somelabel"
     # probeNamespaceSelector:
+    #   matchLabels:
+    #     prometheus: somelabel
+
+    ## If true, a nil or {} value for prometheus.prometheusSpec.scrapeConfigSelector will cause the
+    ## prometheus resource to be created with selectors based on values in the helm deployment,
+    ## which will also match the scrapeConfigs created
+    ##
+    scrapeConfigSelectorNilUsesHelmValues: true
+
+    ## scrapeConfigs to be selected for target discovery.
+    ## If {}, select all scrapeConfigs
+    ##
+    scrapeConfigSelector: {}
+    ## Example which selects scrapeConfigs with label "prometheus" set to "somelabel"
+    # scrapeConfig:
+    #   matchLabels:
+    #     prometheus: somelabel
+
+    ## If nil, select own namespace. Namespaces to be selected for scrapeConfig discovery.
+    scrapeConfigNamespaceSelector: {}
+    ## Example which selects scrapeConfig in namespaces with label "prometheus" set to "somelabel"
+    # scrapeConfigsNamespaceSelector:
     #   matchLabels:
     #     prometheus: somelabel
 
@@ -3608,6 +3744,8 @@ prometheus:
       runAsNonRoot: true
       runAsUser: 1000
       fsGroup: 2000
+      seccompProfile:
+        type: RuntimeDefault
 
     ## Priority class assigned to the Pods
     ##
@@ -4053,7 +4191,7 @@ thanosRuler:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/thanos/thanos
-      tag: v0.30.2
+      tag: v0.31.0
       sha: ""
 
     ## Namespaces to be selected for PrometheusRules discovery.
@@ -4239,6 +4377,8 @@ thanosRuler:
       runAsNonRoot: true
       runAsUser: 1000
       fsGroup: 2000
+      seccompProfile:
+        type: RuntimeDefault
 
     ## ListenLocal makes the ThanosRuler server listen on loopback, so that it does not bind against the Pod IP.
     ## Note this is only for the ThanosRuler UI, not the gossip communication.
@@ -4281,3 +4421,13 @@ thanosRuler:
 ## Setting to true produces cleaner resource names, but requires a data migration because the name of the persistent volume changes. Therefore this should only be set once on initial installation.
 ##
 cleanPrometheusOperatorObjectNames: false
+
+## Extra manifests to deploy as an array
+extraManifests: []
+  # - apiVersion: v1
+  #   kind: ConfigMap
+  #   metadata:
+  #   labels:
+  #     name: prometheus-extra
+  #   data:
+  #     extra-data: "value"
