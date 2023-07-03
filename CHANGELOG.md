@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [47.0.0-bb.0] - 2023-06-27
+### Added
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins major 9.5.1 -> 10.0.1
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar minor 1.23.3 -> 1.24.4
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl minor v1.26.4 -> 1.27.3
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader minor v0.65.1 -> v0.66.0
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator minor v0.65.1 -> v0.66.0
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operato minor 0.65.1 -> v0.66.0
+- registry1.dso.mil/ironbank/opensource/prometheus/node-exporter minor v1.5.0 -> v1.6.0
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus minor v2.42.0 -> v2.45.0
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus minor v2.43.1 -> v2.45.0
+- registry1.dso.mil/ironbank/opensource/thanos/thanos minor v0.30.2 -> v0.31.0
+- registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal minor 8.7 -> 8.8
+
 ## [45.27.2-bb.4] - 2023-05-26
 ### Added
 - Added Openshift support
