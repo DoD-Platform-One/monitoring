@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 47.1.0-bb.0](https://img.shields.io/badge/Version-47.1.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.66.0](https://img.shields.io/badge/AppVersion-v0.66.0-informational?style=flat-square)
+![Version: 47.1.0-bb.1](https://img.shields.io/badge/Version-47.1.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.66.0](https://img.shields.io/badge/AppVersion-v0.66.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -70,14 +70,6 @@ helm install monitoring chart/
 | istio.alertmanager.service | string | `""` |  |
 | istio.alertmanager.port | string | `""` |  |
 | istio.alertmanager.namespace | string | `""` |  |
-| istio.grafana.enabled | bool | `true` |  |
-| istio.grafana.annotations | object | `{}` |  |
-| istio.grafana.labels | object | `{}` |  |
-| istio.grafana.gateways[0] | string | `"istio-system/main"` |  |
-| istio.grafana.hosts[0] | string | `"grafana.{{ .Values.domain }}"` |  |
-| istio.grafana.service | string | `""` |  |
-| istio.grafana.port | string | `""` |  |
-| istio.grafana.namespace | string | `""` |  |
 | istio.injection | string | `"disabled"` |  |
 | istio.mtls.mode | string | `"STRICT"` |  |
 | sso.enabled | bool | `false` |  |

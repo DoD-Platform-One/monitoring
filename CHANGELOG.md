@@ -3,9 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
-## [47.0.0-bb.0] - 2023-06-27
+## [47.1.0-bb.1] - 2023-07-21
+### Changed
+- grafana disabled by default
+### Removed
+- Grafana related BigBang templates
+
+## [47.1.0-bb.0] - 2023-06-27
 ### Added
-- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins major 9.5.1 -> 10.0.1
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins major 9.5.1 -> 9.5.3
 - registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar minor 1.23.3 -> 1.24.4
 - registry1.dso.mil/ironbank/opensource/kubernetes/kubectl minor v1.26.4 -> 1.27.3
 - registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader minor v0.65.1 -> v0.66.0

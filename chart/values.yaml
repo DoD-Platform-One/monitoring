@@ -24,7 +24,6 @@ bbtests:
     artifacts: true
     envs:
       cypress_prometheus_url: 'http://monitoring-kube-prometheus-prometheus:9090'
-      cypress_grafana_url: 'http://monitoring-grafana:80'
       cypress_alertmanager_url: 'http://monitoring-kube-prometheus-alertmanager:9093'
 
 minioOperator:
@@ -56,18 +55,6 @@ istio:
       - istio-system/main
     hosts:
       - alertmanager.{{ .Values.domain }}
-    service: ""
-    port: ""
-    namespace: ""
-  grafana:
-    # Toggle vs creation
-    enabled: true
-    annotations: {}
-    labels: {}
-    gateways:
-      - istio-system/main
-    hosts:
-      - grafana.{{ .Values.domain }}
     service: ""
     port: ""
     namespace: ""
@@ -965,7 +952,7 @@ alertmanager:
 ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
 ##
 grafana:
-  enabled: true
+  enabled: false
   namespaceOverride: ""
 
   # use IronBank image
