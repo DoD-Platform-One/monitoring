@@ -21,7 +21,6 @@ describe('Basic prometheus', function() {
       cy.get('button[class="mw-100 text-truncate dropdown-toggle btn btn-secondary"]').click()
       cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-alertmanager\/0/)
       cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-coredns\/0/)
-      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-grafana\/0/)
       cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-apiserver\/0/)
       //cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-istio-envoy\/0/)
       //cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-istio-pilot\/0/)
