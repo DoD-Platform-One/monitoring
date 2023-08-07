@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 47.1.0-bb.1](https://img.shields.io/badge/Version-47.1.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.66.0](https://img.shields.io/badge/AppVersion-v0.66.0-informational?style=flat-square)
+![Version: 47.1.0-bb.2](https://img.shields.io/badge/Version-47.1.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.66.0](https://img.shields.io/badge/AppVersion-v0.66.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -49,7 +49,6 @@ helm install monitoring chart/
 | bbtests.enabled | bool | `false` |  |
 | bbtests.cypress.artifacts | bool | `true` |  |
 | bbtests.cypress.envs.cypress_prometheus_url | string | `"http://monitoring-kube-prometheus-prometheus:9090"` |  |
-| bbtests.cypress.envs.cypress_grafana_url | string | `"http://monitoring-grafana:80"` |  |
 | bbtests.cypress.envs.cypress_alertmanager_url | string | `"http://monitoring-kube-prometheus-alertmanager:9093"` |  |
 | minioOperator.enabled | bool | `false` |  |
 | gitlabRunner.enabled | bool | `false` |  |
@@ -89,6 +88,9 @@ helm install monitoring chart/
 | cleanUpgrade.securityContext.runAsUser | int | `1000` |  |
 | cleanUpgrade.securityContext.runAsGroup | int | `1000` |  |
 | cleanUpgrade.securityContext.runAsNonRoot | bool | `true` |  |
+| cleanUpgrade.securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| cleanUpgrade.securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| cleanUpgrade.securityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | nameOverride | string | `"kube-prometheus-stack"` |  |
 | namespaceOverride | string | `""` |  |
 | kubeTargetVersionOverride | string | `""` |  |
@@ -202,7 +204,7 @@ helm install monitoring chart/
 | alertmanager.podDisruptionBudget.maxUnavailable | string | `""` |  |
 | alertmanager.config.global.resolve_timeout | string | `"5m"` |  |
 | alertmanager.config.inhibit_rules[0].source_matchers[0] | string | `"severity = critical"` |  |
-| alertmanager.config.inhibit_rules[0].target_matchers[0] | string | `"severity =~ warning|info"` |  |
+| alertmanager.config.inhibit_rules[0].target_matchers[0] | string | `"severity =~ warning\|info"` |  |
 | alertmanager.config.inhibit_rules[0].equal[0] | string | `"namespace"` |  |
 | alertmanager.config.inhibit_rules[0].equal[1] | string | `"alertname"` |  |
 | alertmanager.config.inhibit_rules[1].source_matchers[0] | string | `"severity = warning"` |  |
@@ -218,7 +220,7 @@ helm install monitoring chart/
 | alertmanager.config.route.repeat_interval | string | `"12h"` |  |
 | alertmanager.config.route.receiver | string | `"null"` |  |
 | alertmanager.config.route.routes[0].receiver | string | `"null"` |  |
-| alertmanager.config.route.routes[0].matchers[0] | string | `"alertname =~ \"InfoInhibitor|Watchdog\""` |  |
+| alertmanager.config.route.routes[0].matchers[0] | string | `"alertname =~ \"InfoInhibitor\|Watchdog\""` |  |
 | alertmanager.config.receivers[0].name | string | `"null"` |  |
 | alertmanager.config.templates[0] | string | `"/etc/alertmanager/config/*.tmpl"` |  |
 | alertmanager.stringConfig | string | `""` |  |
@@ -330,7 +332,7 @@ helm install monitoring chart/
 | alertmanager.alertmanagerSpec.minReadySeconds | int | `0` |  |
 | alertmanager.extraSecret.annotations | object | `{}` |  |
 | alertmanager.extraSecret.data | object | `{}` |  |
-| grafana.enabled | bool | `true` |  |
+| grafana.enabled | bool | `false` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
 | grafana.image.tag | string | `"9.5.3"` |  |
@@ -448,7 +450,7 @@ helm install monitoring chart/
 | kubeApiServer.serviceMonitor.selector.matchLabels.component | string | `"apiserver"` |  |
 | kubeApiServer.serviceMonitor.selector.matchLabels.provider | string | `"kubernetes"` |  |
 | kubeApiServer.serviceMonitor.metricRelabelings[0].action | string | `"drop"` |  |
-| kubeApiServer.serviceMonitor.metricRelabelings[0].regex | string | `"apiserver_request_duration_seconds_bucket;(0.15|0.2|0.3|0.35|0.4|0.45|0.6|0.7|0.8|0.9|1.25|1.5|1.75|2|3|3.5|4|4.5|6|7|8|9|15|25|40|50)"` |  |
+| kubeApiServer.serviceMonitor.metricRelabelings[0].regex | string | `"apiserver_request_duration_seconds_bucket;(0.15\|0.2\|0.3\|0.35\|0.4\|0.45\|0.6\|0.7\|0.8\|0.9\|1.25\|1.5\|1.75\|2\|3\|3.5\|4\|4.5\|6\|7\|8\|9\|15\|25\|40\|50)"` |  |
 | kubeApiServer.serviceMonitor.metricRelabelings[0].sourceLabels[0] | string | `"__name__"` |  |
 | kubeApiServer.serviceMonitor.metricRelabelings[0].sourceLabels[1] | string | `"le"` |  |
 | kubeApiServer.serviceMonitor.relabelings | list | `[]` |  |
@@ -469,16 +471,16 @@ helm install monitoring chart/
 | kubelet.serviceMonitor.resourcePath | string | `"/metrics/resource/v1alpha1"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[0].sourceLabels[0] | string | `"__name__"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[0].action | string | `"drop"` |  |
-| kubelet.serviceMonitor.cAdvisorMetricRelabelings[0].regex | string | `"container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)"` |  |
+| kubelet.serviceMonitor.cAdvisorMetricRelabelings[0].regex | string | `"container_cpu_(cfs_throttled_seconds_total\|load_average_10s\|system_seconds_total\|user_seconds_total)"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[1].sourceLabels[0] | string | `"__name__"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[1].action | string | `"drop"` |  |
-| kubelet.serviceMonitor.cAdvisorMetricRelabelings[1].regex | string | `"container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)"` |  |
+| kubelet.serviceMonitor.cAdvisorMetricRelabelings[1].regex | string | `"container_fs_(io_current\|io_time_seconds_total\|io_time_weighted_seconds_total\|reads_merged_total\|sector_reads_total\|sector_writes_total\|writes_merged_total)"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[2].sourceLabels[0] | string | `"__name__"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[2].action | string | `"drop"` |  |
-| kubelet.serviceMonitor.cAdvisorMetricRelabelings[2].regex | string | `"container_memory_(mapped_file|swap)"` |  |
+| kubelet.serviceMonitor.cAdvisorMetricRelabelings[2].regex | string | `"container_memory_(mapped_file\|swap)"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[3].sourceLabels[0] | string | `"__name__"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[3].action | string | `"drop"` |  |
-| kubelet.serviceMonitor.cAdvisorMetricRelabelings[3].regex | string | `"container_(file_descriptors|tasks_state|threads_max)"` |  |
+| kubelet.serviceMonitor.cAdvisorMetricRelabelings[3].regex | string | `"container_(file_descriptors\|tasks_state\|threads_max)"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[4].sourceLabels[0] | string | `"__name__"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[4].action | string | `"drop"` |  |
 | kubelet.serviceMonitor.cAdvisorMetricRelabelings[4].regex | string | `"container_spec.*"` |  |
@@ -658,8 +660,8 @@ helm install monitoring chart/
 | prometheus-node-exporter.namespaceOverride | string | `""` |  |
 | prometheus-node-exporter.podLabels.jobLabel | string | `"node-exporter"` |  |
 | prometheus-node-exporter.releaseLabel | bool | `true` |  |
-| prometheus-node-exporter.extraArgs[0] | string | `"--collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)"` |  |
-| prometheus-node-exporter.extraArgs[1] | string | `"--collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$"` |  |
+| prometheus-node-exporter.extraArgs[0] | string | `"--collector.filesystem.mount-points-exclude=^/(dev\|proc\|sys\|var/lib/docker/.+\|var/lib/kubelet/.+)($\|/)"` |  |
+| prometheus-node-exporter.extraArgs[1] | string | `"--collector.filesystem.fs-types-exclude=^(autofs\|binfmt_misc\|bpf\|cgroup2?\|configfs\|debugfs\|devpts\|devtmpfs\|fusectl\|hugetlbfs\|iso9660\|mqueue\|nsfs\|overlay\|proc\|procfs\|pstore\|rpc_pipefs\|securityfs\|selinuxfs\|squashfs\|sysfs\|tracefs)$"` |  |
 | prometheus-node-exporter.service.portName | string | `"http-metrics"` |  |
 | prometheus-node-exporter.prometheus.monitor.enabled | bool | `true` |  |
 | prometheus-node-exporter.prometheus.monitor.jobLabel | string | `"jobLabel"` |  |
@@ -1119,5 +1121,4 @@ helm install monitoring chart/
 
 ## Contributing
 
-Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing. <html><body>You are being <a href="https://repo1.dso.mil/big-bang/product/packages/gluon/-/raw/master/docs/_templates.gotmpl">redirected</a>.</body></html>
-
+Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
