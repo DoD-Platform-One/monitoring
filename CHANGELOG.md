@@ -4,9 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
-## [47.1.0-bb.3] - 2023-08-14
+## [48.2.3-bb.0] - 2023-08-02
 ### Changed
-- Updated Cypress tests to allow for SSO testing
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins major 9.5.3 -> 10.0.2 
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins patch 10.0.1 -> 10.0.2 
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar minor 1.24.4 -> 1.25.0 
+- registry1.dso.mil/ironbank/opensource/bats/bats minor 1.9.0 -> v1.10.0 
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl patch 1.27.3 -> 1.27.4 
+- registry1.dso.mil/ironbank/opensource/prometheus/node-exporter patch v1.6.0 -> v1.6.1 
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus minor v2.45.0 -> v2.46.0
 
 ## [47.1.0-bb.2] - 2023-07-31
 ### Added
