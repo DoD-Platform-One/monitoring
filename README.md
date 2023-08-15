@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 48.2.3-bb.0](https://img.shields.io/badge/Version-48.2.3--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.66.0](https://img.shields.io/badge/AppVersion-v0.66.0-informational?style=flat-square)
+![Version: 48.3.1-bb.0](https://img.shields.io/badge/Version-48.3.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.66.0](https://img.shields.io/badge/AppVersion-v0.66.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -681,6 +681,7 @@ helm install monitoring chart/
 | prometheus-node-exporter.prometheus.monitor.relabelings | list | `[]` |  |
 | prometheus-node-exporter.rbac.pspEnabled | bool | `false` |  |
 | prometheusOperator.enabled | bool | `true` |  |
+| prometheusOperator.revisionHistoryLimit | int | `10` |  |
 | prometheusOperator.tls.enabled | bool | `true` |  |
 | prometheusOperator.tls.tlsMinVersion | string | `"VersionTLS13"` |  |
 | prometheusOperator.tls.internalPort | int | `10250` |  |
