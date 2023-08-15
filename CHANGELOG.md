@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [48.3.1-bb.0] - 2023-08-02
+### Changed
+- kube-prometheus-stack upgraded to 48.3.1
+- removed duplicated CRDs
+
 ## [48.2.3-bb.0] - 2023-08-02
 ### Changed
 - registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins major 9.5.3 -> 10.0.2 
