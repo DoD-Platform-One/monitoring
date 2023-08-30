@@ -686,7 +686,7 @@ alertmanager:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus/alertmanager
-      tag: v0.25.0
+      tag: v0.26.0
       sha: ""
 
     ## If true then the user will be responsible to provide a secret with alertmanager configuration
@@ -975,7 +975,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 10.0.2
+    tag: 10.0.3
     pullSecrets:
     - private-registry
   
@@ -2121,7 +2121,7 @@ kube-state-metrics:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kubernetes/kube-state-metrics
-    tag: v2.8.2
+    tag: v2.9.2
 
   resources:
     limits:
@@ -2738,7 +2738,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.66.0
+    tag: v0.67.1
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2764,7 +2764,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.66.0
+      tag: v0.67.1
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
@@ -2784,7 +2784,7 @@ prometheusOperator:
   thanosImage:
     registry: registry1.dso.mil
     repository: ironbank/opensource/thanos/thanos
-    tag: v0.31.0
+    tag: v0.32.1
     sha: ""
 
   ## Set a Label Selector to filter watched prometheus and prometheusAgent
@@ -2806,7 +2806,7 @@ prometheusOperator:
   ##
   kubectlImage:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
-    tag: 1.27.4
+    tag: 1.27.5
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -4220,7 +4220,7 @@ thanosRuler:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/thanos/thanos
-      tag: v0.31.0
+      tag: v0.32.1
       sha: ""
 
     ## Namespaces to be selected for PrometheusRules discovery.
