@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 48.3.1-bb.0](https://img.shields.io/badge/Version-48.3.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.66.0](https://img.shields.io/badge/AppVersion-v0.66.0-informational?style=flat-square)
+![Version: 48.3.1-bb.1](https://img.shields.io/badge/Version-48.3.1--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.67.1](https://img.shields.io/badge/AppVersion-v0.67.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -285,7 +285,7 @@ helm install monitoring chart/
 | alertmanager.alertmanagerSpec.podMetadata | object | `{}` |  |
 | alertmanager.alertmanagerSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | alertmanager.alertmanagerSpec.image.repository | string | `"ironbank/opensource/prometheus/alertmanager"` |  |
-| alertmanager.alertmanagerSpec.image.tag | string | `"v0.25.0"` |  |
+| alertmanager.alertmanagerSpec.image.tag | string | `"v0.26.0"` |  |
 | alertmanager.alertmanagerSpec.image.sha | string | `""` |  |
 | alertmanager.alertmanagerSpec.useExistingSecret | bool | `false` |  |
 | alertmanager.alertmanagerSpec.secrets | list | `[]` |  |
@@ -339,7 +339,7 @@ helm install monitoring chart/
 | grafana.enabled | bool | `false` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"10.0.2"` |  |
+| grafana.image.tag | string | `"10.0.3"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
@@ -620,7 +620,7 @@ helm install monitoring chart/
 | kube-state-metrics.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | kube-state-metrics.image.registry | string | `"registry1.dso.mil"` |  |
 | kube-state-metrics.image.repository | string | `"ironbank/opensource/kubernetes/kube-state-metrics"` |  |
-| kube-state-metrics.image.tag | string | `"v2.8.2"` |  |
+| kube-state-metrics.image.tag | string | `"v2.9.2"` |  |
 | kube-state-metrics.resources.limits.cpu | string | `"100m"` |  |
 | kube-state-metrics.resources.limits.memory | string | `"128Mi"` |  |
 | kube-state-metrics.resources.requests.cpu | string | `"100m"` |  |
@@ -795,12 +795,12 @@ helm install monitoring chart/
 | prometheusOperator.verticalPodAutoscaler.updatePolicy.updateMode | string | `"Auto"` |  |
 | prometheusOperator.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.66.0"` |  |
+| prometheusOperator.image.tag | string | `"v0.67.1"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.66.0"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.67.1"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.enableProbe | bool | `false` |  |
 | prometheusOperator.prometheusConfigReloader.resources.requests.cpu | string | `"200m"` |  |
@@ -809,14 +809,14 @@ helm install monitoring chart/
 | prometheusOperator.prometheusConfigReloader.resources.limits.memory | string | `"50Mi"` |  |
 | prometheusOperator.thanosImage.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.thanosImage.repository | string | `"ironbank/opensource/thanos/thanos"` |  |
-| prometheusOperator.thanosImage.tag | string | `"v0.31.0"` |  |
+| prometheusOperator.thanosImage.tag | string | `"v0.32.1"` |  |
 | prometheusOperator.thanosImage.sha | string | `""` |  |
 | prometheusOperator.prometheusInstanceSelector | string | `""` |  |
 | prometheusOperator.alertmanagerInstanceSelector | string | `""` |  |
 | prometheusOperator.thanosRulerInstanceSelector | string | `""` |  |
 | prometheusOperator.secretFieldSelector | string | `"type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1"` |  |
 | prometheusOperator.kubectlImage.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl"` |  |
-| prometheusOperator.kubectlImage.tag | string | `"1.27.4"` |  |
+| prometheusOperator.kubectlImage.tag | string | `"1.27.5"` |  |
 | prometheusOperator.kubectlImage.sha | string | `""` |  |
 | prometheusOperator.kubectlImage.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheus.enabled | bool | `true` |  |
@@ -1082,7 +1082,7 @@ helm install monitoring chart/
 | thanosRuler.thanosRulerSpec.podMetadata | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | thanosRuler.thanosRulerSpec.image.repository | string | `"ironbank/opensource/thanos/thanos"` |  |
-| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.31.0"` |  |
+| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.32.1"` |  |
 | thanosRuler.thanosRulerSpec.image.sha | string | `""` |  |
 | thanosRuler.thanosRulerSpec.ruleNamespaceSelector | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.ruleSelectorNilUsesHelmValues | bool | `true` |  |

@@ -4,6 +4,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [48.3.1-bb.1] - 2023-08-02
+### Changed
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins patch 10.0.2 -> 10.0.3
+- registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics minor v2.8.2 -> v2.9.2
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl patch 1.27.4 -> 1.27.5
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader  minor v0.66.0 -> v0.67.1
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator minor v0.66.0 -> v0.67.1
+- registry1.dso.mil/ironbank/opensource/prometheus/alertmanager minor v0.25.0 -> v0.26.0
+- registry1.dso.mil/ironbank/opensource/thanos/thanos minor v0.31.0 -> v0.32.1
+
 ## [48.3.1-bb.0] - 2023-08-02
 ### Changed
 - kube-prometheus-stack upgraded to 48.3.1

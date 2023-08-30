@@ -21,8 +21,8 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 48.3.1-bb.0
-appVersion: v0.66.0
+version: 48.3.1-bb.1
+appVersion: v0.67.1
 kubeVersion: ">=1.16.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -39,18 +39,18 @@ annotations:
       url: https://github.com/prometheus-operator/kube-prometheus
   bigbang.dev/applicationVersions: |
     - Prometheus: v2.46.0
-    - Grafana: 10.0.2
-    - Alertmanager: v0.25.0
+    - Grafana: 10.0.3
+    - Alertmanager: v0.26.0
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
   helm.sh/images: |
     - name: alertmanager
-      image: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager:v0.25.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager:v0.26.0
       condition: alertmanager.enabled
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.0.0
     - name: grafana
-      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:10.0.2
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:10.0.3
       condition: grafana.enabled
       dependency: grafana
     - name: init-chown-data
@@ -61,10 +61,10 @@ annotations:
       condition: grafana.enabled
       dependency: grafana
     - name: kubectl
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:1.27.4
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:1.27.5
       condition: prometheusOperator.enabled
     - name: kube-state-metrics
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.8.2
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.9.2
       condition: kubeStateMetrics.enabled
       dependency: kube-state-metrics
     - name: kube-webhook-certgen
@@ -74,10 +74,10 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v2.46.0
       condition: prometheus.enabled
     - name: prometheus-config-reloader
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.66.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.67.1
       condition: prometheusOperator.enabled
     - name: prometheus-operator
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.66.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.67.1
       condition: prometheusOperator.enabled
     - name: prometheus-node-exporter
       image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.6.1
@@ -88,10 +88,10 @@ annotations:
       condition: grafana.enabled
       dependency: grafana
     - name: thanos
-      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.31.0
+      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.32.1
       condition: prometheusOperator.enabled
     - name: thanos-ruler
-      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.31.0
+      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.32.1
       condition: thanosRuler.enabled
 
 dependencies:
