@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [49.2.0-bb.0] - 2023-08-31
+### Changed
+- upgrade chart version to 49.2.0
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar patch 1.25.0 -> 1.25.1
+
 ## [48.3.1-bb.1] - 2023-08-02
 ### Changed
 - registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins patch 10.0.2 -> 10.0.3

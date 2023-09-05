@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 48.3.1-bb.1](https://img.shields.io/badge/Version-48.3.1--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.67.1](https://img.shields.io/badge/AppVersion-v0.67.1-informational?style=flat-square)
+![Version: 49.2.0-bb.0](https://img.shields.io/badge/Version-49.2.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.67.1](https://img.shields.io/badge/AppVersion-v0.67.1-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -376,7 +376,7 @@ helm install monitoring chart/
 | grafana.ingress.path | string | `"/"` |  |
 | grafana.ingress.tls | list | `[]` |  |
 | grafana.sidecar.image.repository | string | `"registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar"` |  |
-| grafana.sidecar.image.tag | string | `"1.25.0"` |  |
+| grafana.sidecar.image.tag | string | `"1.25.1"` |  |
 | grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
 | grafana.sidecar.resources.requests.cpu | string | `"100m"` |  |
