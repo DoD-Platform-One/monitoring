@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [49.2.0-bb.1] - 2023-09-25
+### Changed
+- changed defaultpeerauthentication from a hardcoded value to use {{ .Release.Namespace }}
+
 ## [49.2.0-bb.0] - 2023-08-31
 ### Changed
 - upgrade chart version to 49.2.0
