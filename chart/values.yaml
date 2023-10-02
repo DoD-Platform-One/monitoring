@@ -124,7 +124,7 @@ nameOverride: "kube-prometheus-stack"
 ##
 namespaceOverride: ""
 
-## Provide a k8s version to auto dashboard import script example: kubeTargetVersionOverride: 1.16.6
+## Provide a k8s version to auto dashboard import script example: kubeTargetVersionOverride: 1.26.6
 ##
 kubeTargetVersionOverride: ""
 
@@ -2121,7 +2121,7 @@ kube-state-metrics:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kubernetes/kube-state-metrics
-    tag: v2.9.2
+    tag: v2.10.0
 
   resources:
     limits:
@@ -2216,6 +2216,11 @@ kube-state-metrics:
 ##
 nodeExporter:
   enabled: true
+  operatingSystems:
+    linux:
+      enabled: false
+    darwin:
+      enabled: false
   serviceMonitor:
     interval: ""
   jobLabel: jobLabel
@@ -2741,7 +2746,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.67.1
+    tag: v0.68.0
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2767,7 +2772,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.67.1
+      tag: v0.68.0
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
@@ -2787,7 +2792,7 @@ prometheusOperator:
   thanosImage:
     registry: registry1.dso.mil
     repository: ironbank/opensource/thanos/thanos
-    tag: v0.32.1
+    tag: v0.32.3
     sha: ""
 
   ## Set a Label Selector to filter watched prometheus and prometheusAgent
@@ -2809,7 +2814,7 @@ prometheusOperator:
   ##
   kubectlImage:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
-    tag: 1.27.5
+    tag: v1.28.1
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3305,7 +3310,7 @@ prometheus:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus/prometheus
-      tag: v2.46.0
+      tag: v2.47.0
       sha: ""
 
     ## Tolerations for use with node taints
@@ -4242,7 +4247,7 @@ thanosRuler:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/thanos/thanos
-      tag: v0.32.1
+      tag: v0.32.3
       sha: ""
 
     ## Namespaces to be selected for PrometheusRules discovery.
