@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 49.2.0-bb.1](https://img.shields.io/badge/Version-49.2.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.67.1](https://img.shields.io/badge/AppVersion-v0.67.1-informational?style=flat-square)
+![Version: 51.1.0-bb.0](https://img.shields.io/badge/Version-51.1.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.68.0](https://img.shields.io/badge/AppVersion-v0.68.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -20,7 +20,7 @@ kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Pro
 * Kubernetes config installed in `~/.kube/config`
 * Helm installed
 
-Kubernetes: `>=1.16.0-0`
+Kubernetes: `>=1.19.0-0`
 
 Install Helm
 
@@ -620,7 +620,7 @@ helm install monitoring chart/
 | kube-state-metrics.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | kube-state-metrics.image.registry | string | `"registry1.dso.mil"` |  |
 | kube-state-metrics.image.repository | string | `"ironbank/opensource/kubernetes/kube-state-metrics"` |  |
-| kube-state-metrics.image.tag | string | `"v2.9.2"` |  |
+| kube-state-metrics.image.tag | string | `"v2.10.0"` |  |
 | kube-state-metrics.resources.limits.cpu | string | `"100m"` |  |
 | kube-state-metrics.resources.limits.memory | string | `"128Mi"` |  |
 | kube-state-metrics.resources.requests.cpu | string | `"100m"` |  |
@@ -647,6 +647,8 @@ helm install monitoring chart/
 | kube-state-metrics.prometheus.monitor.relabelings | list | `[]` |  |
 | kube-state-metrics.selfMonitor.enabled | bool | `false` |  |
 | nodeExporter.enabled | bool | `true` |  |
+| nodeExporter.operatingSystems.linux.enabled | bool | `false` |  |
+| nodeExporter.operatingSystems.darwin.enabled | bool | `false` |  |
 | nodeExporter.serviceMonitor.interval | string | `""` |  |
 | nodeExporter.jobLabel | string | `"jobLabel"` |  |
 | prometheus-node-exporter.serviceMonitor.attachMetadata | object | `{}` |  |
@@ -795,12 +797,12 @@ helm install monitoring chart/
 | prometheusOperator.verticalPodAutoscaler.updatePolicy.updateMode | string | `"Auto"` |  |
 | prometheusOperator.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.67.1"` |  |
+| prometheusOperator.image.tag | string | `"v0.68.0"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.67.1"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.68.0"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.enableProbe | bool | `false` |  |
 | prometheusOperator.prometheusConfigReloader.resources.requests.cpu | string | `"200m"` |  |
@@ -809,14 +811,14 @@ helm install monitoring chart/
 | prometheusOperator.prometheusConfigReloader.resources.limits.memory | string | `"50Mi"` |  |
 | prometheusOperator.thanosImage.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.thanosImage.repository | string | `"ironbank/opensource/thanos/thanos"` |  |
-| prometheusOperator.thanosImage.tag | string | `"v0.32.1"` |  |
+| prometheusOperator.thanosImage.tag | string | `"v0.32.3"` |  |
 | prometheusOperator.thanosImage.sha | string | `""` |  |
 | prometheusOperator.prometheusInstanceSelector | string | `""` |  |
 | prometheusOperator.alertmanagerInstanceSelector | string | `""` |  |
 | prometheusOperator.thanosRulerInstanceSelector | string | `""` |  |
 | prometheusOperator.secretFieldSelector | string | `"type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1"` |  |
 | prometheusOperator.kubectlImage.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl"` |  |
-| prometheusOperator.kubectlImage.tag | string | `"1.27.5"` |  |
+| prometheusOperator.kubectlImage.tag | string | `"v1.28.1"` |  |
 | prometheusOperator.kubectlImage.sha | string | `""` |  |
 | prometheusOperator.kubectlImage.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheus.enabled | bool | `true` |  |
@@ -944,7 +946,7 @@ helm install monitoring chart/
 | prometheus.prometheusSpec.enableFeatures | list | `[]` |  |
 | prometheus.prometheusSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheus.prometheusSpec.image.repository | string | `"ironbank/opensource/prometheus/prometheus"` |  |
-| prometheus.prometheusSpec.image.tag | string | `"v2.46.0"` |  |
+| prometheus.prometheusSpec.image.tag | string | `"v2.47.0"` |  |
 | prometheus.prometheusSpec.image.sha | string | `""` |  |
 | prometheus.prometheusSpec.tolerations | list | `[]` |  |
 | prometheus.prometheusSpec.topologySpreadConstraints | list | `[]` |  |
@@ -1082,7 +1084,7 @@ helm install monitoring chart/
 | thanosRuler.thanosRulerSpec.podMetadata | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | thanosRuler.thanosRulerSpec.image.repository | string | `"ironbank/opensource/thanos/thanos"` |  |
-| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.32.1"` |  |
+| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.32.3"` |  |
 | thanosRuler.thanosRulerSpec.image.sha | string | `""` |  |
 | thanosRuler.thanosRulerSpec.ruleNamespaceSelector | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.ruleSelectorNilUsesHelmValues | bool | `true` |  |

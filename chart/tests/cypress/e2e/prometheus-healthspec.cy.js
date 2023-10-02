@@ -3,7 +3,6 @@ describe('Basic prometheus', function() {
       cy.visit(Cypress.env('prometheus_url'))
       // Checks if Keycloak_Test_Enable is set in the tests-value.yaml, should only be run for SSO
       if (Cypress.env('keycloak_test_enable')) {
-          cy.task('log', 'logging in via keycloak...')
           cy.get('input[id="username"]')
             .type(Cypress.env('tnr_username'))
             .should('have.value', Cypress.env('tnr_username'));
@@ -19,7 +18,6 @@ describe('Basic prometheus', function() {
           cy.get('input[id="kc-login"]').click(); 
           }
       else {
-        cy.task('log', 'skipping sso test...')
         cy.get('body').then(($body) => {
           if ($body.find('input[name="user"]').length != 0) {
             cy.task('log', 'detected login page, logging in with static username and password...')
