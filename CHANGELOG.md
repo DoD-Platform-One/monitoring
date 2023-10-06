@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [51.1.0-bb.1] - 2023-10-03
+### Changed
+- Add delay before sidecar proxy kill for monitoring jobs
+
 ## [51.1.0-bb.0] - 2023-09-26
 ### Changed
 - upgrade chart version to 51.1.0
@@ -14,7 +18,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - registry1.dso.mil/ironbank/opensource/thanos/thanos minor v0.32.1 -> v0.32.3
 - Updated gluon from 0.4.0 to 0.4.1
 - Updated cypress folder structure to accommodate cypress 13.X+
-
 
 ## [49.2.0-bb.1] - 2023-09-25
 ### Changed
