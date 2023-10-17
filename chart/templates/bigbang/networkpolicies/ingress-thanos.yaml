@@ -1,0 +1,25 @@
+{{- if and .Values.networkPolicies.enabled .Values.prometheus.thanosService.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-thanos
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: prometheus  
+  policyTypes:
+    - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          app.kubernetes.io/name: thanos
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: thanos
+          app.kubernetes.io/component: query
+    ports:
+      - port: {{ .Values.prometheus.thanosService.port }}
+        protocol: TCP          
+{{- end }}
