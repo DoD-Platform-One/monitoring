@@ -2218,9 +2218,9 @@ nodeExporter:
   enabled: true
   operatingSystems:
     linux:
-      enabled: false
+      enabled: true
     darwin:
-      enabled: false
+      enabled: true
   serviceMonitor:
     interval: ""
   jobLabel: jobLabel
@@ -2779,13 +2779,13 @@ prometheusOperator:
     enableProbe: false
 
     # resource config for prometheusConfigReloader
-    resources:
-      requests:
-        cpu: 200m
-        memory: 50Mi
-      limits:
-        cpu: 200m
-        memory: 50Mi
+    resources: {}
+      # requests:
+      #   cpu: 200m
+      #   memory: 50Mi
+      # limits:
+      #   cpu: 200m
+      #   memory: 50Mi
 
   ## Thanos side-car image when configured
   ##
@@ -2814,7 +2814,7 @@ prometheusOperator:
   ##
   kubectlImage:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
-    tag: v1.28.1
+    tag: v1.28.2
     sha: ""
     pullPolicy: IfNotPresent
 

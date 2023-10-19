@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [51.1.0-bb.4] - 2023-10-18
+### Changed
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl 1.28.1 -> v1.28.2
+
 ## [51.1.0-bb.3] - 2023-10-16
 ### Added
 - Added NetworkPolicy for Thanos to connect to Prometheus-Thanos-Sidecar
