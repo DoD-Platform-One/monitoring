@@ -14,6 +14,9 @@ networkPolicies:
   ingressLabels:
     app: istio-ingressgateway
     istio: ingressgateway
+  # -- This toggle enables a NetworkPolicy that will allow external egress providing the ability to send alterts to external resources like MM/Slack/etc.
+  alertmanager:
+    enableEgress: false
 
 # Toggles networkpolicy needed for openshift
 openshift: false
