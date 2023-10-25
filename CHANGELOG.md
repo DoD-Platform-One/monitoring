@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [51.10.0-bb.0] - 2023-10-20
+### Changed
+- upgrade chart version to 51.10.0
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar patch 1.25.1 -> 1.25.2
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl 1.28.2 -> v1.28.1
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus minor v2.47.0 -> v2.47.2
+- registry1.dso.mil/ironbank/opensource/thanos/thanos minor v0.32.3 -> v0.32.5
+
 ## [51.1.0-bb.5] - 2023-10-19
 ### Added
 - adding network policy to allow alert manager to send alerts to external endpoints.
