@@ -186,6 +186,9 @@ defaultRules:
   ## Reduce app namespace alert scope
   appNamespacesTarget: ".*"
 
+  ## Set keep_firing_for for all alerts
+  keepFiringFor: ""
+
   ## Labels for default rules
   labels: {}
   ## Annotations for default rules
@@ -315,10 +318,30 @@ global:
   - name: private-registry
 
 windowsMonitoring:
-  ## Deploys the windows-exporter and Windows-specific dashboards and rules
+  ## Deploys the windows-exporter and Windows-specific dashboards and rules (job name must be 'windows-exporter')
   enabled: false
-  ## Job must match jobLabel in the PodMonitor/ServiceMonitor and is used for the rules
-  job: prometheus-windows-exporter
+
+## Configuration for prometheus-windows-exporter
+## ref: https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-windows-exporter
+##
+prometheus-windows-exporter:
+  ## Enable ServiceMonitor and set Kubernetes label to use as a job label
+  ##
+  prometheus:
+    monitor:
+      enabled: true
+      jobLabel: jobLabel
+
+  ## Set job label to 'windows-exporter' as required by the default Prometheus rules and Grafana dashboards
+  ##
+  podLabels:
+    jobLabel: windows-exporter
+
+  ## Enable memory and container metrics as required by the default Prometheus rules and Grafana dashboards
+  ##
+  config: |-
+    collectors:
+      enabled: '[defaults],memory,container'
 
 ## Configuration for alertmanager
 ## ref: https://prometheus.io/docs/alerting/alertmanager/
@@ -553,11 +576,14 @@ alertmanager:
     ##
 
     ## Additional ports to open for Alertmanager service
+    ##
     additionalPorts: []
-    # additionalPorts:
-    # - name: authenticated
+    # - name: oauth-proxy
     #   port: 8081
     #   targetPort: 8081
+    # - name: oauth-metrics
+    #   port: 8082
+    #   targetPort: 8082
 
     externalIPs: []
     loadBalancerIP: ""
@@ -673,6 +699,12 @@ alertmanager:
     #   targetLabel: nodename
     #   replacement: $1
     #   action: replace
+
+    ## Additional Endpoints
+    ##
+    additionalEndpoints: []
+    # - port: oauth-metrics
+    #   path: /metrics
 
   ## Settings affecting alertmanagerSpec
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#alertmanagerspec
@@ -901,14 +933,18 @@ alertmanager:
     containers: []
     # containers:
     # - name: oauth-proxy
-    #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0
+    #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.5.1
     #   args:
     #   - --upstream=http://127.0.0.1:9093
     #   - --http-address=0.0.0.0:8081
+    #   - --metrics-address=0.0.0.0:8082
     #   - ...
     #   ports:
     #   - containerPort: 8081
     #     name: oauth-proxy
+    #     protocol: TCP
+    #   - containerPort: 8082
+    #     name: oauth-metrics
     #     protocol: TCP
     #   resources: {}
 
@@ -957,6 +993,14 @@ alertmanager:
     ## Minimum number of seconds for which a newly created pod should be ready without any of its container crashing for it to
     ## be considered available. Defaults to 0 (pod will be considered available as soon as it is ready).
     minReadySeconds: 0
+
+    ## Additional configuration which is not covered by the properties above. (passed through tpl)
+    additionalConfig: {}
+
+    ## Additional configuration which is not covered by the properties above.
+    ## Useful, if you need advanced templating inside alertmanagerSpec.
+    ## Otherwise, use alertmanager.alertmanagerSpec.additionalConfig (passed through tpl)
+    additionalConfigString: ""
 
   ## ExtraSecret can be used to store various data in an extra secret
   ## (use it for example to store hashed basic auth credentials)
@@ -1111,7 +1155,7 @@ grafana:
     # use IronBank image
     image:
       repository: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar
-      tag: 1.25.1
+      tag: 1.25.2
 
     resources:
       limits:
@@ -1432,6 +1476,11 @@ kubelet:
   namespace: kube-system
 
   serviceMonitor:
+    ## Attach metadata to discovered targets. Requires Prometheus v2.45 for endpoints created by the operator.
+    ##
+    attachMetadata:
+      node: false
+
     ## Scrape interval. If not set, the Prometheus default scrape interval is used.
     ##
     interval: ""
@@ -2531,7 +2580,7 @@ prometheusOperator:
 
     nodePortTls: 30443
 
-  ## Additional ports to open for Prometheus service
+  ## Additional ports to open for Prometheus operator service
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#multi-port-services
   ##
     additionalPorts: []
@@ -2795,7 +2844,7 @@ prometheusOperator:
   thanosImage:
     registry: registry1.dso.mil
     repository: ironbank/opensource/thanos/thanos
-    tag: v0.32.3
+    tag: v0.32.5
     sha: ""
 
   ## Set a Label Selector to filter watched prometheus and prometheusAgent
@@ -2817,7 +2866,7 @@ prometheusOperator:
   ##
   kubectlImage:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
-    tag: v1.28.2
+    tag: v1.28.3
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2999,12 +3048,16 @@ prometheus:
     ##
     type: ClusterIP
 
-    ## Additional port to define in the Service
+    ## Additional ports to open for Prometheus service
+    ##
     additionalPorts: []
     # additionalPorts:
-    # - name: authenticated
+    # - name: oauth-proxy
     #   port: 8081
     #   targetPort: 8081
+    # - name: oauth-metrics
+    #   port: 8082
+    #   targetPort: 8082
 
     ## Consider that all endpoints are considered "ready" even if the Pods themselves are not
     ## Ref: https://kubernetes.io/docs/reference/kubernetes-api/service-resources/service-v1/#ServiceSpec
@@ -3247,6 +3300,12 @@ prometheus:
     #   replacement: $1
     #   action: replace
 
+    ## Additional Endpoints
+    ##
+    additionalEndpoints: []
+    # - port: oauth-metrics
+    #   path: /metrics
+
   ## Settings affecting prometheusSpec
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#prometheusspec
   ##
@@ -3313,7 +3372,7 @@ prometheus:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus/prometheus
-      tag: v2.47.0
+      tag: v2.47.2
       sha: ""
 
     ## Tolerations for use with node taints
@@ -3806,14 +3865,18 @@ prometheus:
     containers: []
     # containers:
     # - name: oauth-proxy
-    #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0
+    #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.5.1
     #   args:
-    #   - --upstream=http://127.0.0.1:9093
+    #   - --upstream=http://127.0.0.1:9090
     #   - --http-address=0.0.0.0:8081
+    #   - --metrics-address=0.0.0.0:8082
     #   - ...
     #   ports:
     #   - containerPort: 8081
     #     name: oauth-proxy
+    #     protocol: TCP
+    #   - containerPort: 8082
+    #     name: oauth-metrics
     #     protocol: TCP
     #   resources: {}
 
@@ -3914,6 +3977,14 @@ prometheus:
     ## TracingConfig configures tracing in Prometheus.
     ## See https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#prometheustracingconfig
     tracingConfig: {}
+
+    ## Additional configuration which is not covered by the properties above. (passed through tpl)
+    additionalConfig: {}
+
+    ## Additional configuration which is not covered by the properties above.
+    ## Useful, if you need advanced templating inside alertmanagerSpec.
+    ## Otherwise, use prometheus.prometheusSpec.additionalConfig (passed through tpl)
+    additionalConfigString: ""
 
   additionalRulesForClusterRole: []
   #  - apiGroups: [ "" ]
@@ -4236,6 +4307,12 @@ thanosRuler:
     #   replacement: $1
     #   action: replace
 
+    ## Additional Endpoints
+    ##
+    additionalEndpoints: []
+    # - port: oauth-metrics
+    #   path: /metrics
+
   ## Settings affecting thanosRulerpec
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#thanosrulerspec
   ##
@@ -4250,7 +4327,7 @@ thanosRuler:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/thanos/thanos
-      tag: v0.32.3
+      tag: v0.32.5
       sha: ""
 
     ## Namespaces to be selected for PrometheusRules discovery.
