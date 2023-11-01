@@ -1,0 +1,20 @@
+{{- if and .Values.istio.enabled .Values.sso.enabled .Values.prometheus.thanosService.enabled (eq .Values.istio.injection "enabled") -}}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: thanos-prometheus-authz-policy
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces:
+        - thanos
+    to:
+    - operation:
+        ports: ["{{ .Values.prometheus.thanosService.port }}"]
+{{- end }}
