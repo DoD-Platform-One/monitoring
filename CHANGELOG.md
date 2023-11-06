@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [51.10.0-bb.2] - 2023-11-01
+### Added
+- automountServiceAccountToken to false for AlertManager (unnecessary token)
+
 ## [51.10.0-bb.1] - 2023-11-01
 ### Added
 - Added AuthorizationPolicy for Thanos to connect to prometheus-thanos sidecar
