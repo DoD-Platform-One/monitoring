@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [52.1.0-bb.0] - 2023-10-31
+### Changed
+- upgrade chart version to 52.1.0
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 10.0.3 -> 10.1.5
+- upgrading gluon from 0.4.1 to 0.4.4
+
 ## [51.10.0-bb.2] - 2023-11-01
 ### Added
 - automountServiceAccountToken to false for AlertManager (unnecessary token)

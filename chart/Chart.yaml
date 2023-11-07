@@ -21,7 +21,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 51.10.0-bb.2
+version: 52.1.0-bb.0
 appVersion: v0.68.0
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
@@ -39,7 +39,7 @@ annotations:
       url: https://github.com/prometheus-operator/kube-prometheus
   bigbang.dev/applicationVersions: |
     - Prometheus: v2.47.2
-    - Grafana: 10.0.3
+    - Grafana: 10.1.5
     - Alertmanager: v0.26.0
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
@@ -50,7 +50,7 @@ annotations:
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.0.0
     - name: grafana
-      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:10.0.3
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:10.1.5
       condition: grafana.enabled
       dependency: grafana
     - name: init-chown-data
@@ -111,7 +111,7 @@ dependencies:
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
-    version: "0.4.1"
+    version: "0.4.4"
     repository: oci://registry1.dso.mil/bigbang
   - name: prometheus-windows-exporter
     repository: https://prometheus-community.github.io/helm-charts
