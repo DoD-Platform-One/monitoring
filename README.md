@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 51.10.0-bb.2](https://img.shields.io/badge/Version-51.10.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.68.0](https://img.shields.io/badge/AppVersion-v0.68.0-informational?style=flat-square)
+![Version: 52.1.0-bb.0](https://img.shields.io/badge/Version-52.1.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.68.0](https://img.shields.io/badge/AppVersion-v0.68.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -347,7 +347,7 @@ helm install monitoring chart/
 | grafana.enabled | bool | `false` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"10.0.3"` |  |
+| grafana.image.tag | string | `"10.1.5"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
@@ -471,6 +471,8 @@ helm install monitoring chart/
 | kubelet.namespace | string | `"kube-system"` |  |
 | kubelet.serviceMonitor.attachMetadata.node | bool | `false` |  |
 | kubelet.serviceMonitor.interval | string | `""` |  |
+| kubelet.serviceMonitor.honorLabels | bool | `true` |  |
+| kubelet.serviceMonitor.honorTimestamps | bool | `true` |  |
 | kubelet.serviceMonitor.sampleLimit | int | `0` |  |
 | kubelet.serviceMonitor.targetLimit | int | `0` |  |
 | kubelet.serviceMonitor.labelLimit | int | `0` |  |
@@ -1105,13 +1107,15 @@ helm install monitoring chart/
 | thanosRuler.thanosRulerSpec.retention | string | `"24h"` |  |
 | thanosRuler.thanosRulerSpec.evaluationInterval | string | `""` |  |
 | thanosRuler.thanosRulerSpec.storage | object | `{}` |  |
-| thanosRuler.thanosRulerSpec.alertmanagersConfig | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.alertmanagersConfig.existingSecret | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.alertmanagersConfig.secret | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.externalPrefix | string | `nil` |  |
 | thanosRuler.thanosRulerSpec.routePrefix | string | `"/"` |  |
-| thanosRuler.thanosRulerSpec.objectStorageConfig | object | `{}` |  |
-| thanosRuler.thanosRulerSpec.objectStorageConfigFile | string | `""` |  |
+| thanosRuler.thanosRulerSpec.objectStorageConfig.existingSecret | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.objectStorageConfig.secret | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.queryEndpoints | list | `[]` |  |
-| thanosRuler.thanosRulerSpec.queryConfig | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.queryConfig.existingSecret | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.queryConfig.secret | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.labels | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.paused | bool | `false` |  |
 | thanosRuler.thanosRulerSpec.nodeSelector | object | `{}` |  |
