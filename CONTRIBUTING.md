@@ -2,6 +2,8 @@
 
 Thanks for contributing to this repository!
 
+If you are coming from `repo1.dso.mil` and have an account at `login.dso.mil` please keep reading. If you are coming from or looking for the [project on Github](https://github.com/DoD-Platform-One) and wanting to make a Pull Request without a `dso.mil` account please see [External Github Contributions](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/CONTRIBUTING.md?ref_type=heads#community-contributions-to-dod-platform-one-via-github).
+
 This repository follows the following conventions:
 
 * [Semantic Versioning](https://semver.org/)
