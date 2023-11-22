@@ -101,7 +101,7 @@ cleanUpgrade:
   enabled: false
   image:
     repository: registry1.dso.mil/ironbank/big-bang/base
-    tag: 2.0.0
+    tag: 2.1.0
   resources:
     requests:
       memory: 256Mi
@@ -1245,7 +1245,7 @@ grafana:
 
   downloadDashboardsImage:
     repository: registry1.dso.mil/ironbank/big-bang/base #curlimages/curl
-    tag: 2.0.0
+    tag: 2.1.0
   
   ## Resource settings for above DownloadDashboards container
   downloadDashboards:
@@ -1372,7 +1372,7 @@ grafana:
     ##
     image:
       repository: registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal
-      tag: "8.8"
+      tag: "8.9"
       sha: ""
       pullPolicy: IfNotPresent
   
@@ -2181,7 +2181,7 @@ kube-state-metrics:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kubernetes/kube-state-metrics
-    tag: v2.10.0
+    tag: v2.10.1
 
   resources:
     limits:
@@ -2306,7 +2306,7 @@ prometheus-node-exporter:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus/node-exporter 
-    tag: v1.6.1
+    tag: v1.7.0
 
   resources:
     limits:
@@ -2464,7 +2464,7 @@ prometheusOperator:
     cleanupProxy:
       image:
         repository: registry1.dso.mil/ironbank/big-bang/base
-        tag: 2.0.0
+        tag: 2.1.0
         pullPolicy: IfNotPresent
       resources:
         limits:
@@ -2806,7 +2806,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.68.0
+    tag: v0.69.1
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -2832,7 +2832,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.68.0
+      tag: v0.69.1
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
@@ -2874,7 +2874,7 @@ prometheusOperator:
   ##
   kubectlImage:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
-    tag: v1.28.3
+    tag: v1.28.4
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3380,7 +3380,7 @@ prometheus:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus/prometheus
-      tag: v2.47.2
+      tag: v2.48.0
       sha: ""
 
     ## Tolerations for use with node taints

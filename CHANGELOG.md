@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [52.1.0-bb.1] - 2023-11-21
+### Updated 
+- registry1.dso.mil/ironbank/big-bang/base 2.0.0 -> 2.1.0 
+- registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics v2.10.0 -> v2.10.1 
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.28.3 -> v1.28.4 
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.68.0 -> v0.69.1 
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.68.0 -> v0.69.1 
+- registry1.dso.mil/ironbank/opensource/prometheus/node-exporter v1.6.1 -> v1.7.0 
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus v2.47.2 -> v2.48.0 
+- registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal 8.8 -> 8.9
+
 ## [52.1.0-bb.0] - 2023-10-31
 ### Changed
 - upgrade chart version to 52.1.0
