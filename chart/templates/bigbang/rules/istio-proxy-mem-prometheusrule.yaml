@@ -1,4 +1,5 @@
 {{- if and .Values.istio.enabled (.Capabilities.APIVersions.Has "monitoring.coreos.com/v1") }}
+{{- if or .Values.istio.prometheusRule.IstioSidecarMemModerate .Values.istio.prometheusRule.IstioSidecarMemHigh .Values.istio.prometheusRule.IstioConfigValidationFailed .Values.istio.prometheusRule.Istio5XXResponseCode .Values.istio.prometheusRule.IstioSidecarEndpointError .Values.istio.prometheusRule.IstioSidecarListenerConflict }}
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
@@ -8,24 +9,29 @@ spec:
   groups:
   - name: istio.rules
     rules:
+    {{- if and .Values.istio.prometheusRule.IstioSidecarMemModerate }}
     - alert: IstioSidecarMemModerate
       annotations:
         description: Istio Sidecar Memory is above 50MB for {{`{{`}} $labels.pod_name {{`}}`}}
         summary: Istio Sidecar Memory usage is above average
-      # "0.00000095357432" multiplier used to convert Bytes to Megabytes to make human readable
+        # "0.00000095357432" multiplier used to convert Bytes to Megabytes to make human readable
       expr: istio_agent_go_memstats_heap_sys_bytes{} * 0.00000095357432 > 50
       for: 1h
       labels:
         severity: warning
+    {{- end }}
+    {{- if and .Values.istio.prometheusRule.IstioSidecarMemHigh }}
     - alert: IstioSidecarMemHigh
       annotations:
         description: Istio Sidecar Memory is above 100MB for {{`{{`}} $labels.pod_name {{`}}`}}
         summary: Istio Sidecar Memory usage is very high
-      # "0.00000095357432" multiplier used to convert Bytes to Megabytes to make human readable
+        # "0.00000095357432" multiplier used to convert Bytes to Megabytes to make human readable
       expr: istio_agent_go_memstats_heap_sys_bytes{} * 0.00000095357432 > 100
       for: 1h
       labels:
         severity: critical
+    {{- end }}
+    {{- if and .Values.istio.prometheusRule.IstioConfigValidationFailed }}
     - alert: IstioConfigValidationFailed
       annotations:
         description: Istio Configuration Validation Error
@@ -34,6 +40,8 @@ spec:
       for: 2m
       labels:
         severity: critical
+    {{- end }}
+    {{- if and .Values.istio.prometheusRule.Istio5XXResponseCode }}
     - alert: Istio5XXResponseCode
       annotations:
         description: Multiple {{`{{`}} $labels.reponse_code {{`}}`}} Errors for pod {{`{{`}} $labels.pod_name {{`}}`}}
@@ -42,6 +50,8 @@ spec:
       for: 10m
       labels:
         severity: critical
+    {{- end }}
+    {{- if and .Values.istio.prometheusRule.IstioSidecarEndpointError }}
     - alert: IstioSidecarEndpointError
       annotations:
         description: Istio Sidecar Agent Not Ready for pod {{`{{`}} $labels.pod_name {{`}}`}} in namespace {{`{{`}} $labels.namespace {{`}}`}}
@@ -50,6 +60,8 @@ spec:
       for: 10m
       labels:
         severity: critical
+    {{- end }}
+    {{- if and .Values.istio.prometheusRule.IstioSidecarListenerConflict }}
     - alert: IstioSidecarListenerConflict
       annotations:
         description: Istio Sidecar Agent Has Listener Conflict for pod {{`{{`}} $labels.pod_name {{`}}`}} in namespace {{`{{`}} $labels.namespace {{`}}`}}
@@ -58,4 +70,6 @@ spec:
       for: 10m
       labels:
         severity: warning
+    {{- end }}
+{{- end }}
 {{- end }}

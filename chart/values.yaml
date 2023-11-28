@@ -49,6 +49,15 @@ istio:
     service: ""
     port: ""
     namespace: ""
+  # Toggle to disable all rules via the enabled: false
+  prometheusRule:
+    IstioSidecarMemModerate: true
+    IstioSidecarMemHigh: true
+    IstioConfigValidationFailed: true
+    Istio5XXResponseCode: true
+    IstioSidecarEndpointError: true
+    IstioSidecarListenerConflict: true
+
   alertmanager:
     # Toggle vs creation
     enabled: true
