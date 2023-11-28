@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [52.1.0-bb.2] - 2023-11-22
+### Changed
+- Allowing consumers to choose to disable all or certain bigbang istio prometheus alert rules. (.Values.istio.prometheusRule.x)
+
 ## [52.1.0-bb.1] - 2023-11-21
 ### Updated 
 - registry1.dso.mil/ironbank/big-bang/base 2.0.0 -> 2.1.0 
