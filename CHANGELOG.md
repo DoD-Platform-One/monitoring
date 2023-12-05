@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [55.0.0-bb.0] - 2023-12-4
+### Changed
+- Updated chart version to 55.0.0
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 10.1.5 -> 10.2.2
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.69.1 -> v0.70.0
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.69.1 -> v0.70.0
+
 ## [52.1.0-bb.2] - 2023-11-22
 ### Changed
 - Allowing consumers to choose to disable all or certain bigbang istio prometheus alert rules. (.Values.istio.prometheusRule.x)

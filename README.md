@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 52.1.0-bb.2](https://img.shields.io/badge/Version-52.1.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.69.1](https://img.shields.io/badge/AppVersion-v0.69.1-informational?style=flat-square)
+![Version: 55.0.0-bb.0](https://img.shields.io/badge/Version-55.0.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.70.0](https://img.shields.io/badge/AppVersion-v0.70.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -109,7 +109,12 @@ helm install monitoring chart/
 | defaultRules.rules.alertmanager | bool | `true` |  |
 | defaultRules.rules.etcd | bool | `true` |  |
 | defaultRules.rules.general | bool | `true` |  |
-| defaultRules.rules.k8s | bool | `true` |  |
+| defaultRules.rules.k8sContainerCpuUsageSecondsTotal | bool | `true` |  |
+| defaultRules.rules.k8sContainerMemoryCache | bool | `true` |  |
+| defaultRules.rules.k8sContainerMemoryRss | bool | `true` |  |
+| defaultRules.rules.k8sContainerMemorySwap | bool | `true` |  |
+| defaultRules.rules.k8sContainerResource | bool | `true` |  |
+| defaultRules.rules.k8sPodOwner | bool | `true` |  |
 | defaultRules.rules.kubeApiserverAvailability | bool | `true` |  |
 | defaultRules.rules.kubeApiserverBurnrate | bool | `true` |  |
 | defaultRules.rules.kubeApiserverHistogram | bool | `true` |  |
@@ -143,7 +148,12 @@ helm install monitoring chart/
 | defaultRules.additionalRuleGroupLabels.etcd | object | `{}` |  |
 | defaultRules.additionalRuleGroupLabels.configReloaders | object | `{}` |  |
 | defaultRules.additionalRuleGroupLabels.general | object | `{}` |  |
-| defaultRules.additionalRuleGroupLabels.k8s | object | `{}` |  |
+| defaultRules.additionalRuleGroupLabels.k8sContainerCpuUsageSecondsTotal | object | `{}` |  |
+| defaultRules.additionalRuleGroupLabels.k8sContainerMemoryCache | object | `{}` |  |
+| defaultRules.additionalRuleGroupLabels.k8sContainerMemoryRss | object | `{}` |  |
+| defaultRules.additionalRuleGroupLabels.k8sContainerMemorySwap | object | `{}` |  |
+| defaultRules.additionalRuleGroupLabels.k8sContainerResource | object | `{}` |  |
+| defaultRules.additionalRuleGroupLabels.k8sPodOwner | object | `{}` |  |
 | defaultRules.additionalRuleGroupLabels.kubeApiserverAvailability | object | `{}` |  |
 | defaultRules.additionalRuleGroupLabels.kubeApiserverBurnrate | object | `{}` |  |
 | defaultRules.additionalRuleGroupLabels.kubeApiserverHistogram | object | `{}` |  |
@@ -170,7 +180,12 @@ helm install monitoring chart/
 | defaultRules.additionalRuleGroupAnnotations.etcd | object | `{}` |  |
 | defaultRules.additionalRuleGroupAnnotations.configReloaders | object | `{}` |  |
 | defaultRules.additionalRuleGroupAnnotations.general | object | `{}` |  |
-| defaultRules.additionalRuleGroupAnnotations.k8s | object | `{}` |  |
+| defaultRules.additionalRuleGroupAnnotations.k8sContainerCpuUsageSecondsTotal | object | `{}` |  |
+| defaultRules.additionalRuleGroupAnnotations.k8sContainerMemoryCache | object | `{}` |  |
+| defaultRules.additionalRuleGroupAnnotations.k8sContainerMemoryRss | object | `{}` |  |
+| defaultRules.additionalRuleGroupAnnotations.k8sContainerMemorySwap | object | `{}` |  |
+| defaultRules.additionalRuleGroupAnnotations.k8sContainerResource | object | `{}` |  |
+| defaultRules.additionalRuleGroupAnnotations.k8sPodOwner | object | `{}` |  |
 | defaultRules.additionalRuleGroupAnnotations.kubeApiserverAvailability | object | `{}` |  |
 | defaultRules.additionalRuleGroupAnnotations.kubeApiserverBurnrate | object | `{}` |  |
 | defaultRules.additionalRuleGroupAnnotations.kubeApiserverHistogram | object | `{}` |  |
@@ -193,6 +208,7 @@ helm install monitoring chart/
 | defaultRules.additionalRuleGroupAnnotations.nodeExporterRecording | object | `{}` |  |
 | defaultRules.additionalRuleGroupAnnotations.prometheus | object | `{}` |  |
 | defaultRules.additionalRuleGroupAnnotations.prometheusOperator | object | `{}` |  |
+| defaultRules.additionalAggregationLabels | list | `[]` |  |
 | defaultRules.runbookUrl | string | `"https://runbooks.prometheus-operator.dev/runbooks"` |  |
 | defaultRules.disabled | object | `{}` |  |
 | additionalPrometheusRulesMap | object | `{}` |  |
@@ -353,7 +369,7 @@ helm install monitoring chart/
 | grafana.enabled | bool | `false` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"10.1.5"` |  |
+| grafana.image.tag | string | `"10.2.2"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
@@ -814,12 +830,12 @@ helm install monitoring chart/
 | prometheusOperator.verticalPodAutoscaler.updatePolicy.updateMode | string | `"Auto"` |  |
 | prometheusOperator.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.69.1"` |  |
+| prometheusOperator.image.tag | string | `"v0.70.0"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.69.1"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.70.0"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.enableProbe | bool | `false` |  |
 | prometheusOperator.prometheusConfigReloader.resources | object | `{}` |  |
