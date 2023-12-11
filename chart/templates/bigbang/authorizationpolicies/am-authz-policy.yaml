@@ -19,7 +19,7 @@ spec:
         paths: ["/*"]
   - to:
     - operation:
-        ports: ["{{ .Values.alertmanager.service.port }}"]
+        ports: ["{{ .Values.alertmanager.service.port }}", "8080"]
   - from:
     - source:
         namespaces: ["{{ template "kube-prometheus-stack.namespace" . }}"]

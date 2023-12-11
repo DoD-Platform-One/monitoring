@@ -11,6 +11,8 @@ spec:
     matchLabels:
       app.kubernetes.io/name: alertmanager
   portLevelMtls:
+    "8080":
+      mode: PERMISSIVE
     "{{ .Values.alertmanager.service.port }}":
       mode: PERMISSIVE
 {{- end }}

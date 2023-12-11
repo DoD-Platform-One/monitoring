@@ -28,6 +28,10 @@ bbtests:
     envs:
       cypress_prometheus_url: 'http://monitoring-kube-prometheus-prometheus:9090'
       cypress_alertmanager_url: 'http://monitoring-kube-prometheus-alertmanager:9093'
+    resources:
+      requests:
+        cpu: 2
+        memory: 2Gi
 
 minioOperator:
   enabled: false
