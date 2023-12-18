@@ -21,7 +21,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 55.0.0-bb.1
+version: 55.0.0-bb.2
 appVersion: v0.70.0
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
@@ -54,7 +54,7 @@ annotations:
       condition: grafana.enabled
       dependency: grafana
     - name: init-chown-data
-      image: registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal:8.9
+      image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.3
       condition: grafana.initChownData.enabled
     - name: k8s-sidecar
       image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.25.2
