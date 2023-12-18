@@ -33,8 +33,8 @@ grafana:
     ## initChownData container image
     ##
     image:
-      repository: registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal
-      tag: "8.6"
+      repository: registry1.dso.mil/ironbank/redhat/ubi/9-minimal
+      tag: "9.3"
       sha: ""
       pullPolicy: IfNotPresent
   

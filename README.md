@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 55.0.0-bb.1](https://img.shields.io/badge/Version-55.0.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.70.0](https://img.shields.io/badge/AppVersion-v0.70.0-informational?style=flat-square)
+![Version: 55.0.0-bb.2](https://img.shields.io/badge/Version-55.0.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.70.0](https://img.shields.io/badge/AppVersion-v0.70.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -460,8 +460,8 @@ helm install monitoring chart/
 | grafana.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | grafana.persistence.size | string | `"10Gi"` |  |
 | grafana.initChownData.enabled | bool | `false` |  |
-| grafana.initChownData.image.repository | string | `"registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal"` |  |
-| grafana.initChownData.image.tag | string | `"8.9"` |  |
+| grafana.initChownData.image.repository | string | `"registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal"` |  |
+| grafana.initChownData.image.tag | string | `"9.3"` |  |
 | grafana.initChownData.image.sha | string | `""` |  |
 | grafana.initChownData.image.pullPolicy | string | `"IfNotPresent"` |  |
 | grafana.initChownData.resources.limits.cpu | string | `"100m"` |  |
