@@ -1129,7 +1129,7 @@ spec:
                         sigv4:
                           description: "Sigv4 allows to configures AWS's Signature
                             Verification 4 for the URL. \n It requires Prometheus
-                            >= v2.48.0. \n Cannot be set at the same time as `basicAuth`,
+                            >= v2.48.1. \n Cannot be set at the same time as `basicAuth`,
                             `bearerTokenFile` or `authorization`."
                           properties:
                             accessKey:
@@ -5297,7 +5297,7 @@ spec:
                         oauth:
                           description: "OAuth defines the oauth config that is being
                             used to authenticate. Cannot be set at the same time as
-                            `managedIdentity`. \n It requires Prometheus >= v2.48.0."
+                            `managedIdentity`. \n It requires Prometheus >= v2.48.1."
                           properties:
                             clientId:
                               description: '`clientID` is the clientId of the Azure

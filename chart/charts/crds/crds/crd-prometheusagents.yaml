@@ -4443,7 +4443,7 @@ spec:
                         oauth:
                           description: "OAuth defines the oauth config that is being
                             used to authenticate. Cannot be set at the same time as
-                            `managedIdentity`. \n It requires Prometheus >= v2.48.0."
+                            `managedIdentity`. \n It requires Prometheus >= v2.48.1."
                           properties:
                             clientId:
                               description: '`clientID` is the clientId of the Azure
