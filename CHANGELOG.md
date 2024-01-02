@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [55.0.0-bb.3] - 2023-12-28
+### Updated
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar 1.25.2 -> 1.25.3
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus v2.48.0 -> v2.48.1
+
 ## [55.0.0-bb.2] - 2023-12-15
 ### Updated
 - Updated `ubi8-minimal:8.9` to `ubi9-minimal:9.3`

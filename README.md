@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 55.0.0-bb.2](https://img.shields.io/badge/Version-55.0.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.70.0](https://img.shields.io/badge/AppVersion-v0.70.0-informational?style=flat-square)
+![Version: 55.5.1-bb.0](https://img.shields.io/badge/Version-55.5.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.70.0](https://img.shields.io/badge/AppVersion-v0.70.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -406,7 +406,7 @@ helm install monitoring chart/
 | grafana.ingress.path | string | `"/"` |  |
 | grafana.ingress.tls | list | `[]` |  |
 | grafana.sidecar.image.repository | string | `"registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar"` |  |
-| grafana.sidecar.image.tag | string | `"1.25.2"` |  |
+| grafana.sidecar.image.tag | string | `"1.25.3"` |  |
 | grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
 | grafana.sidecar.resources.requests.cpu | string | `"100m"` |  |
@@ -977,7 +977,7 @@ helm install monitoring chart/
 | prometheus.prometheusSpec.enableFeatures | list | `[]` |  |
 | prometheus.prometheusSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheus.prometheusSpec.image.repository | string | `"ironbank/opensource/prometheus/prometheus"` |  |
-| prometheus.prometheusSpec.image.tag | string | `"v2.48.0"` |  |
+| prometheus.prometheusSpec.image.tag | string | `"v2.48.1"` |  |
 | prometheus.prometheusSpec.image.sha | string | `""` |  |
 | prometheus.prometheusSpec.tolerations | list | `[]` |  |
 | prometheus.prometheusSpec.topologySpreadConstraints | list | `[]` |  |
