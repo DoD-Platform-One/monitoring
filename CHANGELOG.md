@@ -3,7 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
-## [55.0.0-bb.3] - 2023-12-28
+## [55.5.1-bb.1] - 2023-1-05
+### Added
+- Added istio `allow-nothing` policy
+- Added istio `allow-ingress` polic(y|ies)
+- Added istio `allow-tempo` policy
+- Added istio custom policy template
+
+## [55.5.1-bb.0] - 2023-12-28
 ### Updated
 - registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar 1.25.2 -> 1.25.3
 - registry1.dso.mil/ironbank/opensource/prometheus/prometheus v2.48.0 -> v2.48.1
@@ -40,7 +47,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - registry1.dso.mil/ironbank/opensource/prometheus/prometheus v2.47.2 -> v2.48.0 
 - registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal 8.8 -> 8.9
 
-## [52.1.0-bb.0] - 2023-10-31
+## [52.1.0-bb.0] - 2023-11-2
 ### Changed
 - upgrade chart version to 52.1.0
 - registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 10.0.3 -> 10.1.5

@@ -5,6 +5,12 @@ networkPolicies:
   enabled: true
   controlPlaneCidr: 172.16.0.0/12
 
+# Enables Istio AuthorizationPolicies in testing
+istio:
+  enabled: true
+  hardened:
+    enabled: true
+
 grafana:
   testFramework:
     enabled: false
