@@ -41,6 +41,18 @@ gitlabRunner:
   
 istio:
   enabled: false
+  hardened:
+    enabled: false
+    customAuthorizationPolicies: []
+    # - name: "allow-nothing"
+    #   enabled: true
+    #   spec: {}
+    tempo:
+        enabled: false
+        namespaces:
+        - tempo
+        principals:
+        - cluster.local/ns/tempo/sa/tempo-tempo  
   prometheus:
     # Toggle vs creation
     enabled: true
@@ -79,6 +91,8 @@ istio:
     # Note that setting this to STRICT requires additional configuration for Prometheus and monitors.
     # Review `./docs/istio-mtls-metrics.md` for additional information.
     mode: STRICT
+  console:
+    enabled: false
 
 sso:
   enabled: false

@@ -1,0 +1,25 @@
+{{- if and .Values.istio.enabled .Values.istio.hardened.enabled .Values.istio.console.enabled -}}
+{{- range .Values.istio.console.gateways -}}
+{{- $gatewayParts := split "/" . }}
+{{- $namespace := $gatewayParts._0 }}
+{{- $name := $gatewayParts._1 }}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ $name }}-ingressgateway-authz-policy
+  namespace: {{ $.Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: monitoring
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces:
+        - {{ $namespace }}
+        principals:
+        - "cluster.local/ns/{{ $namespace }}/sa/{{ $name }}-ingressgateway-service-account"
+---
+{{ end -}}
+{{- end }}

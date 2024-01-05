@@ -1,0 +1,17 @@
+{{- if and .Values.istio.enabled .Values.istio.hardened.enabled .Values.istio.hardened.tempo.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: tempo-authz-policy
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: monitoring
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: {{ .Values.istio.hardened.monitoring.namespaces }}
+        principals: {{ .Values.istio.hardened.monitoring.principals }}
+{{- end }}
