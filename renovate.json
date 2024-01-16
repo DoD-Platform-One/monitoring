@@ -4,6 +4,7 @@
     "dependencyDashboard": true,
     "dependencyDashboardHeader": "- [ ] Follow steps in [package update docs](./docs/PACKAGE_UPDATES.md) to upgrade the package.",
     "dependencyDashboardTitle": "Renovate: Upgrade Monitoring Package Dependencies",
+    "dependencyDashboardLabels": ["kind::maintenance", "priority::2", "team::Observability", "monitoring"],
     "draftPR": true,
     "enabledManagers": ["helm-values","regex"],
     "ignorePaths": ["chart/charts/**"],
