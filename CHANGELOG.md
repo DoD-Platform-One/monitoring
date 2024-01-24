@@ -3,7 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
-## [55.5.1-bb.1] - 2023-1-05
+## [56.0.3-bb.0] - 2024-01-22
+### Updated
+- Monitoring chart version 55.5.1-bb.1 -> 56.0.3-bb.0
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 10.2.2 -> 10.2.3
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.28.4 -> v1.28.6
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.70.0 -> v0.71.0
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.70.0 -> v0.71.0
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus v2.48.1 -> v2.49.1
+- registry1.dso.mil/ironbank/opensource/thanos/thanos v0.32.5 -> v0.33.0
+
+## [55.5.1-bb.1] - 2024-1-05
 ### Added
 - Added istio `allow-nothing` policy
 - Added istio `allow-ingress` polic(y|ies)

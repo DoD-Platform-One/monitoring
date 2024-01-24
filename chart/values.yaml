@@ -377,6 +377,8 @@ prometheus-windows-exporter:
       enabled: true
       jobLabel: jobLabel
 
+  releaseLabel: true
+
   ## Set job label to 'windows-exporter' as required by the default Prometheus rules and Grafana dashboards
   ##
   podLabels:
@@ -1076,7 +1078,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 10.2.2
+    tag: 10.2.3
     pullSecrets:
     - private-registry
   
@@ -2499,6 +2501,8 @@ prometheusOperator:
     #   argocd.argoproj.io/hook: PreSync
     #   argocd.argoproj.io/hook-delete-policy: HookSucceeded
 
+    namespaceSelector: {}
+
     deployment:
       enabled: false
 
@@ -3079,7 +3083,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.70.0
+    tag: v0.71.0
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3105,7 +3109,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.70.0
+      tag: v0.71.0
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
@@ -3125,7 +3129,7 @@ prometheusOperator:
   thanosImage:
     registry: registry1.dso.mil
     repository: ironbank/opensource/thanos/thanos
-    tag: v0.32.5
+    tag: v0.33.0
     sha: ""
 
   ## Set a Label Selector to filter watched prometheus and prometheusAgent
@@ -3147,7 +3151,7 @@ prometheusOperator:
   ##
   kubectlImage:
     repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
-    tag: v1.28.4
+    tag: v1.28.6
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3663,7 +3667,7 @@ prometheus:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus/prometheus
-      tag: v2.48.1
+      tag: v2.49.1
       sha: ""
 
     ## Tolerations for use with node taints
@@ -4206,8 +4210,10 @@ prometheus:
     ## OverrideHonorTimestamps allows to globally enforce honoring timestamps in all scrape configs.
     overrideHonorTimestamps: false
 
-    ## IgnoreNamespaceSelectors if set to true will ignore NamespaceSelector settings from the podmonitor and servicemonitor
-    ## configs, and they will only discover endpoints within their current namespace. Defaults to false.
+    ## When ignoreNamespaceSelectors is set to true, namespaceSelector from all PodMonitor, ServiceMonitor and Probe objects will be ignored,
+    ## they will only discover targets within the namespace of the PodMonitor, ServiceMonitor and Probe object,
+    ## and servicemonitors will be installed in the default service namespace.
+    ## Defaults to false.
     ignoreNamespaceSelectors: false
 
     ## EnforcedNamespaceLabel enforces adding a namespace label of origin for each alert and metric that is user created.
@@ -4231,6 +4237,10 @@ prometheus:
     ## as /dev/stdout to log querie information to the default Prometheus log stream. This is only available in versions
     ## of Prometheus >= 2.16.0. For more details, see the Prometheus docs (https://prometheus.io/docs/guides/query-log/)
     queryLogFile: false
+
+    # Use to set global sample_limit for Prometheus. This act as default SampleLimit for ServiceMonitor or/and PodMonitor.
+    # Set to 'false' to disable global sample_limit. or set to a number to override the default value.
+    sampleLimit: false
 
     ## EnforcedSampleLimit defines global limit on number of scraped samples that will be accepted. This overrides any SampleLimit
     ## set per ServiceMonitor or/and PodMonitor. It is meant to be used by admins to enforce the SampleLimit to keep overall
@@ -4634,7 +4644,7 @@ thanosRuler:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/thanos/thanos
-      tag: v0.32.5
+      tag: v0.33.0
       sha: ""
 
     ## Namespaces to be selected for PrometheusRules discovery.
@@ -4784,6 +4794,17 @@ thanosRuler:
     ## If set to true all actions on the underlying managed objects are not going to be performed, except for delete actions.
     ##
     paused: false
+
+    ## Allows setting additional arguments for the ThanosRuler container
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#thanosruler
+    ##
+    additionalArgs: []
+      # - name: remote-write.config
+      #   value: |-
+      #     "remote_write":
+      #     - "name": "receiver-0"
+      #       "remote_timeout": "30s"
+      #       "url": "http://thanos-receiver-0.thanos-receiver:8081/api/v1/receive"
 
     ## Define which Nodes the Pods are scheduled on.
     ## ref: https://kubernetes.io/docs/user-guide/node-selection/

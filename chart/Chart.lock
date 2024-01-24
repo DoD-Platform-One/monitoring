@@ -4,18 +4,18 @@ dependencies:
   version: 0.0.0
 - name: kube-state-metrics
   repository: https://prometheus-community.github.io/helm-charts
-  version: 5.15.2
+  version: 5.16.0
 - name: prometheus-node-exporter
   repository: https://prometheus-community.github.io/helm-charts
-  version: 4.24.0
+  version: 4.25.0
 - name: grafana
   repository: https://grafana.github.io/helm-charts
-  version: 7.0.11
+  version: 7.2.4
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
   version: 0.4.4
 - name: prometheus-windows-exporter
   repository: https://prometheus-community.github.io/helm-charts
-  version: 0.1.2
-digest: sha256:6d148ed3d8a2104e0d51f372e0cfa826bb9243f82a0ba4bb54923958dfc90222
-generated: "2023-12-04T13:24:23.662567-05:00"
+  version: 0.2.0
+digest: sha256:908bbe9f04fabe800e7008148c5a6c36b06c05260c2a00f32501b0fda419bfdd
+generated: "2024-01-22T14:05:17.695988-05:00"
