@@ -7,15 +7,15 @@ dependencies:
   version: 5.16.0
 - name: prometheus-node-exporter
   repository: https://prometheus-community.github.io/helm-charts
-  version: 4.25.0
+  version: 4.26.1
 - name: grafana
   repository: https://grafana.github.io/helm-charts
-  version: 7.2.4
+  version: 7.2.5
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
   version: 0.4.4
 - name: prometheus-windows-exporter
   repository: https://prometheus-community.github.io/helm-charts
-  version: 0.2.0
-digest: sha256:908bbe9f04fabe800e7008148c5a6c36b06c05260c2a00f32501b0fda419bfdd
-generated: "2024-01-22T14:05:17.695988-05:00"
+  version: 0.3.0
+digest: sha256:a6de5dfffc3a64dfecc93d570b67bacd50a452be9e8284843ad42beab1e58295
+generated: "2024-01-29T13:44:00.861693-06:00"
