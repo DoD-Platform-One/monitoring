@@ -1078,7 +1078,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 10.2.3
+    tag: 10.3.1
     pullSecrets:
     - private-registry
   
@@ -1209,6 +1209,18 @@ grafana:
     # - secretName: grafana-general-tls
     #   hosts:
     #   - grafana.example.com
+
+  # # To make Grafana persistent (Using Statefulset)
+  # #
+  # persistence:
+  #   enabled: true
+  #   type: sts
+  #   storageClassName: "storageClassName"
+  #   accessModes:
+  #     - ReadWriteOnce
+  #   size: 20Gi
+  #   finalizers:
+  #     - kubernetes.io/pvc-protection
 
   sidecar:
 
@@ -3083,7 +3095,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.71.0
+    tag: v0.71.2
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3109,7 +3121,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.71.0
+      tag: v0.71.2
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
@@ -4241,6 +4253,11 @@ prometheus:
     # Use to set global sample_limit for Prometheus. This act as default SampleLimit for ServiceMonitor or/and PodMonitor.
     # Set to 'false' to disable global sample_limit. or set to a number to override the default value.
     sampleLimit: false
+
+    # EnforcedKeepDroppedTargetsLimit defines on the number of targets dropped by relabeling that will be kept in memory.
+    # The value overrides any spec.keepDroppedTargets set by ServiceMonitor, PodMonitor, Probe objects unless spec.keepDroppedTargets
+    # is greater than zero and less than spec.enforcedKeepDroppedTargets. 0 means no limit.
+    enforcedKeepDroppedTargets: 0
 
     ## EnforcedSampleLimit defines global limit on number of scraped samples that will be accepted. This overrides any SampleLimit
     ## set per ServiceMonitor or/and PodMonitor. It is meant to be used by admins to enforce the SampleLimit to keep overall

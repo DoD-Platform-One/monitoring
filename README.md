@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 56.0.3-bb.0](https://img.shields.io/badge/Version-56.0.3--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.71.0](https://img.shields.io/badge/AppVersion-v0.71.0-informational?style=flat-square)
+![Version: 56.2.1-bb.0](https://img.shields.io/badge/Version-56.2.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.71.2](https://img.shields.io/badge/AppVersion-v0.71.2-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -381,7 +381,7 @@ helm install monitoring chart/
 | grafana.enabled | bool | `false` |  |
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"10.2.3"` |  |
+| grafana.image.tag | string | `"10.3.1"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
@@ -903,12 +903,12 @@ helm install monitoring chart/
 | prometheusOperator.verticalPodAutoscaler.updatePolicy.updateMode | string | `"Auto"` |  |
 | prometheusOperator.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.71.0"` |  |
+| prometheusOperator.image.tag | string | `"v0.71.2"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.71.0"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.71.2"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.enableProbe | bool | `false` |  |
 | prometheusOperator.prometheusConfigReloader.resources | object | `{}` |  |
@@ -1134,6 +1134,7 @@ helm install monitoring chart/
 | prometheus.prometheusSpec.excludedFromEnforcement | list | `[]` |  |
 | prometheus.prometheusSpec.queryLogFile | bool | `false` |  |
 | prometheus.prometheusSpec.sampleLimit | bool | `false` |  |
+| prometheus.prometheusSpec.enforcedKeepDroppedTargets | int | `0` |  |
 | prometheus.prometheusSpec.enforcedSampleLimit | bool | `false` |  |
 | prometheus.prometheusSpec.enforcedTargetLimit | bool | `false` |  |
 | prometheus.prometheusSpec.enforcedLabelLimit | bool | `false` |  |

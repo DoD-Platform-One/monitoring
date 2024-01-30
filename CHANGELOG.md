@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [56.2.1-bb.0] - 2024-01-29
+### Updated
+- Updated Monitoring chart from 56.0.3-bb.0 to 56.2.1-bb.0
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 10.2.3 -> 10.3.1
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader 0.71.0 -> v0.71.2
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.71.0 -> v0.71.2
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator 0.71.0 -> v0.71.2
+
 ## [56.0.3-bb.0] - 2024-01-22
 ### Updated
 - Monitoring chart version 55.5.1-bb.1 -> 56.0.3-bb.0
