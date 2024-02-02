@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 56.2.1-bb.0](https://img.shields.io/badge/Version-56.2.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.71.2](https://img.shields.io/badge/AppVersion-v0.71.2-informational?style=flat-square)
+![Version: 56.2.1-bb.1](https://img.shields.io/badge/Version-56.2.1--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.71.2](https://img.shields.io/badge/AppVersion-v0.71.2-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -53,6 +53,8 @@ helm install monitoring chart/
 | bbtests.cypress.envs.cypress_alertmanager_url | string | `"http://monitoring-kube-prometheus-alertmanager:9093"` |  |
 | bbtests.cypress.resources.requests.cpu | int | `2` |  |
 | bbtests.cypress.resources.requests.memory | string | `"2Gi"` |  |
+| bbtests.cypress.resources.limits.cpu | int | `2` |  |
+| bbtests.cypress.resources.limits.memory | string | `"2Gi"` |  |
 | minioOperator.enabled | bool | `false` |  |
 | gitlabRunner.enabled | bool | `false` |  |
 | istio.enabled | bool | `false` |  |
