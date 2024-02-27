@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [56.2.1-bb.2] - 2024-02-26
+### Updated
+- Create PeerAuthentication exception for prometheus if more than one replica is set
+
 ## [56.2.1-bb.1] - 2024-02-02
 ### Updated
 - Updated gluon to 4.8 to allow for custom scripts
