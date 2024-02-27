@@ -93,7 +93,12 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: metrics-clean-upgrade
-          image: "{{ .Values.cleanUpgrade.image.repository }}:{{ .Values.cleanUpgrade.image.tag }}"
+          {{- $registry := .Values.global.imageRegistry | default .Values.cleanUpgrade.image.registry -}}
+          {{- if .Values.cleanUpgrade.image.sha }}
+          image: "{{ $registry }}/{{ .Values.cleanUpgrade.image.repository }}:{{ .Values.cleanUpgrade.image.tag }}@sha256:{{ .Values.cleanUpgrade.image.sha }}"
+          {{- else }}
+          image: "{{ $registry }}/{{ .Values.cleanUpgrade.image.repository }}:{{ .Values.cleanUpgrade.image.tag }}"
+          {{- end }}
           command:
             - /bin/sh
             - -c

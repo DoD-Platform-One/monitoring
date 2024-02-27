@@ -59,7 +59,12 @@ spec:
 {{ toYaml .Values.prometheusOperator.admissionWebhooks.patch.resources | indent 12 }}
         {{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") }}
         - name: cleanup-proxy
-          image: {{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.repository }}:{{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.tag }}
+          {{- $registry := .Values.global.imageRegistry | default .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.registry -}}
+          {{- if .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.sha }}
+          image: {{ $registry }}/{{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.repository }}:{{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.tag }}@sha256:{{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.sha }}
+          {{- else }}
+          image: {{ $registry }}/{{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.repository }}:{{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.tag }}
+          {{- end }}
           imagePullPolicy: {{ .Values.prometheusOperator.admissionWebhooks.cleanupProxy.image.pullPolicy }}
 {{- if .Values.prometheusOperator.admissionWebhooks.containerSecurityContext }}
           securityContext:

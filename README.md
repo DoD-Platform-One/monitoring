@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 56.2.1-bb.2](https://img.shields.io/badge/Version-56.2.1--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.71.2](https://img.shields.io/badge/AppVersion-v0.71.2-informational?style=flat-square)
+![Version: 56.2.1-bb.3](https://img.shields.io/badge/Version-56.2.1--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.71.2](https://img.shields.io/badge/AppVersion-v0.71.2-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -96,8 +96,10 @@ helm install monitoring chart/
 | vault.enabled | bool | `false` |  |
 | vault.tlsDisable | bool | `true` | TLS Toggle inherited from Vault Chart and Big Bang |
 | cleanUpgrade.enabled | bool | `false` |  |
-| cleanUpgrade.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
+| cleanUpgrade.image.registry | string | `"registry1.dso.mil"` |  |
+| cleanUpgrade.image.repository | string | `"ironbank/big-bang/base"` |  |
 | cleanUpgrade.image.tag | string | `"2.1.0"` |  |
+| cleanUpgrade.image.sha | string | `""` |  |
 | cleanUpgrade.resources.requests.memory | string | `"256Mi"` |  |
 | cleanUpgrade.resources.requests.cpu | string | `"100m"` |  |
 | cleanUpgrade.resources.limits.memory | string | `"256Mi"` |  |
@@ -814,8 +816,10 @@ helm install monitoring chart/
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsNonRoot | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsUser | int | `65532` |  |
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsGroup | int | `65532` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
+| prometheusOperator.admissionWebhooks.cleanupProxy.image.registry | string | `"registry1.dso.mil"` |  |
+| prometheusOperator.admissionWebhooks.cleanupProxy.image.repository | string | `"ironbank/big-bang/base"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.tag | string | `"2.1.0"` |  |
+| prometheusOperator.admissionWebhooks.cleanupProxy.image.sha | string | `""` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.resources.limits.cpu | string | `"50m"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.resources.limits.memory | string | `"50Mi"` |  |
@@ -922,7 +926,8 @@ helm install monitoring chart/
 | prometheusOperator.alertmanagerInstanceSelector | string | `""` |  |
 | prometheusOperator.thanosRulerInstanceSelector | string | `""` |  |
 | prometheusOperator.secretFieldSelector | string | `"type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1"` |  |
-| prometheusOperator.kubectlImage.repository | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl"` |  |
+| prometheusOperator.kubectlImage.registry | string | `"registry1.dso.mil"` |  |
+| prometheusOperator.kubectlImage.repository | string | `"ironbank/opensource/kubernetes/kubectl"` |  |
 | prometheusOperator.kubectlImage.tag | string | `"v1.28.6"` |  |
 | prometheusOperator.kubectlImage.sha | string | `""` |  |
 | prometheusOperator.kubectlImage.pullPolicy | string | `"IfNotPresent"` |  |
