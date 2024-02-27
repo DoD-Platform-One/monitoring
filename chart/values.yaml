@@ -131,8 +131,10 @@ vault:
 cleanUpgrade:
   enabled: false
   image:
-    repository: registry1.dso.mil/ironbank/big-bang/base
+    registry: registry1.dso.mil
+    repository: ironbank/big-bang/base
     tag: 2.1.0
+    sha: ""
   resources:
     requests:
       memory: 256Mi
@@ -2750,8 +2752,10 @@ prometheusOperator:
         runAsGroup: 65532
     cleanupProxy:
       image:
-        repository: registry1.dso.mil/ironbank/big-bang/base
+        registry: registry1.dso.mil
+        repository: ironbank/big-bang/base
         tag: 2.1.0
+        sha: ""
         pullPolicy: IfNotPresent
       resources:
         limits:
@@ -3166,7 +3170,8 @@ prometheusOperator:
   ## kubectl image to use when cleaning up
   ##
   kubectlImage:
-    repository: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl
+    registry: registry1.dso.mil
+    repository: ironbank/opensource/kubernetes/kubectl
     tag: v1.28.6
     sha: ""
     pullPolicy: IfNotPresent
