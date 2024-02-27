@@ -1,0 +1,25 @@
+{{- if and .Values.prometheus.prometheusSpec.replicas (gt (int .Values.prometheus.prometheusSpec.replicas) 1) }}
+{{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") (eq .Values.istio.mtls.mode "STRICT") }}
+apiVersion: "security.istio.io/v1beta1"
+kind: PeerAuthentication
+metadata:
+  name: prometheus-exception
+  namespace: {{ .Release.Namespace }}
+spec:
+  mtls:
+    mode: {{ .Values.istio.mtls.mode }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+  portLevelMtls:
+    "8080":
+      mode: PERMISSIVE
+    "{{ .Values.prometheus.service.port }}":
+      mode: PERMISSIVE
+  {{- if .Values.prometheus.thanosService.enabled }}
+    "{{ .Values.prometheus.thanosService.httpPort}}":
+      mode: PERMISSIVE
+  {{- end }}
+
+{{- end }}
+{{- end }}

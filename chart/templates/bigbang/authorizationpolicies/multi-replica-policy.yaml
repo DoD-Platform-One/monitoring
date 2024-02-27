@@ -1,0 +1,30 @@
+{{- if and .Values.prometheus.prometheusSpec.replicas (gt (int .Values.prometheus.prometheusSpec.replicas) 1) }}
+{{- if and .Values.istio.enabled .Values.sso.enabled (eq .Values.istio.injection "enabled") -}}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: multi-prometheus-authz-policy
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+spec:
+  selector:
+    matchLabels:
+      prometheus: {{ template "kube-prometheus-stack.fullname" . }}-prometheus
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: ["{{ template "kube-prometheus-stack.namespace" . }}"]
+    to:
+    - operation:
+        methods: ["GET", "POST"]
+        paths: ["/*"]
+  - to:
+    - operation:
+        ports: 
+        - "{{ .Values.prometheus.service.port }}"
+        - "8080"
+      {{- if .Values.prometheus.thanosService.enabled }}
+        - "{{ .Values.prometheus.thanosService.httpPort}}"
+      {{- end }}
+{{- end }}
+{{- end }}
