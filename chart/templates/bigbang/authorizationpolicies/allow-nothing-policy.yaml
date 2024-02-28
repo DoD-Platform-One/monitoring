@@ -3,7 +3,7 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: allow-nothing-policy
+  name: monitoring-allow-nothing-policy
   namespace: {{ .Release.Namespace }}
 spec: {}
 {{- end }}
