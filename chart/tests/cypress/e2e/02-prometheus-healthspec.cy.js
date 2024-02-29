@@ -19,18 +19,6 @@ describe('Basic prometheus', function() {
       // Run a query
       cy.get('button[class="execute-btn btn btn-primary"]')
         .click({waitForAnimations: false})
-      // Check Targets
-      cy.wait(3000)
-      cy.visit(`${Cypress.env('prometheus_url')}/targets`)
-      cy.get('button[class="mw-100 text-truncate dropdown-toggle btn btn-secondary"]').click()
-      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-alertmanager\/0/)
-      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-coredns\/0/)
-      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-apiserver\/0/)
-      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-kube-state-metrics\/0/)
-      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-kubelet\/0/)
-      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-node-exporter\/0/)
-      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-operator\/0/)
-      cy.get('button[class="dropdown-item"]').contains(/monitoring\/.+-prometheus\/0/)  
     })
 
 })

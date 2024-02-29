@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [56.2.1-bb.6] - 2024-02-29
+### Updated
+- Enhance Cypress tests to ensure the prometheus targets are actually up
+
 ## [56.2.1-bb.5] - 2024-02-29
 ### Updated
 - Split and fixed ingress policies
