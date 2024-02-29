@@ -1,0 +1,25 @@
+{{- if and .Values.istio.enabled .Values.istio.hardened.enabled .Values.istio.alertmanager.enabled -}}
+{{- range .Values.istio.alertmanager.gateways -}}
+{{- $gatewayParts := split "/" . }}
+{{- $namespace := $gatewayParts._0 }}
+{{- $name := $gatewayParts._1 }}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: "am-{{ $name }}-ingressgateway-authz-policy"
+  namespace: {{ $.Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+    app: {{ template "kube-prometheus-stack.name" $ }}-alertmanager
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces:
+        - {{ $namespace }}
+        principals:
+        - "cluster.local/ns/{{ $namespace }}/sa/{{ $name }}-ingressgateway-service-account"
+---
+{{ end -}}
+{{- end }}

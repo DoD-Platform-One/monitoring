@@ -5,9 +5,6 @@ metadata:
   name: tempo-authz-policy
   namespace: {{ .Release.Namespace }}
 spec:
-  selector:
-    matchLabels:
-      app: monitoring
   action: ALLOW
   rules:
   - from:
