@@ -11,7 +11,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-    app: {{ template "kube-prometheus-stack.name" $ }}-alertmanager
+      alertmanager: {{ template "kube-prometheus-stack.fullname" $ }}-alertmanager
   action: ALLOW
   rules:
   - from:
