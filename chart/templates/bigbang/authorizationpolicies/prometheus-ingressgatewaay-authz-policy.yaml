@@ -11,7 +11,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ template "kube-prometheus-stack.name" $ }}-prometheus
+      app: prometheus
   action: ALLOW
   rules:
   - from:
