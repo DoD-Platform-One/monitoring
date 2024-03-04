@@ -1,4 +1,4 @@
-{{- if and .Values.istio.enabled .Values.sso.enabled .Values.tempo.enabled (eq .Values.istio.injection "enabled") -}}
+{{- if and .Values.istio.enabled .Values.tempo.enabled (eq .Values.istio.injection "enabled") -}}
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
