@@ -1,0 +1,15 @@
+{{- if and .Values.istio.enabled .Values.istio.hardened.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+ name: monitoring-allow-kube-exporter-port
+ namespace: {{ .Release.Namespace }}
+spec:
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        ports: ["10250"]
+{{- end }}
+
+
