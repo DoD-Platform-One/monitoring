@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [56.2.1-bb.9] - 2024-03-04
+### Updated
+- Cypress upgrade for bigbang and package CI
+
 ## [56.2.1-bb.8] - 2024-03-04
 ### Updated
 - removing the sso.enabled from a bunch of authorization policies that didn't need it
