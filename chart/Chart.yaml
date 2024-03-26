@@ -23,8 +23,8 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 56.2.1-bb.10
-appVersion: v0.71.2
+version: 57.0.3-bb.0
+appVersion: 0.72.0
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -40,30 +40,30 @@ annotations:
     - name: Upstream Project
       url: https://github.com/prometheus-operator/kube-prometheus
   bigbang.dev/applicationVersions: |
-    - Prometheus: 2.49.1
-    - Grafana: 10.3.1
-    - Alertmanager: v0.26.0
+    - Prometheus: 2.50.1
+    - Grafana: 10.4.0
+    - Alertmanager: 0.27.0
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
   helm.sh/images: |
     - name: alertmanager
-      image: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager:v0.26.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager:v0.27.0
       condition: alertmanager.enabled
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
     - name: grafana
-      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:10.3.1
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:10.4.0
       condition: grafana.enabled
       dependency: grafana
     - name: init-chown-data
       image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.3
       condition: grafana.initChownData.enabled
     - name: k8s-sidecar
-      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.25.3
+      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.26.1
       condition: grafana.enabled
       dependency: grafana
     - name: kubectl
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.28.6
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.28.8
       condition: prometheusOperator.enabled
     - name: kube-state-metrics
       image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.10.1
@@ -73,27 +73,27 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.3.0
       condition: prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
-      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v2.49.1
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v2.50.1
       condition: prometheus.enabled
     - name: prometheus-config-reloader
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.71.2
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.72.0
       condition: prometheusOperator.enabled
     - name: prometheus-operator
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.71.2
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.72.0
       condition: prometheusOperator.enabled
     - name: prometheus-node-exporter
       image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.7.0
       condition: nodeExporter.enabled
       dependency: prometheus-node-exporter
     - name: test-framework
-      image: registry1.dso.mil/ironbank/opensource/bats/bats:v1.10.0
+      image: registry1.dso.mil/ironbank/opensource/bats/bats:v1.11.0
       condition: grafana.enabled
       dependency: grafana
     - name: thanos
-      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.33.0
+      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.34.1
       condition: prometheusOperator.enabled
     - name: thanos-ruler
-      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.33.0
+      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.34.1
       condition: thanosRuler.enabled
 
 dependencies:
@@ -101,15 +101,15 @@ dependencies:
     version: "0.0.0"
     condition: crds.enabled
   - name: kube-state-metrics
-    version: "5.16.*"
+    version: "5.18.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: kubeStateMetrics.enabled
   - name: prometheus-node-exporter
-    version: "4.26.*"
+    version: "4.32.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: nodeExporter.enabled
   - name: grafana
-    version: "7.2.*"
+    version: "7.3.*"
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
