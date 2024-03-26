@@ -3,6 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [57.0.3-bb.0] - 2024-03-20
+### Updated
+- Updated chart 56.2.1 -> 57.0.3
+- Updated grafana-plugins 10.3.1 -> 10.4.0
+- Updated k8s-sidecar 1.25.3 -> 1.26.1
+- Updated kubectl v1.28.6 -> v1.28.8
+- Updated prometheus-config-reloader v0.71.2 -> v0.72.0
+- Updated prometheus-operator v0.71.2 -> v0.72.0
+- Updated alertmanager v0.26.0 -> v0.27.0
+- Updated prometheus v2.49.1 -> v2.50.1
+- Updated thanos v0.33.0 -> v0.34.1
+- Updated bats v1.10.0 -> v1.11.0
+
 ## [56.2.1-bb.10] - 2024-03-08
 ### Updated
 - Openshift update for deploying Monitoring into Openshift cluster
