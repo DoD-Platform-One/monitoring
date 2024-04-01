@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 57.0.3-bb.0](https://img.shields.io/badge/Version-57.0.3--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.72.0](https://img.shields.io/badge/AppVersion-0.72.0-informational?style=flat-square)
+![Version: 57.0.3-bb.1](https://img.shields.io/badge/Version-57.0.3--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.72.0](https://img.shields.io/badge/AppVersion-0.72.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -59,6 +59,8 @@ helm install monitoring chart/
 | gitlabRunner.enabled | bool | `false` |  |
 | istio.enabled | bool | `false` |  |
 | istio.hardened.enabled | bool | `false` |  |
+| istio.hardened.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
+| istio.hardened.customServiceEntries | list | `[]` |  |
 | istio.hardened.customAuthorizationPolicies | list | `[]` |  |
 | istio.hardened.tempo.enabled | bool | `false` |  |
 | istio.hardened.tempo.namespaces[0] | string | `"tempo"` |  |
