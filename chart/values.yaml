@@ -47,6 +47,19 @@ istio:
   enabled: false
   hardened:
     enabled: false
+    outboundTrafficPolicyMode: "REGISTRY_ONLY"
+    customServiceEntries: []
+      # - name: "allow-google"
+      #   enabled: true
+      #   spec:
+      #     hosts:
+      #       - google.com
+      #     location: MESH_EXTERNAL
+      #     ports:
+      #       - number: 443
+      #         protocol: TLS
+      #         name: https
+      #     resolution: DNS
     customAuthorizationPolicies: []
     # - name: "allow-nothing"
     #   enabled: true
