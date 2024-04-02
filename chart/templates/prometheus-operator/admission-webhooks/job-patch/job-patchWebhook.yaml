@@ -38,7 +38,7 @@ spec:
           securityContext:
 {{ toYaml .Values.prometheusOperator.admissionWebhooks.containerSecurityContext | indent 12 }}
           {{- end }}
-          {{- $registry := .Values.global.imageRegistry | default .Values.alertmanager.alertmanagerSpec.image.registry -}}
+          {{- $registry := .Values.global.imageRegistry | default .Values.prometheusOperator.admissionWebhooks.patch.image.registry -}}
           {{- if .Values.prometheusOperator.admissionWebhooks.patch.image.sha }}
           image: {{ $registry }}/{{ .Values.prometheusOperator.admissionWebhooks.patch.image.repository }}:{{ .Values.prometheusOperator.admissionWebhooks.patch.image.tag }}@sha256:{{ .Values.prometheusOperator.admissionWebhooks.patch.image.sha }}
           {{- else }}
