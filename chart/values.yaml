@@ -1113,7 +1113,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 10.4.0
+    tag: 10.4.1
     pullSecrets:
     - private-registry
   
@@ -2347,7 +2347,7 @@ kube-state-metrics:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kubernetes/kube-state-metrics
-    tag: v2.10.1
+    tag: v2.11.0
 
   resources:
     limits:
@@ -3816,7 +3816,7 @@ prometheus:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus/prometheus
-      tag: v2.50.1
+      tag: v2.51.1
       sha: ""
 
     ## Tolerations for use with node taints

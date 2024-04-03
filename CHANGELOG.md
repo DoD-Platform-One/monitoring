@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [57.2.0-bb.0] - 2024-04-03
+### Updated
+- Updated chart 57.0.3 -> 57.2.0
+- Updated grafana-plugins 10.4.0 -> 10.4.1
+- Updated kube-state-metrics 2.10.1 -> 2.11.0
+- Updated prometheus 2.50.1 -> 2.51.1
+
 ## [57.0.3-bb.2] - 2024-04-02
 ### Updated
 - Updated admissionWebhooks containers to support global.imageRegistry
