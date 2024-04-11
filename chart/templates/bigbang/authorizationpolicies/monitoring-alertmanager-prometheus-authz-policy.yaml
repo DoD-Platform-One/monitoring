@@ -1,8 +1,8 @@
-{{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") -}}
+{{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") .Values.sso.enabled -}}
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: prometheus-am
+  name: monitoring-alertmanager-authz-policy
   namespace: {{ template "kube-prometheus-stack.namespace" . }}
 spec:
   selector:
