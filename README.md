@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 57.2.0-bb.2](https://img.shields.io/badge/Version-57.2.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.72.0](https://img.shields.io/badge/AppVersion-0.72.0-informational?style=flat-square)
+![Version: 58.0.0-bb.0](https://img.shields.io/badge/Version-58.0.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.73.0](https://img.shields.io/badge/AppVersion-0.73.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -52,10 +52,6 @@ helm install monitoring chart/
 | bbtests.cypress.artifacts | bool | `true` |  |
 | bbtests.cypress.envs.cypress_prometheus_url | string | `"http://monitoring-kube-prometheus-prometheus:9090"` |  |
 | bbtests.cypress.envs.cypress_alertmanager_url | string | `"http://monitoring-kube-prometheus-alertmanager:9093"` |  |
-| bbtests.cypress.resources.requests.cpu | int | `2` |  |
-| bbtests.cypress.resources.requests.memory | string | `"2Gi"` |  |
-| bbtests.cypress.resources.limits.cpu | int | `2` |  |
-| bbtests.cypress.resources.limits.memory | string | `"2Gi"` |  |
 | minioOperator.enabled | bool | `false` |  |
 | gitlabRunner.enabled | bool | `false` |  |
 | istio.enabled | bool | `false` |  |
@@ -697,7 +693,7 @@ helm install monitoring chart/
 | kube-state-metrics.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | kube-state-metrics.image.registry | string | `"registry1.dso.mil"` |  |
 | kube-state-metrics.image.repository | string | `"ironbank/opensource/kubernetes/kube-state-metrics"` |  |
-| kube-state-metrics.image.tag | string | `"v2.11.0"` |  |
+| kube-state-metrics.image.tag | string | `"v2.12.0"` |  |
 | kube-state-metrics.resources.limits.cpu | string | `"100m"` |  |
 | kube-state-metrics.resources.limits.memory | string | `"128Mi"` |  |
 | kube-state-metrics.resources.requests.cpu | string | `"100m"` |  |
@@ -940,12 +936,12 @@ helm install monitoring chart/
 | prometheusOperator.verticalPodAutoscaler.updatePolicy.updateMode | string | `"Auto"` |  |
 | prometheusOperator.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.72.0"` |  |
+| prometheusOperator.image.tag | string | `"v0.73.0"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.72.0"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.73.0"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.enableProbe | bool | `false` |  |
 | prometheusOperator.prometheusConfigReloader.resources | object | `{}` |  |
@@ -959,7 +955,7 @@ helm install monitoring chart/
 | prometheusOperator.secretFieldSelector | string | `"type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1"` |  |
 | prometheusOperator.kubectlImage.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.kubectlImage.repository | string | `"ironbank/opensource/kubernetes/kubectl"` |  |
-| prometheusOperator.kubectlImage.tag | string | `"v1.28.8"` |  |
+| prometheusOperator.kubectlImage.tag | string | `"v1.29.3"` |  |
 | prometheusOperator.kubectlImage.sha | string | `""` |  |
 | prometheusOperator.kubectlImage.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.automountServiceAccountToken | bool | `true` |  |
