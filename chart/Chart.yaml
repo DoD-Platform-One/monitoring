@@ -23,8 +23,8 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 57.2.0-bb.2
-appVersion: 0.72.0
+version: 58.0.0-bb.0
+appVersion: 0.73.0
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -63,10 +63,10 @@ annotations:
       condition: grafana.enabled
       dependency: grafana
     - name: kubectl
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.28.8
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.29.3
       condition: prometheusOperator.enabled
     - name: kube-state-metrics
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.11.0
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.12.0
       condition: kubeStateMetrics.enabled
       dependency: kube-state-metrics
     - name: kube-webhook-certgen
@@ -76,10 +76,10 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v2.51.1
       condition: prometheus.enabled
     - name: prometheus-config-reloader
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.72.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.73.0
       condition: prometheusOperator.enabled
     - name: prometheus-operator
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.72.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.73.0
       condition: prometheusOperator.enabled
     - name: prometheus-node-exporter
       image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.7.0
@@ -113,7 +113,7 @@ dependencies:
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
-    version: "0.4.8"
+    version: "0.4.9"
     repository: oci://registry1.dso.mil/bigbang
   - name: prometheus-windows-exporter
     repository: https://prometheus-community.github.io/helm-charts
