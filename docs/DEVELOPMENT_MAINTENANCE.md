@@ -64,13 +64,47 @@ grafana:
 
 ## Manual Testing for Updates
 
-NOTE: For these testing steps it is good to do them on both a clean install and an upgrade. For clean install, point monitoring to your branch. For an upgrade do an install with monitoring pointing to the latest tag, then perform a helm upgrade with monitoring pointing to your branch.
+>NOTE: For these testing steps it is good to do them on both a clean install and an upgrade. For clean install, point monitoring to your branch. For an upgrade do an install with monitoring pointing to the latest tag, then perform a helm upgrade with monitoring pointing to your branch.
 
-You will want to install with:
+The following overrides can be used for a bare minimum monitoring deployment:
 
-- Monitoring, Jaeger, Kiali, and Authservice packages enabled
-- Istio enabled
-- [Dev SSO values](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/docs/assets/configs/example/dev-sso-values.yaml) for Kiali, Monitoring, and Jaeger
+```yaml
+istio:
+  enabled: true
+istioOperator:
+  enabled: true
+monitoring:
+  enabled: true
+  git:
+    tag: null
+    branch: "renovate/ironbank"
+  sso:
+    enabled: true
+    prometheus:
+      client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-prometheus
+    alertmanager:
+      client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-alertmanager
+grafana:
+  sso:
+    enabled: true
+    grafana:
+      client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-grafana
+      scopes: "openid Grafana"
+jaeger:
+  enabled: true
+  sso:
+    enabled: true
+    client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-jaeger
+kiali:
+  enabled: true
+  sso:
+    enabled: true
+    client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-kiali
+
+addons:
+  authservice:
+    enabled: true
+```
 
 Testing Steps:
 
