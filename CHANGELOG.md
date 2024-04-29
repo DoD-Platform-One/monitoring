@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [58.2.2-bb.0] (2024-04-24)
+### Updated
+- Updated Monitoring chart to v0.73.2
+- Updated Prometheus: 2.51.2
+- Updated Grafana: 10.4.2
+- Updated kube-state-metrics 5.18.0 -> 5.19.0
+
 ## [58.0.0-bb.1] (2024-04-19)
 ### Fixed
 - Fix Kiali connection issues due to AuthPols

@@ -631,6 +631,10 @@ alertmanager:
     annotations: {}
     labels: {}
     clusterIP: ""
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
 
     ## Port for Alertmanager Service to listen on
     ##
@@ -1107,7 +1111,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 10.4.1
+    tag: 10.4.2
     pullSecrets:
     - private-registry
   
@@ -1798,6 +1802,10 @@ kubeControllerManager:
     ##
     port: null
     targetPort: null
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
     # selector:
     #   component: kube-controller-manager
 
@@ -1884,6 +1892,11 @@ coreDns:
     enabled: true
     port: 9153
     targetPort: 9153
+
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
     # selector:
     #   k8s-app: kube-dns
   serviceMonitor:
@@ -1960,6 +1973,10 @@ kubeDns:
     skydns:
       port: 10055
       targetPort: 10055
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
     # selector:
     #   k8s-app: kube-dns
   serviceMonitor:
@@ -2057,6 +2074,10 @@ kubeEtcd:
     enabled: true
     port: 2381
     targetPort: 2381
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
     # selector:
     #   component: etcd
 
@@ -2161,6 +2182,10 @@ kubeScheduler:
     ##
     port: null
     targetPort: null
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
     # selector:
     #   component: kube-scheduler
 
@@ -2254,6 +2279,10 @@ kubeProxy:
     enabled: true
     port: 10249
     targetPort: 10249
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
     # selector:
     #   k8s-app: kube-proxy
 
@@ -2498,6 +2527,10 @@ prometheus-node-exporter:
     - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
   service:
     portName: http-metrics
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
   prometheus:
     monitor:
       enabled: true
@@ -2655,6 +2688,10 @@ prometheusOperator:
         annotations: {}
         labels: {}
         clusterIP: ""
+        ipDualStack:
+          enabled: false
+          ipFamilies: ["IPv6", "IPv4"]
+          ipFamilyPolicy: "PreferDualStack"
 
         ## Port to expose on each node
         ## Only used if service.type is 'NodePort'
@@ -2971,6 +3008,10 @@ prometheusOperator:
     annotations: {}
     labels: {}
     clusterIP: ""
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
 
   ## Port to expose on each node
   ## Only used if service.type is 'NodePort'
@@ -3036,6 +3077,7 @@ prometheusOperator:
     ##
     enabled: true
     namespace: kube-system
+    selector: ""
     ## Use '{{ template "kube-prometheus-stack.fullname" . }}-kubelet' by default
     name: ""
 
@@ -3206,7 +3248,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.73.0
+    tag: v0.73.1
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3232,7 +3274,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.73.0
+      tag: v0.73.1
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
@@ -3356,6 +3398,13 @@ prometheus:
     ##
     type: ClusterIP
 
+    ## Service dual stack
+    ##
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
+
     ## gRPC port config
     portName: grpc
     port: 10901
@@ -3438,6 +3487,10 @@ prometheus:
     annotations: {}
     labels: {}
     clusterIP: ""
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
 
     ## Port for Prometheus Service to listen on
     ##
@@ -3529,6 +3582,13 @@ prometheus:
     ## Service type
     ##
     type: ClusterIP
+
+    ## Service dual stack
+    ##
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
 
   ## Configure pod disruption budgets for Prometheus
   ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
@@ -3810,7 +3870,7 @@ prometheus:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus/prometheus
-      tag: v2.51.1
+      tag: v2.51.2
       sha: ""
 
     ## Tolerations for use with node taints
@@ -4685,6 +4745,10 @@ thanosRuler:
     annotations: {}
     labels: {}
     clusterIP: ""
+    ipDualStack:
+      enabled: false
+      ipFamilies: ["IPv6", "IPv4"]
+      ipFamilyPolicy: "PreferDualStack"
 
     ## Port for ThanosRuler Service to listen on
     ##
@@ -4899,6 +4963,10 @@ thanosRuler:
     ##
     externalPrefix:
 
+    ## If true, http://{{ template "kube-prometheus-stack.thanosRuler.name" . }}.{{ template "kube-prometheus-stack.namespace" . }}:{{ .Values.thanosRuler.service.port }}
+    ## will be used as value for externalPrefix
+    externalPrefixNilUsesHelmValues: true
+
     ## The route prefix ThanosRuler registers HTTP handlers for. This is useful, if using ExternalURL and a proxy is rewriting HTTP routes of a request, and the actual ExternalURL is still true,
     ## but the server serves requests under a different route prefix. For example for use with kubectl proxy.
     ##
@@ -4920,6 +4988,10 @@ thanosRuler:
         #   region: ""
         #   access_key: ""
         #   secret_key: ""
+
+    ## Labels by name to drop before sending to alertmanager
+    ## Maps to the --alert.label-drop flag of thanos ruler.
+    alertDropLabels: []
 
     ## QueryEndpoints defines Thanos querier endpoints from which to query metrics.
     ## Maps to the --query flag of thanos ruler.
@@ -5060,6 +5132,13 @@ thanosRuler:
     ## PortName to use for ThanosRuler.
     ##
     portName: "web"
+
+    ## Additional configuration which is not covered by the properties above. (passed through tpl)
+    additionalConfig: {}
+
+    ## Additional configuration which is not covered by the properties above.
+    ## Useful, if you need advanced templating
+    additionalConfigString: ""
 
   ## ExtraSecret can be used to store various data in an extra secret
   ## (use it for example to store hashed basic auth credentials)

@@ -23,8 +23,8 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 58.0.0-bb.1
-appVersion: 0.73.0
+version: 58.2.2-bb.0
+appVersion: 0.73.2
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -40,8 +40,8 @@ annotations:
     - name: Upstream Project
       url: https://github.com/prometheus-operator/kube-prometheus
   bigbang.dev/applicationVersions: |
-    - Prometheus: 2.51.1
-    - Grafana: 10.4.1
+    - Prometheus: 2.51.2
+    - Grafana: 10.4.2
     - Alertmanager: 0.27.0
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
@@ -52,7 +52,7 @@ annotations:
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
     - name: grafana
-      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:10.4.1
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:10.4.2
       condition: grafana.enabled
       dependency: grafana
     - name: init-chown-data
@@ -73,13 +73,13 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.3.0
       condition: prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
-      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v2.51.1
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v2.51.2
       condition: prometheus.enabled
     - name: prometheus-config-reloader
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.73.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.73.1
       condition: prometheusOperator.enabled
     - name: prometheus-operator
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.73.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.73.1
       condition: prometheusOperator.enabled
     - name: prometheus-node-exporter
       image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.7.0
@@ -101,7 +101,7 @@ dependencies:
     version: "0.0.0"
     condition: crds.enabled
   - name: kube-state-metrics
-    version: "5.18.*"
+    version: "5.19.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: kubeStateMetrics.enabled
   - name: prometheus-node-exporter
@@ -113,7 +113,7 @@ dependencies:
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
-    version: "0.4.9"
+    version: "0.4.10"
     repository: oci://registry1.dso.mil/bigbang
   - name: prometheus-windows-exporter
     repository: https://prometheus-community.github.io/helm-charts
