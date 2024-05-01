@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [58.3.1-bb.0] (2024-05-01)
+### Updated
+- Updated kubectl: 1.29.4
+- Updated prometheus-config-reloader: v0.73.2
+- Updated prometheus-operator: v0.73.2
+- Updated prometheus-node-exporter: 4.33.0
+
 ## [58.2.2-bb.0] (2024-04-24)
 ### Updated
 - Updated Monitoring chart to v0.73.2

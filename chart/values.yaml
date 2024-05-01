@@ -2903,6 +2903,7 @@ prometheusOperator:
       ## Provide a priority class name to the webhook patching job
       ##
       priorityClassName: ""
+      ttlSecondsAfterFinished: 0
       annotations: {}
       #   argocd.argoproj.io/hook: PreSync
       #   argocd.argoproj.io/hook-delete-policy: HookSucceeded
@@ -3248,7 +3249,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.73.1
+    tag: v0.73.2
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3274,7 +3275,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.73.1
+      tag: v0.73.2
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
@@ -3317,7 +3318,7 @@ prometheusOperator:
   kubectlImage:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kubernetes/kubectl
-    tag: v1.29.3
+    tag: v1.29.4
     sha: ""
     pullPolicy: IfNotPresent
 
