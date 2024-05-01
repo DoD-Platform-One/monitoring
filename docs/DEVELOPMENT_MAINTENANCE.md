@@ -10,9 +10,18 @@ Monitoring is a modified/customized version of an upstream chart. The below deta
 
 4. From the root of the repo run `kpt pkg update chart@kube-prometheus-stack-23.1.6 --strategy alpha-git-patch` replacing `kube-prometheus-stack-23.1.6` with the version tag you got in step 1. You may be prompted to resolve some conflicts - choose what makes sense (if there are BB additions/changes keep them, if there are upstream additions/changes keep them).
 
+```chart/Chart.yaml```
+- Ensure that `condition: prometheus.enabled` is set for prometheus as in the following example:
+
+```yaml
+    - name: prometheus
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:vX.Y.Z
+      condition: prometheus.enabled
+```
+
 ```chart/values.yaml```
 - We want to ensure that `grafana.persistence.enabled=false` and initChownData is using a registry1 ubiX-minimal image:
-```
+```yaml
 grafana:
   ...
   persistence:

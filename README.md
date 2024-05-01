@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 58.2.2-bb.0](https://img.shields.io/badge/Version-58.2.2--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.73.2](https://img.shields.io/badge/AppVersion-0.73.2-informational?style=flat-square)
+![Version: 58.3.1-bb.0](https://img.shields.io/badge/Version-58.3.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.73.2](https://img.shields.io/badge/AppVersion-0.73.2-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -888,6 +888,7 @@ helm install monitoring chart/
 | prometheusOperator.admissionWebhooks.cleanupProxy.resources.requests.cpu | string | `"50m"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.resources.requests.memory | string | `"50Mi"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.priorityClassName | string | `""` |  |
+| prometheusOperator.admissionWebhooks.cleanupProxy.ttlSecondsAfterFinished | int | `0` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.annotations | object | `{}` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.podAnnotations | object | `{}` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.nodeSelector | object | `{}` |  |
@@ -977,12 +978,12 @@ helm install monitoring chart/
 | prometheusOperator.verticalPodAutoscaler.updatePolicy.updateMode | string | `"Auto"` |  |
 | prometheusOperator.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.73.1"` |  |
+| prometheusOperator.image.tag | string | `"v0.73.2"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.73.1"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.73.2"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.enableProbe | bool | `false` |  |
 | prometheusOperator.prometheusConfigReloader.resources | object | `{}` |  |
@@ -996,7 +997,7 @@ helm install monitoring chart/
 | prometheusOperator.secretFieldSelector | string | `"type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1"` |  |
 | prometheusOperator.kubectlImage.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.kubectlImage.repository | string | `"ironbank/opensource/kubernetes/kubectl"` |  |
-| prometheusOperator.kubectlImage.tag | string | `"v1.29.3"` |  |
+| prometheusOperator.kubectlImage.tag | string | `"v1.29.4"` |  |
 | prometheusOperator.kubectlImage.sha | string | `""` |  |
 | prometheusOperator.kubectlImage.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.automountServiceAccountToken | bool | `true` |  |
