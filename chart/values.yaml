@@ -1484,7 +1484,7 @@ grafana:
     ##
     image:
       repository: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal
-      tag: "9.3"
+      tag: "9.4"
       sha: ""
       pullPolicy: IfNotPresent
   
@@ -2499,7 +2499,7 @@ prometheus-node-exporter:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus/node-exporter 
-    tag: v1.7.0
+    tag: v1.8.0
 
   resources:
     limits:
@@ -2903,7 +2903,7 @@ prometheusOperator:
       ## Provide a priority class name to the webhook patching job
       ##
       priorityClassName: ""
-      ttlSecondsAfterFinished: 0
+      ttlSecondsAfterFinished: 60
       annotations: {}
       #   argocd.argoproj.io/hook: PreSync
       #   argocd.argoproj.io/hook-delete-policy: HookSucceeded

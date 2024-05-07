@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 58.3.1-bb.0](https://img.shields.io/badge/Version-58.3.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.73.2](https://img.shields.io/badge/AppVersion-0.73.2-informational?style=flat-square)
+![Version: 58.3.3-bb.0](https://img.shields.io/badge/Version-58.3.3--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.73.2](https://img.shields.io/badge/AppVersion-v0.73.2-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -486,7 +486,7 @@ helm install monitoring chart/
 | grafana.persistence.size | string | `"10Gi"` |  |
 | grafana.initChownData.enabled | bool | `false` |  |
 | grafana.initChownData.image.repository | string | `"registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal"` |  |
-| grafana.initChownData.image.tag | string | `"9.3"` |  |
+| grafana.initChownData.image.tag | string | `"9.4"` |  |
 | grafana.initChownData.image.sha | string | `""` |  |
 | grafana.initChownData.image.pullPolicy | string | `"IfNotPresent"` |  |
 | grafana.initChownData.resources.limits.cpu | string | `"100m"` |  |
@@ -758,7 +758,7 @@ helm install monitoring chart/
 | prometheus-node-exporter.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | prometheus-node-exporter.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheus-node-exporter.image.repository | string | `"ironbank/opensource/prometheus/node-exporter"` |  |
-| prometheus-node-exporter.image.tag | string | `"v1.7.0"` |  |
+| prometheus-node-exporter.image.tag | string | `"v1.8.0"` |  |
 | prometheus-node-exporter.resources.limits.cpu | string | `"200m"` |  |
 | prometheus-node-exporter.resources.limits.memory | string | `"250Mi"` |  |
 | prometheus-node-exporter.resources.requests.cpu | string | `"200m"` |  |
@@ -888,7 +888,7 @@ helm install monitoring chart/
 | prometheusOperator.admissionWebhooks.cleanupProxy.resources.requests.cpu | string | `"50m"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.resources.requests.memory | string | `"50Mi"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.priorityClassName | string | `""` |  |
-| prometheusOperator.admissionWebhooks.cleanupProxy.ttlSecondsAfterFinished | int | `0` |  |
+| prometheusOperator.admissionWebhooks.cleanupProxy.ttlSecondsAfterFinished | int | `60` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.annotations | object | `{}` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.podAnnotations | object | `{}` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.nodeSelector | object | `{}` |  |

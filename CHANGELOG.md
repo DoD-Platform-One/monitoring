@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [58.3.3-bb.0] (2024-05-03)
+### Updated
+- Updated Gluon: 0.4.10 -> 0.5.0
+- Updated prometheus/node-exporter: v1.7.0 -> v1.8.0
+- Updated ubi9-minimal 9.3 -> 9.4
+
 ## [58.3.1-bb.0] (2024-05-01)
 ### Updated
 - Updated kubectl: 1.29.4

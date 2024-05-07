@@ -23,8 +23,8 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 58.3.1-bb.0
-appVersion: 0.73.2
+version: 58.3.3-bb.0
+appVersion: v0.73.2
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -56,7 +56,7 @@ annotations:
       condition: grafana.enabled
       dependency: grafana
     - name: init-chown-data
-      image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.3
+      image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.4
       condition: grafana.initChownData.enabled
     - name: k8s-sidecar
       image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.26.1
@@ -82,7 +82,7 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.73.2
       condition: prometheusOperator.enabled
     - name: prometheus-node-exporter
-      image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.7.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.8.0
       condition: nodeExporter.enabled
       dependency: prometheus-node-exporter
     - name: test-framework
@@ -113,7 +113,7 @@ dependencies:
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
-    version: "0.4.10"
+    version: "0.5.0"
     repository: oci://registry1.dso.mil/bigbang
   - name: prometheus-windows-exporter
     repository: https://prometheus-community.github.io/helm-charts
