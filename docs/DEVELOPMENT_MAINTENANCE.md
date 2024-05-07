@@ -43,7 +43,7 @@ grafana:
     ##
     image:
       repository: registry1.dso.mil/ironbank/redhat/ubi/9-minimal
-      tag: "9.3"
+      tag: "9.4"
       sha: ""
       pullPolicy: IfNotPresent
   

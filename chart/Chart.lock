@@ -13,9 +13,9 @@ dependencies:
   version: 7.3.9
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
-  version: 0.4.10
+  version: 0.5.0
 - name: prometheus-windows-exporter
   repository: https://prometheus-community.github.io/helm-charts
   version: 0.3.1
-digest: sha256:370895d8a6c9805256660a8d3de994cbea31271293bcf83271b56fdb0559232b
-generated: "2024-05-01T06:15:31.599702124Z"
+digest: sha256:abf0ca8b557fa454e6723761e243a9087eda3f86fbb3920192d2adb275b3bcad
+generated: "2024-05-03T06:18:19.351361806Z"
