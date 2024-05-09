@@ -23,7 +23,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 58.3.3-bb.0
+version: 58.4.1-bb.0
 appVersion: v0.73.2
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
@@ -59,7 +59,7 @@ annotations:
       image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.4
       condition: grafana.initChownData.enabled
     - name: k8s-sidecar
-      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.26.1
+      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.26.2
       condition: grafana.enabled
       dependency: grafana
     - name: kubectl
@@ -90,10 +90,10 @@ annotations:
       condition: grafana.enabled
       dependency: grafana
     - name: thanos
-      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.34.1
+      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.35.0
       condition: prometheusOperator.enabled
     - name: thanos-ruler
-      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.34.1
+      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.35.0
       condition: thanosRuler.enabled
 
 dependencies:
@@ -105,7 +105,7 @@ dependencies:
     repository: https://prometheus-community.github.io/helm-charts
     condition: kubeStateMetrics.enabled
   - name: prometheus-node-exporter
-    version: "4.33.*"
+    version: "4.34.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: nodeExporter.enabled
   - name: grafana

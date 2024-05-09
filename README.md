@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 58.3.3-bb.0](https://img.shields.io/badge/Version-58.3.3--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.73.2](https://img.shields.io/badge/AppVersion-v0.73.2-informational?style=flat-square)
+![Version: 58.4.1-bb.0](https://img.shields.io/badge/Version-58.4.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.73.2](https://img.shields.io/badge/AppVersion-v0.73.2-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -430,7 +430,7 @@ helm install monitoring chart/
 | grafana.serviceAccount.create | bool | `true` |  |
 | grafana.serviceAccount.autoMount | bool | `true` |  |
 | grafana.sidecar.image.repository | string | `"registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar"` |  |
-| grafana.sidecar.image.tag | string | `"1.26.1"` |  |
+| grafana.sidecar.image.tag | string | `"1.26.2"` |  |
 | grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
 | grafana.sidecar.resources.requests.cpu | string | `"100m"` |  |
@@ -527,6 +527,7 @@ helm install monitoring chart/
 | kubelet.serviceMonitor.labelValueLengthLimit | int | `0` |  |
 | kubelet.serviceMonitor.proxyUrl | string | `""` |  |
 | kubelet.serviceMonitor.https | bool | `true` |  |
+| kubelet.serviceMonitor.insecureSkipVerify | bool | `true` |  |
 | kubelet.serviceMonitor.cAdvisor | bool | `true` |  |
 | kubelet.serviceMonitor.probes | bool | `true` |  |
 | kubelet.serviceMonitor.resource | bool | `false` |  |
@@ -989,7 +990,7 @@ helm install monitoring chart/
 | prometheusOperator.prometheusConfigReloader.resources | object | `{}` |  |
 | prometheusOperator.thanosImage.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.thanosImage.repository | string | `"ironbank/opensource/thanos/thanos"` |  |
-| prometheusOperator.thanosImage.tag | string | `"v0.34.1"` |  |
+| prometheusOperator.thanosImage.tag | string | `"v0.35.0"` |  |
 | prometheusOperator.thanosImage.sha | string | `""` |  |
 | prometheusOperator.prometheusInstanceSelector | string | `""` |  |
 | prometheusOperator.alertmanagerInstanceSelector | string | `""` |  |
@@ -1292,7 +1293,7 @@ helm install monitoring chart/
 | thanosRuler.thanosRulerSpec.podMetadata | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | thanosRuler.thanosRulerSpec.image.repository | string | `"ironbank/opensource/thanos/thanos"` |  |
-| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.34.1"` |  |
+| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.35.0"` |  |
 | thanosRuler.thanosRulerSpec.image.sha | string | `""` |  |
 | thanosRuler.thanosRulerSpec.ruleNamespaceSelector | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.ruleSelectorNilUsesHelmValues | bool | `true` |  |

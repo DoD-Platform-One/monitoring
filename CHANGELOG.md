@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [58.4.1-bb.0] (2024-05-09)
+### Updated
+- kiwigrid/k8s-sidecar 1.26.1 -> 1.26.2
+- thanos/thanos v0.34.1 -> v0.35.0
+- prometheus/node_exporter 4.33.* -> 4.34.*
+
 ## [58.3.3-bb.0] (2024-05-03)
 ### Updated
 - Updated Gluon: 0.4.10 -> 0.5.0
