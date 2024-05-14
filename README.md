@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 58.4.1-bb.0](https://img.shields.io/badge/Version-58.4.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.73.2](https://img.shields.io/badge/AppVersion-v0.73.2-informational?style=flat-square)
+![Version: 58.5.1-bb.0](https://img.shields.io/badge/Version-58.5.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.73.2](https://img.shields.io/badge/AppVersion-v0.73.2-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -1145,7 +1145,7 @@ helm install monitoring chart/
 | prometheus.prometheusSpec.enableFeatures | list | `[]` |  |
 | prometheus.prometheusSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheus.prometheusSpec.image.repository | string | `"ironbank/opensource/prometheus/prometheus"` |  |
-| prometheus.prometheusSpec.image.tag | string | `"v2.51.2"` |  |
+| prometheus.prometheusSpec.image.tag | string | `"v2.52.0"` |  |
 | prometheus.prometheusSpec.image.sha | string | `""` |  |
 | prometheus.prometheusSpec.tolerations | list | `[]` |  |
 | prometheus.prometheusSpec.topologySpreadConstraints | list | `[]` |  |
