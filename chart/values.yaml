@@ -1111,7 +1111,7 @@ grafana:
   # use IronBank image
   image:
     repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
-    tag: 10.4.2
+    tag: 11.0.0
     pullSecrets:
     - private-registry
   
@@ -1264,7 +1264,7 @@ grafana:
     # use IronBank image
     image:
       repository: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar
-      tag: 1.26.2
+      tag: 1.27.1
 
     resources:
       limits:
@@ -2650,6 +2650,8 @@ prometheusOperator:
     #   argocd.argoproj.io/hook-delete-policy: HookSucceeded
 
     namespaceSelector: {}
+    objectSelector: {}
+
 
     deployment:
       enabled: false
@@ -3324,7 +3326,7 @@ prometheusOperator:
   kubectlImage:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kubernetes/kubectl
-    tag: v1.29.4
+    tag: v1.29.5
     sha: ""
     pullPolicy: IfNotPresent
 
