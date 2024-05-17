@@ -23,7 +23,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 58.5.1-bb.0
+version: 58.5.3-bb.0
 appVersion: v0.73.2
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
@@ -41,7 +41,7 @@ annotations:
       url: https://github.com/prometheus-operator/kube-prometheus
   bigbang.dev/applicationVersions: |
     - Prometheus: 2.52.0
-    - Grafana: 10.4.2
+    - Grafana: 11.0.0
     - Alertmanager: 0.27.0
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
@@ -52,18 +52,18 @@ annotations:
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
     - name: grafana
-      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:10.4.2
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:11.0.0
       condition: grafana.enabled
       dependency: grafana
     - name: init-chown-data
       image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.4
       condition: grafana.initChownData.enabled
     - name: k8s-sidecar
-      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.26.2
+      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.27.1
       condition: grafana.enabled
       dependency: grafana
     - name: kubectl
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.29.4
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.29.5
       condition: prometheusOperator.enabled
     - name: kube-state-metrics
       image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.12.0
