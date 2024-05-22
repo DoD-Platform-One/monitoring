@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 58.5.3-bb.1](https://img.shields.io/badge/Version-58.5.3--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.73.2](https://img.shields.io/badge/AppVersion-v0.73.2-informational?style=flat-square)
+![Version: 58.6.0-bb.0](https://img.shields.io/badge/Version-58.6.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.73.2](https://img.shields.io/badge/AppVersion-v0.73.2-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -980,12 +980,12 @@ helm install monitoring chart/
 | prometheusOperator.verticalPodAutoscaler.updatePolicy.updateMode | string | `"Auto"` |  |
 | prometheusOperator.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.73.2"` |  |
+| prometheusOperator.image.tag | string | `"v0.74.0"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.73.2"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.74.0"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.enableProbe | bool | `false` |  |
 | prometheusOperator.prometheusConfigReloader.resources | object | `{}` |  |
