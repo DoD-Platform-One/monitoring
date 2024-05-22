@@ -3257,7 +3257,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.73.2
+    tag: v0.74.0
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3283,7 +3283,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.73.2
+      tag: v0.74.0
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
