@@ -23,7 +23,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 58.6.0-bb.0
+version: 58.6.1-bb.0
 appVersion: v0.73.2
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
@@ -59,7 +59,7 @@ annotations:
       image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.4
       condition: grafana.initChownData.enabled
     - name: k8s-sidecar
-      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.27.1
+      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.27.2
       condition: grafana.enabled
       dependency: grafana
     - name: kubectl
@@ -82,7 +82,7 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.74.0
       condition: prometheusOperator.enabled
     - name: prometheus-node-exporter
-      image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.8.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.8.1
       condition: nodeExporter.enabled
       dependency: prometheus-node-exporter
     - name: test-framework
