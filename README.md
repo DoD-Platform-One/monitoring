@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 58.6.0-bb.0](https://img.shields.io/badge/Version-58.6.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.73.2](https://img.shields.io/badge/AppVersion-v0.73.2-informational?style=flat-square)
+![Version: 58.6.1-bb.0](https://img.shields.io/badge/Version-58.6.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.73.2](https://img.shields.io/badge/AppVersion-v0.73.2-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -430,7 +430,7 @@ helm install monitoring chart/
 | grafana.serviceAccount.create | bool | `true` |  |
 | grafana.serviceAccount.autoMount | bool | `true` |  |
 | grafana.sidecar.image.repository | string | `"registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar"` |  |
-| grafana.sidecar.image.tag | string | `"1.27.1"` |  |
+| grafana.sidecar.image.tag | string | `"1.27.2"` |  |
 | grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
 | grafana.sidecar.resources.requests.cpu | string | `"100m"` |  |
@@ -759,7 +759,7 @@ helm install monitoring chart/
 | prometheus-node-exporter.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | prometheus-node-exporter.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheus-node-exporter.image.repository | string | `"ironbank/opensource/prometheus/node-exporter"` |  |
-| prometheus-node-exporter.image.tag | string | `"v1.8.0"` |  |
+| prometheus-node-exporter.image.tag | string | `"v1.8.1"` |  |
 | prometheus-node-exporter.resources.limits.cpu | string | `"200m"` |  |
 | prometheus-node-exporter.resources.limits.memory | string | `"250Mi"` |  |
 | prometheus-node-exporter.resources.requests.cpu | string | `"200m"` |  |
@@ -880,6 +880,8 @@ helm install monitoring chart/
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsNonRoot | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsUser | int | `65532` |  |
 | prometheusOperator.admissionWebhooks.patch.securityContext.runAsGroup | int | `65532` |  |
+| prometheusOperator.admissionWebhooks.patch.serviceAccount.create | bool | `true` |  |
+| prometheusOperator.admissionWebhooks.patch.serviceAccount.automountServiceAccountToken | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.repository | string | `"ironbank/big-bang/base"` |  |
 | prometheusOperator.admissionWebhooks.cleanupProxy.image.tag | string | `"2.1.0"` |  |
