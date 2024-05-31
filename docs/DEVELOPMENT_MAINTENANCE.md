@@ -19,7 +19,24 @@ Monitoring is a modified/customized version of an upstream chart. The below deta
       condition: prometheus.enabled
 ```
 
-```chart/values.yaml```
+- Ensure that `alertManager.serviceAccount.automountServiceAccountToken: false` is set.
+
+- Ensure `prometheusOperator.clusterDomain: "cluster.local"` is set.
+
+- Ensure that `prometheusOperator.resources` is set to the following:
+
+```yaml
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 512Mi
+```
+
+- Ensure that the `prometheusOperator.image.tag` and `prometheusOperator.prometheusConfigReloader.image.tag` values are not ahead of the actual `appVersion` in `Chart.yaml`. You need to check `values.yaml` and `Chart.yaml` for unintended changes. The bot will try to jump ahead.
+
 - We want to ensure that `grafana.persistence.enabled=false` and initChownData is using a registry1 ubiX-minimal image:
 ```yaml
 grafana:
