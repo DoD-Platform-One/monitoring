@@ -41,4 +41,3 @@ spec:
     app.kubernetes.io/name: prometheus
     operator.prometheus.io/name: {{ template "kube-prometheus-stack.prometheus.crname" . }}
 {{- end }}
-

@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # These values are for the BigBang overrides
-domain: bigbang.dev
+domain: dev.bigbang.mil
 flux:
   enabled: false
   namespace: flux-system
@@ -29,13 +29,6 @@ bbtests:
     envs:
       cypress_prometheus_url: 'http://monitoring-kube-prometheus-prometheus:9090'
       cypress_alertmanager_url: 'http://monitoring-kube-prometheus-alertmanager:9093'
-
-
-minioOperator:
-  enabled: false
-
-gitlabRunner:
-  enabled: false
   
 istio:
   enabled: false
@@ -108,29 +101,9 @@ istio:
 sso:
   enabled: false
 
-anchore:
-  # Toggle anchore grafana dashboard creation
-  enabled: false
-  
-redis:
-  # Toggle redis grafana dashboard creation -- requires the redis-datasource datasource
-  # see the grafana.plugins value below 
-  enabled: false   
-
-loki:
-  # Toggle loki grafana dashboard creation -- requires the grafana-piechart-panel plugin
-  # see the grafana.plugins value below 
-  enabled: false
-
 tempo:
   # Toggle tempo AuthorizationPolicy creation 
   enabled: false
-
-vault:
-  # Toggle creating the vault resources
-  enabled: false
-  # -- TLS Toggle inherited from Vault Chart and Big Bang
-  tlsDisable: true
 
 # Deletes previous kube-state-metrics deployment/statefulset before attempting an upgrade
 # May be required on some monitoring chart updates due to upstream breaking changes
@@ -206,6 +179,7 @@ defaultRules:
   rules:
     alertmanager: true
     etcd: true
+    configReloaders: true
     general: true
     k8sContainerCpuUsageSecondsTotal: true
     k8sContainerMemoryCache: true
@@ -430,6 +404,7 @@ alertmanager:
   apiVersion: v2
 
   ## Service account for Alertmanager to use.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
   ##
   serviceAccount:
     create: true
@@ -439,8 +414,6 @@ alertmanager:
 
   ## Configure pod disruption budgets for Alertmanager
   ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
-  ## This configuration is immutable once created and will require the PDB to be deleted to be changed
-  ## https://github.com/kubernetes/kubernetes/issues/45398
   ##
   podDisruptionBudget:
     enabled: false
@@ -2362,11 +2335,6 @@ kubeProxy:
 kubeStateMetrics:
   enabled: true
 
-  serviceMonitor:
-    interval: ""
-    selfMonitor:
-      enabled: false
-
 ## Configuration for kube-state-metrics subchart
 ##
 kube-state-metrics:
@@ -2505,7 +2473,7 @@ prometheus-node-exporter:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus/node-exporter 
-    tag: v1.8.1
+    tag: v1.8.0
 
   resources:
     limits:
@@ -2894,6 +2862,17 @@ prometheusOperator:
         runAsNonRoot: true
         runAsUser: 65532
         runAsGroup: 65532
+      ## Provide a priority class name to the webhook patching job
+      ##
+      priorityClassName: ""
+      ttlSecondsAfterFinished: 60
+      annotations: {}
+      #   argocd.argoproj.io/hook: PreSync
+      #   argocd.argoproj.io/hook-delete-policy: HookSucceeded
+      podAnnotations: {}
+      nodeSelector: {}
+      affinity: {}
+      tolerations: [] 
       ## Service account for Prometheus Operator Webhook Job Patch to use.
       ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
       ##
@@ -2914,7 +2893,7 @@ prometheusOperator:
         requests:
           cpu: 50m
           memory: 50Mi
-      ## Provide a priority class name to the webhook patching job
+      ## Provide a priority class name to the webhook cleanup proxy job
       ##
       priorityClassName: ""
       ttlSecondsAfterFinished: 60
@@ -2924,7 +2903,7 @@ prometheusOperator:
       podAnnotations: {}
       nodeSelector: {}
       affinity: {}
-      tolerations: []
+      tolerations: [] 
 
       ## SecurityContext holds pod-level security attributes and common container settings.
       ## This defaults to non root user with uid 2000 and gid 2000. *v1.PodSecurityContext  false
@@ -3224,7 +3203,7 @@ prometheusOperator:
     readOnlyRootFilesystem: true
     capabilities:
       drop:
-        - ALL
+      - ALL
 
   # Enable vertical pod autoscaler support for prometheus-operator
   verticalPodAutoscaler:
@@ -3347,7 +3326,7 @@ prometheusOperator:
   ## Additional volume mounts
   ##
   extraVolumeMounts: []
-  
+
 ## Deploy a Prometheus instance
 ##
 prometheus:
@@ -3607,8 +3586,6 @@ prometheus:
 
   ## Configure pod disruption budgets for Prometheus
   ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
-  ## This configuration is immutable once created and will require the PDB to be deleted to be changed
-  ## https://github.com/kubernetes/kubernetes/issues/45398
   ##
   podDisruptionBudget:
     enabled: false
@@ -3914,7 +3891,6 @@ prometheus:
     ## Default configuration will connect to the alertmanager deployed as part of this release
     ##
     alertingEndpoints: []
-
     # - name: ""
     #   namespace: ""
     #   port: http
@@ -4713,8 +4689,6 @@ thanosRuler:
 
   ## Configure pod disruption budgets for ThanosRuler
   ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
-  ## This configuration is immutable once created and will require the PDB to be deleted to be changed
-  ## https://github.com/kubernetes/kubernetes/issues/45398
   ##
   podDisruptionBudget:
     enabled: false
