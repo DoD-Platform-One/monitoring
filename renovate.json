@@ -2,7 +2,7 @@
     "baseBranches": ["main"],
     "configWarningReuseIssue": false,
     "dependencyDashboard": true,
-    "dependencyDashboardHeader": "- [ ] Follow steps in [package update docs](./docs/PACKAGE_UPDATES.md) to upgrade the package.",
+    "dependencyDashboardHeader": "- [ ] Follow steps in [package update docs](./docs/DEVELOPMENT_MAINTENANCE.md) to upgrade the package.",
     "dependencyDashboardTitle": "Renovate: Upgrade Monitoring Package Dependencies",
     "draftPR": true,
     "enabledManagers": ["helm-values","regex","helmv3"],

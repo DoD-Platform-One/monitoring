@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 58.6.1-bb.0](https://img.shields.io/badge/Version-58.6.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.73.2](https://img.shields.io/badge/AppVersion-v0.73.2-informational?style=flat-square)
+![Version: 59.1.0-bb.0](https://img.shields.io/badge/Version-59.1.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -442,6 +442,7 @@ helm install monitoring chart/
 | grafana.sidecar.datasources.enabled | bool | `true` |  |
 | grafana.sidecar.datasources.defaultDatasourceEnabled | bool | `true` |  |
 | grafana.sidecar.datasources.isDefaultDatasource | bool | `true` |  |
+| grafana.sidecar.datasources.name | string | `"Prometheus"` |  |
 | grafana.sidecar.datasources.uid | string | `"prometheus"` |  |
 | grafana.sidecar.datasources.annotations | object | `{}` |  |
 | grafana.sidecar.datasources.httpMethod | string | `"POST"` |  |
@@ -450,6 +451,7 @@ helm install monitoring chart/
 | grafana.sidecar.datasources.labelValue | string | `"1"` |  |
 | grafana.sidecar.datasources.exemplarTraceIdDestinations | object | `{}` |  |
 | grafana.sidecar.datasources.alertmanager.enabled | bool | `true` |  |
+| grafana.sidecar.datasources.alertmanager.name | string | `"Alertmanager"` |  |
 | grafana.sidecar.datasources.alertmanager.uid | string | `"alertmanager"` |  |
 | grafana.sidecar.datasources.alertmanager.handleGrafanaManagedAlerts | bool | `false` |  |
 | grafana.sidecar.datasources.alertmanager.implementation | string | `"prometheus"` |  |
@@ -1133,6 +1135,7 @@ helm install monitoring chart/
 | prometheus.serviceMonitor.metricRelabelings | list | `[]` |  |
 | prometheus.serviceMonitor.relabelings | list | `[]` |  |
 | prometheus.serviceMonitor.additionalEndpoints | list | `[]` |  |
+| prometheus.prometheusSpec.persistentVolumeClaimRetentionPolicy | object | `{}` |  |
 | prometheus.prometheusSpec.disableCompaction | bool | `false` |  |
 | prometheus.prometheusSpec.apiserverConfig | object | `{}` |  |
 | prometheus.prometheusSpec.additionalArgs | list | `[]` |  |
