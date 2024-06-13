@@ -56,7 +56,8 @@ istio:
         namespaces:
         - tempo
         principals:
-        - cluster.local/ns/tempo/sa/tempo-tempo  
+        - cluster.local/ns/tempo/sa/tempo-tempo
+  namespace: istio-system
   prometheus:
     # Toggle vs creation
     enabled: true
