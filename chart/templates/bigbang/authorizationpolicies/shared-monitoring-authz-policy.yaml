@@ -1,0 +1,16 @@
+{{- if and .Values.istio.enabled .Values.istio.hardened.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: shared-monitoring-authz-policy
+  namespace: {{ .Values.istio.namespace }}
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces:
+        - {{ .Release.Namespace }}
+        principals:
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ template "kube-prometheus-stack.prometheus.serviceAccountName" . }}
+{{- end }}

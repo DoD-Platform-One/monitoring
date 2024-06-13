@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [59.1.0-bb.1] (2024-06-06)
+### Updated
+- Moved the shared monitoring policy into the monitoring chart
+
 ## [59.1.0-bb.0] (2024-06-06)
 ### Updated
 - Chart's appVersion synchronized with upstream chart
