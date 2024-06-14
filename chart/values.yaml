@@ -1084,7 +1084,8 @@ grafana:
 
   # use IronBank image
   image:
-    repository: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins
+    registry: registry1.dso.mil
+    repository: ironbank/big-bang/grafana/grafana-plugins
     tag: 11.0.0
     pullSecrets:
     - private-registry
@@ -1113,7 +1114,8 @@ grafana:
       memory: 256Mi
 
   testFramework:
-    image: registry1.dso.mil/ironbank/opensource/bats/bats
+    registry: registry1.dso.mil
+    repository: ironbank/opensource/bats/bats
     tag: v1.11.0
     pullSecrets:
     - private-registry
@@ -1237,7 +1239,8 @@ grafana:
 
     # use IronBank image
     image:
-      repository: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar
+      registry: registry1.dso.mil
+      repository: ironbank/kiwigrid/k8s-sidecar
       tag: 1.27.2
 
     resources:
@@ -1332,7 +1335,8 @@ grafana:
   #        path: /var/lib/grafana/dashboards/default
 
   downloadDashboardsImage:
-    repository: registry1.dso.mil/ironbank/big-bang/base #curlimages/curl
+    registry: registry1.dso.mil
+    repository: ironbank/big-bang/base
     tag: 2.1.0
   
   ## Resource settings for above DownloadDashboards container
@@ -1459,7 +1463,8 @@ grafana:
     ## initChownData container image
     ##
     image:
-      repository: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal
+      registry: registry1.dso.mil
+      repository: ironbank/redhat/ubi/ubi9-minimal
       tag: "9.4"
       sha: ""
       pullPolicy: IfNotPresent
@@ -2476,7 +2481,7 @@ prometheus-node-exporter:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus/node-exporter 
-    tag: v1.8.0
+    tag: v1.8.1
 
   resources:
     limits:
@@ -2735,7 +2740,6 @@ prometheusOperator:
       image:
         registry: quay.io
         repository: prometheus-operator/admission-webhook
-        # if not set appVersion field from Chart.yaml is used
         tag: ""
         sha: ""
         pullPolicy: IfNotPresent
@@ -3291,7 +3295,7 @@ prometheusOperator:
   thanosImage:
     registry: registry1.dso.mil
     repository: ironbank/opensource/thanos/thanos
-    tag: v0.35.0
+    tag: v0.35.1
     sha: ""
 
   ## Set a Label Selector to filter watched prometheus and prometheusAgent
@@ -4517,7 +4521,7 @@ prometheus:
     ## Defines the maximum time that the `prometheus` container's startup probe
     ## will wait before being considered failed. The startup probe will return
     ## success after the WAL replay is complete. If set, the value should be
-    ## greater than 60 (seconds). Otherwise it will be equal to 600 seconds (15
+    ## greater than 60 (seconds). Otherwise it will be equal to 900 seconds (15
     ## minutes).
     maximumStartupDurationSeconds: 0
 
@@ -4867,7 +4871,7 @@ thanosRuler:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/thanos/thanos
-      tag: v0.35.0
+      tag: v0.35.1
       sha: ""
 
     ## Namespaces to be selected for PrometheusRules discovery.

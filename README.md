@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 59.1.0-bb.1](https://img.shields.io/badge/Version-59.1.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
+![Version: 60.1.0-bb.0](https://img.shields.io/badge/Version-60.1.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -384,7 +384,8 @@ helm install monitoring chart/
 | alertmanager.extraSecret.data | object | `{}` |  |
 | grafana.enabled | bool | `false` |  |
 | grafana.namespaceOverride | string | `""` |  |
-| grafana.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins"` |  |
+| grafana.image.registry | string | `"registry1.dso.mil"` |  |
+| grafana.image.repository | string | `"ironbank/big-bang/grafana/grafana-plugins"` |  |
 | grafana.image.tag | string | `"11.0.0"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
@@ -392,7 +393,8 @@ helm install monitoring chart/
 | grafana.resources.limits.memory | string | `"256Mi"` |  |
 | grafana.resources.requests.cpu | string | `"100m"` |  |
 | grafana.resources.requests.memory | string | `"256Mi"` |  |
-| grafana.testFramework.image | string | `"registry1.dso.mil/ironbank/opensource/bats/bats"` |  |
+| grafana.testFramework.registry | string | `"registry1.dso.mil"` |  |
+| grafana.testFramework.repository | string | `"ironbank/opensource/bats/bats"` |  |
 | grafana.testFramework.tag | string | `"v1.11.0"` |  |
 | grafana.testFramework.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.testFramework.imagePullPolicy | string | `"IfNotPresent"` |  |
@@ -424,7 +426,8 @@ helm install monitoring chart/
 | grafana.ingress.tls | list | `[]` |  |
 | grafana.serviceAccount.create | bool | `true` |  |
 | grafana.serviceAccount.autoMount | bool | `true` |  |
-| grafana.sidecar.image.repository | string | `"registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar"` |  |
+| grafana.sidecar.image.registry | string | `"registry1.dso.mil"` |  |
+| grafana.sidecar.image.repository | string | `"ironbank/kiwigrid/k8s-sidecar"` |  |
 | grafana.sidecar.image.tag | string | `"1.27.2"` |  |
 | grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
@@ -457,7 +460,8 @@ helm install monitoring chart/
 | grafana.sidecar.datasources.alertmanager.handleGrafanaManagedAlerts | bool | `false` |  |
 | grafana.sidecar.datasources.alertmanager.implementation | string | `"prometheus"` |  |
 | grafana.dashboardProviders | object | `{}` |  |
-| grafana.downloadDashboardsImage.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
+| grafana.downloadDashboardsImage.registry | string | `"registry1.dso.mil"` |  |
+| grafana.downloadDashboardsImage.repository | string | `"ironbank/big-bang/base"` |  |
 | grafana.downloadDashboardsImage.tag | string | `"2.1.0"` |  |
 | grafana.downloadDashboards.resources.limits.cpu | string | `"20m"` |  |
 | grafana.downloadDashboards.resources.limits.memory | string | `"20Mi"` |  |
@@ -482,7 +486,8 @@ helm install monitoring chart/
 | grafana.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | grafana.persistence.size | string | `"10Gi"` |  |
 | grafana.initChownData.enabled | bool | `false` |  |
-| grafana.initChownData.image.repository | string | `"registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal"` |  |
+| grafana.initChownData.image.registry | string | `"registry1.dso.mil"` |  |
+| grafana.initChownData.image.repository | string | `"ironbank/redhat/ubi/ubi9-minimal"` |  |
 | grafana.initChownData.image.tag | string | `"9.4"` |  |
 | grafana.initChownData.image.sha | string | `""` |  |
 | grafana.initChownData.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -754,7 +759,7 @@ helm install monitoring chart/
 | prometheus-node-exporter.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | prometheus-node-exporter.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheus-node-exporter.image.repository | string | `"ironbank/opensource/prometheus/node-exporter"` |  |
-| prometheus-node-exporter.image.tag | string | `"v1.8.0"` |  |
+| prometheus-node-exporter.image.tag | string | `"v1.8.1"` |  |
 | prometheus-node-exporter.resources.limits.cpu | string | `"200m"` |  |
 | prometheus-node-exporter.resources.limits.memory | string | `"250Mi"` |  |
 | prometheus-node-exporter.resources.requests.cpu | string | `"200m"` |  |
@@ -995,7 +1000,7 @@ helm install monitoring chart/
 | prometheusOperator.prometheusConfigReloader.resources | object | `{}` |  |
 | prometheusOperator.thanosImage.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.thanosImage.repository | string | `"ironbank/opensource/thanos/thanos"` |  |
-| prometheusOperator.thanosImage.tag | string | `"v0.35.0"` |  |
+| prometheusOperator.thanosImage.tag | string | `"v0.35.1"` |  |
 | prometheusOperator.thanosImage.sha | string | `""` |  |
 | prometheusOperator.prometheusInstanceSelector | string | `""` |  |
 | prometheusOperator.alertmanagerInstanceSelector | string | `""` |  |
@@ -1299,7 +1304,7 @@ helm install monitoring chart/
 | thanosRuler.thanosRulerSpec.podMetadata | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | thanosRuler.thanosRulerSpec.image.repository | string | `"ironbank/opensource/thanos/thanos"` |  |
-| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.35.0"` |  |
+| thanosRuler.thanosRulerSpec.image.tag | string | `"v0.35.1"` |  |
 | thanosRuler.thanosRulerSpec.image.sha | string | `""` |  |
 | thanosRuler.thanosRulerSpec.ruleNamespaceSelector | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.ruleSelectorNilUsesHelmValues | bool | `true` |  |

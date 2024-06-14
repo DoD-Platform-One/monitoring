@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [60.1.0-bb.0] (2024-06-13)
+### Updated
+- Updated node-exporter: v1.8.0 -> v1.8.1
+- Updated thanos: v0.35.0 -> v0.35.1
+- Updated kube-state-metrics chart: 5.19.x -> 5.20.x
+- Updated prometheus-node-exporter chart: 4.34.x -> 4.36.x
+- Updated grafana chart: 7.3.* -> 8.0.*
+
 ## [59.1.0-bb.1] (2024-06-06)
 ### Updated
 - Moved the shared monitoring policy into the monitoring chart
