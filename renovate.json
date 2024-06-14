@@ -1,10 +1,10 @@
 {
     "baseBranches": ["main"],
-    "configWarningReuseIssue": false,
-    "dependencyDashboard": true,
+    "configWarningReuseIssue": "false",
+    "dependencyDashboard": "true",
     "dependencyDashboardHeader": "- [ ] Follow steps in [package update docs](./docs/DEVELOPMENT_MAINTENANCE.md) to upgrade the package.",
     "dependencyDashboardTitle": "Renovate: Upgrade Monitoring Package Dependencies",
-    "draftPR": true,
+    "draftPR": "true",
     "enabledManagers": ["helm-values","regex","helmv3"],
     "ignorePaths": ["chart/charts/**"],
     "labels": ["monitoring","renovate"],
@@ -27,10 +27,10 @@
         {
             "fileMatch": ["^chart/values\\.yaml$"],
             "matchStrings": [
-                "image:\\s+registry:\\s+repository:\\s+[^/]+/(?<depName>.+)\\s+tag:\\s+(?<currentValue>.+)"
+                "registry:\\s+.+\\s+repository: (?<depName>.+)\\s+tag: (?<currentValue>.+)"
             ],
             "datasourceTemplate": "docker",
-	    "registryUrlTemplate": "https://registry1.dso.mil"
+	        "registryUrlTemplate": "https://registry1.dso.mil"
         },
         {
             "fileMatch": ["^chart/Chart\\.yaml$"],
