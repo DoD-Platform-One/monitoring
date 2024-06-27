@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [60.4.0-bb.0] (2024-06-26)
+### Updated
+- Updated kubectl: v1.29.5 -> v1.29.6
+- Updated prometheus: v2.52.0 -> v2.53.0
 
 ## [60.1.0-bb.0] (2024-06-13)
 

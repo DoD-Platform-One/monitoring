@@ -11,7 +11,7 @@ Monitoring is a modified/customized version of an upstream chart. The below deta
 4. From the root of the repo run `kpt pkg update chart@kube-prometheus-stack-23.1.6 --strategy alpha-git-patch` replacing `kube-prometheus-stack-23.1.6` with the version tag you got in step 1. You may be prompted to resolve some conflicts - choose what makes sense (if there are BB additions/changes keep them, if there are upstream additions/changes keep them).
 
 ```chart/Chart.yaml```
-- Ensure that `condition: prometheus.enabled` is set for prometheus as in the following example:
+- LIne 75-77- Ensure that `condition: prometheus.enabled` is set for prometheus as in the following example:
 
 ```yaml
     - name: prometheus
@@ -19,11 +19,11 @@ Monitoring is a modified/customized version of an upstream chart. The below deta
       condition: prometheus.enabled
 ```
 
-- Ensure that `alertManager.serviceAccount.automountServiceAccountToken: false` is set.
+- Line 418- Ensure that `alertManager.serviceAccount.automountServiceAccountToken: false` is set.
 
-- Ensure `prometheusOperator.clusterDomain: "cluster.local"` is set.
+- LIne 2983- Ensure `prometheusOperator.clusterDomain: "cluster.local"` is set.
 
-- Ensure that `prometheusOperator.resources` is set to the following:
+- Line 3145-3151- Ensure that `prometheusOperator.resources` is set to the following:
 
 ```yaml
   resources:
@@ -35,9 +35,9 @@ Monitoring is a modified/customized version of an upstream chart. The below deta
       memory: 512Mi
 ```
 
-- Ensure that the `prometheusOperator.image.tag` and `prometheusOperator.prometheusConfigReloader.image.tag` values are not ahead of the actual `appVersion` in `Chart.yaml`. You need to check `values.yaml` and `Chart.yaml` for unintended changes. The bot will try to jump ahead.
+- Line 3256/3282- Ensure that the `prometheusOperator.image.tag` and `prometheusOperator.prometheusConfigReloader.image.tag` values are not ahead of the actual `appVersion` in `Chart.yaml`. You need to check `values.yaml` and `Chart.yaml` for unintended changes. The bot will try to jump ahead.
 
-- We want to ensure that `grafana.persistence.enabled=false` and initChownData is using a registry1 ubiX-minimal image:
+- Lin 1452-1458- We want to ensure that `grafana.persistence.enabled=false` and initChownData is using a registry1 ubiX-minimal image:
 ```yaml
 grafana:
   ...
