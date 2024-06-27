@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 60.1.0-bb.0](https://img.shields.io/badge/Version-60.1.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
+![Version: 60.4.0-bb.0](https://img.shields.io/badge/Version-60.4.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -238,6 +238,7 @@ helm install monitoring chart/
 | alertmanager.enabled | bool | `true` |  |
 | alertmanager.annotations | object | `{}` |  |
 | alertmanager.apiVersion | string | `"v2"` |  |
+| alertmanager.enableFeatures | list | `[]` |  |
 | alertmanager.serviceAccount.create | bool | `true` |  |
 | alertmanager.serviceAccount.name | string | `""` |  |
 | alertmanager.serviceAccount.annotations | object | `{}` |  |
@@ -1011,7 +1012,7 @@ helm install monitoring chart/
 | prometheusOperator.secretFieldSelector | string | `"type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1"` |  |
 | prometheusOperator.kubectlImage.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.kubectlImage.repository | string | `"ironbank/opensource/kubernetes/kubectl"` |  |
-| prometheusOperator.kubectlImage.tag | string | `"v1.29.5"` |  |
+| prometheusOperator.kubectlImage.tag | string | `"v1.29.6"` |  |
 | prometheusOperator.kubectlImage.sha | string | `""` |  |
 | prometheusOperator.kubectlImage.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.automountServiceAccountToken | bool | `true` |  |
@@ -1145,6 +1146,7 @@ helm install monitoring chart/
 | prometheus.serviceMonitor.relabelings | list | `[]` |  |
 | prometheus.serviceMonitor.additionalEndpoints | list | `[]` |  |
 | prometheus.prometheusSpec.persistentVolumeClaimRetentionPolicy | object | `{}` |  |
+| prometheus.prometheusSpec.automountServiceAccountToken | bool | `true` |  |
 | prometheus.prometheusSpec.disableCompaction | bool | `false` |  |
 | prometheus.prometheusSpec.apiserverConfig | object | `{}` |  |
 | prometheus.prometheusSpec.additionalArgs | list | `[]` |  |
@@ -1159,7 +1161,7 @@ helm install monitoring chart/
 | prometheus.prometheusSpec.enableFeatures | list | `[]` |  |
 | prometheus.prometheusSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheus.prometheusSpec.image.repository | string | `"ironbank/opensource/prometheus/prometheus"` |  |
-| prometheus.prometheusSpec.image.tag | string | `"v2.52.0"` |  |
+| prometheus.prometheusSpec.image.tag | string | `"v2.53.0"` |  |
 | prometheus.prometheusSpec.image.sha | string | `""` |  |
 | prometheus.prometheusSpec.tolerations | list | `[]` |  |
 | prometheus.prometheusSpec.topologySpreadConstraints | list | `[]` |  |
