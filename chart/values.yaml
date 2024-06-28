@@ -14,7 +14,7 @@ networkPolicies:
   ingressLabels:
     app: istio-ingressgateway
     istio: ingressgateway
-  # -- This toggle enables a NetworkPolicy that will allow external egress providing the ability to send alterts to external resources like MM/Slack/etc.
+  # -- This toggle enables a NetworkPolicy that will allow external egress providing the ability to send alerts to external resources like MM/Slack/etc.
   alertmanager:
     enableEgress: false
   additionalPolicies: []
@@ -2347,7 +2347,7 @@ kubeProxy:
 kubeStateMetrics:
   enabled: true
 
-## Configuration for kube-state-metrics subchart
+## Configuration for kube-state-metrics sub-chart
 ##
 kube-state-metrics:
   imagePullSecrets:
@@ -2579,6 +2579,46 @@ prometheus-node-exporter:
     ## If true, create PSPs for node-exporter
     ##
     pspEnabled: false
+
+## Deploy SNMP exporter as a deployment to all nodes
+##
+snmpExporter:
+  enabled: false
+
+## Configuration for prometheus-snmp-exporter subchart
+##
+  image:
+    repository: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter
+    tag: v0.26.0
+
+  imagePullSecrets:
+    - name: private-registry
+
+  configmapReload:
+    image:
+      repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
+      tag: v0.74.0
+
+  ## Security context to be added to snmp-exporter pods
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
+
+  ## Security context to be added to snmp-exporter containers
+  containerSecurityContext:
+    runAsGroup: 1001
+    runAsNonRoot: true
+    runAsUser: 1001
+    capabilities:
+      drop:
+        - ALL
+
+  # Enable this if you're using https://github.com/prometheus-operator/prometheus-operator
+  # A service monitor will be created per each item in serviceMonitor.params[]
+  serviceMonitor:
+    enabled: true
 
 ## Manages Prometheus and Alertmanager components
 ##

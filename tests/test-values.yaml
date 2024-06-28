@@ -45,6 +45,8 @@ monitoring:
                   protocol: TLS
                   name: https
               resolution: DNS
+    snmpExporter:
+      enabled: true
 
 
 prometheus:
