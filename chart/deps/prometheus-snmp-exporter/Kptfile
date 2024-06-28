@@ -1,0 +1,11 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: prometheus-snmp-exporter
+upstream:
+  type: git
+  git:
+    commit: 71bcd7d0c255fcf9321dfaca850ad1364508a711
+    repo: https://github.com/prometheus-community/helm-charts
+    directory: /charts/prometheus-snmp-exporter
+    ref: prometheus-snmp-exporter-5.4.0

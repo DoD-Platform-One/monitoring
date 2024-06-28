@@ -1,0 +1,16 @@
+{{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") (eq .Values.istio.mtls.mode "STRICT") .Values.snmpExporter.enabled }}
+apiVersion: "security.istio.io/v1beta1"
+kind: PeerAuthentication
+metadata:
+  name: snmp-exporter-exception
+  namespace: {{ .Release.Namespace }}
+spec:
+  mtls:
+    mode: {{ .Values.istio.mtls.mode }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ default "prometheus-snmp-exporter" .Values.snmpExporter.nameOverride }}
+  portLevelMtls:
+    "{{ .Values.snmpExporter.service.port }}":
+      mode: PERMISSIVE
+{{- end }}

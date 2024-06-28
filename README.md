@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 60.4.0-bb.0](https://img.shields.io/badge/Version-60.4.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
+![Version: 60.4.0-bb.1](https://img.shields.io/badge/Version-60.4.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -48,7 +48,7 @@ helm install monitoring chart/
 | networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
 | networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
-| networkPolicies.alertmanager | object | `{"enableEgress":false}` | This toggle enables a NetworkPolicy that will allow external egress providing the ability to send alterts to external resources like MM/Slack/etc. |
+| networkPolicies.alertmanager | object | `{"enableEgress":false}` | This toggle enables a NetworkPolicy that will allow external egress providing the ability to send alerts to external resources like MM/Slack/etc. |
 | networkPolicies.additionalPolicies | list | `[]` |  |
 | openshift | bool | `false` |  |
 | bbtests.enabled | bool | `false` |  |
@@ -793,6 +793,21 @@ helm install monitoring chart/
 | prometheus-node-exporter.prometheus.monitor.metricRelabelings | list | `[]` |  |
 | prometheus-node-exporter.prometheus.monitor.relabelings | list | `[]` |  |
 | prometheus-node-exporter.rbac.pspEnabled | bool | `false` |  |
+| snmpExporter.enabled | bool | `false` |  |
+| snmpExporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter"` |  |
+| snmpExporter.image.tag | string | `"v0.26.0"` |  |
+| snmpExporter.imagePullSecrets[0].name | string | `"private-registry"` |  |
+| snmpExporter.configmapReload.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
+| snmpExporter.configmapReload.image.tag | string | `"v0.74.0"` |  |
+| snmpExporter.securityContext.runAsNonRoot | bool | `true` |  |
+| snmpExporter.securityContext.runAsUser | int | `1001` |  |
+| snmpExporter.securityContext.runAsGroup | int | `1001` |  |
+| snmpExporter.securityContext.fsGroup | int | `1001` |  |
+| snmpExporter.containerSecurityContext.runAsGroup | int | `1001` |  |
+| snmpExporter.containerSecurityContext.runAsNonRoot | bool | `true` |  |
+| snmpExporter.containerSecurityContext.runAsUser | int | `1001` |  |
+| snmpExporter.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| snmpExporter.serviceMonitor.enabled | bool | `true` |  |
 | prometheusOperator.enabled | bool | `true` |  |
 | prometheusOperator.fullnameOverride | string | `""` |  |
 | prometheusOperator.revisionHistoryLimit | int | `10` |  |
