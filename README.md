@@ -1,6 +1,6 @@
 # monitoring
 
-![Version: 60.4.0-bb.1](https://img.shields.io/badge/Version-60.4.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
+![Version: 60.4.0-bb.2](https://img.shields.io/badge/Version-60.4.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -348,7 +348,7 @@ helm install monitoring chart/
 | alertmanager.alertmanagerSpec.replicas | int | `1` |  |
 | alertmanager.alertmanagerSpec.retention | string | `"120h"` |  |
 | alertmanager.alertmanagerSpec.storage | object | `{}` |  |
-| alertmanager.alertmanagerSpec.externalUrl | string | `nil` |  |
+| alertmanager.alertmanagerSpec.externalUrl | string | `"https://alertmanager.{{ .Values.domain }}"` |  |
 | alertmanager.alertmanagerSpec.routePrefix | string | `"/"` |  |
 | alertmanager.alertmanagerSpec.scheme | string | `""` |  |
 | alertmanager.alertmanagerSpec.tlsConfig | object | `{}` |  |
@@ -1187,7 +1187,7 @@ helm install monitoring chart/
 | prometheus.prometheusSpec.replicaExternalLabelNameClear | bool | `false` |  |
 | prometheus.prometheusSpec.prometheusExternalLabelName | string | `""` |  |
 | prometheus.prometheusSpec.prometheusExternalLabelNameClear | bool | `false` |  |
-| prometheus.prometheusSpec.externalUrl | string | `""` |  |
+| prometheus.prometheusSpec.externalUrl | string | `"https://prometheus.{{ .Values.domain }}"` |  |
 | prometheus.prometheusSpec.nodeSelector | object | `{}` |  |
 | prometheus.prometheusSpec.secrets | list | `[]` |  |
 | prometheus.prometheusSpec.configMaps | list | `[]` |  |

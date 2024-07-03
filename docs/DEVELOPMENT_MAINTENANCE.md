@@ -144,7 +144,15 @@ This provides a log of these changes to make updates from upstream faster.
   nameOverride: "kube-prometheus-stack"
   ```
 
-- Line 418: Ensure that `alertManager.serviceAccount.automountServiceAccountToken: false` is set.
+- Line 418: Ensure that `alertmanager.serviceAccount.automountServiceAccountToken: false` is set.
+
+- Line 901: Ensure that `alertmanager.alertmanagerSpec.externalUrl` is set.
+
+  ```yaml
+  ## The external URL the Alertmanager instances will be available under. This is necessary to generate correct URLs. This is necessary if Alertmanager is not served from root of a DNS name. string  false
+  ##
+  externalUrl: "https://alertmanager.{{ .Values.domain }}"
+  ```
 
 - Line 1452-1485: We want to ensure that `grafana.persistence.enabled=false` and initChownData is using a registry1 ubiX-minimal image:
 
@@ -253,6 +261,14 @@ This provides a log of these changes to make updates from upstream faster.
   ```
 
 - Line 3296/3322: Ensure that the `prometheusOperator.image.tag` and `prometheusOperator.prometheusConfigReloader.image.tag` values are not ahead of the actual `appVersion` in `Chart.yaml`. You need to check `values.yaml` and `Chart.yaml` for unintended changes. The bot will try to jump ahead.
+
+- Line 3995: Ensure that `prometheus.prometheusSpec.externalUrl` is set.
+
+  ```yaml
+  ## External URL at which Prometheus will be reachable.
+  ##
+  externalUrl: "https://prometheus.{{ .Values.domain }}"
+  ```
 
 ### ```chart/deps/prometheus-snmp-exporter/values.yaml```
 
