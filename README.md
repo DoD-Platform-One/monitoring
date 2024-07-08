@@ -1,18 +1,16 @@
 # monitoring
 
-![Version: 60.4.0-bb.2](https://img.shields.io/badge/Version-60.4.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
+![Version: 60.4.0-bb.3](https://img.shields.io/badge/Version-60.4.0--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.74.0](https://img.shields.io/badge/AppVersion-v0.74.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
 ## Upstream References
-
 * <https://github.com/prometheus-operator/kube-prometheus>
 
 * <https://github.com/prometheus-community/helm-charts>
 * <https://github.com/prometheus-operator/kube-prometheus>
 
 ## Learn More
-
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
 
@@ -26,13 +24,12 @@ Kubernetes: `>=1.19.0-0`
 
 Install Helm
 
-<https://helm.sh/docs/intro/install/>
+https://helm.sh/docs/intro/install/
 
 ## Deployment
 
 * Clone down the repository
 * cd into directory
-
 ```bash
 helm install monitoring chart/
 ```
