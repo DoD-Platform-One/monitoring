@@ -154,7 +154,7 @@ This provides a log of these changes to make updates from upstream faster.
   externalUrl: "https://alertmanager.{{ .Values.domain }}"
   ```
 
-- Line 1452-1485: We want to ensure that `grafana.persistence.enabled=false` and initChownData is using a registry1 ubiX-minimal image:
+- Line 1454-1487: We want to ensure that `grafana.persistence.enabled=false` and initChownData is using a registry1 ubiX-minimal image:
 
   ```yaml
   grafana:
@@ -194,7 +194,7 @@ This provides a log of these changes to make updates from upstream faster.
           memory: 128Mi
   ```
 
-- Line 2503: Ensure that `prometheus-node-exporter.hostPID` is set to `false` to resolve OPA violations with the prometheus node exporter daemonset:
+- Line 2505: Ensure that `prometheus-node-exporter.hostPID` is set to `false` to resolve OPA violations with the prometheus node exporter daemonset:
 
   ```yaml
   prometheus-node-exporter:
@@ -202,7 +202,7 @@ This provides a log of these changes to make updates from upstream faster.
     hostPID: false
   ```
 
-- Line 2583: Ensure that the `snmpExporter` configuration is present and that the `snmpExporter.image.tag` and `snmpExporter.configmapReload.image.tag` are set to the intended versions. Consult the upstream `prometheus-snmp-exporter` chart version for the correct versions. The following is an example of the configuration block for the SNMP exporter:
+- Line 2585: Ensure that the `snmpExporter` configuration is present and that the `snmpExporter.image.tag` and `snmpExporter.configmapReload.image.tag` are set to the intended versions. Consult the upstream `prometheus-snmp-exporter` chart version for the correct versions. The following is an example of the configuration block for the SNMP exporter:
 
   ```yaml
   ## Deploy SNMP exporter as a deployment to all nodes
@@ -246,9 +246,9 @@ This provides a log of these changes to make updates from upstream faster.
       enabled: true
   ```
 
-- Line 3023: Ensure `prometheusOperator.clusterDomain: "cluster.local"` is set.
+- Line 3025: Ensure `prometheusOperator.clusterDomain: "cluster.local"` is set.
 
-- Line 3185-3191: Ensure that `prometheusOperator.resources` is set to the following:
+- Line 3187-3193: Ensure that `prometheusOperator.resources` is set to the following:
 
   ```yaml
   resources:
@@ -260,9 +260,9 @@ This provides a log of these changes to make updates from upstream faster.
       memory: 512Mi
   ```
 
-- Line 3296/3322: Ensure that the `prometheusOperator.image.tag` and `prometheusOperator.prometheusConfigReloader.image.tag` values are not ahead of the actual `appVersion` in `Chart.yaml`. You need to check `values.yaml` and `Chart.yaml` for unintended changes. The bot will try to jump ahead.
+- Line 3298/3324: Ensure that the `prometheusOperator.image.tag` and `prometheusOperator.prometheusConfigReloader.image.tag` values are not ahead of the actual `appVersion` in `Chart.yaml`. You need to check `values.yaml` and `Chart.yaml` for unintended changes. The bot will try to jump ahead.
 
-- Line 3995: Ensure that `prometheus.prometheusSpec.externalUrl` is set.
+- Line 3997: Ensure that `prometheus.prometheusSpec.externalUrl` is set.
 
   ```yaml
   ## External URL at which Prometheus will be reachable.
@@ -280,7 +280,7 @@ This provides a log of these changes to make updates from upstream faster.
 
 ### ```chart/deps/prometheus-snmp-exporter/templates/deployment.yaml```
 
-- Line 93-96: To comply with Kyverno policies, we alter the upstream chart to pass `containerSecurityContext` into the `configmap-reload` container. This is done by adding the following block to the `configmap-reload` container:
+- Line 96-99: To comply with Kyverno policies, we alter the upstream chart to pass `containerSecurityContext` into the `configmap-reload` container. This is done by adding the following block to the `configmap-reload` container:
 
   ```yaml
   {{- if .Values.containerSecurityContext }}

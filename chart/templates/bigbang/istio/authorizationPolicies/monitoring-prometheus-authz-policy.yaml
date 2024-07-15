@@ -1,0 +1,24 @@
+{{- if or (and .Values.istio.enabled (eq .Values.istio.injection "enabled") .Values.sso.enabled) (and .Values.istio.enabled .Values.istio.hardened.enabled) -}}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: monitoring-prometheus-authz-policy
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces:
+        - {{ .Release.Namespace }}
+    to:
+    - operation:
+        methods:
+        - GET
+        - POST
+        paths:
+        - /*
+{{- end }}
