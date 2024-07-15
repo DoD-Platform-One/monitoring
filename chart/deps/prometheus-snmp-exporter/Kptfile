@@ -5,7 +5,7 @@ metadata:
 upstream:
   type: git
   git:
-    commit: 71bcd7d0c255fcf9321dfaca850ad1364508a711
+    commit: 18f399b1028084e7e924a4d1efe2ce39bbda1ee3
     repo: https://github.com/prometheus-community/helm-charts
     directory: /charts/prometheus-snmp-exporter
-    ref: prometheus-snmp-exporter-5.4.0
+    ref: prometheus-snmp-exporter-5.5.0

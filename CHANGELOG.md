@@ -3,6 +3,23 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [61.2.0-bb.0] - 2024-07-15
+
+### Updated
+
+- Updated Grafana: 11.0.0 -> 11.1.0
+- Updated grafana-plugins: 11.0.0 -> 11.1.0
+- Updated prometheus-config-reloader: v0.74.0 -> v0.75.0
+- Updated prometheus-operator: v0.74.0 -> v0.75.0
+- Updated kube-state-metrics chart: 5.20.1 -> 5.21.0
+- Updated prometheus-node-exporter chart: 4.36.0 -> 4.37.0
+- Updated grafana chart: 8.0.2 -> 8.3.2
+- Updated prometheus-snmp-exporter chart: 5.4.0 -> 5.5.0
+
+### Fixed
+
+- Restored missing authPolicy required for Grafana<->Prometheus communication with SSO enabled.
+
 ## [60.4.0-bb.5] - 2024-07-11
 
 ### Removed

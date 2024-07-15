@@ -1090,7 +1090,7 @@ grafana:
   image:
     registry: registry1.dso.mil
     repository: ironbank/big-bang/grafana/grafana-plugins
-    tag: 11.0.0
+    tag: 11.1.0
     pullSecrets:
     - private-registry
   
@@ -1412,6 +1412,8 @@ grafana:
   ##
   service:
     portName: http-web
+    ipFamilies: []
+    ipFamilyPolicy: ""
 
   serviceMonitor:
     # If true, a ServiceMonitor CRD is created for a prometheus operator
@@ -3293,7 +3295,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.74.0
+    tag: v0.75.0
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3319,7 +3321,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.74.0
+      tag: v0.75.0
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
