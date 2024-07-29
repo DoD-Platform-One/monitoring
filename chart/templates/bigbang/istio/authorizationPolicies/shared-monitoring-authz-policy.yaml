@@ -13,4 +13,9 @@ spec:
         - {{ .Release.Namespace }}
         principals:
         - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ template "kube-prometheus-stack.prometheus.serviceAccountName" . }}
+  {{- if and (not .Values.istio.clusterWideHardenedEnabled) .Values.sso.enabled }}
+  selector:
+    matchLabels:
+      {{ .Values.sso.selector.key | default "protect" }}: {{ .Values.sso.selector.value | default "keycloak" | quote }}
+  {{- end }}
 {{- end }}
