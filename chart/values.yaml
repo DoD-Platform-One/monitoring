@@ -51,6 +51,7 @@ istio:
     # - name: "allow-nothing"
     #   enabled: true
     #   spec: {}
+    clusterWideHardenedEnabled: false
     tempo:
         enabled: false
         namespaces:
@@ -101,6 +102,9 @@ istio:
 
 sso:
   enabled: false
+  selector:
+    key: protect
+    value: keycloak
 
 tempo:
   # Toggle tempo AuthorizationPolicy creation 

@@ -16,7 +16,7 @@ spec:
         - kiali
     - source:
         principals:
-        - cluster.local/ns/kiali/sa/kiali-service-account        
+        - cluster.local/ns/kiali/sa/kiali-service-account
     to:
     - operation:
         methods:

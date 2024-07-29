@@ -1,6 +1,7 @@
+<!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 61.2.0-bb.0](https://img.shields.io/badge/Version-61.2.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.75.0](https://img.shields.io/badge/AppVersion-v0.75.0-informational?style=flat-square)
+![Version: 61.2.0-bb.1](https://img.shields.io/badge/Version-61.2.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.75.0](https://img.shields.io/badge/AppVersion-v0.75.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -9,6 +10,17 @@ kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Pro
 
 * <https://github.com/prometheus-community/helm-charts>
 * <https://github.com/prometheus-operator/kube-prometheus>
+
+### Upstream Release Notes
+
+This package has no upstream release note links on file. Please add some to [chart/Chart.yaml](chart/Chart.yaml) under `annotations.bigbang.dev/upstreamReleaseNotesMarkdown`.
+Example:
+```yaml
+annotations:
+  bigbang.dev/upstreamReleaseNotesMarkdown: |
+    - [Find our upstream chart's CHANGELOG here](https://link-goes-here/CHANGELOG.md)
+    - [and our upstream application release notes here](https://another-link-here/RELEASE_NOTES.md)
+```
 
 ## Learn More
 * [Application Overview](docs/overview.md)
@@ -57,6 +69,7 @@ helm install monitoring chart/
 | istio.hardened.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
 | istio.hardened.customServiceEntries | list | `[]` |  |
 | istio.hardened.customAuthorizationPolicies | list | `[]` |  |
+| istio.hardened.clusterWideHardenedEnabled | bool | `false` |  |
 | istio.hardened.tempo.enabled | bool | `false` |  |
 | istio.hardened.tempo.namespaces[0] | string | `"tempo"` |  |
 | istio.hardened.tempo.principals[0] | string | `"cluster.local/ns/tempo/sa/tempo-tempo"` |  |
@@ -87,6 +100,8 @@ helm install monitoring chart/
 | istio.mtls.mode | string | `"STRICT"` |  |
 | istio.console.enabled | bool | `false` |  |
 | sso.enabled | bool | `false` |  |
+| sso.selector.key | string | `"protect"` |  |
+| sso.selector.value | string | `"keycloak"` |  |
 | tempo.enabled | bool | `false` |  |
 | cleanUpgrade.enabled | bool | `false` |  |
 | cleanUpgrade.image.registry | string | `"registry1.dso.mil"` |  |
@@ -1377,3 +1392,8 @@ helm install monitoring chart/
 ## Contributing
 
 Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+
+---
+
+_This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
+
