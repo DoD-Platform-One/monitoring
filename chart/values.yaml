@@ -1153,8 +1153,9 @@ grafana:
   ## Editable flag for the default dashboards
   ##
   defaultDashboardsEditable: true
-
-  adminPassword: prom-operator
+  
+  ## Use the Big Bang Grafana values.yaml to set adminPassword for Grafana- https://repo1.dso.mil/big-bang/product/packages/grafana/-/blob/main/chart/values.yaml
+  adminPassword: prom-operator 
 
   grafana.ini:
     # Required if enabling SSO

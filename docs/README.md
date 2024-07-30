@@ -24,7 +24,7 @@ You can find the API Spec for the Prometheus Operator [here](https://github.com/
 
 ### Grafana
 
-By default an admin user with username "admin" and the configured password in the chart at "grafana.adminPassword" is created for logging into the Grafana UI.
+To set the admin/password of Grafana, set the `adminUser` `adminPassword` values at [Big Bang Grafana chart/values.yaml](https://repo1.dso.mil/big-bang/product/packages/grafana/-/blob/main/chart/values.yaml). By default an admin user with username "admin" and the configured password in the Grafana chart at "adminPassword" is created for logging into the Grafana UI.
 
 #### Adding Dashboards
 
