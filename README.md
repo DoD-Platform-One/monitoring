@@ -1,11 +1,12 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 61.2.0-bb.2](https://img.shields.io/badge/Version-61.2.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.75.0](https://img.shields.io/badge/AppVersion-v0.75.0-informational?style=flat-square)
+![Version: 61.2.0-bb.3](https://img.shields.io/badge/Version-61.2.0--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.75.0](https://img.shields.io/badge/AppVersion-v0.75.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
 ## Upstream References
+
 * <https://github.com/prometheus-operator/kube-prometheus>
 
 * <https://github.com/prometheus-community/helm-charts>
@@ -13,10 +14,11 @@ kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Pro
 
 ### Upstream Release Notes
 
-- [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
-- [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
+* [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
+* [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
 
 ## Learn More
+
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
 
@@ -30,12 +32,13 @@ Kubernetes: `>=1.19.0-0`
 
 Install Helm
 
-https://helm.sh/docs/intro/install/
+<https://helm.sh/docs/intro/install/>
 
 ## Deployment
 
 * Clone down the repository
 * cd into directory
+
 ```bash
 helm install monitoring chart/
 ```
@@ -1390,4 +1393,3 @@ Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in 
 ---
 
 _This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
-

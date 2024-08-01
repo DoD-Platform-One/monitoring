@@ -4,59 +4,21 @@ bbtests:
 networkPolicies:
   enabled: true
   controlPlaneCidr: 172.16.0.0/12
-
-# Enables Istio AuthorizationPolicies in testing
-istio:
-  enabled: true
-  hardened:
-    enabled: true
-
+  
 grafana:
   testFramework:
     enabled: false
 
-monitoring:
-  values:
-    istio:
-      hardened:
-        enabled: true
-        customServiceEntries:
-          - name: "allow-npm-for-cypress-tests"
-            enabled: true
-            spec:
-              hosts:
-                - 'registry.npmjs.org'
-                - 'download.cypress.io'
-                - 'cdn.cypress.io'
-              location: MESH_EXTERNAL
-              ports:
-                - number: 443
-                  protocol: TLS
-                  name: https
-              resolution: DNS
-          - name: "allow-repo1-for-cypress"
-            enabled: true
-            spec:
-              hosts:
-                - 'repo1.dso.mil'
-              location: MESH_EXTERNAL
-              ports:
-                - number: 443
-                  protocol: TLS
-                  name: https
-              resolution: DNS
-    snmpExporter:
-      enabled: true
+snmpExporter:
+  enabled: true
 
 
 prometheus:
   prometheusSpec:
     resources:
       limits:
-        cpu: 300m
         memory: 1Gi
       requests:
-        cpu: 300m
         memory: 1Gi
 
 
