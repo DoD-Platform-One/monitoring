@@ -2357,8 +2357,6 @@ kubeStateMetrics:
 ## Configuration for kube-state-metrics sub-chart
 ##
 kube-state-metrics:
-  imagePullSecrets:
-  - name: private-registry
   # use IronBank image
   image:
     registry: registry1.dso.mil
@@ -2477,10 +2475,6 @@ prometheus-node-exporter:
   ## Service Monitor attach metadata
   serviceMonitor:
     attachMetadata: {}
-  # set imagePullSecret
-  serviceAccount:
-    imagePullSecrets:
-    - name: private-registry
   
   # set container SecurityContext
   containerSecurityContext:
@@ -2597,7 +2591,6 @@ snmpExporter:
   image:
     repository: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter
     tag: v0.26.0
-
   imagePullSecrets:
     - name: private-registry
 

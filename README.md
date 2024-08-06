@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 61.2.0-bb.3](https://img.shields.io/badge/Version-61.2.0--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.75.0](https://img.shields.io/badge/AppVersion-v0.75.0-informational?style=flat-square)
+![Version: 61.2.0-bb.4](https://img.shields.io/badge/Version-61.2.0--bb.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.75.0](https://img.shields.io/badge/AppVersion-v0.75.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -734,7 +734,6 @@ helm install monitoring chart/
 | kubeProxy.serviceMonitor.relabelings | list | `[]` |  |
 | kubeProxy.serviceMonitor.additionalLabels | object | `{}` |  |
 | kubeStateMetrics.enabled | bool | `true` |  |
-| kube-state-metrics.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | kube-state-metrics.image.registry | string | `"registry1.dso.mil"` |  |
 | kube-state-metrics.image.repository | string | `"ironbank/opensource/kubernetes/kube-state-metrics"` |  |
 | kube-state-metrics.image.tag | string | `"v2.12.0"` |  |
@@ -770,7 +769,6 @@ helm install monitoring chart/
 | nodeExporter.jobLabel | string | `"jobLabel"` |  |
 | nodeExporter.forceDeployDashboards | bool | `false` |  |
 | prometheus-node-exporter.serviceMonitor.attachMetadata | object | `{}` |  |
-| prometheus-node-exporter.serviceAccount.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | prometheus-node-exporter.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | prometheus-node-exporter.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheus-node-exporter.image.repository | string | `"ironbank/opensource/prometheus/node-exporter"` |  |

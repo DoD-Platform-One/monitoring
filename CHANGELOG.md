@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [61.2.0-bb.4] - 2024-08-05
+
+### Fixed
+
+- Use global imagePullSecret Only
+
 ## [61.2.0-bb.3] - 2024-08-01
 
 ### Changed
