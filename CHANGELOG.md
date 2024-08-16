@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [61.2.0-bb.5] - 2024-08-13
+
+### Updated
+
+- Updated templating for `podMetadata` to consistently use `tpl`
+- Updated versions of prometheus-node-exporter and kube-state-metrics after submitting upstream PRs to update templating to use `tpl`
+
 ## [61.2.0-bb.4] - 2024-08-05
 
 ### Fixed

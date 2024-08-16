@@ -127,7 +127,7 @@ spec:
 {{- end }}
 {{- if .Values.thanosRuler.thanosRulerSpec.podMetadata }}
   podMetadata:
-{{ toYaml .Values.thanosRuler.thanosRulerSpec.podMetadata | indent 4 }}
+{{ tpl (toYaml .Values.thanosRuler.thanosRulerSpec.podMetadata | indent 4) . }}
 {{- end }}
 {{- if or .Values.thanosRuler.thanosRulerSpec.podAntiAffinity .Values.thanosRuler.thanosRulerSpec.affinity }}
   affinity:
