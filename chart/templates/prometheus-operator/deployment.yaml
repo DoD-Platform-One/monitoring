@@ -31,7 +31,7 @@ spec:
       labels:
         {{- include "kube-prometheus-stack.prometheus-operator.labels" . | nindent 8 }}
 {{- if .Values.prometheusOperator.podLabels }}
-{{ toYaml .Values.prometheusOperator.podLabels | indent 8 }}
+{{ tpl (toYaml .Values.prometheusOperator.podLabels | indent 8) . }}
 {{- end }}
 {{- if .Values.prometheusOperator.podAnnotations }}
       annotations:
