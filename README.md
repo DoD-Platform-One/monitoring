@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 61.2.0-bb.5](https://img.shields.io/badge/Version-61.2.0--bb.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.75.0](https://img.shields.io/badge/AppVersion-v0.75.0-informational?style=flat-square)
+![Version: 62.1.0-bb.0](https://img.shields.io/badge/Version-62.1.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.76.0](https://img.shields.io/badge/AppVersion-v0.76.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -485,6 +485,7 @@ helm install monitoring chart/
 | grafana.extraSecretMounts | list | `[]` |  |
 | grafana.deleteDatasources | list | `[]` |  |
 | grafana.additionalDataSources | list | `[]` |  |
+| grafana.prune | bool | `false` |  |
 | grafana.service.portName | string | `"http-web"` |  |
 | grafana.service.ipFamilies | list | `[]` |  |
 | grafana.service.ipFamilyPolicy | string | `""` |  |
@@ -824,6 +825,18 @@ helm install monitoring chart/
 | prometheusOperator.tls.enabled | bool | `true` |  |
 | prometheusOperator.tls.tlsMinVersion | string | `"VersionTLS13"` |  |
 | prometheusOperator.tls.internalPort | int | `10250` |  |
+| prometheusOperator.livenessProbe.enabled | bool | `true` |  |
+| prometheusOperator.livenessProbe.failureThreshold | int | `3` |  |
+| prometheusOperator.livenessProbe.initialDelaySeconds | int | `0` |  |
+| prometheusOperator.livenessProbe.periodSeconds | int | `10` |  |
+| prometheusOperator.livenessProbe.successThreshold | int | `1` |  |
+| prometheusOperator.livenessProbe.timeoutSeconds | int | `1` |  |
+| prometheusOperator.readinessProbe.enabled | bool | `true` |  |
+| prometheusOperator.readinessProbe.failureThreshold | int | `3` |  |
+| prometheusOperator.readinessProbe.initialDelaySeconds | int | `0` |  |
+| prometheusOperator.readinessProbe.periodSeconds | int | `10` |  |
+| prometheusOperator.readinessProbe.successThreshold | int | `1` |  |
+| prometheusOperator.readinessProbe.timeoutSeconds | int | `1` |  |
 | prometheusOperator.admissionWebhooks.failurePolicy | string | `""` |  |
 | prometheusOperator.admissionWebhooks.timeoutSeconds | int | `10` |  |
 | prometheusOperator.admissionWebhooks.enabled | bool | `true` |  |
@@ -832,6 +845,8 @@ helm install monitoring chart/
 | prometheusOperator.admissionWebhooks.annotations | object | `{}` |  |
 | prometheusOperator.admissionWebhooks.namespaceSelector | object | `{}` |  |
 | prometheusOperator.admissionWebhooks.objectSelector | object | `{}` |  |
+| prometheusOperator.admissionWebhooks.mutatingWebhookConfiguration.annotations | object | `{}` |  |
+| prometheusOperator.admissionWebhooks.validatingWebhookConfiguration.annotations | object | `{}` |  |
 | prometheusOperator.admissionWebhooks.deployment.enabled | bool | `false` |  |
 | prometheusOperator.admissionWebhooks.deployment.replicas | int | `1` |  |
 | prometheusOperator.admissionWebhooks.deployment.strategy | object | `{}` |  |
@@ -1176,6 +1191,7 @@ helm install monitoring chart/
 | prometheus.prometheusSpec.additionalArgs | list | `[]` |  |
 | prometheus.prometheusSpec.scrapeInterval | string | `""` |  |
 | prometheus.prometheusSpec.scrapeTimeout | string | `""` |  |
+| prometheus.prometheusSpec.scrapeClasses | list | `[]` |  |
 | prometheus.prometheusSpec.evaluationInterval | string | `""` |  |
 | prometheus.prometheusSpec.listenLocal | bool | `false` |  |
 | prometheus.prometheusSpec.enableAdminAPI | bool | `false` |  |
@@ -1279,6 +1295,7 @@ helm install monitoring chart/
 | prometheus.prometheusSpec.hostNetwork | bool | `false` |  |
 | prometheus.prometheusSpec.hostAliases | list | `[]` |  |
 | prometheus.prometheusSpec.tracingConfig | object | `{}` |  |
+| prometheus.prometheusSpec.serviceDiscoveryRole | string | `""` |  |
 | prometheus.prometheusSpec.additionalConfig | object | `{}` |  |
 | prometheus.prometheusSpec.additionalConfigString | string | `""` |  |
 | prometheus.prometheusSpec.maximumStartupDurationSeconds | int | `0` |  |
