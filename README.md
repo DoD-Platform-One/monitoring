@@ -1,12 +1,11 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 62.1.0-bb.0](https://img.shields.io/badge/Version-62.1.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.76.0](https://img.shields.io/badge/AppVersion-v0.76.0-informational?style=flat-square)
+![Version: 62.4.0-bb.0](https://img.shields.io/badge/Version-62.4.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.76.0](https://img.shields.io/badge/AppVersion-v0.76.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
 ## Upstream References
-
 * <https://github.com/prometheus-operator/kube-prometheus>
 
 * <https://github.com/prometheus-community/helm-charts>
@@ -14,11 +13,10 @@ kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Pro
 
 ### Upstream Release Notes
 
-* [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
-* [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
+- [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
+- [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
 
 ## Learn More
-
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
 
@@ -32,13 +30,12 @@ Kubernetes: `>=1.19.0-0`
 
 Install Helm
 
-<https://helm.sh/docs/intro/install/>
+https://helm.sh/docs/intro/install/
 
 ## Deployment
 
 * Clone down the repository
 * cd into directory
-
 ```bash
 helm install monitoring chart/
 ```
@@ -230,6 +227,7 @@ helm install monitoring chart/
 | defaultRules.additionalRuleGroupAnnotations.prometheusOperator | object | `{}` |  |
 | defaultRules.additionalAggregationLabels | list | `[]` |  |
 | defaultRules.runbookUrl | string | `"https://runbooks.prometheus-operator.dev/runbooks"` |  |
+| defaultRules.node.fsSelector | string | `"fstype!=\"\""` |  |
 | defaultRules.disabled | object | `{}` |  |
 | additionalPrometheusRulesMap | object | `{}` |  |
 | global.rbac.create | bool | `true` |  |
@@ -790,6 +788,7 @@ helm install monitoring chart/
 | prometheus-node-exporter.service.ipDualStack.ipFamilies[0] | string | `"IPv6"` |  |
 | prometheus-node-exporter.service.ipDualStack.ipFamilies[1] | string | `"IPv4"` |  |
 | prometheus-node-exporter.service.ipDualStack.ipFamilyPolicy | string | `"PreferDualStack"` |  |
+| prometheus-node-exporter.service.labels.jobLabel | string | `"node-exporter"` |  |
 | prometheus-node-exporter.prometheus.monitor.enabled | bool | `true` |  |
 | prometheus-node-exporter.prometheus.monitor.jobLabel | string | `"jobLabel"` |  |
 | prometheus-node-exporter.prometheus.monitor.interval | string | `""` |  |
@@ -1201,7 +1200,7 @@ helm install monitoring chart/
 | prometheus.prometheusSpec.enableFeatures | list | `[]` |  |
 | prometheus.prometheusSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheus.prometheusSpec.image.repository | string | `"ironbank/opensource/prometheus/prometheus"` |  |
-| prometheus.prometheusSpec.image.tag | string | `"v2.53.0"` |  |
+| prometheus.prometheusSpec.image.tag | string | `"v2.54.1"` |  |
 | prometheus.prometheusSpec.image.sha | string | `""` |  |
 | prometheus.prometheusSpec.tolerations | list | `[]` |  |
 | prometheus.prometheusSpec.topologySpreadConstraints | list | `[]` |  |
@@ -1394,6 +1393,7 @@ helm install monitoring chart/
 | thanosRuler.thanosRulerSpec.initContainers | list | `[]` |  |
 | thanosRuler.thanosRulerSpec.priorityClassName | string | `""` |  |
 | thanosRuler.thanosRulerSpec.portName | string | `"web"` |  |
+| thanosRuler.thanosRulerSpec.web | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.additionalConfig | object | `{}` |  |
 | thanosRuler.thanosRulerSpec.additionalConfigString | string | `""` |  |
 | thanosRuler.extraSecret.annotations | object | `{}` |  |
@@ -1408,3 +1408,4 @@ Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in 
 ---
 
 _This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
+

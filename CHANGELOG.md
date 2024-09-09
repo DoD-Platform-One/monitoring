@@ -4,6 +4,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [62.4.0-bb.0] - 2024-08-20
+
+### Updated
+
+- Updated `kube-prometheus-stack` from `62.1.0` -> `62.4.0`
+- Updated `grafana` from `8.3.8` -> `8.5.1`
+- Updated `kube-state-metrics` from `5.22.1` -> `5.25.1`
+- Updated `prometheus-node-exporter` from `4.38.0` -> `4.39.0`
+- Updated `prometheus-windows-exporter` from `0.3.1` -> `0.5.2`
+
 ## [62.1.0-bb.0] - 2024-08-20
 
 ### Updated
