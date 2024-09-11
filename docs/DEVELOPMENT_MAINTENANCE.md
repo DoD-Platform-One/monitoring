@@ -87,12 +87,18 @@ monitoring:
       client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-prometheus
     alertmanager:
       client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-alertmanager
+  values:
+    istio:
+      enabled: true
 grafana:
   sso:
     enabled: true
     grafana:
       client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-grafana
       scopes: "openid Grafana"
+  values:
+    istio:
+      enabled: true
 jaeger:
   enabled: true
   sso:
