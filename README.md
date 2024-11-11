@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 62.4.0-bb.0](https://img.shields.io/badge/Version-62.4.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.76.0](https://img.shields.io/badge/AppVersion-v0.76.0-informational?style=flat-square)
+![Version: 62.4.0-bb.1](https://img.shields.io/badge/Version-62.4.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.76.0](https://img.shields.io/badge/AppVersion-v0.76.0-informational?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -13,8 +13,8 @@ kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Pro
 
 ### Upstream Release Notes
 
-- [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
-- [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
+* [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
+* [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
 
 ## Learn More
 * [Application Overview](docs/overview.md)
@@ -36,6 +36,7 @@ https://helm.sh/docs/intro/install/
 
 * Clone down the repository
 * cd into directory
+
 ```bash
 helm install monitoring chart/
 ```
