@@ -32,6 +32,7 @@ keywords:
   - prometheus
   - kube-prometheus
 annotations:
+  bigbang.dev/maintenanceTrack: bb_integrated
   "artifacthub.io/license": Apache-2.0
   "artifacthub.io/operator": "true"
   "artifacthub.io/links": |
