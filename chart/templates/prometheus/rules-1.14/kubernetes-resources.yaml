@@ -38,7 +38,7 @@ spec:
         runbook_url: {{ .Values.defaultRules.runbookUrl }}/kubernetes/kubecpuovercommit
         summary: Cluster has overcommitted CPU resource requests.
       expr: |-
-        sum(namespace_cpu:kube_pod_container_resource_requests:sum{job="{{ $kubeStateMetricsJob }}",}) by ({{ range $.Values.defaultRules.additionalAggregationLabels }}{{ . }},{{ end }}cluster) - (sum(kube_node_status_allocatable{job="{{ $kubeStateMetricsJob }}",resource="cpu"}) by ({{ range $.Values.defaultRules.additionalAggregationLabels }}{{ . }},{{ end }}cluster) - max(kube_node_status_allocatable{job="{{ $kubeStateMetricsJob }}",resource="cpu"}) by ({{ range $.Values.defaultRules.additionalAggregationLabels }}{{ . }},{{ end }}cluster)) > 0
+        sum(namespace_cpu:kube_pod_container_resource_requests:sum{}) by ({{ range $.Values.defaultRules.additionalAggregationLabels }}{{ . }},{{ end }}cluster) - (sum(kube_node_status_allocatable{job="{{ $kubeStateMetricsJob }}",resource="cpu"}) by ({{ range $.Values.defaultRules.additionalAggregationLabels }}{{ . }},{{ end }}cluster) - max(kube_node_status_allocatable{job="{{ $kubeStateMetricsJob }}",resource="cpu"}) by ({{ range $.Values.defaultRules.additionalAggregationLabels }}{{ . }},{{ end }}cluster)) > 0
         and
         (sum(kube_node_status_allocatable{job="{{ $kubeStateMetricsJob }}",resource="cpu"}) by ({{ range $.Values.defaultRules.additionalAggregationLabels }}{{ . }},{{ end }}cluster) - max(kube_node_status_allocatable{job="{{ $kubeStateMetricsJob }}",resource="cpu"}) by ({{ range $.Values.defaultRules.additionalAggregationLabels }}{{ . }},{{ end }}cluster)) > 0
       for: {{ dig "KubeCPUOvercommit" "for" "10m" .Values.customRules }}
@@ -260,9 +260,9 @@ spec:
         runbook_url: {{ .Values.defaultRules.runbookUrl }}/kubernetes/cputhrottlinghigh
         summary: Processes experience elevated CPU throttling.
       expr: |-
-        sum(increase(container_cpu_cfs_throttled_periods_total{container!="", }[5m])) by ({{ range $.Values.defaultRules.additionalAggregationLabels }}{{ . }},{{ end }}cluster, container, pod, namespace)
+        sum(increase(container_cpu_cfs_throttled_periods_total{container!="", job="kubelet", metrics_path="/metrics/cadvisor", }[5m])) without (id, metrics_path, name, image, endpoint, job, node)
           /
-        sum(increase(container_cpu_cfs_periods_total{}[5m])) by ({{ range $.Values.defaultRules.additionalAggregationLabels }}{{ . }},{{ end }}cluster, container, pod, namespace)
+        sum(increase(container_cpu_cfs_periods_total{job="kubelet", metrics_path="/metrics/cadvisor", }[5m])) without (id, metrics_path, name, image, endpoint, job, node)
           > ( 25 / 100 )
       for: {{ dig "CPUThrottlingHigh" "for" "15m" .Values.customRules }}
       {{- with .Values.defaultRules.keepFiringFor }}
