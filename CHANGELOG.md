@@ -4,6 +4,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [66.3.1-bb.0] - 2024-12-06
+
+### Updated
+
+- Updated Grafana: 11.1.0 -> 11.2.2
+- Updated grafana-plugins: 11.1.0 -> 11.2.2
+- Updated prometheus-config-reloader: v0.71.2 -> v0.78.2
+- Updated prometheus-operator: v0.74.0 -> v0.78.2
+- Updated kube-state-metrics chart: v2.12.0 -> v2.14.0
+- Updated prometheus-node-exporter chart: v1.8.1 -> v1.8.2
+- Updated prometheus-snmp-exporter chart: 5.5.0 -> 5.6.0
+
 ## [62.4.0-bb.1] - 2024-11-04
 
 ### Changed

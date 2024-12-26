@@ -17,7 +17,7 @@ describe('Basic prometheus', function() {
         .type('kube_node_info{}')
   
       // Run a query
-      cy.get('button[class="execute-btn btn btn-primary"]')
+      cy.get('button').contains("Execute")
         .click({waitForAnimations: false})
     })
 
