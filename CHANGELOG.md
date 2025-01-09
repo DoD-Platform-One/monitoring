@@ -4,6 +4,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [67.9.0-bb.0] - 2025-01-09
+
+### Updated
+
+- Updated grafana-plugins: 11.3.1 -> 11.4.0
+- Updated prometheus-config-reloader: v0.78.2 -> v0.79.2
+- Updated prometheus-operator: v0.78.2 -> v0.79.2
+- Updated k8s-sidecar: 1.28.0 -> 1.28.4
+- Updated kube-webhook-certgen: v1.4.4 -> v.1.5.0
+- Updated kubectl: v1.30.7 -> v1.30.8
+- Updated thanos: v0.37.1 -> v0.37.2
+- Updated kube-state-metrics: 5.27.0 -> 5.28.0
+- Updated grafana: 8.6.4 -> 8.8.2
+- Updated prometheus-node-exporter: 4.42.0 -> 4.43.1
+
 ## [66.3.1-bb.0] - 2024-12-06
 
 ### Updated
