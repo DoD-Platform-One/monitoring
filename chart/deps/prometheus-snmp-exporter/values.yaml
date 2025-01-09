@@ -155,7 +155,7 @@ configmapReload:
   ##
   image:
     repository: quay.io/prometheus-operator/prometheus-config-reloader
-    tag: v0.78.2
+    tag: v0.79.2
     pullPolicy: IfNotPresent
 
   ## configmap-reload resource requests and limits
