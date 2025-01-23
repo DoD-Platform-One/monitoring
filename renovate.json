@@ -4,17 +4,16 @@
     "dependencyDashboard": "true",
     "dependencyDashboardTitle": "Renovate: Upgrade Monitoring Package Dependencies",
     "draftPR": "true",
-    "enabledManagers": ["helm-values","regex","helmv3"],
+    "enabledManagers": ["custom.regex", "helm-values", "helmv3"],
     "ignorePaths": ["chart/charts/**"],
-    "labels": ["monitoring","renovate"],
-    "commitMessagePrefix": "SKIP UPDATE CHECK",
+    "labels": ["monitoring","renovate", "kind::maintenance", "team::Observability"],
     "packageRules": [
         {
             "matchDatasources": ["docker"],
             "groupName": "Ironbank"
         }
     ],
-    "regexManagers": [
+    "customManagers": [
         {
             "fileMatch": ["^chart/Chart\\.yaml$"],
             "matchStrings": [
