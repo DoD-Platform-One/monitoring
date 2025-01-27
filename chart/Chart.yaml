@@ -23,7 +23,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 67.9.0-bb.0
+version: 67.11.0-bb.0
 appVersion: v0.79.2
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
@@ -44,7 +44,7 @@ annotations:
     - [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
     - [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
   bigbang.dev/applicationVersions: |
-    - Prometheus: 3.0.1
+    - Prometheus: 3.1.0
     - Grafana: 11.4.0
     - Alertmanager: 0.27.0
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
@@ -63,21 +63,21 @@ annotations:
       image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.5
       condition: grafana.initChownData.enabled
     - name: k8s-sidecar
-      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.28.4
+      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.29.0
       condition: grafana.enabled
       dependency: grafana
     - name: kubectl
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.8
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.9
       condition: prometheusOperator.enabled
     - name: kube-state-metrics
       image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.14.0
       condition: kubeStateMetrics.enabled
       dependency: kube-state-metrics
     - name: kube-webhook-certgen
-      image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.5.0
+      image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.5.1
       condition: prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
-      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.0.1
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.1.0
       condition: prometheus.enabled
     - name: prometheus-config-reloader
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.79.2
@@ -90,7 +90,7 @@ annotations:
       condition: nodeExporter.enabled
       dependency: prometheus-node-exporter
     - name: prometheus-snmp-exporter
-      image: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter:v0.26.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter:v0.27.0
       condition: snmpExporter.enabled
       dependency: prometheus-snmp-exporter
     - name: test-framework
@@ -121,11 +121,11 @@ dependencies:
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
-    version: "0.5.12"
+    version: "0.5.14"
     repository: oci://registry1.dso.mil/bigbang
   - name: prometheus-windows-exporter
     repository: https://prometheus-community.github.io/helm-charts
-    version: "0.7.*"
+    version: "0.8.*"
     condition: windowsMonitoring.enabled
   - name: prometheus-snmp-exporter
     repository: file://./deps/prometheus-snmp-exporter

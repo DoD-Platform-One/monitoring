@@ -4,6 +4,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [67.11.0-bb.0] - 2025-01-17
+
+### Updated
+
+- Updated gluon 0.5.12 -> 0.5.14
+- Updated k8s-sidecar 1.28.4 -> 1.29.0
+- Updated kube-webhook-certgen v1.5.0 -> v1.5.1
+- Updated kubectl v1.30.8 -> v1.30.9
+- Updated prometheus v3.0.1 -> v3.1.0
+- Updated snmp_exporter v0.26.0 -> v0.27.0
+- Updated grafana 8.8.2 -> 8.8.4
+- Updated windows_exporter v0.7.0 -> v0.8.0
+
 ## [67.9.0-bb.0] - 2025-01-09
 
 ### Updated

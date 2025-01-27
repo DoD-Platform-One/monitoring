@@ -10,15 +10,15 @@ dependencies:
   version: 4.43.1
 - name: grafana
   repository: https://grafana.github.io/helm-charts
-  version: 8.8.2
+  version: 8.8.4
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
-  version: 0.5.12
+  version: 0.5.14
 - name: prometheus-windows-exporter
   repository: https://prometheus-community.github.io/helm-charts
-  version: 0.7.1
+  version: 0.8.0
 - name: prometheus-snmp-exporter
   repository: file://./deps/prometheus-snmp-exporter
   version: 5.6.0
-digest: sha256:7223fefdfb9da72af06b2f73310ce5514ba0ff57d9679a27e395b240ebb67eb7
-generated: "2025-01-09T11:18:35.454182-05:00"
+digest: sha256:56739dd6fd24aafe97741ad1861a27f29bffcc68e84a503ae03c74c84823ec4c
+generated: "2025-01-14T07:21:43.296814817Z"

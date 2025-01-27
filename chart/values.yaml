@@ -1303,7 +1303,7 @@ grafana:
     image:
       registry: registry1.dso.mil
       repository: ironbank/kiwigrid/k8s-sidecar
-      tag: 1.28.4
+      tag: 1.29.0
 
     resources:
       limits:
@@ -1643,6 +1643,9 @@ kubelet:
   namespace: kube-system
 
   serviceMonitor:
+    ## Enable scraping /metrics from kubelet's service
+    kubelet: true
+
     ## Attach metadata to discovered targets. Requires Prometheus v2.45 for endpoints created by the operator.
     ##
     attachMetadata:
@@ -2704,7 +2707,7 @@ snmpExporter:
 ##
   image:
     repository: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter
-    tag: v0.26.0
+    tag: v0.27.0
   imagePullSecrets:
     - name: private-registry
 
@@ -3036,7 +3039,7 @@ prometheusOperator:
       image:
         registry: registry1.dso.mil
         repository: ironbank/opensource/ingress-nginx/kube-webhook-certgen
-        tag: v1.5.0
+        tag: v1.5.1
         sha: ""
         pullPolicy: IfNotPresent
       resources:
@@ -3525,7 +3528,7 @@ prometheusOperator:
   kubectlImage:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kubernetes/kubectl
-    tag: v1.30.8
+    tag: v1.30.9
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -4138,7 +4141,7 @@ prometheus:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus/prometheus
-      tag: v3.0.1
+      tag: v3.1.0
       sha: ""
 
     ## Tolerations for use with node taints
@@ -4900,24 +4903,24 @@ prometheus:
           ##
           # serverName: ""
 
-    ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
-    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
-    ##
-    # metricRelabelings: []
-    # - action: keep
-    #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
-    #   sourceLabels: [__name__]
+      ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
+      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
+      ##
+      # metricRelabelings: []
+      # - action: keep
+      #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
+      #   sourceLabels: [__name__]
 
-    ## RelabelConfigs to apply to samples before scraping
-    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
-    ##
-    # relabelings: []
-    # - sourceLabels: [__meta_kubernetes_pod_node_name]
-    #   separator: ;
-    #   regex: ^(.*)$
-    #   targetLabel: nodename
-    #   replacement: $1
-    #   action: replace
+      ## RelabelConfigs to apply to samples before scraping
+      ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
+      ##
+      # relabelings: []
+      # - sourceLabels: [__meta_kubernetes_pod_node_name]
+      #   separator: ;
+      #   regex: ^(.*)$
+      #   targetLabel: nodename
+      #   replacement: $1
+      #   action: replace
 
     ## Fallback scrape protocol used by Prometheus for scraping metrics
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#monitoring.coreos.com/v1.ScrapeProtocol
