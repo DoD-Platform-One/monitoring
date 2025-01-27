@@ -6,19 +6,17 @@ Monitoring is a modified/customized version of an upstream chart. The below deta
 
 1. Navigate to the [upstream chart repo and folder](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) and find the tag that corresponds with the new chart version for this image update. For example, if updating the Prometheus image to 2.31.1 you would check the [chart values](https://github.com/prometheus-community/helm-charts/blob/kube-prometheus-stack-23.1.6/charts/kube-prometheus-stack/values.yaml#L2069) and switch Gitlab tags (naming syntax is `kube-prometheus-stack-*`) until you find the latest chart version that uses the 2.31.1 Prometheus image. Start with the newest chart version to make sure we get the latest patches.
 
-2. Validate that the other images required by this chart version are ready and available in Ironbank. Look at the previous releases `images.txt` to get the list of images and search through the values file to find what the new versions are.
+2. Checkout the `renovate/ironbank` branch. This branch will already have most of the updates you need for the images.
 
-3. Checkout the `renovate/ironbank` branch. This branch will already have most of the updates you need for the images.
+3. From the root of the repo run `kpt pkg update chart@kube-prometheus-stack-23.1.6 --strategy alpha-git-patch` replacing `kube-prometheus-stack-23.1.6` with the version tag you got in step 1. You may be prompted to resolve some conflicts - choose what makes sense (if there are BB additions/changes keep them, if there are upstream additions/changes keep them).
 
-4. From the root of the repo run `kpt pkg update chart@kube-prometheus-stack-23.1.6 --strategy alpha-git-patch` replacing `kube-prometheus-stack-23.1.6` with the version tag you got in step 1. You may be prompted to resolve some conflicts - choose what makes sense (if there are BB additions/changes keep them, if there are upstream additions/changes keep them).
+4. See the [Big Bang Modifications](#big-bang-modifications) section below for the specific changes that need to be made to the [`chart/Chart.yaml`](#chartchartyaml) and [`chart/values.yaml`](#chartvaluesyaml) files.
 
-5. See the [Big Bang Modifications](#big-bang-modifications) section below for the specific changes that need to be made to the [`chart/Chart.yaml`](#chartchartyaml) and [`chart/values.yaml`](#chartvaluesyaml) files.
+5. Modify the `version` in `Chart.yaml` - you will want to append `-bb.0` to the chart version from upstream.
 
-6. Modify the `version` in `Chart.yaml` - you will want to append `-bb.0` to the chart version from upstream.
+6. Update `CHANGELOG.md` adding an entry for the new version and noting all changes (at minimum should include `Updated Monitoring chart to x.x.x` and `Updated image versions to latest in IB (P: x.x.x G: x.x.x A: x.x.x)` with the versions for Prometheus, Grafana, Alertmanager).
 
-7. Update `CHANGELOG.md` adding an entry for the new version and noting all changes (at minimum should include `Updated Monitoring chart to x.x.x` and `Updated image versions to latest in IB (P: x.x.x G: x.x.x A: x.x.x)` with the versions for Prometheus, Grafana, Alertmanager).
-
-8. Update dependencies and binaries using `helm dependency update ./chart`
+7. Update dependencies and binaries using `helm dependency update ./chart`
     - Pull assets and commit the binaries as well as the Chart.lock file that was generated.
     - **If the `prometheus/snmp_exporter` image is being updated in `Chart.yaml`:**
       - Check the [upstream prometheus-snmp-exporter
@@ -41,11 +39,11 @@ Chart.yaml](https://github.com/prometheus-community/helm-charts/blob/main/charts
 
         - Otherwise (if a new chart does not exist with the new image), skip this image update (i.e. revert it from `Chart.yaml` because Renovate is trying to jump ahead) and continue to `Step 9.`
 
-9. Generate the `README.md` updates by following the [guide in gluon](https://repo1.dso.mil/platform-one/big-bang/apps/library-charts/gluon/-/blob/master/docs/bb-package-readme.md).
+8. Generate the `README.md` updates by following the [guide in gluon](https://repo1.dso.mil/platform-one/big-bang/apps/library-charts/gluon/-/blob/master/docs/bb-package-readme.md).
 
-10. Push up your changes, validate that CI passes. If there are any failures follow the information in the pipeline to make the necessary updates and reach out to the team if needed.
+9.  Push up your changes, validate that CI passes. If there are any failures follow the information in the pipeline to make the necessary updates and reach out to the team if needed.
 
-11. As part of your MR that modifies bigbang packages, you should modify the bigbang  [bigbang/tests/test-values.yaml](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/tests/test-values.yaml?ref_type=heads) against your branch for the CI/CD MR testing by enabling your packages. 
+10.  As part of your MR that modifies bigbang packages, you should modify the bigbang  [bigbang/tests/test-values.yaml](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/tests/test-values.yaml?ref_type=heads) against your branch for the CI/CD MR testing by enabling your packages.
 
     - To do this, at a minimum, you will need to follow the instructions at [bigbang/docs/developer/test-package-against-bb.md](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/docs/developer/test-package-against-bb.md?ref_type=heads) with changes for Monitoring enabled (the below is a reference, actual changes could be more depending on what changes where made to Monitoring in the pakcage MR).
 
@@ -63,7 +61,7 @@ Chart.yaml](https://github.com/prometheus-community/helm-charts/blob/main/charts
       ### Additional compononents of Monitoring should be changed to reflect testing changes introduced in the package MR
     ```
 
-12. Perform the steps below for manual testing. CI provides a good set of basic smoke tests but it is beneficial to run some additional checks.
+11. Perform the steps below for manual testing. CI provides a good set of basic smoke tests but it is beneficial to run some additional checks.
 
 ## Manual Testing for Updates
 
@@ -134,7 +132,7 @@ This provides a log of these changes to make updates from upstream faster.
 
 ### ```chart/Chart.yaml```
 
-- Line 75-77: Ensure that `condition: prometheus.enabled` is set for prometheus as in the following example:
+- Ensure `condition: prometheus.enabled` is set for prometheus as in the following example:
 
   ```yaml
   - name: prometheus
@@ -144,15 +142,15 @@ This provides a log of these changes to make updates from upstream faster.
 
 ### ```chart/values.yaml```
 
-- Line 138: Ensure `nameOverride` is set to `chart/values.yaml` to keep resource names from changing
+- Ensure `nameOverride` is set to `chart/values.yaml` to keep resource names from changing
 
   ```yaml
   nameOverride: "kube-prometheus-stack"
   ```
 
-- Line 418: Ensure that `alertmanager.serviceAccount.automountServiceAccountToken: false` is set.
+- Ensure `alertmanager.serviceAccount.automountServiceAccountToken: false` is set.
 
-- Line 901: Ensure that `alertmanager.alertmanagerSpec.externalUrl` is set.
+- Ensure `alertmanager.alertmanagerSpec.externalUrl` is set.
 
   ```yaml
   ## The external URL the Alertmanager instances will be available under. This is necessary to generate correct URLs. This is necessary if Alertmanager is not served from root of a DNS name. string  false
@@ -160,7 +158,7 @@ This provides a log of these changes to make updates from upstream faster.
   externalUrl: "https://alertmanager.{{ .Values.domain }}"
   ```
 
-- Line 1454-1487: We want to ensure that `grafana.persistence.enabled=false` and initChownData is using a registry1 ubiX-minimal image:
+- Ensure `grafana.persistence.enabled=false` and initChownData is using a registry1 ubiX-minimal image:
 
   ```yaml
   grafana:
@@ -179,7 +177,7 @@ This provides a log of these changes to make updates from upstream faster.
       ## This allows the prometheus-server to be run with an arbitrary user
       ##
       enabled: false
-    
+
       ## initChownData container image
       ##
       image:
@@ -187,7 +185,7 @@ This provides a log of these changes to make updates from upstream faster.
         tag: "9.4"
         sha: ""
         pullPolicy: IfNotPresent
-    
+
       ## initChownData resource requests and limits
       ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
       ##
@@ -200,7 +198,7 @@ This provides a log of these changes to make updates from upstream faster.
           memory: 128Mi
   ```
 
-- Line 2505: Ensure that `prometheus-node-exporter.hostPID` is set to `false` to resolve OPA violations with the prometheus node exporter daemonset:
+- Ensure `prometheus-node-exporter.hostPID` is set to `false` to resolve OPA violations with the prometheus node exporter daemonset:
 
   ```yaml
   prometheus-node-exporter:
@@ -208,7 +206,7 @@ This provides a log of these changes to make updates from upstream faster.
     hostPID: false
   ```
 
-- Line 2585: Ensure that the `snmpExporter` configuration is present and that the `snmpExporter.image.tag` and `snmpExporter.configmapReload.image.tag` are set to the intended versions. Consult the upstream `prometheus-snmp-exporter` chart version for the correct versions. The following is an example of the configuration block for the SNMP exporter:
+- Ensure the `snmpExporter` configuration is present and that the `snmpExporter.image.tag` and `snmpExporter.configmapReload.image.tag` are set to the intended versions. Consult the upstream `prometheus-snmp-exporter` chart version for the correct versions. The following is an example of the configuration block for the SNMP exporter:
 
   ```yaml
   ## Deploy SNMP exporter as a deployment to all nodes
@@ -252,9 +250,9 @@ This provides a log of these changes to make updates from upstream faster.
       enabled: true
   ```
 
-- Line 3025: Ensure `prometheusOperator.clusterDomain: "cluster.local"` is set.
+- Ensure `prometheusOperator.clusterDomain: "cluster.local"` is set.
 
-- Line 3187-3193: Ensure that `prometheusOperator.resources` is set to the following:
+- Ensure `prometheusOperator.resources` is set to the following:
 
   ```yaml
   resources:
@@ -266,9 +264,9 @@ This provides a log of these changes to make updates from upstream faster.
       memory: 512Mi
   ```
 
-- Line 3298/3324: Ensure that the `prometheusOperator.image.tag` and `prometheusOperator.prometheusConfigReloader.image.tag` values are not ahead of the actual `appVersion` in `Chart.yaml`. You need to check `values.yaml` and `Chart.yaml` for unintended changes. The bot will try to jump ahead.
+- Ensure the `prometheusOperator.image.tag` and `prometheusOperator.prometheusConfigReloader.image.tag` values are not ahead of the actual `appVersion` in `Chart.yaml`. You need to check `values.yaml` and `Chart.yaml` for unintended changes. The bot will try to jump ahead.
 
-- Line 3997: Ensure that `prometheus.prometheusSpec.externalUrl` is set.
+- Ensure `prometheus.prometheusSpec.externalUrl` is set.
 
   ```yaml
   ## External URL at which Prometheus will be reachable.
@@ -278,7 +276,7 @@ This provides a log of these changes to make updates from upstream faster.
 
 ### ```chart/deps/prometheus-snmp-exporter/values.yaml```
 
-- Line 1: Ensure that `nameOverride` is set to `prometheus-snmp-exporter` to keep resource names from changing due to the use of the `snmpExporter` alias.
+- Ensure `nameOverride` is set to `prometheus-snmp-exporter` to keep resource names from changing due to the use of the `snmpExporter` alias.
 
   ```yaml
   nameOverride: "prometheus-snmp-exporter"
@@ -286,7 +284,7 @@ This provides a log of these changes to make updates from upstream faster.
 
 ### ```chart/deps/prometheus-snmp-exporter/templates/deployment.yaml```
 
-- Line 96-99: To comply with Kyverno policies, we alter the upstream chart to pass `containerSecurityContext` into the `configmap-reload` container. This is done by adding the following block to the `configmap-reload` container:
+- To comply with Kyverno policies, we alter the upstream chart to pass `containerSecurityContext` into the `configmap-reload` container. This is done by adding the following block to the `configmap-reload` container:
 
   ```yaml
   {{- if .Values.containerSecurityContext }}
