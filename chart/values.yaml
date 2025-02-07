@@ -29,7 +29,7 @@ bbtests:
     envs:
       cypress_prometheus_url: 'http://monitoring-kube-prometheus-prometheus:9090'
       cypress_alertmanager_url: 'http://monitoring-kube-prometheus-alertmanager:9093'
-  
+
 istio:
   enabled: false
   hardened:
@@ -53,11 +53,17 @@ istio:
     #   spec: {}
     clusterWideHardenedEnabled: false
     tempo:
-        enabled: false
-        namespaces:
+      enabled: false
+      namespaces:
         - tempo
-        principals:
+      principals:
         - cluster.local/ns/tempo/sa/tempo-tempo
+    loki:
+      enabled: false
+      namespaces:
+        - logging
+      principals:
+        - cluster.local/ns/logging/sa/logging-loki
   namespace: istio-system
   prometheus:
     # Toggle vs creation
@@ -107,7 +113,7 @@ sso:
     value: keycloak
 
 tempo:
-  # Toggle tempo AuthorizationPolicy creation 
+  # Toggle tempo AuthorizationPolicy creation
   enabled: false
 
 # Deletes previous kube-state-metrics deployment/statefulset before attempting an upgrade
@@ -1150,12 +1156,12 @@ grafana:
     tag: 11.4.0
     pullSecrets:
     - private-registry
-  
+
   containerSecurityContext:
     capabilities:
       drop:
         - ALL
-    
+
 
   # add plugins to be installed (only works in non-airgap, pulls directly from the internet)
   #plugins:
@@ -1166,7 +1172,7 @@ grafana:
   #    # redis-datasource is required for the Redis Dasboards
   #  - redis-datasource
 
-  resources: 
+  resources:
     limits:
       cpu: 100m
       memory: 256Mi
@@ -1206,9 +1212,9 @@ grafana:
   ## Editable flag for the default dashboards
   ##
   defaultDashboardsEditable: true
-  
+
   ## Use the Big Bang Grafana values.yaml to set adminPassword for Grafana- https://repo1.dso.mil/big-bang/product/packages/grafana/-/blob/main/chart/values.yaml
-  adminPassword: prom-operator 
+  adminPassword: prom-operator
 
   grafana.ini:
     # Required if enabling SSO
@@ -1312,7 +1318,7 @@ grafana:
       requests:
         cpu: 100m
         memory: 100Mi
-    
+
     securityContext:
       capabilities:
         drop:
@@ -1400,10 +1406,10 @@ grafana:
     registry: registry1.dso.mil
     repository: ironbank/big-bang/base
     tag: 2.1.0
-  
+
   ## Resource settings for above DownloadDashboards container
   downloadDashboards:
-    resources: 
+    resources:
       limits:
         cpu: 20m
         memory: 20Mi
@@ -1445,7 +1451,7 @@ grafana:
   #   secretName: grafana-oidc-secret
   #   readOnly: true
   #   subPath: "ca.pem"
-  
+
   deleteDatasources: []
   # - name: example-datasource
   #   orgId: 1
@@ -1511,7 +1517,7 @@ grafana:
     #   targetLabel: nodename
     #   replacement: $1
     #   action: replace
-  
+
   ## Enable persistence using Persistent Volume Claims
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
@@ -1529,7 +1535,7 @@ grafana:
     ## This allows the prometheus-server to be run with an arbitrary user
     ## Is not required for BigBang monitoring installations since permission/owership is fully stated
     enabled: false
-  
+
     ## initChownData container image
     ##
     image:
@@ -1538,7 +1544,7 @@ grafana:
       tag: "9.5"
       sha: ""
       pullPolicy: IfNotPresent
-  
+
     ## initChownData resource requests and limits
     ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
     ##
@@ -2583,7 +2589,7 @@ prometheus-node-exporter:
   ## Service Monitor attach metadata
   serviceMonitor:
     attachMetadata: {}
-  
+
   # set container SecurityContext
   containerSecurityContext:
     capabilities:
@@ -2593,7 +2599,7 @@ prometheus-node-exporter:
   # use IronBank image
   image:
     registry: registry1.dso.mil
-    repository: ironbank/opensource/prometheus/node-exporter 
+    repository: ironbank/opensource/prometheus/node-exporter
     tag: v1.8.2
 
   resources:
@@ -2602,7 +2608,7 @@ prometheus-node-exporter:
       memory: 250Mi
     requests:
       cpu: 200m
-      memory: 250Mi  
+      memory: 250Mi
   ## Disable the hostNetwork in order to resolve no-host-namespace violations. If not set, the prometheus-node-exporter default (hostNetwork: true) is used.
   #
   hostNetwork: false
@@ -2610,7 +2616,7 @@ prometheus-node-exporter:
   ## Big Bang modification to resolve OPA violations (not available in upstream chart)
   #
   hostPID: false
-  
+
   namespaceOverride: ""
   podLabels:
     ## Add the 'node-exporter' label to be used by serviceMonitor to match standard common usage in rules and grafana dashboards
@@ -3067,7 +3073,7 @@ prometheusOperator:
       podAnnotations: {}
       nodeSelector: {}
       affinity: {}
-      tolerations: [] 
+      tolerations: []
       ## Service account for Prometheus Operator Webhook Job Patch to use.
       ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
       ##
@@ -3098,7 +3104,7 @@ prometheusOperator:
       podAnnotations: {}
       nodeSelector: {}
       affinity: {}
-      tolerations: [] 
+      tolerations: []
 
       ## SecurityContext holds pod-level security attributes and common container settings.
       ## This defaults to non root user with uid 2000 and gid 2000. *v1.PodSecurityContext  false

@@ -1,0 +1,24 @@
+{{- if and .Values.istio.enabled .Values.istio.hardened.enabled .Values.istio.hardened.loki.enabled }}
+# Allows Loki to push metrics to Prometheus API
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: loki-prometheus-authz-policy
+  namespace: {{ .Release.Namespace }}
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: {{ .Values.istio.hardened.loki.namespaces }}
+        principals: {{ .Values.istio.hardened.loki.principals }}
+    to:
+    - operation:
+        methods:
+        - POST
+        paths:
+        - /api/v1/write
+  selector:
+    matchLabels:
+      app: prometheus
+{{- end }}

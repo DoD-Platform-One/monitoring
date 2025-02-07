@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 67.11.0-bb.1](https://img.shields.io/badge/Version-67.11.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.79.2](https://img.shields.io/badge/AppVersion-v0.79.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 67.11.0-bb.2](https://img.shields.io/badge/Version-67.11.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.79.2](https://img.shields.io/badge/AppVersion-v0.79.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -69,6 +69,9 @@ helm install monitoring chart/
 | istio.hardened.tempo.enabled | bool | `false` |  |
 | istio.hardened.tempo.namespaces[0] | string | `"tempo"` |  |
 | istio.hardened.tempo.principals[0] | string | `"cluster.local/ns/tempo/sa/tempo-tempo"` |  |
+| istio.hardened.loki.enabled | bool | `false` |  |
+| istio.hardened.loki.namespaces[0] | string | `"logging"` |  |
+| istio.hardened.loki.principals[0] | string | `"cluster.local/ns/logging/sa/logging-loki"` |  |
 | istio.namespace | string | `"istio-system"` |  |
 | istio.prometheus.enabled | bool | `true` |  |
 | istio.prometheus.annotations | object | `{}` |  |
