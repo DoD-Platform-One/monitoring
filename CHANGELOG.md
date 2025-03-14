@@ -3,6 +3,21 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [69.7.3-bb.0] - 2025-03-05
+
+### Updated
+
+- Updated grafana-plugins 11.4.0 -> 11.5.2
+- Updated k8s-sidecar 1.29.0 -> 1.30.0
+- Updated kube-state-metrics v2.14.0 -> v2.15.0
+- Updated kubectl v1.30.9 -> v1.30.10
+- Updated prometheus-config-reloader v0.79.2 -> v0.80.1
+- Updated prometheus-operator v0.79.2 -> v0.80.1
+- Updated alertmanager v0.27.0 -> v0.28.0
+- Updated node-exporter v1.8.2 -> v1.9.0
+- Updated prometheus v3.1.0 -> v3.2.1
+- Updated snmp_exporter v0.27.0 -> v0.28.0
+
 ## [67.11.0-bb.2] - 2025-02-07
 
 ### Added
