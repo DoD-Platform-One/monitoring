@@ -29,3 +29,7 @@ CONTRIBUTING.md
 Kptfile
 unittests/
 files/dashboards/
+
+README.md
+CONTRIBUTING.md
+.editorconfig

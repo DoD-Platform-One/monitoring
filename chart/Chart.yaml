@@ -5,26 +5,34 @@ type: application
 maintainers:
   - name: andrewgkew
     email: andrew@quadcorps.co.uk
+    url: https://github.com/andrewgkew
   - name: gianrubio
     email: gianrubio@gmail.com
+    url: https://github.com/gianrubio
   - name: gkarthiks
     email: github.gkarthiks@gmail.com
+    url: https://github.com/gkarthiks
   - name: GMartinez-Sisti
     email: kube-prometheus-stack@sisti.pt
+    url: https://github.com/GMartinez-Sisti
   - name: jkroepke
     email: github@jkroepke.de
+    url: https://github.com/jkroepke
   - name: scottrigby
     email: scott@r6by.com
+    url: https://github.com/scottrigby
   - name: Xtigyro
     email: miroslav.hadzhiev@gmail.com
+    url: https://github.com/Xtigyro
   - name: QuentinBisson
     email: quentin.bisson@gmail.com
+    url: https://github.com/QuentinBisson
 name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 67.11.0-bb.2
-appVersion: v0.79.2
+version: 69.7.3-bb.0
+appVersion: v0.80.1
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -40,57 +48,59 @@ annotations:
       url: https://github.com/prometheus-community/helm-charts
     - name: Upstream Project
       url: https://github.com/prometheus-operator/kube-prometheus
+    - name: Upgrade Process
+      url: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart
   "bigbang.dev/upstreamReleaseNotesMarkdown": |
     - [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
     - [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
   bigbang.dev/applicationVersions: |
-    - Prometheus: 3.1.0
-    - Grafana: 11.4.0
-    - Alertmanager: 0.27.0
+    - Prometheus: 3.2.1
+    - Grafana: 11.5.2
+    - Alertmanager: 0.28.0
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
   helm.sh/images: |
     - name: alertmanager
-      image: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager:v0.27.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager:v0.28.0
       condition: alertmanager.enabled
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
     - name: grafana
-      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:11.4.0
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:11.5.2
       condition: grafana.enabled
       dependency: grafana
     - name: init-chown-data
       image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.5
       condition: grafana.initChownData.enabled
     - name: k8s-sidecar
-      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.29.0
+      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.30.0
       condition: grafana.enabled
       dependency: grafana
     - name: kubectl
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.9
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.10
       condition: prometheusOperator.enabled
     - name: kube-state-metrics
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.14.0
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.15.0
       condition: kubeStateMetrics.enabled
       dependency: kube-state-metrics
     - name: kube-webhook-certgen
       image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.5.1
       condition: prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
-      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.1.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.2.1
       condition: prometheus.enabled
     - name: prometheus-config-reloader
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.79.2
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.80.1
       condition: prometheusOperator.enabled
     - name: prometheus-operator
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.79.2
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.80.1
       condition: prometheusOperator.enabled
     - name: prometheus-node-exporter
-      image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.8.2
+      image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.9.0
       condition: nodeExporter.enabled
       dependency: prometheus-node-exporter
     - name: prometheus-snmp-exporter
-      image: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter:v0.27.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter:v0.28.0
       condition: snmpExporter.enabled
       dependency: prometheus-snmp-exporter
     - name: test-framework
@@ -109,15 +119,15 @@ dependencies:
     version: "0.0.0"
     condition: crds.enabled
   - name: kube-state-metrics
-    version: "5.28.*"
+    version: "5.30.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: kubeStateMetrics.enabled
   - name: prometheus-node-exporter
-    version: "4.43.*"
+    version: "4.44.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: nodeExporter.enabled
   - name: grafana
-    version: "8.8.*"
+    version: "8.10.*"
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
@@ -125,10 +135,10 @@ dependencies:
     repository: oci://registry1.dso.mil/bigbang
   - name: prometheus-windows-exporter
     repository: https://prometheus-community.github.io/helm-charts
-    version: "0.8.*"
+    version: "0.9.*"
     condition: windowsMonitoring.enabled
   - name: prometheus-snmp-exporter
     repository: file://./deps/prometheus-snmp-exporter
-    version: "5.6.0"
+    version: "8.0.0"
     condition: snmpExporter.enabled
     alias: snmpExporter
