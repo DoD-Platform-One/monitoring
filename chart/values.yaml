@@ -64,6 +64,12 @@ istio:
         - logging
       principals:
         - cluster.local/ns/logging/sa/logging-loki
+    alloy:
+      enabled: false
+      namespaces:
+        - alloy
+      principals:
+        - cluster.local/ns/alloy/sa/alloy-alloy-metrics
   namespace: istio-system
   prometheus:
     # Toggle vs creation
