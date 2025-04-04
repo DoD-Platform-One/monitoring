@@ -1,26 +1,37 @@
-bbtests:
-  enabled: true
-
-networkPolicies:
-  enabled: true
-  controlPlaneCidr: 172.16.0.0/12
-  
+#########################
+# Disable Core Packages #
+#########################
+# monitoring:
+#   enabled: false
 grafana:
-  testFramework:
+  enabled: false
+kyvernoReporter:
+  enabled: false
+neuvector:
+  enabled: false
+loki:
+  enabled: false
+promtail:
+  enabled: false
+tempo:
+  enabled: false
+kiali:
+  enabled: false
+addons:
+  minioOperator:
     enabled: false
-
-snmpExporter:
+#########################
+# Required for package #
+########################
+monitoring:
   enabled: true
-
-
-prometheus:
-  prometheusSpec:
-    resources:
-      limits:
-        memory: 1Gi
-      requests:
-        memory: 1Gi
-
-
+kyverno:
+  values:
+    bbtests:
+      enabled: false
+kyvernoPolicies:
+  values:
+    bbtests:
+      enabled: false
 
 
