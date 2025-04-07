@@ -202,7 +202,7 @@ crds:
 
     env: {}
     ## Define resources requests and limits for single Pods.
-    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
     ##
     resources: {}
 
@@ -215,12 +215,12 @@ crds:
     extraVolumeMounts: []
 
     ## Define which Nodes the Pods are scheduled on.
-    ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
     ##
     nodeSelector: {}
 
     ## Assign custom affinity rules to the upgrade-crd job
-    ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
     ##
     affinity: {}
     # nodeAffinity:
@@ -234,7 +234,7 @@ crds:
     #         - e2e-az2
 
     ## If specified, the pod's tolerations.
-    ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
     ##
     tolerations: []
     # - key: "key"
@@ -243,7 +243,7 @@ crds:
     #   effect: "NoSchedule"
 
     ## If specified, the pod's topology spread constraints.
-    ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
     ##
     topologySpreadConstraints: []
     # - maxSkew: 1
@@ -490,7 +490,7 @@ global:
       # seccomp.security.alpha.kubernetes.io/defaultProfileName: 'docker/default'
       # apparmor.security.beta.kubernetes.io/defaultProfileName: 'runtime/default'
 
-  ## Global image registry to use if it needs to be overriden for some specific use cases (e.g local registries, custom images, ...)
+  ## Global image registry to use if it needs to be overridden for some specific use cases (e.g local registries, custom images, ...)
   ##
   imageRegistry: ""
 
@@ -777,7 +777,7 @@ alertmanager:
   # Be aware that this is an early beta of this feature,
   # kube-prometheus-stack does not guarantee this works and is subject to change.
   # Being BETA this can/will change in the future without notice, do not use unless you want to take that risk
-  # [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io%2fv1alpha2)
+  # [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io%2fv1alpha2)
   route:
     main:
       # -- Enables or disables the route
@@ -865,6 +865,7 @@ alertmanager:
   ## Configuration for Alertmanager service
   ##
   service:
+    enabled: true
     annotations: {}
     labels: {}
     clusterIP: ""
@@ -887,7 +888,7 @@ alertmanager:
     ##
     nodePort: 30903
     ## List of IP addresses at which the Prometheus server service is available
-    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+    ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-ips
     ##
 
     ## Additional ports to open for Alertmanager service
@@ -1001,7 +1002,7 @@ alertmanager:
     enableHttp2: true
 
     ## tlsConfig: TLS configuration to use when scraping the endpoint. For example if using istio mTLS.
-    ## Of type: https://github.com/coreos/prometheus-operator/blob/main/Documentation/api-reference/api.md#tlsconfig
+    ## Of type: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#tlsconfig
     tlsConfig: {}
 
     bearerTokenFile:
@@ -1050,13 +1051,16 @@ alertmanager:
     ##
     podMetadata: {}
 
+    ##
+    serviceName:
+
     ## Image of Alertmanager
     ##
     # use IronBank image
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus/alertmanager
-      tag: v0.28.0
+      tag: v0.28.1
       sha: ""
 
     ## If true then the user will be responsible to provide a secret with alertmanager configuration
@@ -1181,7 +1185,7 @@ alertmanager:
     scheme: ""
 
     ## tlsConfig: TLS configuration to use when connect to the endpoint. For example if using istio mTLS.
-    ## Of type: https://github.com/coreos/prometheus-operator/blob/main/Documentation/api-reference/api.md#tlsconfig
+    ## Of type: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#tlsconfig
     tlsConfig: {}
 
     ## If set to true all actions on the underlying managed objects are not going to be performed, except for delete actions.
@@ -1189,12 +1193,12 @@ alertmanager:
     paused: false
 
     ## Define which Nodes the Pods are scheduled on.
-    ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
     ##
     nodeSelector: {}
 
     ## Define resources requests and limits for single Pods.
-    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
     ##
     resources:
       limits:
@@ -1217,7 +1221,7 @@ alertmanager:
     podAntiAffinityTopologyKey: kubernetes.io/hostname
 
     ## Assign custom affinity rules to the alertmanager instance
-    ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
     ##
     affinity: {}
     # nodeAffinity:
@@ -1231,7 +1235,7 @@ alertmanager:
     #         - e2e-az2
 
     ## If specified, the pod's tolerations.
-    ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
     ##
     tolerations: []
     # - key: "key"
@@ -1240,7 +1244,7 @@ alertmanager:
     #   effect: "NoSchedule"
 
     ## If specified, the pod's topology spread constraints.
-    ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
     ##
     topologySpreadConstraints: []
     # - maxSkew: 1
@@ -1272,7 +1276,7 @@ alertmanager:
     containers: []
     # containers:
     # - name: oauth-proxy
-    #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.5.1
+    #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.8.2
     #   args:
     #   - --upstream=http://127.0.0.1:9093
     #   - --http-address=0.0.0.0:8081
@@ -1365,7 +1369,7 @@ grafana:
   image:
     registry: registry1.dso.mil
     repository: ironbank/big-bang/grafana/grafana-plugins
-    tag: 11.5.2
+    tag: 11.6.0
     pullSecrets:
     - private-registry
 
@@ -1424,6 +1428,10 @@ grafana:
   ## Editable flag for the default dashboards
   ##
   defaultDashboardsEditable: true
+
+  ## Default interval for Grafana dashboards
+  ##
+  defaultDashboardsInterval: 1m
 
   ## Use the Big Bang Grafana values.yaml to set adminPassword for Grafana- https://repo1.dso.mil/big-bang/product/packages/grafana/-/blob/main/chart/values.yaml
   adminUser: admin
@@ -1522,7 +1530,7 @@ grafana:
     image:
       registry: registry1.dso.mil
       repository: ironbank/kiwigrid/k8s-sidecar
-      tag: 1.30.0
+      tag: 1.30.3
 
     resources:
       limits:
@@ -1583,10 +1591,12 @@ grafana:
       httpMethod: POST
 
       ## Create datasource for each Pod of Prometheus StatefulSet;
-      ## this uses headless service `prometheus-operated` which is
-      ## created by Prometheus Operator
+      ## this uses by default the headless service `prometheus-operated` which is
+      ## created by Prometheus Operator. In case you deployed your own Service for your
+      ## Prometheus instance, you can specifiy it with the field `prometheusServiceName`
       ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/0fee93e12dc7c2ea1218f19ae25ec6b893460590/pkg/prometheus/statefulset.go#L255-L286
       createPrometheusReplicasDatasources: false
+      prometheusServiceName: prometheus-operated
       label: grafana_datasource
       labelValue: "1"
 
@@ -1671,7 +1681,7 @@ grafana:
   #   orgId: 1
 
   ## Configure additional grafana datasources (passed through tpl)
-  ## ref: http://docs.grafana.org/administration/provisioning/#datasources
+  ## ref: https://grafana.com/docs/grafana/latest/administration/provisioning/#datasources
   additionalDataSources: []
   # - name: prometheus-sample
   #   access: proxy
@@ -1689,7 +1699,7 @@ grafana:
 
   # Flag to mark provisioned data sources for deletion if they are no longer configured.
   # It takes no effect if data sources are already listed in the deleteDatasources section.
-  # ref: https://grafana.com/docs/grafana/latest/administration/provisioning/#example-data-source-config-file
+  # ref: https://grafana.com/docs/grafana/latest/administration/provisioning/#example-data-source-configuration-file
   prune: false
 
   ## Passed to grafana subchart and used by servicemonitor below
@@ -1701,7 +1711,7 @@ grafana:
 
   serviceMonitor:
     # If true, a ServiceMonitor CRD is created for a prometheus operator
-    # https://github.com/coreos/prometheus-operator
+    # https://github.com/prometheus-operator/prometheus-operator
     #
     enabled: true
 
@@ -1786,6 +1796,7 @@ kubeApiServer:
     serverName: kubernetes
     insecureSkipVerify: false
   serviceMonitor:
+    enabled: true
     ## Scrape interval. If not set, the Prometheus default scrape interval is used.
     ##
     interval: ""
@@ -1863,6 +1874,7 @@ kubelet:
   namespace: kube-system
 
   serviceMonitor:
+    enabled: true
     ## Enable scraping /metrics from kubelet's service
     kubelet: true
 
@@ -2959,7 +2971,7 @@ snmpExporter:
   configmapReload:
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.80.1
+      tag: v0.81.0
 
   ## Security context to be added to snmp-exporter pods
   securityContext:
@@ -3002,7 +3014,7 @@ prometheusOperator:
   ##
   tls:
     enabled: true
-    # Value must match version names from https://golang.org/pkg/crypto/tls/#pkg-constants
+    # Value must match version names from https://pkg.go.dev/crypto/tls#pkg-constants
     tlsMinVersion: VersionTLS13
     # The default webhook port is 10250 in order to work out-of-the-box in GKE private clusters and avoid adding firewall rules.
     internalPort: 10250
@@ -3085,7 +3097,7 @@ prometheusOperator:
       ##
       tls:
         enabled: true
-        # Value must match version names from https://golang.org/pkg/crypto/tls/#pkg-constants
+        # Value must match version names from https://pkg.go.dev/crypto/tls#pkg-constants
         tlsMinVersion: VersionTLS13
         # The default webhook port is 10250 in order to work out-of-the-box in GKE private clusters and avoid adding firewall rules.
         internalPort: 10250
@@ -3138,7 +3150,7 @@ prometheusOperator:
         type: ClusterIP
 
         ## List of IP addresses at which the Prometheus server service is available
-        ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+        ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-ips
         ##
         externalIPs: []
 
@@ -3221,12 +3233,12 @@ prometheusOperator:
       hostNetwork: false
 
       ## Define which Nodes the Pods are scheduled on.
-      ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+      ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
       ##
       nodeSelector: {}
 
       ## Tolerations for use with node taints
-      ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+      ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
       ##
       tolerations: []
       # - key: "key"
@@ -3235,7 +3247,7 @@ prometheusOperator:
       #   effect: "NoSchedule"
 
       ## Assign custom affinity rules to the prometheus operator
-      ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+      ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
       ##
       affinity: {}
         # nodeAffinity:
@@ -3284,7 +3296,7 @@ prometheusOperator:
       image:
         registry: registry1.dso.mil
         repository: ironbank/opensource/ingress-nginx/kube-webhook-certgen
-        tag: v1.5.1
+        tag: v1.5.2
         sha: ""
         pullPolicy: IfNotPresent
       resources:
@@ -3495,7 +3507,7 @@ prometheusOperator:
     type: ClusterIP
 
     ## List of IP addresses at which the Prometheus server service is available
-    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+    ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-ips
     ##
     externalIPs: []
 
@@ -3541,7 +3553,7 @@ prometheusOperator:
   kubeletEndpointSliceEnabled: false
 
   ## Extra arguments to pass to prometheusOperator
-  # https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/operator.md
+  # https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/platform/operator.md
   extraArgs: []
   #  - --labels="cluster=talos-cluster"
 
@@ -3621,12 +3633,12 @@ prometheusOperator:
   hostNetwork: false
 
   ## Define which Nodes the Pods are scheduled on.
-  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
   ##
   nodeSelector: {}
 
   ## Tolerations for use with node taints
-  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
   ##
   tolerations: []
   # - key: "key"
@@ -3635,7 +3647,7 @@ prometheusOperator:
   #   effect: "NoSchedule"
 
   ## Assign custom affinity rules to the prometheus operator
-  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
   ##
   affinity: {}
     # nodeAffinity:
@@ -3712,7 +3724,7 @@ prometheusOperator:
   image:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus-operator/prometheus-operator
-    tag: v0.80.1
+    tag: v0.81.0
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3738,7 +3750,7 @@ prometheusOperator:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.80.1
+      tag: v0.81.0
       sha: ""
 
     # add prometheus config reloader liveness and readiness probe. Default: false
@@ -3781,7 +3793,7 @@ prometheusOperator:
   kubectlImage:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kubernetes/kubectl
-    tag: v1.30.10
+    tag: v1.30.11
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -3804,7 +3816,7 @@ prometheus:
 
   ## Toggle prometheus into agent mode
   ## Note many of features described below (e.g. rules, query, alerting, remote read, thanos) will not work in agent mode.
-  ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/designs/prometheus-agent.md
+  ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/platform/prometheus-agent.md
   ##
   agentMode: false
 
@@ -3902,7 +3914,7 @@ prometheus:
     scheme: ""
 
     ## tlsConfig: TLS configuration to use when scraping the endpoint. For example if using istio mTLS.
-    ## Of type: https://github.com/coreos/prometheus-operator/blob/main/Documentation/api-reference/api.md#tlsconfig
+    ## Of type: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#tlsconfig
     tlsConfig: {}
 
     bearerTokenFile:
@@ -3913,6 +3925,9 @@ prometheus:
     ## relabel configs to apply to samples before ingestion.
     relabelings: []
 
+    ## Set default scrapeProtocols for Prometheus instances
+    ## https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#scrapeprotocolstring-alias
+    scrapeProtocols: []
   # Service for external access to sidecar
   # Enabling this creates a service to expose thanos-sidecar outside the cluster.
   thanosServiceExternal:
@@ -3948,6 +3963,7 @@ prometheus:
   ## Configuration for Prometheus service
   ##
   service:
+    enabled: true
     annotations: {}
     labels: {}
     clusterIP: ""
@@ -3968,7 +3984,7 @@ prometheus:
     reloaderWebPort: 8080
 
     ## List of IP addresses at which the Prometheus server service is available
-    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+    ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-ips
     ##
     externalIPs: []
 
@@ -4155,7 +4171,7 @@ prometheus:
   # Be aware that this is an early beta of this feature,
   # kube-prometheus-stack does not guarantee this works and is subject to change.
   # Being BETA this can/will change in the future without notice, do not use unless you want to take that risk
-  # [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io%2fv1alpha2)
+  # [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io%2fv1alpha2)
   route:
     main:
       # -- Enables or disables the route
@@ -4236,7 +4252,7 @@ prometheus:
       prefix: "prometheus"
 
   ## Configure additional options for default pod security policy for Prometheus
-  ## ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/
+  ## ref: https://kubernetes.io/docs/concepts/security/pod-security-policy/
   podSecurityPolicy:
     allowedCapabilities: []
     allowedHostPaths: []
@@ -4398,9 +4414,12 @@ prometheus:
       # maxSize: 100000
 
     # EnableFeatures API enables access to Prometheus disabled features.
-    # ref: https://prometheus.io/docs/prometheus/latest/disabled_features/
+    # ref: https://prometheus.io/docs/prometheus/latest/feature_flags/
     enableFeatures: []
     # - exemplar-storage
+
+    ##
+    serviceName:
 
     ## Image of Prometheus.
     ##
@@ -4411,7 +4430,7 @@ prometheus:
       sha: ""
 
     ## Tolerations for use with node taints
-    ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
     ##
     tolerations: []
     #  - key: "key"
@@ -4420,7 +4439,7 @@ prometheus:
     #    effect: "NoSchedule"
 
     ## If specified, the pod's topology spread constraints.
-    ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
     ##
     topologySpreadConstraints: []
     # - maxSkew: 1
@@ -4474,7 +4493,7 @@ prometheus:
     externalUrl: "https://prometheus.{{ .Values.domain }}"
 
     ## Define which Nodes the Pods are scheduled on.
-    ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
     ##
     nodeSelector: {}
 
@@ -4689,7 +4708,7 @@ prometheus:
     podAntiAffinityTopologyKey: kubernetes.io/hostname
 
     ## Assign custom affinity rules to the prometheus instance
-    ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
     ##
     affinity: {}
     # nodeAffinity:
@@ -4823,7 +4842,7 @@ prometheus:
     additionalPrometheusSecretsAnnotations: {}
 
     ## AdditionalAlertManagerConfigs allows for manual configuration of alertmanager jobs in the form as specified
-    ## in the official Prometheus documentation https://prometheus.io/docs/prometheus/latest/configuration/configuration/#<alertmanager_config>.
+    ## in the official Prometheus documentation https://prometheus.io/docs/prometheus/latest/configuration/configuration/#alertmanager_config.
     ## AlertManager configurations specified are appended to the configurations generated by the Prometheus Operator.
     ## As AlertManager configs are appended, the user is responsible to make sure it is valid. Note that using this
     ## feature may expose the possibility to break upgrades of Prometheus. It is advised to review Prometheus release
@@ -4919,7 +4938,7 @@ prometheus:
     containers: []
     # containers:
     # - name: oauth-proxy
-    #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.5.1
+    #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.8.2
     #   args:
     #   - --upstream=http://127.0.0.1:9090
     #   - --http-address=0.0.0.0:8081
@@ -5324,7 +5343,7 @@ thanosRuler:
   # Be aware that this is an early beta of this feature,
   # kube-prometheus-stack does not guarantee this works and is subject to change.
   # Being BETA this can/will change in the future without notice, do not use unless you want to take that risk
-  # [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io%2fv1alpha2)
+  # [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io%2fv1alpha2)
   route:
     main:
       # -- Enables or disables the route
@@ -5363,6 +5382,7 @@ thanosRuler:
   ## Configuration for ThanosRuler service
   ##
   service:
+    enabled: true
     annotations: {}
     labels: {}
     clusterIP: ""
@@ -5382,7 +5402,7 @@ thanosRuler:
     ##
     nodePort: 30905
     ## List of IP addresses at which the Prometheus server service is available
-    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+    ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-ips
     ##
 
     ## Additional ports to open for ThanosRuler service
@@ -5443,7 +5463,7 @@ thanosRuler:
     scheme: ""
 
     ## tlsConfig: TLS configuration to use when scraping the endpoint. For example if using istio mTLS.
-    ## Of type: https://github.com/coreos/prometheus-operator/blob/main/Documentation/api-reference/api.md#tlsconfig
+    ## Of type: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md#tlsconfig
     tlsConfig: {}
 
     bearerTokenFile:
@@ -5481,6 +5501,9 @@ thanosRuler:
     ## Metadata Labels and Annotations gets propagated to the ThanosRuler pods.
     ##
     podMetadata: {}
+
+    ##
+    serviceName:
 
     ## Image of ThanosRuler
     ##
@@ -5658,12 +5681,12 @@ thanosRuler:
       #       "url": "http://thanos-receiver-0.thanos-receiver:8081/api/v1/receive"
 
     ## Define which Nodes the Pods are scheduled on.
-    ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
     ##
     nodeSelector: {}
 
     ## Define resources requests and limits for single Pods.
-    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ## ref: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
     ##
     resources: {}
     # requests:
@@ -5682,7 +5705,7 @@ thanosRuler:
     podAntiAffinityTopologyKey: kubernetes.io/hostname
 
     ## Assign custom affinity rules to the thanosRuler instance
-    ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
     ##
     affinity: {}
     # nodeAffinity:
@@ -5696,7 +5719,7 @@ thanosRuler:
     #         - e2e-az2
 
     ## If specified, the pod's tolerations.
-    ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
     ##
     tolerations: []
     # - key: "key"
@@ -5705,7 +5728,7 @@ thanosRuler:
     #   effect: "NoSchedule"
 
     ## If specified, the pod's topology spread constraints.
-    ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+    ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
     ##
     topologySpreadConstraints: []
     # - maxSkew: 1

@@ -30,6 +30,6 @@ Kptfile
 unittests/
 files/dashboards/
 
-README.md
+UPGRADE.md
 CONTRIBUTING.md
 .editorconfig

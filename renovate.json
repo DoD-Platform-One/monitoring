@@ -1,66 +1,77 @@
 {
     "baseBranches": ["main"],
-    "configWarningReuseIssue": "false",
-    "dependencyDashboard": "true",
+    "configWarningReuseIssue": false,
+    "dependencyDashboard": true,
     "dependencyDashboardTitle": "Renovate: Upgrade Monitoring Package Dependencies",
-    "draftPR": "true",
+    "draftPR": true,
     "enabledManagers": ["custom.regex", "helm-values", "helmv3"],
     "ignorePaths": ["chart/charts/**"],
-    "labels": ["monitoring","renovate", "kind::maintenance", "team::Observability"],
+    "labels": ["monitoring", "renovate", "kind::maintenance", "team::Observability"],
+    "postUpdateOptions": ["helmUpdateSubChartArchives"],
+    "separateMajorMinor": false,
     "packageRules": [
         {
-            "matchDatasources": ["docker"],
-            "groupName": "Ironbank"
+            "matchDatasources": ["docker", "helm"],
+            "groupName": "Ironbank",
+            "postUpgradeTasks": {
+                "commands": [
+                    "regenerate-helm-docs",
+                    "bump-changelog '{{#each upgrades}}- {{depName}} {{currentVersion}} -> {{newVersion}}\\n{{/each}}'"
+                ],
+                "executionMode": "update",
+                "fileFilters": ["README.md", "CHANGELOG.md"]
+            }
         }
     ],
     "customManagers": [
         {
+            "customType": "regex",
+            "description": "Update app version chart annotation",
             "fileMatch": ["^chart/Chart\\.yaml$"],
-            "matchStrings": [
-                "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)"
-            ],
+            "matchStrings": ["appVersion:\\s+(?<currentValue>.+)"],
             "depNameTemplate": "registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator",
             "datasourceTemplate": "docker"
         },
         {
-            "fileMatch": ["^chart/values\\.yaml$"],
-            "matchStrings": [
-                "image:[^\\S\\r\\n]+(?<depName>.+)\\s+tag:[^\\S\\r\\n]+(?<currentValue>[\\d\\.]+)"
-            ],
-            "datasourceTemplate": "docker"
-        },
-        {
+            "customType": "regex",
+            "description": "Update Prometheus version chart annotation",
             "fileMatch": ["^chart/Chart\\.yaml$"],
-            "matchStrings": [
-                "- Prometheus:\\s+(?<currentValue>.+)"
-            ],
+            "matchStrings": ["- Prometheus:\\s+(?<currentValue>.+)"],
             "depNameTemplate": "registry1.dso.mil/ironbank/opensource/prometheus/prometheus",
             "datasourceTemplate": "docker"
         },
         {
+            "customType": "regex",
+            "description": "Update Grafana version chart annotation",
             "fileMatch": ["^chart/Chart\\.yaml$"],
-            "matchStrings": [
-                "- Grafana:\\s+(?<currentValue>.+)"
-            ],
+            "matchStrings": ["- Grafana:\\s+(?<currentValue>.+)"],
             "depNameTemplate": "registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins",
             "datasourceTemplate": "docker"
         },
         {
+            "customType": "regex",
+            "description": "Update Alertmanager version chart annotation",
             "fileMatch": ["^chart/Chart\\.yaml$"],
-            "matchStrings": [
-                "- Alertmanager:\\s+(?<currentValue>.+)"
-            ],
+            "matchStrings": ["- Alertmanager:\\s+(?<currentValue>.+)"],
             "depNameTemplate": "registry1.dso.mil/ironbank/opensource/prometheus/alertmanager",
             "datasourceTemplate": "docker"
         },
         {
+            "customType": "regex",
+            "description": "Update docker image references",
             "fileMatch": ["^chart/Chart\\.yaml$"],
-            "matchStrings": [
-              "image:[^\\S\\r\\n]+(?<depName>.+):(?<currentValue>.+)"
-             ],
+            "matchStrings": ["image:[^\\S\\r\\n]+(?<depName>.+):(?<currentValue>.+)"],
              "datasourceTemplate": "docker"
+        },
+        {
+            "customType": "regex",
+            "description": "Update chart version",
+            "fileMatch": ["^chart/Chart\\.yaml$"],
+            "matchStrings": ["version:\\s+(?<currentValue>.+)-bb\\.\\d+"],
+            "autoReplaceStringTemplate": "version: {{newValue}}-bb.0",
+            "depNameTemplate": "kube-prometheus-stack",
+            "datasourceTemplate": "helm",
+            "registryUrlTemplate": "https://prometheus-community.github.io/helm-charts"
         }
-    ],
-    "separateMajorMinor": false,
-    "postUpdateOptions": ["helmUpdateSubChartArchives"]
+    ]
 }

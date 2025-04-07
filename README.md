@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 69.7.3-bb.1](https://img.shields.io/badge/Version-69.7.3--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.80.1](https://img.shields.io/badge/AppVersion-v0.80.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 70.4.1-bb.0](https://img.shields.io/badge/Version-70.4.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.81.0](https://img.shields.io/badge/AppVersion-v0.81.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -72,7 +72,7 @@ helm install monitoring chart/
 | istio.hardened.loki.enabled | bool | `false` |  |
 | istio.hardened.loki.namespaces[0] | string | `"logging"` |  |
 | istio.hardened.loki.principals[0] | string | `"cluster.local/ns/logging/sa/logging-loki"` |  |
-| istio.hardened.alloy.enabled | bool | `true` |  |
+| istio.hardened.alloy.enabled | bool | `false` |  |
 | istio.hardened.alloy.namespaces[0] | string | `"alloy"` |  |
 | istio.hardened.alloy.principals[0] | string | `"cluster.local/ns/alloy/sa/alloy-alloy-metrics"` |  |
 | istio.namespace | string | `"istio-system"` |  |
@@ -343,7 +343,7 @@ helm install monitoring chart/
 | alertmanager.ingress.hosts | list | `[]` |  |
 | alertmanager.ingress.paths | list | `[]` |  |
 | alertmanager.ingress.tls | list | `[]` |  |
-| alertmanager.route | object | `{"main":{"additionalRules":[],"annotations":{},"apiVersion":"gateway.networking.k8s.io/v1","enabled":false,"filters":[],"hostnames":[],"httpsRedirect":false,"kind":"HTTPRoute","labels":{},"matches":[{"path":{"type":"PathPrefix","value":"/"}}],"parentRefs":[]}}` | BETA: Configure the gateway routes for the chart here. More routes can be added by adding a dictionary key like the 'main' route. Be aware that this is an early beta of this feature, kube-prometheus-stack does not guarantee this works and is subject to change. Being BETA this can/will change in the future without notice, do not use unless you want to take that risk [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io%2fv1alpha2) |
+| alertmanager.route | object | `{"main":{"additionalRules":[],"annotations":{},"apiVersion":"gateway.networking.k8s.io/v1","enabled":false,"filters":[],"hostnames":[],"httpsRedirect":false,"kind":"HTTPRoute","labels":{},"matches":[{"path":{"type":"PathPrefix","value":"/"}}],"parentRefs":[]}}` | BETA: Configure the gateway routes for the chart here. More routes can be added by adding a dictionary key like the 'main' route. Be aware that this is an early beta of this feature, kube-prometheus-stack does not guarantee this works and is subject to change. Being BETA this can/will change in the future without notice, do not use unless you want to take that risk [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io%2fv1alpha2) |
 | alertmanager.route.main.enabled | bool | `false` | Enables or disables the route |
 | alertmanager.route.main.apiVersion | string | `"gateway.networking.k8s.io/v1"` | Set the route apiVersion, e.g. gateway.networking.k8s.io/v1 or gateway.networking.k8s.io/v1alpha2 |
 | alertmanager.route.main.kind | string | `"HTTPRoute"` | Set the route kind Valid options are GRPCRoute, HTTPRoute, TCPRoute, TLSRoute, UDPRoute |
@@ -358,6 +358,7 @@ helm install monitoring chart/
 | alertmanager.ingressPerReplica.tlsSecretName | string | `""` |  |
 | alertmanager.ingressPerReplica.tlsSecretPerReplica.enabled | bool | `false` |  |
 | alertmanager.ingressPerReplica.tlsSecretPerReplica.prefix | string | `"alertmanager"` |  |
+| alertmanager.service.enabled | bool | `true` |  |
 | alertmanager.service.annotations | object | `{}` |  |
 | alertmanager.service.labels | object | `{}` |  |
 | alertmanager.service.clusterIP | string | `""` |  |
@@ -402,9 +403,10 @@ helm install monitoring chart/
 | alertmanager.serviceMonitor.additionalEndpoints | list | `[]` |  |
 | alertmanager.alertmanagerSpec.persistentVolumeClaimRetentionPolicy | object | `{}` |  |
 | alertmanager.alertmanagerSpec.podMetadata | object | `{}` |  |
+| alertmanager.alertmanagerSpec.serviceName | string | `nil` |  |
 | alertmanager.alertmanagerSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | alertmanager.alertmanagerSpec.image.repository | string | `"ironbank/opensource/prometheus/alertmanager"` |  |
-| alertmanager.alertmanagerSpec.image.tag | string | `"v0.28.0"` |  |
+| alertmanager.alertmanagerSpec.image.tag | string | `"v0.28.1"` |  |
 | alertmanager.alertmanagerSpec.image.sha | string | `""` |  |
 | alertmanager.alertmanagerSpec.useExistingSecret | bool | `false` |  |
 | alertmanager.alertmanagerSpec.secrets | list | `[]` |  |
@@ -463,7 +465,7 @@ helm install monitoring chart/
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.registry | string | `"registry1.dso.mil"` |  |
 | grafana.image.repository | string | `"ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"11.5.2"` |  |
+| grafana.image.tag | string | `"11.6.0"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
@@ -481,6 +483,7 @@ helm install monitoring chart/
 | grafana.defaultDashboardsEnabled | bool | `true` |  |
 | grafana.defaultDashboardsTimezone | string | `"utc"` |  |
 | grafana.defaultDashboardsEditable | bool | `true` |  |
+| grafana.defaultDashboardsInterval | string | `"1m"` |  |
 | grafana.adminUser | string | `"admin"` |  |
 | grafana.adminPassword | string | `"prom-operator"` |  |
 | grafana."grafana.ini"."auth.generic_oauth".enabled | bool | `false` |  |
@@ -506,7 +509,7 @@ helm install monitoring chart/
 | grafana.serviceAccount.autoMount | bool | `true` |  |
 | grafana.sidecar.image.registry | string | `"registry1.dso.mil"` |  |
 | grafana.sidecar.image.repository | string | `"ironbank/kiwigrid/k8s-sidecar"` |  |
-| grafana.sidecar.image.tag | string | `"1.30.0"` |  |
+| grafana.sidecar.image.tag | string | `"1.30.3"` |  |
 | grafana.sidecar.resources.limits.cpu | string | `"100m"` |  |
 | grafana.sidecar.resources.limits.memory | string | `"100Mi"` |  |
 | grafana.sidecar.resources.requests.cpu | string | `"100m"` |  |
@@ -529,6 +532,7 @@ helm install monitoring chart/
 | grafana.sidecar.datasources.annotations | object | `{}` |  |
 | grafana.sidecar.datasources.httpMethod | string | `"POST"` |  |
 | grafana.sidecar.datasources.createPrometheusReplicasDatasources | bool | `false` |  |
+| grafana.sidecar.datasources.prometheusServiceName | string | `"prometheus-operated"` |  |
 | grafana.sidecar.datasources.label | string | `"grafana_datasource"` |  |
 | grafana.sidecar.datasources.labelValue | string | `"1"` |  |
 | grafana.sidecar.datasources.exemplarTraceIdDestinations | object | `{}` |  |
@@ -581,6 +585,7 @@ helm install monitoring chart/
 | kubeApiServer.enabled | bool | `true` |  |
 | kubeApiServer.tlsConfig.serverName | string | `"kubernetes"` |  |
 | kubeApiServer.tlsConfig.insecureSkipVerify | bool | `false` |  |
+| kubeApiServer.serviceMonitor.enabled | bool | `true` |  |
 | kubeApiServer.serviceMonitor.interval | string | `""` |  |
 | kubeApiServer.serviceMonitor.sampleLimit | int | `0` |  |
 | kubeApiServer.serviceMonitor.targetLimit | int | `0` |  |
@@ -600,6 +605,7 @@ helm install monitoring chart/
 | kubeApiServer.serviceMonitor.targetLabels | list | `[]` |  |
 | kubelet.enabled | bool | `true` |  |
 | kubelet.namespace | string | `"kube-system"` |  |
+| kubelet.serviceMonitor.enabled | bool | `true` |  |
 | kubelet.serviceMonitor.kubelet | bool | `true` |  |
 | kubelet.serviceMonitor.attachMetadata.node | bool | `false` |  |
 | kubelet.serviceMonitor.interval | string | `""` |  |
@@ -899,7 +905,7 @@ helm install monitoring chart/
 | snmpExporter.image.tag | string | `"v0.28.0"` |  |
 | snmpExporter.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | snmpExporter.configmapReload.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| snmpExporter.configmapReload.image.tag | string | `"v0.80.1"` |  |
+| snmpExporter.configmapReload.image.tag | string | `"v0.81.0"` |  |
 | snmpExporter.securityContext.runAsNonRoot | bool | `true` |  |
 | snmpExporter.securityContext.runAsUser | int | `1001` |  |
 | snmpExporter.securityContext.runAsGroup | int | `1001` |  |
@@ -1004,7 +1010,7 @@ helm install monitoring chart/
 | prometheusOperator.admissionWebhooks.patch.enabled | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.patch.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.admissionWebhooks.patch.image.repository | string | `"ironbank/opensource/ingress-nginx/kube-webhook-certgen"` |  |
-| prometheusOperator.admissionWebhooks.patch.image.tag | string | `"v1.5.1"` |  |
+| prometheusOperator.admissionWebhooks.patch.image.tag | string | `"v1.5.2"` |  |
 | prometheusOperator.admissionWebhooks.patch.image.sha | string | `""` |  |
 | prometheusOperator.admissionWebhooks.patch.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.admissionWebhooks.patch.resources.limits.cpu | string | `"50m"` |  |
@@ -1135,12 +1141,12 @@ helm install monitoring chart/
 | prometheusOperator.verticalPodAutoscaler.updatePolicy.updateMode | string | `"Auto"` |  |
 | prometheusOperator.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.80.1"` |  |
+| prometheusOperator.image.tag | string | `"v0.81.0"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.80.1"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.81.0"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.enableProbe | bool | `false` |  |
 | prometheusOperator.prometheusConfigReloader.resources | object | `{}` |  |
@@ -1154,7 +1160,7 @@ helm install monitoring chart/
 | prometheusOperator.secretFieldSelector | string | `"type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1"` |  |
 | prometheusOperator.kubectlImage.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.kubectlImage.repository | string | `"ironbank/opensource/kubernetes/kubectl"` |  |
-| prometheusOperator.kubectlImage.tag | string | `"v1.30.10"` |  |
+| prometheusOperator.kubectlImage.tag | string | `"v1.30.11"` |  |
 | prometheusOperator.kubectlImage.sha | string | `""` |  |
 | prometheusOperator.kubectlImage.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.automountServiceAccountToken | bool | `true` |  |
@@ -1195,6 +1201,7 @@ helm install monitoring chart/
 | prometheus.thanosServiceMonitor.bearerTokenFile | string | `nil` |  |
 | prometheus.thanosServiceMonitor.metricRelabelings | list | `[]` |  |
 | prometheus.thanosServiceMonitor.relabelings | list | `[]` |  |
+| prometheus.thanosServiceMonitor.scrapeProtocols | list | `[]` |  |
 | prometheus.thanosServiceExternal.enabled | bool | `false` |  |
 | prometheus.thanosServiceExternal.annotations | object | `{}` |  |
 | prometheus.thanosServiceExternal.labels | object | `{}` |  |
@@ -1210,6 +1217,7 @@ helm install monitoring chart/
 | prometheus.thanosServiceExternal.type | string | `"LoadBalancer"` |  |
 | prometheus.thanosServiceExternal.nodePort | int | `30901` |  |
 | prometheus.thanosServiceExternal.httpNodePort | int | `30902` |  |
+| prometheus.service.enabled | bool | `true` |  |
 | prometheus.service.annotations | object | `{}` |  |
 | prometheus.service.labels | object | `{}` |  |
 | prometheus.service.clusterIP | string | `""` |  |
@@ -1261,7 +1269,7 @@ helm install monitoring chart/
 | prometheus.ingress.hosts | list | `[]` |  |
 | prometheus.ingress.paths | list | `[]` |  |
 | prometheus.ingress.tls | list | `[]` |  |
-| prometheus.route | object | `{"main":{"additionalRules":[],"annotations":{},"apiVersion":"gateway.networking.k8s.io/v1","enabled":false,"filters":[],"hostnames":[],"httpsRedirect":false,"kind":"HTTPRoute","labels":{},"matches":[{"path":{"type":"PathPrefix","value":"/"}}],"parentRefs":[]}}` | BETA: Configure the gateway routes for the chart here. More routes can be added by adding a dictionary key like the 'main' route. Be aware that this is an early beta of this feature, kube-prometheus-stack does not guarantee this works and is subject to change. Being BETA this can/will change in the future without notice, do not use unless you want to take that risk [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io%2fv1alpha2) |
+| prometheus.route | object | `{"main":{"additionalRules":[],"annotations":{},"apiVersion":"gateway.networking.k8s.io/v1","enabled":false,"filters":[],"hostnames":[],"httpsRedirect":false,"kind":"HTTPRoute","labels":{},"matches":[{"path":{"type":"PathPrefix","value":"/"}}],"parentRefs":[]}}` | BETA: Configure the gateway routes for the chart here. More routes can be added by adding a dictionary key like the 'main' route. Be aware that this is an early beta of this feature, kube-prometheus-stack does not guarantee this works and is subject to change. Being BETA this can/will change in the future without notice, do not use unless you want to take that risk [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io%2fv1alpha2) |
 | prometheus.route.main.enabled | bool | `false` | Enables or disables the route |
 | prometheus.route.main.apiVersion | string | `"gateway.networking.k8s.io/v1"` | Set the route apiVersion, e.g. gateway.networking.k8s.io/v1 or gateway.networking.k8s.io/v1alpha2 |
 | prometheus.route.main.kind | string | `"HTTPRoute"` | Set the route kind Valid options are GRPCRoute, HTTPRoute, TCPRoute, TLSRoute, UDPRoute |
@@ -1308,6 +1316,7 @@ helm install monitoring chart/
 | prometheus.prometheusSpec.web | object | `{}` |  |
 | prometheus.prometheusSpec.exemplars | object | `{}` |  |
 | prometheus.prometheusSpec.enableFeatures | list | `[]` |  |
+| prometheus.prometheusSpec.serviceName | string | `nil` |  |
 | prometheus.prometheusSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheus.prometheusSpec.image.repository | string | `"ironbank/opensource/prometheus/prometheus"` |  |
 | prometheus.prometheusSpec.image.tag | string | `"v3.2.1"` |  |
@@ -1426,11 +1435,12 @@ helm install monitoring chart/
 | thanosRuler.ingress.hosts | list | `[]` |  |
 | thanosRuler.ingress.paths | list | `[]` |  |
 | thanosRuler.ingress.tls | list | `[]` |  |
-| thanosRuler.route | object | `{"main":{"additionalRules":[],"annotations":{},"apiVersion":"gateway.networking.k8s.io/v1","enabled":false,"filters":[],"hostnames":[],"httpsRedirect":false,"kind":"HTTPRoute","labels":{},"matches":[{"path":{"type":"PathPrefix","value":"/"}}],"parentRefs":[]}}` | BETA: Configure the gateway routes for the chart here. More routes can be added by adding a dictionary key like the 'main' route. Be aware that this is an early beta of this feature, kube-prometheus-stack does not guarantee this works and is subject to change. Being BETA this can/will change in the future without notice, do not use unless you want to take that risk [[ref]](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io%2fv1alpha2) |
+| thanosRuler.route | object | `{"main":{"additionalRules":[],"annotations":{},"apiVersion":"gateway.networking.k8s.io/v1","enabled":false,"filters":[],"hostnames":[],"httpsRedirect":false,"kind":"HTTPRoute","labels":{},"matches":[{"path":{"type":"PathPrefix","value":"/"}}],"parentRefs":[]}}` | BETA: Configure the gateway routes for the chart here. More routes can be added by adding a dictionary key like the 'main' route. Be aware that this is an early beta of this feature, kube-prometheus-stack does not guarantee this works and is subject to change. Being BETA this can/will change in the future without notice, do not use unless you want to take that risk [[ref]](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io%2fv1alpha2) |
 | thanosRuler.route.main.enabled | bool | `false` | Enables or disables the route |
 | thanosRuler.route.main.apiVersion | string | `"gateway.networking.k8s.io/v1"` | Set the route apiVersion, e.g. gateway.networking.k8s.io/v1 or gateway.networking.k8s.io/v1alpha2 |
 | thanosRuler.route.main.kind | string | `"HTTPRoute"` | Set the route kind Valid options are GRPCRoute, HTTPRoute, TCPRoute, TLSRoute, UDPRoute |
 | thanosRuler.route.main.httpsRedirect | bool | `false` | create http route for redirect (https://gateway-api.sigs.k8s.io/guides/http-redirect-rewrite/#http-to-https-redirects) # Take care that you only enable this on the http listener of the gateway to avoid an infinite redirect. # matches, filters and additionalRules will be ignored if this is set to true. Be are |
+| thanosRuler.service.enabled | bool | `true` |  |
 | thanosRuler.service.annotations | object | `{}` |  |
 | thanosRuler.service.labels | object | `{}` |  |
 | thanosRuler.service.clusterIP | string | `""` |  |
@@ -1463,6 +1473,7 @@ helm install monitoring chart/
 | thanosRuler.serviceMonitor.relabelings | list | `[]` |  |
 | thanosRuler.serviceMonitor.additionalEndpoints | list | `[]` |  |
 | thanosRuler.thanosRulerSpec.podMetadata | object | `{}` |  |
+| thanosRuler.thanosRulerSpec.serviceName | string | `nil` |  |
 | thanosRuler.thanosRulerSpec.image.registry | string | `"registry1.dso.mil"` |  |
 | thanosRuler.thanosRulerSpec.image.repository | string | `"ironbank/opensource/thanos/thanos"` |  |
 | thanosRuler.thanosRulerSpec.image.tag | string | `"v0.37.2"` |  |

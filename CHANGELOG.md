@@ -3,6 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [70.4.1-bb.0] 2025-04-01
+
+### Updated
+
+- Updated gluon 0.5.14 -> 0.5.15
+- Updated grafana-plugins 11.5.2 -> 11.6.0
+- Updated k8s-sidecar 1.30.0 -> 1.30.3
+- Updated kube-webhook-certgen v1.5.1 -> v1.5.2
+- Updated kubectl v1.30.10 -> v1.30.11
+- Updated prometheus-config-reloader v0.80.1 -> v0.81.0
+- Updated prometheus-operator v0.80.1 -> v0.81.0
+- Updated alertmanager v0.28.0 -> v0.28.1
+
 ## [69.7.3-bb.1] - 2025-03-19
 
 ### Added
