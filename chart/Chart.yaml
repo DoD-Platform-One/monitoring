@@ -31,7 +31,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 70.4.1-bb.0
+version: 70.7.0-bb.0
 appVersion: v0.81.0
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
@@ -77,7 +77,7 @@ annotations:
       condition: grafana.enabled
       dependency: grafana
     - name: kubectl
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.11
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.3
       condition: prometheusOperator.enabled
     - name: kube-state-metrics
       image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.15.0
@@ -90,13 +90,13 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.2.1
       condition: prometheus.enabled
     - name: prometheus-config-reloader
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.81.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.82.0
       condition: prometheusOperator.enabled
     - name: prometheus-operator
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.81.0
       condition: prometheusOperator.enabled
     - name: prometheus-node-exporter
-      image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.9.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.9.1
       condition: nodeExporter.enabled
       dependency: prometheus-node-exporter
     - name: prometheus-snmp-exporter
@@ -108,10 +108,10 @@ annotations:
       condition: grafana.enabled
       dependency: grafana
     - name: thanos
-      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.37.2
+      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.38.0
       condition: prometheusOperator.enabled
     - name: thanos-ruler
-      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.37.2
+      image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.38.0
       condition: thanosRuler.enabled
 
 dependencies:
@@ -119,7 +119,7 @@ dependencies:
     version: "0.0.0"
     condition: crds.enabled
   - name: kube-state-metrics
-    version: "5.31.*"
+    version: "5.32.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: kubeStateMetrics.enabled
   - name: prometheus-node-exporter
@@ -127,7 +127,7 @@ dependencies:
     repository: https://prometheus-community.github.io/helm-charts
     condition: nodeExporter.enabled
   - name: grafana
-    version: "8.11.*"
+    version: "8.12.*"
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
@@ -135,7 +135,7 @@ dependencies:
     repository: oci://registry1.dso.mil/bigbang
   - name: prometheus-windows-exporter
     repository: https://prometheus-community.github.io/helm-charts
-    version: "0.9.*"
+    version: "0.10.*"
     condition: windowsMonitoring.enabled
   - name: prometheus-snmp-exporter
     repository: file://./deps/prometheus-snmp-exporter
