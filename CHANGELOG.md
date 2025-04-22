@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [70.7.0-bb.0] (2025-04-19)
+### Changed
+- grafana 8.11.4 -> 8.12.1
+- kube-prometheus-stack 70.4.1 -> 70.7.0
+- kube-state-metrics 5.31.2 -> 5.32.0
+- prometheus-windows-exporter 0.9.2 -> 0.10.0
+- quay.io/prometheus-operator/prometheus-config-reloader v0.81.0 -> v0.82.0
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.30.11 -> v1.32.3
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.81.0 -> v0.82.0
+- registry1.dso.mil/ironbank/opensource/prometheus/node-exporter v1.9.0 -> v1.9.1
+- registry1.dso.mil/ironbank/opensource/thanos/thanos v0.37.2 -> v0.38.0
+
 ## [70.4.1-bb.0] 2025-04-01
 
 ### Updated
