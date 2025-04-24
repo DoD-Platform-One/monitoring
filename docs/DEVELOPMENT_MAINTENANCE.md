@@ -117,7 +117,8 @@ Testing Steps:
 
 - Login with SSO to Prometheus (if you are not prompted for an SSO login, this could indicate a problem with the authservice connection), check the Status -> Targets page and validate that all targets show as up
 - Login with SSO to Alertmanager and validate that alerts are firing (if the main page shows no alert groups check the Prometheus logs and see if there are errors with that connection)
-- Login with SSO to Grafana and take a look at some dashboards, validate that data is loaded
+- Login with SSO to Grafana and take a look at some dashboards, validate that data is loaded.
+  - In Grafana got to the Datasources, click on Prometheus, scroll to the bottom and click on "Save and Test" to test the datasource connection to ensure no error.
 - Login to Kiali and go to applications, pick monitoring namespace and prometheus for the application, validate that there is data in some of the inbound/outbound metrics fields - also validate Kiali is showing no red bells on the top bar (this could indicate connection issues with Prometheus/Grafana)
 
 When in doubt with any testing or upgrade steps ask one of the CODEOWNERS for assistance.
