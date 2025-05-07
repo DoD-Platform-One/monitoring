@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [71.2.0-bb.0] (2025-05-03)
+### Changed
+- gluon 0.5.15 -> 0.5.17
+- grafana 8.12.1 -> 8.14.2
+- kube-prometheus-stack 70.7.0 -> 71.2.0
+- kube-state-metrics 5.32.0 -> 5.33.0
+- prometheus-node-exporter 4.45.3 -> 4.46.0
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 11.6.0 -> 11.6.1
+- registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen v1.5.2 -> v1.5.3
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.32.3 -> v1.32.4
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.81.0 -> v0.82.0
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus v3.2.1 -> v3.3.1
+- registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter v0.28.0 -> v0.29.0
+
 ## [70.7.0-bb.0] (2025-04-19)
 ### Changed
 - grafana 8.11.4 -> 8.12.1
