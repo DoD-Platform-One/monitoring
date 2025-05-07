@@ -31,8 +31,8 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 70.7.0-bb.0
-appVersion: v0.81.0
+version: 71.2.0-bb.0
+appVersion: v0.82.0
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -54,8 +54,8 @@ annotations:
     - [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
     - [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
   bigbang.dev/applicationVersions: |
-    - Prometheus: 3.2.1
-    - Grafana: 11.6.0
+    - Prometheus: 3.3.1
+    - Grafana: 11.6.1
     - Alertmanager: 0.28.1
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
@@ -66,7 +66,7 @@ annotations:
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
     - name: grafana
-      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:11.6.0
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:11.6.1
       condition: grafana.enabled
       dependency: grafana
     - name: init-chown-data
@@ -77,30 +77,30 @@ annotations:
       condition: grafana.enabled
       dependency: grafana
     - name: kubectl
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.3
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.4
       condition: prometheusOperator.enabled
     - name: kube-state-metrics
       image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.15.0
       condition: kubeStateMetrics.enabled
       dependency: kube-state-metrics
     - name: kube-webhook-certgen
-      image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.5.2
+      image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.5.3
       condition: prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
-      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.2.1
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.3.1
       condition: prometheus.enabled
     - name: prometheus-config-reloader
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.82.0
       condition: prometheusOperator.enabled
     - name: prometheus-operator
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.81.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.82.0
       condition: prometheusOperator.enabled
     - name: prometheus-node-exporter
       image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.9.1
       condition: nodeExporter.enabled
       dependency: prometheus-node-exporter
     - name: prometheus-snmp-exporter
-      image: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter:v0.28.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter:v0.29.0
       condition: snmpExporter.enabled
       dependency: prometheus-snmp-exporter
     - name: test-framework
@@ -119,19 +119,19 @@ dependencies:
     version: "0.0.0"
     condition: crds.enabled
   - name: kube-state-metrics
-    version: "5.32.*"
+    version: "5.33.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: kubeStateMetrics.enabled
   - name: prometheus-node-exporter
-    version: "4.45.*"
+    version: "4.46.*"
     repository: https://prometheus-community.github.io/helm-charts
     condition: nodeExporter.enabled
   - name: grafana
-    version: "8.12.*"
+    version: "8.14.*"
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
-    version: "0.5.15"
+    version: "0.5.17"
     repository: oci://registry1.dso.mil/bigbang
   - name: prometheus-windows-exporter
     repository: https://prometheus-community.github.io/helm-charts
