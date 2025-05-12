@@ -3,7 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [71.2.0-bb.1] (2025-05-08)
+
+### Changed
+- kube-state-metrics 5.33.0 -> 5.33.1
+
+### Added
+- prometheus-blackbox-exporter 9.0.0
+
+### Fixed
+- typo bug in flux-podmonitor
+
 ## [71.2.0-bb.0] (2025-05-03)
+
 ### Changed
 - gluon 0.5.15 -> 0.5.17
 - grafana 8.12.1 -> 8.14.2
@@ -18,7 +30,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter v0.28.0 -> v0.29.0
 
 ## [70.7.0-bb.0] (2025-04-19)
+
 ### Changed
+
 - grafana 8.11.4 -> 8.12.1
 - kube-prometheus-stack 70.4.1 -> 70.7.0
 - kube-state-metrics 5.31.2 -> 5.32.0
