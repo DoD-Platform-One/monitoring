@@ -15,7 +15,7 @@ spec:
   selector:
     matchExpressions:
     - key: app
-      operator: in
+      operator: In
       values:
       - helm-controller
       - kustomize-controller

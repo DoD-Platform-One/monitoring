@@ -31,7 +31,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 71.2.0-bb.0
+version: 71.2.0-bb.1
 appVersion: v0.82.0
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
@@ -103,6 +103,10 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter:v0.29.0
       condition: snmpExporter.enabled
       dependency: prometheus-snmp-exporter
+    - name: prometheus-blackbox-exporter
+      image: registry1.dso.mil/ironbank/opensource/prometheus/blackbox_exporter:v0.26.0
+      condition: blackboxExporter.enabled
+      dependency: prometheus-snmp-exporter
     - name: test-framework
       image: registry1.dso.mil/ironbank/opensource/bats/bats:1.11.1
       condition: grafana.enabled
@@ -142,3 +146,8 @@ dependencies:
     version: "8.0.0"
     condition: snmpExporter.enabled
     alias: snmpExporter
+  - name: prometheus-blackbox-exporter
+    repository: https://prometheus-community.github.io/helm-charts
+    version: "9.0.0"
+    condition: blackboxExporter.enabled
+    alias: blackboxExporter

@@ -1,0 +1,17 @@
+{{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") (eq .Values.istio.mtls.mode "STRICT") .Values.blackboxExporter.enabled }}
+# Allows blackbox-exporter metrics to be scraped since metrics endpoint does not support TLS
+apiVersion: "security.istio.io/v1beta1"
+kind: PeerAuthentication
+metadata:
+  name: prometheus-blackbox-exporter-exception
+  namespace: {{ .Release.Namespace }}
+spec:
+  mtls:
+    mode: {{ .Values.istio.mtls.mode }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.blackboxExporter.nameOverride}}
+  portLevelMtls:
+    "{{ .Values.blackboxExporter.service.port }}":
+      mode: PERMISSIVE
+{{- end }}
