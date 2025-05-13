@@ -41,11 +41,11 @@ Chart.yaml](https://github.com/prometheus-community/helm-charts/blob/main/charts
 
 8. Generate the `README.md` updates by following the [guide in gluon](https://repo1.dso.mil/platform-one/big-bang/apps/library-charts/gluon/-/blob/master/docs/bb-package-readme.md).
 
-9.  Push up your changes, validate that CI passes. If there are any failures follow the information in the pipeline to make the necessary updates and reach out to the team if needed.
+9. Push up your changes, validate that CI passes. If there are any failures follow the information in the pipeline to make the necessary updates and reach out to the team if needed.
 
-10.  As part of your MR that modifies bigbang packages, you should modify the bigbang  [bigbang/tests/test-values.yaml](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/tests/test-values.yaml?ref_type=heads) against your branch for the CI/CD MR testing by enabling your packages.
+10. (_Optional, only required if package changes are expected to have cascading effects on bigbang umbrella chart_) As part of your MR that modifies bigbang packages, you should modify the bigbang [bigbang/tests/test-values.yaml](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/tests/test-values.yaml?ref_type=heads) against your branch for the CI/CD MR testing by enabling your packages.
 
-- To do this, at a minimum, you will need to follow the instructions at [bigbang/docs/developer/test-package-against-bb.md](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/docs/developer/test-package-against-bb.md?ref_type=heads) with changes for Monitoring enabled (the below is a reference, actual changes could be more depending on what changes where made to Monitoring in the pakcage MR).
+- To do this, at a minimum, you will need to follow the instructions at [bigbang/docs/developer/test-package-against-bb.md](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/docs/developer/test-package-against-bb.md?ref_type=heads) with changes for Monitoring enabled (the below is a reference, actual changes could be more depending on what changes were made to Monitoring in the package MR).
 
 ### [test-values.yaml](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/tests/test-values.yaml?ref_type=heads)
 ```yaml
@@ -65,9 +65,9 @@ monitoring:
 
 ## Manual Testing for Updates
 
->NOTE: For these testing steps it is good to do them on both a clean install and an upgrade. For clean install, point monitoring to your branch. For an upgrade do an install with monitoring pointing to the latest tag, then perform a helm upgrade with monitoring pointing to your branch.
+>NOTE: For these testing steps it is good to do them on both a clean install and an upgrade. For clean install, point Monitoring to your branch. For an upgrade do an install with Monitoring pointing to the latest tag, then perform a helm upgrade with Monitoring pointing to your branch.
 
-The following overrides can be used for a bare minimum monitoring deployment:
+The following overrides can be used for a bare minimum Monitoring deployment:
 
 ```yaml
 istio:
@@ -115,11 +115,11 @@ addons:
 
 Testing Steps:
 
-- Login with SSO to Prometheus (if you are not prompted for an SSO login, this could indicate a problem with the authservice connection), check the Status -> Targets page and validate that all targets show as up
-- Login with SSO to Alertmanager and validate that alerts are firing (if the main page shows no alert groups check the Prometheus logs and see if there are errors with that connection)
-- Login with SSO to Grafana and take a look at some dashboards, validate that data is loaded.
-  - In Grafana got to the Datasources, click on Prometheus, scroll to the bottom and click on "Save and Test" to test the datasource connection to ensure no error.
-- Login to Kiali and go to applications, pick monitoring namespace and prometheus for the application, validate that there is data in some of the inbound/outbound metrics fields - also validate Kiali is showing no red bells on the top bar (this could indicate connection issues with Prometheus/Grafana)
+- Login with SSO to [Prometheus](https://prometheus.dev.bigbang.mil) (if you are not prompted for an SSO login, this could indicate a problem with the authservice connection), check the [Status -> Targets page](https://prometheus.dev.bigbang.mil/targets?pool=) and validate that all targets show as up
+- Login with SSO to [Alertmanager](https://alertmanager.dev.bigbang.mil) and validate that alerts are firing (if the main page shows no alert groups check the Prometheus logs and see if there are errors with that connection)
+- Login with SSO to [Grafana](https://grafana.dev.bigbang.mil) and take a look at some [dashboards](https://grafana.dev.bigbang.mil/dashboards), validate that data is loaded.
+- Login to Grafana with [admin credentials](https://docs-bigbang.dso.mil/latest/docs/guides/using-bigbang/default-credentials/?h=default+cred%2F/#packages-with-built-in-authentication) go to the [Datasources](https://grafana.dev.bigbang.mil/connections/datasources), click on Prometheus, scroll to the bottom and click on "Save and Test" to test the datasource connection to ensure no error.
+- Login to [Kiali](https://kiali.dev.bigbang.mil) and go to [Applications](https://kiali.dev.bigbang.mil/kiali/console/applications?duration=60&refresh=60000&namespaces=monitoring&appName=prometheus&opLabel=or), pick `monitoring` namespace and `prometheus` for the application, validate that there is data in some of the inbound/outbound metrics fields - also validate Kiali is showing no red bells on the top bar (this could indicate connection issues with Prometheus/Grafana)
 
 When in doubt with any testing or upgrade steps ask one of the CODEOWNERS for assistance.
 

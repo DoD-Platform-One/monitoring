@@ -31,8 +31,9 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 71.2.0-bb.1
-appVersion: v0.82.0
+version: 72.2.0-bb.0
+# Please do not add a renovate hint here, since appVersion updates involves manual tasks
+appVersion: v0.82.1
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -55,7 +56,7 @@ annotations:
     - [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
   bigbang.dev/applicationVersions: |
     - Prometheus: 3.3.1
-    - Grafana: 11.6.1
+    - Grafana: 12.0.0
     - Alertmanager: 0.28.1
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
@@ -66,7 +67,7 @@ annotations:
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
     - name: grafana
-      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:11.6.1
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:12.0.0
       condition: grafana.enabled
       dependency: grafana
     - name: init-chown-data
@@ -90,10 +91,10 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.3.1
       condition: prometheus.enabled
     - name: prometheus-config-reloader
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.82.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.82.1
       condition: prometheusOperator.enabled
     - name: prometheus-operator
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.82.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.82.1
       condition: prometheusOperator.enabled
     - name: prometheus-node-exporter
       image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.9.1
@@ -131,11 +132,11 @@ dependencies:
     repository: https://prometheus-community.github.io/helm-charts
     condition: nodeExporter.enabled
   - name: grafana
-    version: "8.14.*"
+    version: "9.0.0"
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
-    version: "0.5.17"
+    version: "0.5.18"
     repository: oci://registry1.dso.mil/bigbang
   - name: prometheus-windows-exporter
     repository: https://prometheus-community.github.io/helm-charts
