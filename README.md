@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 71.2.0-bb.1](https://img.shields.io/badge/Version-71.2.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.82.0](https://img.shields.io/badge/AppVersion-v0.82.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 72.2.0-bb.0](https://img.shields.io/badge/Version-72.2.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.82.1](https://img.shields.io/badge/AppVersion-v0.82.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -313,6 +313,7 @@ helm install monitoring chart/
 | alertmanager.podDisruptionBudget.enabled | bool | `false` |  |
 | alertmanager.podDisruptionBudget.minAvailable | int | `1` |  |
 | alertmanager.podDisruptionBudget.maxUnavailable | string | `""` |  |
+| alertmanager.podDisruptionBudget.unhealthyPodEvictionPolicy | string | `"AlwaysAllow"` |  |
 | alertmanager.config.global.resolve_timeout | string | `"5m"` |  |
 | alertmanager.config.inhibit_rules[0].source_matchers[0] | string | `"severity = critical"` |  |
 | alertmanager.config.inhibit_rules[0].target_matchers[0] | string | `"severity =~ warning\|info"` |  |
@@ -466,7 +467,7 @@ helm install monitoring chart/
 | grafana.namespaceOverride | string | `""` |  |
 | grafana.image.registry | string | `"registry1.dso.mil"` |  |
 | grafana.image.repository | string | `"ironbank/big-bang/grafana/grafana-plugins"` |  |
-| grafana.image.tag | string | `"11.6.1"` |  |
+| grafana.image.tag | string | `"12.0.0"` |  |
 | grafana.image.pullSecrets[0] | string | `"private-registry"` |  |
 | grafana.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | grafana.resources.limits.cpu | string | `"100m"` |  |
@@ -906,7 +907,7 @@ helm install monitoring chart/
 | snmpExporter.image.tag | string | `"v0.29.0"` |  |
 | snmpExporter.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | snmpExporter.configmapReload.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| snmpExporter.configmapReload.image.tag | string | `"v0.82.0"` |  |
+| snmpExporter.configmapReload.image.tag | string | `"v0.82.1"` |  |
 | snmpExporter.securityContext.runAsNonRoot | bool | `true` |  |
 | snmpExporter.securityContext.runAsUser | int | `1001` |  |
 | snmpExporter.securityContext.runAsGroup | int | `1001` |  |
@@ -1112,7 +1113,10 @@ helm install monitoring chart/
 | prometheusOperator.admissionWebhooks.deployment.enabled | bool | `false` |  |
 | prometheusOperator.admissionWebhooks.deployment.replicas | int | `1` |  |
 | prometheusOperator.admissionWebhooks.deployment.strategy | object | `{}` |  |
-| prometheusOperator.admissionWebhooks.deployment.podDisruptionBudget | object | `{}` |  |
+| prometheusOperator.admissionWebhooks.deployment.podDisruptionBudget.enabled | bool | `false` |  |
+| prometheusOperator.admissionWebhooks.deployment.podDisruptionBudget.minAvailable | int | `1` |  |
+| prometheusOperator.admissionWebhooks.deployment.podDisruptionBudget.maxUnavailable | string | `""` |  |
+| prometheusOperator.admissionWebhooks.deployment.podDisruptionBudget.unhealthyPodEvictionPolicy | string | `"AlwaysAllow"` |  |
 | prometheusOperator.admissionWebhooks.deployment.revisionHistoryLimit | int | `10` |  |
 | prometheusOperator.admissionWebhooks.deployment.tls.enabled | bool | `true` |  |
 | prometheusOperator.admissionWebhooks.deployment.tls.tlsMinVersion | string | `"VersionTLS13"` |  |
@@ -1263,6 +1267,10 @@ helm install monitoring chart/
 | prometheusOperator.annotations | object | `{}` |  |
 | prometheusOperator.podLabels | object | `{}` |  |
 | prometheusOperator.podAnnotations | object | `{}` |  |
+| prometheusOperator.podDisruptionBudget.enabled | bool | `false` |  |
+| prometheusOperator.podDisruptionBudget.minAvailable | int | `1` |  |
+| prometheusOperator.podDisruptionBudget.maxUnavailable | string | `""` |  |
+| prometheusOperator.podDisruptionBudget.unhealthyPodEvictionPolicy | string | `"AlwaysAllow"` |  |
 | prometheusOperator.kubeletService.enabled | bool | `true` |  |
 | prometheusOperator.kubeletService.namespace | string | `"kube-system"` |  |
 | prometheusOperator.kubeletService.selector | string | `""` |  |
@@ -1306,12 +1314,12 @@ helm install monitoring chart/
 | prometheusOperator.verticalPodAutoscaler.updatePolicy.updateMode | string | `"Auto"` |  |
 | prometheusOperator.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-operator"` |  |
-| prometheusOperator.image.tag | string | `"v0.82.0"` |  |
+| prometheusOperator.image.tag | string | `"v0.82.1"` |  |
 | prometheusOperator.image.sha | string | `""` |  |
 | prometheusOperator.image.pullPolicy | string | `"IfNotPresent"` |  |
 | prometheusOperator.prometheusConfigReloader.image.registry | string | `"registry1.dso.mil"` |  |
 | prometheusOperator.prometheusConfigReloader.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.82.0"` |  |
+| prometheusOperator.prometheusConfigReloader.image.tag | string | `"v0.82.1"` |  |
 | prometheusOperator.prometheusConfigReloader.image.sha | string | `""` |  |
 | prometheusOperator.prometheusConfigReloader.enableProbe | bool | `false` |  |
 | prometheusOperator.prometheusConfigReloader.resources | object | `{}` |  |
@@ -1418,6 +1426,7 @@ helm install monitoring chart/
 | prometheus.podDisruptionBudget.enabled | bool | `false` |  |
 | prometheus.podDisruptionBudget.minAvailable | int | `1` |  |
 | prometheus.podDisruptionBudget.maxUnavailable | string | `""` |  |
+| prometheus.podDisruptionBudget.unhealthyPodEvictionPolicy | string | `"AlwaysAllow"` |  |
 | prometheus.thanosIngress.enabled | bool | `false` |  |
 | prometheus.thanosIngress.annotations | object | `{}` |  |
 | prometheus.thanosIngress.labels | object | `{}` |  |
@@ -1594,6 +1603,7 @@ helm install monitoring chart/
 | thanosRuler.podDisruptionBudget.enabled | bool | `false` |  |
 | thanosRuler.podDisruptionBudget.minAvailable | int | `1` |  |
 | thanosRuler.podDisruptionBudget.maxUnavailable | string | `""` |  |
+| thanosRuler.podDisruptionBudget.unhealthyPodEvictionPolicy | string | `"AlwaysAllow"` |  |
 | thanosRuler.ingress.enabled | bool | `false` |  |
 | thanosRuler.ingress.annotations | object | `{}` |  |
 | thanosRuler.ingress.labels | object | `{}` |  |

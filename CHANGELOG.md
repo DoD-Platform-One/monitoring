@@ -3,6 +3,16 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [72.2.0-bb.0] (2025-05-08)
+### Changed
+- gluon 0.5.17 -> 0.5.18
+- grafana 8.14.2 -> 9.0.0
+- kube-prometheus-stack 71.2.0 -> 72.2.0
+- quay.io/prometheus-operator/prometheus-config-reloader v0.82.0 -> v0.82.1
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 11.6.1 -> 12.0.0
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.82.0 -> v0.82.1
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.82.0 -> v0.82.1
+
 ## [71.2.0-bb.1] (2025-05-08)
 
 ### Changed
