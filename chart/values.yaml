@@ -132,6 +132,8 @@ cleanUpgrade:
     repository: ironbank/big-bang/base
     tag: 2.1.0
     sha: ""
+    imagePullSecrets:
+      - name: private-registry
   resources:
     requests:
       memory: 256Mi
@@ -1066,6 +1068,8 @@ alertmanager:
       repository: ironbank/opensource/prometheus/alertmanager
       tag: v0.28.1
       sha: ""
+      imagePullSecrets:
+        - name: private-registry
 
     ## If true then the user will be responsible to provide a secret with alertmanager configuration
     ## So when true the config part will be ignored (including templateFiles) and the one in the secret will be used
@@ -1535,6 +1539,8 @@ grafana:
       registry: registry1.dso.mil
       repository: ironbank/kiwigrid/k8s-sidecar
       tag: 1.30.3
+      imagePullSecrets:
+        - name: private-registry
 
     resources:
       limits:
@@ -1772,6 +1778,8 @@ grafana:
       tag: "9.5"
       sha: ""
       pullPolicy: IfNotPresent
+      imagePullSecrets:
+        - name: private-registry
 
     ## initChownData resource requests and limits
     ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
@@ -2719,6 +2727,8 @@ kube-state-metrics:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kubernetes/kube-state-metrics
     tag: v2.15.0
+    imagePullSecrets:
+      - name: private-registry
 
   resources:
     limits:
@@ -2856,6 +2866,8 @@ prometheus-node-exporter:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus/node-exporter
     tag: v1.9.1
+    imagePullSecrets:
+      - name: private-registry
 
   resources:
     limits:
@@ -2969,13 +2981,15 @@ snmpExporter:
   image:
     repository: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter
     tag: v0.29.0
-  imagePullSecrets:
-    - name: private-registry
+    imagePullSecrets:
+      - name: private-registry
 
   configmapReload:
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
       tag: v0.82.1
+      imagePullSecrets:
+        - name: private-registry
 
   ## Security context to be added to snmp-exporter pods
   securityContext:
@@ -3001,7 +3015,11 @@ snmpExporter:
 
 ## Configuration for Prometheus Blackbox exporter subchart
 blackboxExporter:
+
+  enabled: false
+
   nameOverride: "prometheus-blackbox-exporter"
+
   global:
     ## Global image registry to use if it needs to be overriden for some specific use cases (e.g local registries, custom images, ...)
     ##
@@ -3110,6 +3128,8 @@ blackboxExporter:
     repository: ironbank/opensource/prometheus/blackbox_exporter
     # Overrides the image tag whose default is {{ printf "v%s" .Chart.AppVersion }}
     tag: v0.26.0
+    imagePullSecrets:
+      - name: private-registry
 
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -3448,6 +3468,8 @@ blackboxExporter:
       tag: v0.82.0
       pullPolicy: IfNotPresent
       digest: ""
+      imagePullSecrets:
+        - name: private-registry
     securityContext:
       runAsUser: 1000
       runAsGroup: 1000
@@ -3791,6 +3813,8 @@ prometheusOperator:
         tag: v1.5.3
         sha: ""
         pullPolicy: IfNotPresent
+        imagePullSecrets:
+          - name: private-registry
       resources:
         limits:
           cpu: 50m
@@ -3830,6 +3854,8 @@ prometheusOperator:
         tag: 2.1.0
         sha: ""
         pullPolicy: IfNotPresent
+        imagePullSecrets:
+          - name: private-registry
       resources:
         limits:
           cpu: 50m
@@ -4227,6 +4253,8 @@ prometheusOperator:
     tag: v0.82.1
     sha: ""
     pullPolicy: IfNotPresent
+    imagePullSecrets:
+      - name: private-registry
 
   ## Prometheus image to use for prometheuses managed by the operator
   ##
@@ -4252,6 +4280,8 @@ prometheusOperator:
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
       tag: v0.82.1
       sha: ""
+      imagePullSecrets:
+        - name: private-registry
 
     # add prometheus config reloader liveness and readiness probe. Default: false
     enableProbe: false
@@ -4929,6 +4959,8 @@ prometheus:
       repository: ironbank/opensource/prometheus/prometheus
       tag: v3.3.1
       sha: ""
+      imagePullSecrets:
+        - name: private-registry
 
     ## Tolerations for use with node taints
     ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
@@ -6014,6 +6046,8 @@ thanosRuler:
       repository: ironbank/opensource/thanos/thanos
       tag: v0.38.0
       sha: ""
+      imagePullSecrets:
+        - name: private-registry
 
     ## Namespaces to be selected for PrometheusRules discovery.
     ## If nil, select own namespace. Namespaces to be selected for ServiceMonitor discovery.
