@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 72.2.0-bb.2](https://img.shields.io/badge/Version-72.2.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.82.1](https://img.shields.io/badge/AppVersion-v0.82.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 72.2.0-bb.3](https://img.shields.io/badge/Version-72.2.0--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.82.1](https://img.shields.io/badge/AppVersion-v0.82.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -840,9 +840,9 @@ helm install monitoring chart/
 | kube-state-metrics.image.tag | string | `"v2.15.0"` |  |
 | kube-state-metrics.image.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | kube-state-metrics.resources.limits.cpu | string | `"100m"` |  |
-| kube-state-metrics.resources.limits.memory | string | `"128Mi"` |  |
+| kube-state-metrics.resources.limits.memory | string | `"256Mi"` |  |
 | kube-state-metrics.resources.requests.cpu | string | `"100m"` |  |
-| kube-state-metrics.resources.requests.memory | string | `"128Mi"` |  |
+| kube-state-metrics.resources.requests.memory | string | `"256Mi"` |  |
 | kube-state-metrics.namespaceOverride | string | `""` |  |
 | kube-state-metrics.rbac.create | bool | `true` |  |
 | kube-state-metrics.podSecurityPolicy.enabled | bool | `false` |  |
