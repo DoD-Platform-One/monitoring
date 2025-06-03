@@ -31,7 +31,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 72.2.0-bb.2
+version: 72.2.0-bb.3
 # Please do not add a renovate hint here, since appVersion updates involves manual tasks
 appVersion: v0.82.1
 kubeVersion: ">=1.19.0-0"
