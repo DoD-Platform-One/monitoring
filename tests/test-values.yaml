@@ -3,6 +3,11 @@
 #########################
 # monitoring:
 #   enabled: false
+bbctl:
+  enabled: false
+  values:
+    bbtests:
+      enabled: false
 grafana:
   enabled: false
 kyvernoReporter:
@@ -25,6 +30,9 @@ addons:
 ########################
 monitoring:
   enabled: true
+  values:
+    bbtests:
+      enabled: true
 kyverno:
   values:
     bbtests:

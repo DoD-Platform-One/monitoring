@@ -3,6 +3,25 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [73.2.0-bb.0] (2025-06-06)
+### Changed
+- gluon 0.5.18 -> 0.6.2
+- grafana 9.0.0 -> 9.2.2
+- kube-prometheus-stack 72.2.0 -> 73.2.0
+- kube-state-metrics 5.33.2 -> 5.36.0
+- prometheus-blackbox-exporter 9.0.0 -> 10.1.0
+- prometheus-node-exporter 4.46.1 -> 4.47.0
+- quay.io/prometheus-operator/prometheus-config-reloader v0.82.1 -> v0.83.0
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 12.0.0 -> 12.0.1
+- registry1.dso.mil/ironbank/opensource/bats/bats 1.11.1 -> 1.12.0
+- registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen v1.5.3 -> v1.5.4
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.32.4 -> v1.32.5
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.82.1 -> v0.83.0
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.82.0 -> v0.83.0
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.82.1 -> v0.83.0
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus v3.3.1 -> v3.4.1
+- registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal 9.5 -> 9.6
+
 ## [72.2.0-bb.3] (2025-06-02)
 ### Changed
 - Increase kube-state-metrics resource limits/requests to 256Mi
