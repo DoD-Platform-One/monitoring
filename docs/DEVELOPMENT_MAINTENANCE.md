@@ -70,6 +70,9 @@ monitoring:
 The following overrides can be used for a bare minimum Monitoring deployment:
 
 ```yaml
+sso:           
+  url: https://login.dso.mil/auth/realms/baby-yoda
+
 monitoring:
   enabled: true
   git:
