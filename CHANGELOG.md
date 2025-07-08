@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [75.6.1-bb.0] (2025-06-28)
+### Changed
+- gluon 0.6.2 -> 0.6.3
+- grafana 9.2.2 -> 9.2.9
+- kube-prometheus-stack 73.2.0 -> 75.6.1
+- kube-state-metrics 5.36.0 -> 6.1.0
+- prometheus-blackbox-exporter 10.1.0 -> 11.0.0
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 12.0.1 -> 12.0.2
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar 1.30.3 -> 1.30.5
+- registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics v2.15.0 -> v2.16.0
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.32.5 -> v1.32.6
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus v3.4.1 -> v3.4.2
+- registry1.dso.mil/ironbank/opensource/thanos/thanos v0.38.0 -> v0.39.0
+
 ## [73.2.0-bb.0] (2025-06-06)
 ### Changed
 - gluon 0.5.18 -> 0.6.2
