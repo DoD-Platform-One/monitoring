@@ -3,8 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [75.6.1-bb.2] (2025-07-29)
+### Changed
+- Set crds.enabled=false by default as CRD creation is now handled by the prometheus-operator-crds chart
+
 ## [75.6.1-bb.1] (2025-07-08)
-### Updated
+### Changed
 - Updated Alloy network policy pod selector
 
 ## [75.6.1-bb.0] (2025-06-28)

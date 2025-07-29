@@ -70,7 +70,7 @@ monitoring:
 The following overrides can be used for a bare minimum Monitoring deployment:
 
 ```yaml
-sso:           
+sso:
   url: https://login.dso.mil/auth/realms/baby-yoda
 
 monitoring:
@@ -135,6 +135,8 @@ This provides a log of these changes to make updates from upstream faster.
   ```yaml
   nameOverride: "kube-prometheus-stack"
   ```
+
+- Ensure `crds.enabled=false` since this is handled by the prometheus-operator-crds chart
 
 - Ensure `alertmanager.serviceAccount.automountServiceAccountToken: false` is set.
 
@@ -241,7 +243,7 @@ This provides a log of these changes to make updates from upstream faster.
 - Ensure the `blackboxExporter` and `prometheus-blackbox-exporter` configuration is present and that the `prometheus-blackbox-exporter.image.tag` and `prometheus-blackbox-exporter.configmapReload.image.tag` are set to the intended versions. Consult the upstream `prometheus-blackbox-exporter` chart version for the correct versions. The following is an example of the configuration block for the SNMP exporter:
 
 ```yaml
-# Enable blackbox exporter 
+# Enable blackbox exporter
 blackboxExporter:
   enabled: false
 
