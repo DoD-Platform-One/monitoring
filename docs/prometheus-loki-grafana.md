@@ -8,7 +8,7 @@ Prometheus is an open-source time-series database and alerting platform. To push
 
 ### What is Loki
 
-Loki is a horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus. It is designed to be very cost effective and easy to operate. It does not index the contents of the logs, but rather a set of labels for each log stream. You can use Grafana to consume the logs. Loki supports clients such as Fluentd, Fluentbit, Logstash and Promtail. 
+Loki is a horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus. It is designed to be very cost effective and easy to operate. It does not index the contents of the logs, but rather a set of labels for each log stream. You can use Grafana to consume the logs. Loki supports clients such as Fluentd, Fluentbit, Logstash, and Alloy. 
 
 > For a detailed look at the [Package Architecture for Loki](https://docs-bigbang.dso.mil/latest/docs/understanding-bigbang/package-architecture/loki/)
 
@@ -17,13 +17,6 @@ Loki is a horizontally scalable, highly available, multi-tenant log aggregation 
 Grafana is an open source interactive data-visualization platform, developed by Grafana Labs, which allows users to see their data via charts and graphs that are unified into one dashboard (or multiple dashboards!) for easier interpretation and understanding.
 
 > For a detailed look at the [Package Architecture for Grafana](https://docs-bigbang.dso.mil/latest/docs/understanding-bigbang/package-architecture/monitoring/)
-
-### What is Promtail
-
-Promtail is a log collection agent built for Loki.
-
-> For a detailed look at the [Package Architecture for Promtail](https://docs-bigbang.dso.mil/latest/docs/understanding-bigbang/package-architecture/promtail/)
-
 
 ## Enable packages
 
