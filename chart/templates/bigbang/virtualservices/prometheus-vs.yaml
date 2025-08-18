@@ -1,4 +1,4 @@
-{{- if and .Values.istio.enabled .Values.istio.prometheus.enabled -}}
+{{- if and .Values.istio.enabled .Values.prometheus.enabled .Values.istio.prometheus.enabled -}}
 {{- $serviceName := printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "prometheus" }}
 {{- $servicePort := .Values.prometheus.service.port -}}
 apiVersion: networking.istio.io/v1beta1
