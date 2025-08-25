@@ -9,15 +9,49 @@ flux:
   namespace: flux-system
 
 networkPolicies:
-  enabled: false
-  controlPlaneCidr: 0.0.0.0/0
-  ingressLabels:
-    app: istio-ingressgateway
-    istio: ingressgateway
-  # -- This toggle enables a NetworkPolicy that will allow external egress providing the ability to send alerts to external resources like MM/Slack/etc.
-  alertmanager:
-    enableEgress: false
+  enabled: true
   additionalPolicies: []
+  egress:
+    from:
+      kube-prometheus-stack-prometheus-operator:
+        to:
+          definition:
+            # -- The operator must be able to read Prometheus/Alertmanager CRs from
+            # the k8s API
+            kubeAPI: true
+      kube-state-metrics:
+        to:
+          definition:
+            # -- Kube-state-metrics derives its metrics from the k8s API
+            kubeAPI: true
+      prometheus:
+        to:
+          definition:
+            # -- Prometheus must be able to read ServiceMonitor and PodMonitor resources
+            # from the k8s API
+            kubeAPI: true
+          k8s:
+            # -- Prometheus must be able to scrape any workload in the cluster
+            "*": true
+      kube-prometheus-stack-admission-create:
+        to:
+          definition:
+            # -- The admission create job needs to be able to create the admission
+            # webhooks for prometheus CRDs so it needs access to the k8s API
+            kubeAPI: true
+      kube-prometheus-stack-admission-patch:
+        to:
+          definition:
+            # -- The admission patch job needs to be able to update the admission
+            # webhooks for prometheus CRDs so it needs access to the k8s API
+            kubeAPI: true
+      alertmanager:
+        to:
+          cidr:
+            # -- Alertmanager can be configured to integrate with many external
+            # alerting systems, so we define this policy but set it to false; set
+            # it to true if you need this connectivity
+            0.0.0.0/0: false
 
 # Toggles networkpolicy needed for openshift
 openshift: false
