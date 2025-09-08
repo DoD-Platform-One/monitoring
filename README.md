@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 75.6.1-bb.4](https://img.shields.io/badge/Version-75.6.1--bb.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.83.0](https://img.shields.io/badge/AppVersion-v0.83.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 75.6.1-bb.5](https://img.shields.io/badge/Version-75.6.1--bb.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.83.0](https://img.shields.io/badge/AppVersion-v0.83.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -55,8 +55,14 @@ helm install monitoring chart/
 | networkPolicies.egress.from.kube-state-metrics.to.definition.kubeAPI | bool | `true` | Kube-state-metrics derives its metrics from the k8s API |
 | networkPolicies.egress.from.prometheus.to.definition.kubeAPI | bool | `true` | Prometheus must be able to read ServiceMonitor and PodMonitor resources from the k8s API |
 | networkPolicies.egress.from.prometheus.to.k8s.* | bool | `true` | Prometheus must be able to scrape any workload in the cluster |
-| networkPolicies.egress.from.kube-prometheus-stack-admission-create.to.definition.kubeAPI | bool | `true` | The admission create job needs to be able to create the admission webhooks for prometheus CRDs so it needs access to the k8s API |
-| networkPolicies.egress.from.kube-prometheus-stack-admission-patch.to.definition.kubeAPI | bool | `true` | The admission patch job needs to be able to update the admission webhooks for prometheus CRDs so it needs access to the k8s API |
+| networkPolicies.egress.from.admission-create-job.podSelector.matchLabels.app | string | `"kube-prometheus-stack-admission-create"` |  |
+| networkPolicies.egress.from.admission-create-job.metadata.annotations."helm.sh/hook" | string | `"pre-install,pre-upgrade"` |  |
+| networkPolicies.egress.from.admission-create-job.metadata.annotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation,hook-succeeded"` |  |
+| networkPolicies.egress.from.admission-create-job.to.definition.kubeAPI | bool | `true` | The admission create job needs to be able to create the admission webhooks for prometheus CRDs so it needs access to the k8s API |
+| networkPolicies.egress.from.admission-patch-job.podSelector.matchLabels.app | string | `"kube-prometheus-stack-admission-patch"` |  |
+| networkPolicies.egress.from.admission-patch-job.metadata.annotations."helm.sh/hook" | string | `"post-install,post-upgrade"` |  |
+| networkPolicies.egress.from.admission-patch-job.metadata.annotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation,hook-succeeded"` |  |
+| networkPolicies.egress.from.admission-patch-job.to.definition.kubeAPI | bool | `true` | The admission patch job needs to be able to update the admission webhooks for prometheus CRDs so it needs access to the k8s API |
 | networkPolicies.egress.from.alertmanager.to.cidr."0.0.0.0/0" | bool | `false` | Alertmanager can be configured to integrate with many external alerting systems, so we define this policy but set it to false; set it to true if you need this connectivity |
 | openshift | bool | `false` |  |
 | bbtests.enabled | bool | `false` |  |

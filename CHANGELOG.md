@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [75.6.1-bb.5] (2025-09-05)
+### Changed
+- Updated netpols to add helm hooks where appropriate
+- gluon 0.8.0 -> 0.7.0 (downgraded due to issue with cypress testing on 0.8.x)
+- bb-common 0.5.1 -> 0.6.1
+
 ## [75.6.1-bb.4] (2025-08-18)
 ### Changed
 - Refactored monitoring to use bb-common netpol implementation

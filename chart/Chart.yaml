@@ -31,7 +31,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 75.6.1-bb.4
+version: 75.6.1-bb.5
 # Please do not add a renovate hint here, since appVersion updates involves manual tasks
 appVersion: v0.83.0
 kubeVersion: ">=1.19.0-0"
@@ -121,7 +121,7 @@ annotations:
 
 dependencies:
   - name: bb-common
-    version: "0.5.1"
+    version: "0.6.1"
     repository: oci://registry1.dso.mil/bigbang
   - name: crds
     version: "0.0.0"
@@ -139,7 +139,7 @@ dependencies:
     repository: https://grafana.github.io/helm-charts
     condition: grafana.enabled
   - name: gluon
-    version: "0.8.0"
+    version: "0.7.0"
     repository: oci://registry1.dso.mil/bigbang
   - name: prometheus-windows-exporter
     repository: https://prometheus-community.github.io/helm-charts
