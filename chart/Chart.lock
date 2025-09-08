@@ -1,7 +1,7 @@
 dependencies:
 - name: bb-common
   repository: oci://registry1.dso.mil/bigbang
-  version: 0.5.1
+  version: 0.6.1
 - name: crds
   repository: ""
   version: 0.0.0
@@ -16,7 +16,7 @@ dependencies:
   version: 9.2.9
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
-  version: 0.8.0
+  version: 0.7.0
 - name: prometheus-windows-exporter
   repository: https://prometheus-community.github.io/helm-charts
   version: 0.10.3
@@ -26,5 +26,5 @@ dependencies:
 - name: prometheus-blackbox-exporter
   repository: https://prometheus-community.github.io/helm-charts
   version: 11.0.0
-digest: sha256:96837a960a6231cb40292a411193ec92b61e7d9337e6b6c7cb395bed7e5b3530
-generated: "2025-08-18T13:31:06.732616619-05:00"
+digest: sha256:8cfc9e698c6d0e4f79a94b53fa533aca1ee83619bc30f511b76088b33d129cd3
+generated: "2025-09-08T09:18:11.637916133-05:00"

@@ -33,16 +33,21 @@ networkPolicies:
           k8s:
             # -- Prometheus must be able to scrape any workload in the cluster
             "*": true
-      kube-prometheus-stack-admission-create:
+      admission-create-job:
+        podSelector:
+          matchLabels:
+            app: kube-prometheus-stack-admission-create
+        metadata:
+          annotations:
+            helm.sh/hook: pre-install,pre-upgrade
+            helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
         to:
+          k8s:
+            # -- Since this is a pre-install/pre-upgrade job, the default istio
+            # egress netpol may not be in effect at the time it runs
+            istio-system/istiod:15012: true
           definition:
             # -- The admission create job needs to be able to create the admission
-            # webhooks for prometheus CRDs so it needs access to the k8s API
-            kubeAPI: true
-      kube-prometheus-stack-admission-patch:
-        to:
-          definition:
-            # -- The admission patch job needs to be able to update the admission
             # webhooks for prometheus CRDs so it needs access to the k8s API
             kubeAPI: true
       alertmanager:
