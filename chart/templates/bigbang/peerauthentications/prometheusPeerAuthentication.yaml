@@ -1,4 +1,4 @@
-{{- if and .Values.prometheus.prometheusSpec.replicas (gt (int .Values.prometheus.prometheusSpec.replicas) 1) }}
+{{- if and .Values.upstream.prometheus.prometheusSpec.replicas (gt (int .Values.upstream.prometheus.prometheusSpec.replicas) 1) }}
 {{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") (eq .Values.istio.mtls.mode "STRICT") }}
 # Allows prometheus to scrape metrics port over cleartext since metrics endpoint does not support TLS
 apiVersion: "security.istio.io/v1beta1"
@@ -15,10 +15,10 @@ spec:
   portLevelMtls:
     "8080":
       mode: PERMISSIVE
-    "{{ .Values.prometheus.service.port }}":
+    "{{ .Values.upstream.prometheus.service.port }}":
       mode: PERMISSIVE
-  {{- if .Values.prometheus.thanosService.enabled }}
-    "{{ .Values.prometheus.thanosService.httpPort}}":
+  {{- if .Values.upstream.prometheus.thanosService.enabled }}
+    "{{ .Values.upstream.prometheus.thanosService.httpPort}}":
       mode: PERMISSIVE
   {{- end }}
 

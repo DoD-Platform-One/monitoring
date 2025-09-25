@@ -1,0 +1,40 @@
+sso:
+  name: P1 SSO
+  url: https://login.dso.mil/auth/realms/baby-yoda
+
+monitoring:
+  enabled: true
+  git:
+    tag: null
+    branch: renovate/ironbank
+  sso:
+    enabled: true
+    prometheus:
+      client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-prometheus
+    alertmanager:
+      client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-alertmanager
+  values:
+    istio:
+      enabled: true
+    upstream:
+      alertmanager:
+        enabled: true
+grafana:
+  enabled: true
+  sso:
+    enabled: true
+    grafana:
+      client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-grafana
+      scopes: "openid Grafana"
+  values:
+    istio:
+      enabled: true
+kiali:
+  enabled: true
+  sso:
+    enabled: true
+    client_id: platform1_a8604cc9-f5e9-4656-802d-d05624370245_bb8-kiali
+
+addons:
+  authservice:
+    enabled: true

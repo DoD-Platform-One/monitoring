@@ -23,7 +23,7 @@ You will also need to provide a variety of other configuration options. Here are
 - `monitoring.values.networkPolicies.additionalPolicies` to allow the SNMP exporter to communicate with an external SNMP server
 - `monitoring.values.snmpExporter.config` to configure the SNMP exporter to scrape the desired SNMP metrics
 - `monitoring.values.snmpExporter.serviceMonitor` to configure the service monitor for the SNMP exporter
-- `monitoring.values.prometheusSpec.additionalScrapeConfigs` to configure Prometheus to scrape the SNMP exporter and relabel the results
+- `monitoring.Values.upstream.prometheusSpec.additionalScrapeConfigs` to configure Prometheus to scrape the SNMP exporter and relabel the results
 
 ## Example Configuration
 

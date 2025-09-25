@@ -1344,7 +1344,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 - pulled in upstream prometheus-node-exporter-1.14.2 chart
-- set `.Values.prometheus-node-exporter.hostNetwork` and `.Values.prometheus-node-exporter.hostPID` to `false` in order to resolve OPA violations with prometheus node exporter daemonset
+- set `.Values.upstream.prometheus-node-exporter.hostNetwork` and `.Values.upstream.prometheus-node-exporter.hostPID` to `false` in order to resolve OPA violations with prometheus node exporter daemonset
 
 ## [14.0.0-bb.3]
 

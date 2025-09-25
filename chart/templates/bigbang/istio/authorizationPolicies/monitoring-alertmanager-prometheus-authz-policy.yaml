@@ -7,7 +7,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      alertmanager: {{ template "kube-prometheus-stack.fullname" . }}-alertmanager
+      alertmanager: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "kube-alertmanager" }}
   action: ALLOW
   rules:
   - from:
@@ -17,16 +17,8 @@ spec:
     - operation:
         methods: ["GET", "POST"]
         paths: ["/*"]
-  - to:
-    - operation:
-        ports: ["{{ .Values.alertmanager.service.port }}", "8080"]
-  - from:
-    - source:
-        namespaces: ["{{ template "kube-prometheus-stack.namespace" . }}"]
-    to:
+        ports: ["{{ .Values.upstream.alertmanager.service.port }}", "8080"]
     - operation:
         methods: ["POST"]
-  - to:
-    - operation:
         ports: ["9094"]
 {{- end }}

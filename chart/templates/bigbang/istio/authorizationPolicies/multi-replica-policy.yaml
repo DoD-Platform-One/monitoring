@@ -1,4 +1,4 @@
-{{- if and .Values.prometheus.prometheusSpec.replicas (gt (int .Values.prometheus.prometheusSpec.replicas) 1) .Values.istio.enabled .Values.istio.hardened.enabled }}
+{{- if and .Values.upstream.prometheus.prometheusSpec.replicas (gt (int .Values.upstream.prometheus.prometheusSpec.replicas) 1) .Values.istio.enabled .Values.istio.hardened.enabled }}
 {{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") -}}
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
@@ -15,7 +15,7 @@ spec:
     - source:
         namespaces:
           - "{{ template "kube-prometheus-stack.namespace" . }}"
-        {{- if .Values.prometheus.thanosService.enabled }}
+        {{- if .Values.upstream.prometheus.thanosService.enabled }}
           - "thanos"
         {{- end }}
     to:
@@ -25,11 +25,11 @@ spec:
   - to:
     - operation:
         ports: 
-        - "{{ .Values.prometheus.service.port }}"
+        - "{{ .Values.upstream.prometheus.service.port }}"
         - "8080"
-      {{- if .Values.prometheus.thanosService.enabled }}
-        - "{{ .Values.prometheus.thanosService.httpPort}}"
-        - "{{ .Values.prometheus.thanosService.port}}"
+      {{- if .Values.upstream.prometheus.thanosService.enabled }}
+        - "{{ .Values.upstream.prometheus.thanosService.httpPort}}"
+        - "{{ .Values.upstream.prometheus.thanosService.port}}"
       {{- end }}
 {{- end }}
 {{- end }}
