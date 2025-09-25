@@ -12,7 +12,8 @@ spec:
         namespaces:
         - {{ .Release.Namespace }}
         principals:
-        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ template "kube-prometheus-stack.prometheus.serviceAccountName" . }}
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "kube-prometheus" }}
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "kube-alertmanager" }}
   {{- if and (not .Values.istio.clusterWideHardenedEnabled) .Values.sso.enabled }}
   selector:
     matchLabels:

@@ -1,13 +1,13 @@
-{{- if and .Values.istio.enabled .Values.alertmanager.enabled .Values.istio.alertmanager.enabled -}}
-{{- $serviceName := printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "alertmanager" }}
-{{- $servicePort := .Values.alertmanager.service.port -}}
+{{- if and .Values.istio.enabled .Values.upstream.alertmanager.enabled .Values.istio.alertmanager.enabled -}}
+{{- $serviceName := printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "kube-alertmanager" }}
+{{- $servicePort := .Values.upstream.alertmanager.service.port -}}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: {{ template "kube-prometheus-stack.fullname" . }}-alertmanager
   namespace: {{ template "kube-prometheus-stack.namespace" . }}
   labels:
-    app: {{ template "kube-prometheus-stack.name" . }}-alertmanager
+    app: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "kube-alertmanager" }}
   {{- include "kube-prometheus-stack.labels" . | indent 4 }}
   {{- if .Values.istio.alertmanager.labels }}
 {{ toYaml .Values.istio.alertmanager.labels | indent 4 }}
@@ -29,6 +29,6 @@ spec:
     - route:
         - destination:
             port:
-              number: {{ .Values.istio.alertmanager.port | default .Values.alertmanager.service.port  }}
+              number: {{ .Values.istio.alertmanager.port | default .Values.upstream.alertmanager.service.port  }}
             host: {{ .Values.istio.alertmanager.service | default $serviceName }}.{{ .Values.istio.alertmanager.namespace | default  .Release.Namespace }}.svc.cluster.local
 {{- end }}
