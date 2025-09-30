@@ -6,7 +6,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 75.6.1-bb.7
+version: 75.6.1-bb.8
 # Please do not add a renovate hint here, since appVersion updates involves manual tasks
 appVersion: v0.83.0
 kubeVersion: ">=1.19.0-0"
@@ -38,39 +38,39 @@ annotations:
   helm.sh/images: |
     - name: alertmanager
       image: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager:v0.28.1
-      condition: alertmanager.enabled
+      condition: upstream.alertmanager.enabled
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
     - name: grafana
       image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:12.0.2
-      condition: grafana.enabled
+      condition: upstream.grafana.enabled
       dependency: grafana
     - name: init-chown-data
       image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.6
       condition: grafana.initChownData.enabled
     - name: k8s-sidecar
       image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.30.5
-      condition: grafana.enabled
+      condition: upstream.grafana.enabled
       dependency: grafana
     - name: kubectl
       image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.6
-      condition: prometheusOperator.enabled
+      condition: upstream.prometheusOperator.enabled
     - name: kube-state-metrics
       image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.16.0
-      condition: kubeStateMetrics.enabled
+      condition: upstream.kubeStateMetrics.enabled
       dependency: kube-state-metrics
     - name: kube-webhook-certgen
       image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.5.4
-      condition: prometheusOperator.admissionWebhooks.patch.enabled
+      condition: upstream.prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
       image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.4.2
-      condition: prometheus.enabled
+      condition: upstream.prometheus.enabled
     - name: prometheus-config-reloader
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.83.0
-      condition: prometheusOperator.enabled
+      condition: upstream.prometheusOperator.enabled
     - name: prometheus-operator
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.83.0
-      condition: prometheusOperator.enabled
+      condition: upstream.prometheusOperator.enabled
     - name: prometheus-node-exporter
       image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.9.1
       condition: nodeExporter.enabled
@@ -85,14 +85,14 @@ annotations:
       dependency: prometheus-snmp-exporter
     - name: test-framework
       image: registry1.dso.mil/ironbank/opensource/bats/bats:1.12.0
-      condition: grafana.enabled
+      condition: upstream.grafana.enabled
       dependency: grafana
     - name: thanos
       image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.39.0
-      condition: prometheusOperator.enabled
+      condition: upstream.prometheusOperator.enabled
     - name: thanos-ruler
       image: registry1.dso.mil/ironbank/opensource/thanos/thanos:v0.39.0
-      condition: thanosRuler.enabled
+      condition: upstream.thanosRuler.enabled
 
 dependencies:
   - name: bb-common
