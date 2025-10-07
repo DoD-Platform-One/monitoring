@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      prometheus: {{ template "kube-prometheus-stack.fullname" . }}-prometheus
+      prometheus: {{ template "kube-prometheus-stack.fullname" . }}-kube-prometheus
   action: ALLOW
   rules:
   - from:
