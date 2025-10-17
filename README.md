@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 75.6.1-bb.10](https://img.shields.io/badge/Version-75.6.1--bb.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.83.0](https://img.shields.io/badge/AppVersion-v0.83.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 75.6.1-bb.10](https://img.shields.io/badge/Version-75.6.1--bb.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.83.0](https://img.shields.io/badge/AppVersion-v0.83.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -49,15 +49,11 @@ helm install monitoring chart/
 | upstream | object | Upstream chart values | Values to pass to [the upstream kube-prometheus-stack chart](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml) |
 | flux.enabled | bool | `false` |  |
 | flux.namespace | string | `"flux-system"` |  |
-| networkPolicies.enabled | bool | `true` |  |
-| networkPolicies.additionalPolicies | list | `[]` |  |
+| networkPolicies | object | NetworkPolicy configuration for this package | [bb-common Network Policies configuration](https://repo1.dso.mil/big-bang/product/packages/bb-common/-/blob/main/docs/network-policies/README.md?ref_type=heads) |
 | networkPolicies.egress.from.kube-prometheus-stack-prometheus-operator.to.definition.kubeAPI | bool | `true` | The operator must be able to read Prometheus/Alertmanager CRs from the k8s API |
 | networkPolicies.egress.from.kube-state-metrics.to.definition.kubeAPI | bool | `true` | Kube-state-metrics derives its metrics from the k8s API |
 | networkPolicies.egress.from.prometheus.to.definition.kubeAPI | bool | `true` | Prometheus must be able to read ServiceMonitor and PodMonitor resources from the k8s API |
 | networkPolicies.egress.from.prometheus.to.k8s.* | bool | `true` | Prometheus must be able to scrape any workload in the cluster |
-| networkPolicies.egress.from.admission-create-job.podSelector.matchLabels.app | string | `"kube-prometheus-stack-admission-create"` |  |
-| networkPolicies.egress.from.admission-create-job.metadata.annotations."helm.sh/hook" | string | `"pre-install,pre-upgrade"` |  |
-| networkPolicies.egress.from.admission-create-job.metadata.annotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation,hook-succeeded"` |  |
 | networkPolicies.egress.from.admission-create-job.to.k8s.istio-system/istiod:15012 | bool | `true` | Since this is a pre-install/pre-upgrade job, the default istio egress netpol may not be in effect at the time it runs |
 | networkPolicies.egress.from.admission-create-job.to.definition.kubeAPI | bool | `true` | The admission create job needs to be able to create the admission webhooks for prometheus CRDs so it needs access to the k8s API |
 | networkPolicies.egress.from.alertmanager.to.cidr."0.0.0.0/0" | bool | `false` | Alertmanager can be configured to integrate with many external alerting systems, so we define this policy but set it to false; set it to true if you need this connectivity |

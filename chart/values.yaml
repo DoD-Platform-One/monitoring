@@ -416,6 +416,8 @@ flux:
   enabled: false
   namespace: flux-system
 
+# -- [bb-common Network Policies configuration](https://repo1.dso.mil/big-bang/product/packages/bb-common/-/blob/main/docs/network-policies/README.md?ref_type=heads)
+# @default -- NetworkPolicy configuration for this package
 networkPolicies:
   enabled: true
   additionalPolicies: []
