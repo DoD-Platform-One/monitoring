@@ -625,7 +625,7 @@ blackboxExporter:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus/blackbox_exporter
     # Overrides the image tag whose default is {{ printf "v%s" .Chart.AppVersion }}
-    tag: v0.26.0
+    tag: v0.27.0
     pullSecrets:
       - private-registry
   ## User and Group to run blackbox-exporter container as

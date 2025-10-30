@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 75.6.1-bb.10](https://img.shields.io/badge/Version-75.6.1--bb.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.83.0](https://img.shields.io/badge/AppVersion-v0.83.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 75.6.1-bb.11](https://img.shields.io/badge/Version-75.6.1--bb.11-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.83.0](https://img.shields.io/badge/AppVersion-v0.83.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -137,7 +137,7 @@ helm install monitoring chart/
 | blackboxExporter.strategy.type | string | `"RollingUpdate"` |  |
 | blackboxExporter.image.registry | string | `"registry1.dso.mil"` |  |
 | blackboxExporter.image.repository | string | `"ironbank/opensource/prometheus/blackbox_exporter"` |  |
-| blackboxExporter.image.tag | string | `"v0.26.0"` |  |
+| blackboxExporter.image.tag | string | `"v0.27.0"` |  |
 | blackboxExporter.image.pullSecrets[0] | string | `"private-registry"` |  |
 | blackboxExporter.securityContext.runAsUser | int | `1000` |  |
 | blackboxExporter.securityContext.runAsGroup | int | `1000` |  |
