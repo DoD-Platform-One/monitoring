@@ -62,24 +62,4 @@ spec:
   endpoints:
   - port: http-monitoring
     interval: 15s
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: {{ template "kube-prometheus-stack.fullname" . }}-istio-operator
-  namespace: {{ template "kube-prometheus-stack.namespace" . }}
-  labels:
-    app: {{ template "kube-prometheus-stack.name" . }}-prometheus
-{{ include "kube-prometheus-stack.labels" . | indent 4 }}
-spec:
-  jobLabel: istio-operator
-  targetLabels: [name]
-  selector:
-    matchExpressions:
-    - {key: name, operator: In, values: [istio-operator]}
-  namespaceSelector:
-    any: true
-  endpoints:
-  - port: http-metrics
-    interval: 15s
 {{- end }}
