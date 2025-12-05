@@ -3,6 +3,27 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [79.11.0-bb.0] (2025-12-05)
+### Changed
+- bb-common 0.6.1 -> 0.10.0
+- gluon 0.9.2 -> 0.9.7
+- kube-prometheus-stack 75.6.1 -> 79.11.0
+- prometheus-blackbox-exporter 11.0.0 -> 11.5.0
+- quay.io/prometheus-operator/prometheus-config-reloader v0.83.0 -> v0.87.0
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 12.0.2 -> 12.3.0
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar 1.30.5 -> 1.30.11
+- registry1.dso.mil/ironbank/opensource/bats/bats 1.12.0 -> 1.13.0
+- registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen v1.5.4 -> v1.6.5
+- registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics v2.16.0 -> v2.17.0
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.32.6 -> v1.34.2
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.83.0 -> v0.87.0
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.83.0 -> v0.87.0
+- registry1.dso.mil/ironbank/opensource/prometheus/alertmanager v0.28.1 -> v0.29.0
+- registry1.dso.mil/ironbank/opensource/prometheus/node-exporter v1.9.1 -> v1.10.2
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus v3.4.2 -> v3.8.0
+- registry1.dso.mil/ironbank/opensource/thanos/thanos v0.39.0 -> v0.40.1
+- registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal 9.6 -> 9.7
+
 ## [75.6.1-bb.12] (2025-11-13)
 ### Removed
 - Removed legacy references to quit istio sidecar
