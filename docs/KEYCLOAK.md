@@ -185,6 +185,3 @@ authservice:
 ```
 
 - Configuration above is for BigBang, chains for authservice are automatically populated when above settings are present.
-
-- Setting monitoring.sso.enabled to true installs an HAProxy container in the authservice namespace which works in conjunction with Authservice itself to place an OIDC redirect in front of Prometheus+Alertmanager.
-- When monitoring.sso.enabled is set to true, the Prometheus+Alertmanager VirtualServices are replaced with ones that route to the HAProxy Deployment rather than directly to the services themselves.
