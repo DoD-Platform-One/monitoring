@@ -116,7 +116,7 @@ upstream:
       image:
         registry: registry1.dso.mil
         repository: ironbank/kiwigrid/k8s-sidecar
-        tag: 1.30.11
+        tag: 1.30.9
         imagePullSecrets:
           - name: private-registry
       resources:
@@ -316,7 +316,7 @@ upstream:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-operator
-      tag: v0.87.0
+      tag: v0.87.1
       sha: ""
       pullPolicy: IfNotPresent
       imagePullSecrets:
@@ -326,7 +326,7 @@ upstream:
       image:
         registry: registry1.dso.mil
         repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-        tag: v0.87.0
+        tag: v0.87.1
         sha: ""
         imagePullSecrets:
           - name: private-registry
@@ -340,7 +340,7 @@ upstream:
     kubectlImage:
       registry: registry1.dso.mil
       repository: ironbank/opensource/kubernetes/kubectl
-      tag: v1.34.2
+      tag: v1.34.3
       sha: ""
       pullPolicy: IfNotPresent
   ## Deploy a Prometheus instance
@@ -625,7 +625,7 @@ blackboxExporter:
     registry: registry1.dso.mil
     repository: ironbank/opensource/prometheus/blackbox_exporter
     # Overrides the image tag whose default is {{ printf "v%s" .Chart.AppVersion }}
-    tag: v0.27.0
+    tag: v0.28.0
     pullSecrets:
       - private-registry
   ## User and Group to run blackbox-exporter container as
@@ -707,7 +707,7 @@ blackboxExporter:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.87.0
+      tag: v0.87.1
       pullPolicy: IfNotPresent
       digest: ""
       imagePullSecrets:
@@ -750,7 +750,7 @@ snmpExporter:
   configmapReload:
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.87.0
+      tag: v0.87.1
       imagePullSecrets:
         - name: private-registry
   ## Security context to be added to snmp-exporter pods

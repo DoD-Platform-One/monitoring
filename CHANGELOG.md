@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [80.4.1-bb.0] (2025-12-13)
+### Changed
+- bb-common 0.10.0 -> 0.11.2
+- kube-prometheus-stack 79.11.0 -> 80.4.1
+- prometheus-blackbox-exporter 11.5.0 -> 11.6.1
+- quay.io/prometheus-operator/prometheus-config-reloader v0.87.0 -> v0.87.1
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.34.2 -> v1.34.3
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.87.0 -> v0.87.1
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.87.0 -> v0.87.1
+- registry1.dso.mil/ironbank/opensource/prometheus/blackbox_exporter v0.27.0 -> v0.28.0
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar 1.30.11 -> 1.30.9
+
 ## [79.11.0-bb.0] (2025-12-05)
 ### Changed
 - bb-common 0.6.1 -> 0.10.0
