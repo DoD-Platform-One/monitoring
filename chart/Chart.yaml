@@ -6,7 +6,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 80.4.1-bb.0
+version: 80.4.1-bb.1
 # Please do not add a renovate hint here, since appVersion updates involves manual tasks
 appVersion: v0.87.1
 kubeVersion: ">=1.19.0-0"
@@ -30,14 +30,14 @@ annotations:
     - [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
     - [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
   bigbang.dev/applicationVersions: |
-    - Prometheus: 3.8.0
+    - Prometheus: 3.8.1
     - Grafana: 12.3.0
-    - Alertmanager: 0.29.0
+    - Alertmanager: 0.30.0
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
   helm.sh/images: |
     - name: alertmanager
-      image: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager:v0.29.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/alertmanager:v0.30.0
       condition: upstream.alertmanager.enabled
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
@@ -63,7 +63,7 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.6.5
       condition: upstream.prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
-      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.8.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.8.1
       condition: upstream.prometheus.enabled
     - name: prometheus-config-reloader
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.87.1
@@ -96,7 +96,7 @@ annotations:
 
 dependencies:
   - name: bb-common
-    version: "0.11.2"
+    version: "0.11.3"
     repository: oci://registry1.dso.mil/bigbang
   - name: kube-prometheus-stack
     version: "80.4.1"

@@ -1,7 +1,7 @@
 dependencies:
 - name: bb-common
   repository: oci://registry1.dso.mil/bigbang
-  version: 0.11.2
+  version: 0.11.3
 - name: kube-prometheus-stack
   repository: https://prometheus-community.github.io/helm-charts
   version: 80.4.1
@@ -14,5 +14,5 @@ dependencies:
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
   version: 0.9.7
-digest: sha256:92b433e6b8634579cc11bcbee01cfb43bfdf560bc3c4eabb55a29fc96782a63c
-generated: "2025-12-13T07:44:58.183582632Z"
+digest: sha256:bbc69db10f0babe9ddbecbd8c7139a0138f3a40f80dd63ddc29ff869715fc02f
+generated: "2025-12-17T07:47:26.346947256Z"
