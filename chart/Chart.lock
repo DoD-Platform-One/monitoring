@@ -1,18 +1,18 @@
 dependencies:
 - name: bb-common
   repository: oci://registry1.dso.mil/bigbang
-  version: 0.11.3
+  version: 0.12.3
 - name: kube-prometheus-stack
   repository: https://prometheus-community.github.io/helm-charts
-  version: 80.4.1
+  version: 80.13.3
 - name: prometheus-snmp-exporter
   repository: file://./deps/prometheus-snmp-exporter
   version: 8.0.0
 - name: prometheus-blackbox-exporter
   repository: https://prometheus-community.github.io/helm-charts
-  version: 11.6.1
+  version: 11.7.0
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
   version: 0.9.7
-digest: sha256:bbc69db10f0babe9ddbecbd8c7139a0138f3a40f80dd63ddc29ff869715fc02f
-generated: "2025-12-17T07:47:26.346947256Z"
+digest: sha256:7baff511f8c7fccd4f100f5237aafd805513ea179f523594c78afce38ce70710
+generated: "2026-01-13T07:42:58.01013426Z"

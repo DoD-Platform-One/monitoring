@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 80.4.1-bb.1](https://img.shields.io/badge/Version-80.4.1--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.87.1](https://img.shields.io/badge/AppVersion-v0.87.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 80.13.3-bb.0](https://img.shields.io/badge/Version-80.13.3--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.88.0](https://img.shields.io/badge/AppVersion-v0.88.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -76,7 +76,7 @@ helm install monitoring chart/
 | istio.hardened.loki.principals[0] | string | `"cluster.local/ns/logging/sa/logging-loki"` |  |
 | istio.hardened.alloy.enabled | bool | `false` |  |
 | istio.hardened.alloy.namespaces[0] | string | `"alloy"` |  |
-| istio.hardened.alloy.principals[0] | string | `"cluster.local/ns/alloy/sa/alloy-alloy-metrics"` |  |
+| istio.hardened.alloy.principals[0] | string | `"cluster.local/ns/alloy/sa/alloy-alloy-logs"` |  |
 | istio.namespace | string | `"istio-system"` |  |
 | istio.prometheus.enabled | bool | `true` |  |
 | istio.prometheus.annotations | object | `{}` |  |
@@ -185,7 +185,7 @@ helm install monitoring chart/
 | blackboxExporter.configReloader.config.watchInterval | string | `"1m"` |  |
 | blackboxExporter.configReloader.image.registry | string | `"registry1.dso.mil"` |  |
 | blackboxExporter.configReloader.image.repository | string | `"ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| blackboxExporter.configReloader.image.tag | string | `"v0.87.1"` |  |
+| blackboxExporter.configReloader.image.tag | string | `"v0.88.0"` |  |
 | blackboxExporter.configReloader.image.pullPolicy | string | `"IfNotPresent"` |  |
 | blackboxExporter.configReloader.image.digest | string | `""` |  |
 | blackboxExporter.configReloader.image.imagePullSecrets[0].name | string | `"private-registry"` |  |
@@ -208,10 +208,10 @@ helm install monitoring chart/
 | blackboxExporter.configReloader.serviceMonitor.selfMonitor.scrapeTimeout | string | `"30s"` |  |
 | snmpExporter.enabled | bool | `false` |  |
 | snmpExporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter"` |  |
-| snmpExporter.image.tag | string | `"v0.29.0"` |  |
+| snmpExporter.image.tag | string | `"v0.30.1"` |  |
 | snmpExporter.image.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | snmpExporter.configmapReload.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
-| snmpExporter.configmapReload.image.tag | string | `"v0.87.1"` |  |
+| snmpExporter.configmapReload.image.tag | string | `"v0.88.0"` |  |
 | snmpExporter.configmapReload.image.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | snmpExporter.securityContext.runAsNonRoot | bool | `true` |  |
 | snmpExporter.securityContext.runAsUser | int | `1001` |  |

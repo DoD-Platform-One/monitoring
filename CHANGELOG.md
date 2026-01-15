@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [80.13.3-bb.0] (2026-01-13)
+### Changed
+- bb-common 0.11.3 -> 0.12.3
+- kube-prometheus-stack 80.4.1 -> 80.13.3
+- prometheus-blackbox-exporter 11.6.1 -> 11.7.0
+- quay.io/prometheus-operator/prometheus-config-reloader v0.87.1 -> v0.88.0
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 12.3.0 -> 12.3.1
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar 1.30.9 -> 2.2.3
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.87.1 -> v0.88.0
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.87.1 -> v0.88.0
+- registry1.dso.mil/ironbank/opensource/prometheus/prometheus v3.8.1 -> v3.9.1
+- registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter v0.29.0 -> v0.30.1
+- serviceAccount name change in Alloy namespace for Authorization Policy
+
 ## [80.4.1-bb.1] (2025-12-17)
 ### Changed
 - bb-common 0.11.2 -> 0.11.3

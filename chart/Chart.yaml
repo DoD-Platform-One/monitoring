@@ -6,9 +6,9 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 80.4.1-bb.1
+version: 80.13.3-bb.0
 # Please do not add a renovate hint here, since appVersion updates involves manual tasks
-appVersion: v0.87.1
+appVersion: v0.88.0
 kubeVersion: ">=1.19.0-0"
 home: https://github.com/prometheus-operator/kube-prometheus
 keywords:
@@ -30,8 +30,8 @@ annotations:
     - [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
     - [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
   bigbang.dev/applicationVersions: |
-    - Prometheus: 3.8.1
-    - Grafana: 12.3.0
+    - Prometheus: 3.9.1
+    - Grafana: 12.3.1
     - Alertmanager: 0.30.0
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
@@ -42,14 +42,14 @@ annotations:
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
     - name: grafana
-      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:12.3.0
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:12.3.1
       condition: upstream.grafana.enabled
       dependency: grafana
     - name: init-chown-data
       image: registry1.dso.mil/ironbank/redhat/ubi/ubi9-minimal:9.7
       condition: grafana.initChownData.enabled
     - name: k8s-sidecar
-      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:1.30.9
+      image: registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar:2.2.3
       condition: upstream.grafana.enabled
       dependency: grafana
     - name: kubectl
@@ -63,20 +63,20 @@ annotations:
       image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.6.5
       condition: upstream.prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
-      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.8.1
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.9.1
       condition: upstream.prometheus.enabled
     - name: prometheus-config-reloader
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.87.1
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.88.0
       condition: upstream.prometheusOperator.enabled
     - name: prometheus-operator
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.87.1
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.88.0
       condition: upstream.prometheusOperator.enabled
     - name: prometheus-node-exporter
       image: registry1.dso.mil/ironbank/opensource/prometheus/node-exporter:v1.10.2
       condition: nodeExporter.enabled
       dependency: prometheus-node-exporter
     - name: prometheus-snmp-exporter
-      image: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter:v0.29.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter:v0.30.1
       condition: snmpExporter.enabled
       dependency: prometheus-snmp-exporter
     - name: prometheus-blackbox-exporter
@@ -96,10 +96,10 @@ annotations:
 
 dependencies:
   - name: bb-common
-    version: "0.11.3"
+    version: "0.12.3"
     repository: oci://registry1.dso.mil/bigbang
   - name: kube-prometheus-stack
-    version: "80.4.1"
+    version: "80.13.3"
     repository: https://prometheus-community.github.io/helm-charts
     alias: upstream
     import-values:
@@ -126,7 +126,7 @@ dependencies:
     alias: snmpExporter
   - name: prometheus-blackbox-exporter
     repository: https://prometheus-community.github.io/helm-charts
-    version: "11.6.1"
+    version: "11.7.0"
     condition: blackboxExporter.enabled
     alias: blackboxExporter
   - name: gluon
