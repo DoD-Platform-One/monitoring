@@ -1,0 +1,130 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: Monitoring bb-common routes
+templates:
+  - templates/bigbang/routes.yaml
+release:
+  name: test
+values:
+  - values/routes-render.yaml
+tests:
+  - it: renders nothing when istio is disabled
+    capabilities:
+      apiVersions:
+        - networking.istio.io/v1
+    set:
+      istio.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders inbound virtualservices and serviceentries when istio is enabled
+    capabilities:
+      apiVersions:
+        - networking.istio.io/v1
+    set:
+      istio.enabled: true
+    asserts:
+      - containsDocument:
+          apiVersion: networking.istio.io/v1
+          kind: VirtualService
+          any: true
+          spec:
+            gateways:
+              - istio-gateway/public-ingressgateway
+            hosts:
+              - prometheus.dev.bigbang.mil
+      - containsDocument:
+          apiVersion: networking.istio.io/v1
+          kind: VirtualService
+          any: true
+          spec:
+            gateways:
+              - istio-gateway/public-ingressgateway
+            hosts:
+              - alertmanager.dev.bigbang.mil
+      - containsDocument:
+          apiVersion: networking.istio.io/v1
+          kind: ServiceEntry
+          any: true
+          spec:
+            hosts:
+              - prometheus.dev.bigbang.mil
+            location: MESH_EXTERNAL
+            resolution: DNS
+      - containsDocument:
+          apiVersion: networking.istio.io/v1
+          kind: ServiceEntry
+          any: true
+          spec:
+            hosts:
+              - alertmanager.dev.bigbang.mil
+            location: MESH_EXTERNAL
+            resolution: DNS
+
+  - it: generates route netpol and authz when netpol and authz are enabled
+    capabilities:
+      apiVersions:
+        - networking.istio.io/v1
+    set:
+      istio.enabled: true
+      networkPolicies.enabled: true
+      istio.authorizationPolicies.enabled: true
+    asserts:
+      - containsDocument:
+          apiVersion: networking.k8s.io/v1
+          kind: NetworkPolicy
+          any: true
+          spec:
+            podSelector:
+              matchLabels:
+                app: prometheus
+            policyTypes:
+              - Ingress
+            ingress:
+              - from:
+                  - namespaceSelector:
+                      matchLabels:
+                        kubernetes.io/metadata.name: istio-gateway
+                    podSelector:
+                      matchLabels:
+                        app.kubernetes.io/name: public-ingressgateway
+                        istio: ingressgateway
+                ports:
+                  - port: 9090
+      - containsDocument:
+          apiVersion: networking.k8s.io/v1
+          kind: NetworkPolicy
+          any: true
+          spec:
+            podSelector:
+              matchLabels:
+                app.kubernetes.io/name: alertmanager
+            policyTypes:
+              - Ingress
+            ingress:
+              - from:
+                  - namespaceSelector:
+                      matchLabels:
+                        kubernetes.io/metadata.name: istio-gateway
+                    podSelector:
+                      matchLabels:
+                        app.kubernetes.io/name: public-ingressgateway
+                        istio: ingressgateway
+                ports:
+                  - port: 9093
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          any: true
+          spec:
+            action: ALLOW
+            selector:
+              matchLabels:
+                app: prometheus
+            rules:
+              - from:
+                  - source:
+                      namespaces:
+                        - istio-gateway
+                      principals:
+                        - cluster.local/ns/istio-gateway/sa/public-ingressgateway-ingressgateway-service-account

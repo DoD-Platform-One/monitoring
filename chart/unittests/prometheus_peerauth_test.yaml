@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: Monitoring prometheus peer auth exception gating
+templates:
+  - templates/bigbang/peerauthentications/prometheusPeerAuthentication.yaml
+release:
+  name: test
+values:
+  - values/peerauth-exceptions.yaml
+tests:
+  - it: renders prometheus exception when replicas are greater than one in strict mesh mode
+    asserts:
+      - hasDocuments:
+          count: 1
+
+  - it: does not render prometheus exception when replicas are one
+    set:
+      upstream.prometheus.prometheusSpec.replicas: 1
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: does not render prometheus exception when sidecar and injection are both disabled
+    set:
+      istio.sidecar.enabled: false
+      istio.injection: disabled
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders prometheus exception when using legacy injection without sidecar
+    set:
+      istio.sidecar.enabled: false
+      istio.injection: enabled
+    asserts:
+      - hasDocuments:
+          count: 1

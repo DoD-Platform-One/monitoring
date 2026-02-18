@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 80.13.3-bb.0](https://img.shields.io/badge/Version-80.13.3--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.88.0](https://img.shields.io/badge/AppVersion-v0.88.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 80.13.3-bb.1](https://img.shields.io/badge/Version-80.13.3--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.88.0](https://img.shields.io/badge/AppVersion-v0.88.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -57,52 +57,47 @@ helm install monitoring chart/
 | networkPolicies.egress.from.admission-create-job.to.k8s.istio-system/istiod:15012 | bool | `true` | Since this is a pre-install/pre-upgrade job, the default istio egress netpol may not be in effect at the time it runs |
 | networkPolicies.egress.from.admission-create-job.to.definition.kubeAPI | bool | `true` | The admission create job needs to be able to create the admission webhooks for prometheus CRDs so it needs access to the k8s API |
 | networkPolicies.egress.from.alertmanager.to.cidr."0.0.0.0/0" | bool | `false` | Alertmanager can be configured to integrate with many external alerting systems, so we define this policy but set it to false; set it to true if you need this connectivity |
+| networkPolicies.ingress.to.kube-prometheus-stack-prometheus-operator:10250.from.cidr."0.0.0.0/0" | bool | `true` | Required for kube API admission webhook traffic and Prometheus scrape access. Override this CIDR from the umbrella when your control-plane range is known. |
+| networkPolicies.ingress.to.prometheus:10901.from.k8s.thanos/thanos | bool | `false` | Thanos store API access to Prometheus sidecar. Set true when Thanos is deployed. |
+| networkPolicies.ingress.to.prometheus:9090.from.k8s.tempo-tempo@tempo/tempo | bool | `false` | Tempo Prometheus remote-write/read access. Set true when Tempo is deployed. Use service-account identity format for SPIFFE principal generation. |
+| networkPolicies.ingress.to.prometheus:9090.from.k8s.kiali-service-account@kiali/kiali | bool | `false` | Kiali Prometheus access. Set true when Kiali is deployed. Use service-account identity format for SPIFFE principal generation. |
 | openshift | bool | `false` |  |
 | bbtests.enabled | bool | `false` |  |
 | bbtests.cypress.artifacts | bool | `true` |  |
 | bbtests.cypress.envs.cypress_prometheus_url | string | `"http://monitoring-kube-prometheus-prometheus:9090"` |  |
 | bbtests.cypress.envs.cypress_alertmanager_url | string | `"http://monitoring-kube-prometheus-alertmanager:9093"` |  |
 | istio.enabled | bool | `false` |  |
-| istio.hardened.enabled | bool | `false` |  |
-| istio.hardened.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
-| istio.hardened.customServiceEntries | list | `[]` |  |
-| istio.hardened.customAuthorizationPolicies | list | `[]` |  |
-| istio.hardened.clusterWideHardenedEnabled | bool | `false` |  |
-| istio.hardened.tempo.enabled | bool | `false` |  |
-| istio.hardened.tempo.namespaces[0] | string | `"tempo"` |  |
-| istio.hardened.tempo.principals[0] | string | `"cluster.local/ns/tempo/sa/tempo-tempo"` |  |
-| istio.hardened.loki.enabled | bool | `false` |  |
-| istio.hardened.loki.namespaces[0] | string | `"logging"` |  |
-| istio.hardened.loki.principals[0] | string | `"cluster.local/ns/logging/sa/logging-loki"` |  |
-| istio.hardened.alloy.enabled | bool | `false` |  |
-| istio.hardened.alloy.namespaces[0] | string | `"alloy"` |  |
-| istio.hardened.alloy.principals[0] | string | `"cluster.local/ns/alloy/sa/alloy-alloy-logs"` |  |
 | istio.namespace | string | `"istio-system"` |  |
-| istio.prometheus.enabled | bool | `true` |  |
-| istio.prometheus.annotations | object | `{}` |  |
-| istio.prometheus.labels | object | `{}` |  |
-| istio.prometheus.gateways[0] | string | `"istio-system/main"` |  |
-| istio.prometheus.hosts[0] | string | `"prometheus.{{ .Values.domain }}"` |  |
-| istio.prometheus.service | string | `""` |  |
-| istio.prometheus.port | string | `""` |  |
-| istio.prometheus.namespace | string | `""` |  |
+| istio.injection | string | `"disabled"` |  |
+| istio.mtls.mode | string | `"STRICT"` |  |
+| istio.sidecar.enabled | bool | `false` |  |
+| istio.sidecar.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
+| istio.serviceEntries.custom | list | `[]` |  |
+| istio.authorizationPolicies.enabled | bool | `false` |  |
+| istio.authorizationPolicies.generateFromNetpol | bool | `true` |  |
+| istio.authorizationPolicies.clusterWideMonitoringAccess | bool | `false` |  |
+| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.enabled | bool | `false` |  |
+| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.selector.matchLabels.app | string | `"prometheus"` |  |
+| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.action | string | `"ALLOW"` |  |
+| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.rules[0].from[0].source.namespaces[0] | string | `"logging"` |  |
+| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.rules[0].from[0].source.principals[0] | string | `"cluster.local/ns/logging/sa/logging-loki"` |  |
+| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.rules[0].to[0].operation.methods[0] | string | `"POST"` |  |
+| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.rules[0].to[0].operation.paths[0] | string | `"/api/v1/write"` |  |
+| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.enabled | bool | `false` |  |
+| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.selector.matchLabels.app | string | `"prometheus"` |  |
+| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.action | string | `"ALLOW"` |  |
+| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.rules[0].from[0].source.namespaces[0] | string | `"alloy"` |  |
+| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.rules[0].from[0].source.principals[0] | string | `"cluster.local/ns/alloy/sa/alloy-alloy-logs"` |  |
+| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.rules[0].to[0].operation.methods[0] | string | `"POST"` |  |
+| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.rules[0].to[0].operation.paths[0] | string | `"/api/v1/write"` |  |
 | istio.prometheusRule.IstioSidecarMemModerate | bool | `true` |  |
 | istio.prometheusRule.IstioSidecarMemHigh | bool | `true` |  |
 | istio.prometheusRule.IstioConfigValidationFailed | bool | `true` |  |
 | istio.prometheusRule.Istio5XXResponseCode | bool | `true` |  |
 | istio.prometheusRule.IstioSidecarEndpointError | bool | `true` |  |
 | istio.prometheusRule.IstioSidecarListenerConflict | bool | `true` |  |
-| istio.alertmanager.enabled | bool | `true` |  |
-| istio.alertmanager.annotations | object | `{}` |  |
-| istio.alertmanager.labels | object | `{}` |  |
-| istio.alertmanager.gateways[0] | string | `"istio-system/main"` |  |
-| istio.alertmanager.hosts[0] | string | `"alertmanager.{{ .Values.domain }}"` |  |
-| istio.alertmanager.service | string | `""` |  |
-| istio.alertmanager.port | string | `""` |  |
-| istio.alertmanager.namespace | string | `""` |  |
-| istio.injection | string | `"disabled"` |  |
-| istio.mtls.mode | string | `"STRICT"` |  |
 | istio.console.enabled | bool | `false` |  |
+| routes | object | `{"inbound":{"monitoring-alertmanager":{"containerPort":9093,"enabled":true,"gateways":["istio-system/main"],"hosts":["alertmanager.{{ .Values.domain }}"],"metadata":{"annotations":{},"labels":{}},"port":"{{ .Values.upstream.alertmanager.service.port }}","selector":{"app.kubernetes.io/name":"alertmanager"},"service":"{{ printf \"%s-%s\" (include \"kube-prometheus-stack.fullname\" .) \"kube-alertmanager\" }}.{{ .Release.Namespace }}.svc.cluster.local"},"monitoring-prometheus":{"containerPort":9090,"enabled":true,"gateways":["istio-system/main"],"hosts":["prometheus.{{ .Values.domain }}"],"metadata":{"annotations":{},"labels":{}},"port":"{{ .Values.upstream.prometheus.service.port }}","selector":{"app":"prometheus"},"service":"{{ printf \"%s-%s\" (include \"kube-prometheus-stack.fullname\" .) \"kube-prometheus\" }}.{{ .Release.Namespace }}.svc.cluster.local"}},"outbound":{}}` | [bb-common Routes configuration](https://repo1.dso.mil/big-bang/product/packages/bb-common/-/blob/main/docs/routes/README.md?ref_type=heads) |
 | kiali.enabled | bool | `false` |  |
 | sso.enabled | bool | `false` |  |
 | sso.selector.key | string | `"protect"` |  |

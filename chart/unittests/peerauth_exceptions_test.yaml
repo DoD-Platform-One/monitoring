@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: Monitoring peer authentication exceptions
+templates:
+  - templates/bigbang/peerauthentications/prometheusPeerAuthentication.yaml
+  - templates/bigbang/peerauthentications/webhookException.yaml
+  - templates/bigbang/peerauthentications/snmpExporterException.yaml
+release:
+  name: test
+values:
+  - values/peerauth-exceptions.yaml
+tests:
+  - it: renders all peer auth exceptions in strict mesh mode
+    asserts:
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: PeerAuthentication
+          any: true
+          spec:
+            selector:
+              matchLabels:
+                app.kubernetes.io/name: prometheus
+            portLevelMtls:
+              "8080":
+                mode: PERMISSIVE
+              "9090":
+                mode: PERMISSIVE
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: PeerAuthentication
+          any: true
+          spec:
+            selector:
+              matchLabels:
+                app: kube-prometheus-stack-operator
+            portLevelMtls:
+              "10250":
+                mode: PERMISSIVE
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: PeerAuthentication
+          any: true
+          spec:
+            selector:
+              matchLabels:
+                app.kubernetes.io/name: prometheus-snmp-exporter
+            portLevelMtls:
+              "9116":
+                mode: PERMISSIVE
+
+  - it: does not render exceptions when mTLS mode is not strict
+    set:
+      istio.mtls.mode: PERMISSIVE
+    asserts:
+      - hasDocuments:
+          count: 0

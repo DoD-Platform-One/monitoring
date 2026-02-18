@@ -1,0 +1,11 @@
+istio:
+  enabled: true
+  namespace: istio-system
+  authorizationPolicies:
+    enabled: true
+    clusterWideMonitoringAccess: false
+sso:
+  enabled: true
+  selector:
+    key: protect
+    value: keycloak

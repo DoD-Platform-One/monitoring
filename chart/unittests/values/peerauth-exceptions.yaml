@@ -1,0 +1,20 @@
+istio:
+  enabled: true
+  injection: disabled
+  sidecar:
+    enabled: true
+  mtls:
+    mode: STRICT
+upstream:
+  prometheus:
+    service:
+      port: 9090
+    prometheusSpec:
+      replicas: 2
+    thanosService:
+      enabled: false
+snmpExporter:
+  enabled: true
+  nameOverride: prometheus-snmp-exporter
+  service:
+    port: 9116
