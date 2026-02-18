@@ -419,7 +419,9 @@ flux:
 # -- [bb-common Network Policies configuration](https://repo1.dso.mil/big-bang/product/packages/bb-common/-/blob/main/docs/network-policies/README.md?ref_type=heads)
 # @default -- NetworkPolicy configuration for this package
 networkPolicies:
-  enabled: true
+  enabled: false
+  defaultsAsHooks:
+    enabled: true
   additionalPolicies: []
   egress:
     from:
@@ -452,13 +454,9 @@ networkPolicies:
             helm.sh/hook: pre-install,pre-upgrade
             helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
         to:
-          k8s:
-            # -- Since this is a pre-install/pre-upgrade job, the default istio
-            # egress netpol may not be in effect at the time it runs
-            istio-system/istiod:15012: true
           definition:
-            # -- The admission create job needs to be able to create the admission
-            # webhooks for prometheus CRDs so it needs access to the k8s API
+            # -- This pre-install/pre-upgrade job creates webhook resources and
+            # must reach the kubeAPI before normal release netpols exist.
             kubeAPI: true
       alertmanager:
         to:
@@ -467,6 +465,29 @@ networkPolicies:
             # alerting systems, so we define this policy but set it to false; set
             # it to true if you need this connectivity
             0.0.0.0/0: false
+  ingress:
+    to:
+      kube-prometheus-stack-prometheus-operator:10250:
+        from:
+          cidr:
+            # -- Required for kube API admission webhook traffic and Prometheus scrape access.
+            # Override this CIDR from the umbrella when your control-plane range is known.
+            0.0.0.0/0: true
+      prometheus:10901:
+        from:
+          k8s:
+            # -- Thanos store API access to Prometheus sidecar.
+            # Set true when Thanos is deployed.
+            thanos/thanos: false
+      prometheus:9090:
+        from:
+          k8s:
+            # -- Tempo Prometheus remote-write/read access. Set true when Tempo is deployed.
+            # Use service-account identity format for SPIFFE principal generation.
+            tempo-tempo@tempo/tempo: false
+            # -- Kiali Prometheus access. Set true when Kiali is deployed.
+            # Use service-account identity format for SPIFFE principal generation.
+            kiali-service-account@kiali/kiali: false
 
 # Toggles networkpolicy needed for openshift
 openshift: false
@@ -481,12 +502,22 @@ bbtests:
 
 istio:
   enabled: false
-  hardened:
+  namespace: istio-system
+  injection: disabled
+  mtls:
+    # Note that setting this to STRICT requires additional configuration for Prometheus and monitors.
+    # Review `./docs/istio-mtls-metrics.md` for additional information.
+    mode: STRICT
+  sidecar:
     enabled: false
     outboundTrafficPolicyMode: "REGISTRY_ONLY"
-    customServiceEntries: []
+  serviceEntries:
+    custom: []
       # - name: "allow-google"
-      #   enabled: true
+      #   labels:
+      #     app: monitoring
+      #   annotations:
+      #     owner: platform
       #   spec:
       #     hosts:
       #       - google.com
@@ -496,42 +527,54 @@ istio:
       #         protocol: TLS
       #         name: https
       #     resolution: DNS
-    customAuthorizationPolicies: []
-    # - name: "allow-nothing"
-    #   enabled: true
-    #   spec: {}
-    clusterWideHardenedEnabled: false
-    tempo:
-      enabled: false
-      namespaces:
-        - tempo
-      principals:
-        - cluster.local/ns/tempo/sa/tempo-tempo
-    loki:
-      enabled: false
-      namespaces:
-        - logging
-      principals:
-        - cluster.local/ns/logging/sa/logging-loki
-    alloy:
-      enabled: false
-      namespaces:
-        - alloy
-      principals:
-        - cluster.local/ns/alloy/sa/alloy-alloy-logs
-  namespace: istio-system
-  prometheus:
-    # Toggle vs creation
-    enabled: true
-    annotations: {}
-    labels: {}
-    gateways:
-      - istio-system/main
-    hosts:
-      - prometheus.{{ .Values.domain }}
-    service: ""
-    port: ""
-    namespace: ""
+  authorizationPolicies:
+    enabled: false
+    # Prefer generating authz from ingress netpol rules (namespace, sa@namespace/pod, or cidr).
+    generateFromNetpol: true
+    clusterWideMonitoringAccess: false
+    additionalPolicies:
+      # bb-common does not support custom path rules yet
+      loki-prometheus-authz-policy:
+        enabled: false
+        spec:
+          selector:
+            matchLabels:
+              app: prometheus
+          action: ALLOW
+          rules:
+            - from:
+                - source:
+                    namespaces:
+                      - logging
+                    principals:
+                      - cluster.local/ns/logging/sa/logging-loki
+              to:
+                - operation:
+                    methods:
+                      - POST
+                    paths:
+                      - /api/v1/write
+      # bb-common does not support custom http rules yet
+      alloy-prometheus-authz-policy:
+        enabled: false
+        spec:
+          selector:
+            matchLabels:
+              app: prometheus
+          action: ALLOW
+          rules:
+            - from:
+                - source:
+                    namespaces:
+                      - alloy
+                    principals:
+                      - cluster.local/ns/alloy/sa/alloy-alloy-logs
+              to:
+                - operation:
+                    methods:
+                      - POST
+                    paths:
+                      - /api/v1/write
   # Toggle to disable all rules via the enabled: false
   prometheusRule:
     IstioSidecarMemModerate: true
@@ -540,26 +583,41 @@ istio:
     Istio5XXResponseCode: true
     IstioSidecarEndpointError: true
     IstioSidecarListenerConflict: true
-
-  alertmanager:
-    # Toggle vs creation
-    enabled: true
-    annotations: {}
-    labels: {}
-    gateways:
-      - istio-system/main
-    hosts:
-      - alertmanager.{{ .Values.domain }}
-    service: ""
-    port: ""
-    namespace: ""
-  injection: disabled
-  mtls:
-    # Note that setting this to STRICT requires additional configuration for Prometheus and monitors.
-    # Review `./docs/istio-mtls-metrics.md` for additional information.
-    mode: STRICT
   console:
     enabled: false
+
+# -- [bb-common Routes configuration](https://repo1.dso.mil/big-bang/product/packages/bb-common/-/blob/main/docs/routes/README.md?ref_type=heads)
+routes:
+  inbound:
+    monitoring-prometheus:
+      enabled: true
+      metadata:
+        labels: {}
+        annotations: {}
+      gateways:
+        - istio-gateway/public-ingressgateway
+      hosts:
+        - prometheus.{{ .Values.domain }}
+      service: "{{ printf \"%s-%s\" (include \"kube-prometheus-stack.fullname\" .) \"kube-prometheus\" }}.{{ .Release.Namespace }}.svc.cluster.local"
+      port: "{{ .Values.upstream.prometheus.service.port }}"
+      containerPort: 9090
+      selector:
+        app: prometheus
+    monitoring-alertmanager:
+      enabled: true
+      metadata:
+        labels: {}
+        annotations: {}
+      gateways:
+        - istio-gateway/public-ingressgateway
+      hosts:
+        - alertmanager.{{ .Values.domain }}
+      service: "{{ printf \"%s-%s\" (include \"kube-prometheus-stack.fullname\" .) \"kube-alertmanager\" }}.{{ .Release.Namespace }}.svc.cluster.local"
+      port: "{{ .Values.upstream.alertmanager.service.port }}"
+      containerPort: 9093
+      selector:
+        app.kubernetes.io/name: alertmanager
+  outbound: {}
 
 kiali:
   enabled: false

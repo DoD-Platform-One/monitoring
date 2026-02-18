@@ -1,0 +1,163 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: Monitoring bb-common istio render
+templates:
+  - templates/bigbang/istio.yaml
+release:
+  name: test
+values:
+  - values/istio-render.yaml
+tests:
+  - it: renders nothing when istio is disabled
+    set:
+      istio.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders sidecar and default peer auth when istio is enabled
+    set:
+      istio.enabled: true
+      istio.sidecar.enabled: true
+      istio.mtls.mode: PERMISSIVE
+    asserts:
+      - containsDocument:
+          apiVersion: networking.istio.io/v1
+          kind: Sidecar
+          any: true
+          spec:
+            outboundTrafficPolicy:
+              mode: REGISTRY_ONLY
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: PeerAuthentication
+          any: true
+          spec:
+            mtls:
+              mode: PERMISSIVE
+
+  - it: renders custom service entry definitions
+    set:
+      istio.enabled: true
+    asserts:
+      - containsDocument:
+          apiVersion: networking.istio.io/v1
+          kind: ServiceEntry
+          any: true
+          spec:
+            hosts:
+              - api.example.com
+            location: MESH_EXTERNAL
+            resolution: DNS
+
+  - it: generates authorization policies from netpol cidr, namespace, and sa@namespace rules
+    set:
+      istio.enabled: true
+    asserts:
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          any: true
+          spec:
+            action: ALLOW
+            rules:
+              - from:
+                  - source:
+                      ipBlocks:
+                        - 0.0.0.0/0
+                to:
+                  - operation:
+                      ports:
+                        - "10250"
+            selector:
+              matchLabels:
+                app.kubernetes.io/name: kube-prometheus-stack-prometheus-operator
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          any: true
+          spec:
+            action: ALLOW
+            rules:
+              - from:
+                  - source:
+                      namespaces:
+                        - logging
+                to:
+                  - operation:
+                      ports:
+                        - "9093"
+            selector:
+              matchLabels:
+                app.kubernetes.io/name: alertmanager
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          any: true
+          spec:
+            action: ALLOW
+            rules:
+              - from:
+                  - source:
+                      namespaces:
+                        - thanos
+                to:
+                  - operation:
+                      ports:
+                        - "10901"
+            selector:
+              matchLabels:
+                app.kubernetes.io/name: prometheus
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          any: true
+          spec:
+            action: ALLOW
+            rules:
+              - from:
+                  - source:
+                      principals:
+                        - cluster.local/ns/tempo/sa/tempo-tempo
+                to:
+                  - operation:
+                      ports:
+                        - "9090"
+            selector:
+              matchLabels:
+                app.kubernetes.io/name: prometheus
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          any: true
+          spec:
+            action: ALLOW
+            rules:
+              - from:
+                  - source:
+                      principals:
+                        - cluster.local/ns/kiali/sa/kiali-service-account
+                to:
+                  - operation:
+                      ports:
+                        - "9090"
+            selector:
+              matchLabels:
+                app.kubernetes.io/name: prometheus
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          any: true
+          spec:
+            action: ALLOW
+            rules:
+              - from:
+                  - source:
+                      principals:
+                        - cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-prometheus
+                to:
+                  - operation:
+                      ports:
+                        - "9090"
+            selector:
+              matchLabels:
+                app.kubernetes.io/name: prometheus

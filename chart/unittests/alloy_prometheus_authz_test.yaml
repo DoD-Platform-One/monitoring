@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: Monitoring alloy prometheus authorization policy
+templates:
+  - templates/bigbang/istio.yaml
+release:
+  name: test
+tests:
+  - it: renders alloy-prometheus-authz-policy with principal and remote write path
+    set:
+      istio.enabled: true
+      istio.authorizationPolicies.enabled: true
+      istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.enabled: true
+    asserts:
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          any: true
+          metadata:
+            name: alloy-prometheus-authz-policy
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          any: true
+          spec:
+            action: ALLOW
+            selector:
+              matchLabels:
+                app: prometheus
+            rules:
+              - from:
+                  - source:
+                      namespaces:
+                        - alloy
+                      principals:
+                        - cluster.local/ns/alloy/sa/alloy-alloy-logs
+                to:
+                  - operation:
+                      methods:
+                        - POST
+                      paths:
+                        - /api/v1/write
+

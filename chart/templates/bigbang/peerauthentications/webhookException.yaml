@@ -1,6 +1,7 @@
-{{- if and .Values.istio.enabled (eq .Values.istio.injection "enabled") (eq .Values.istio.mtls.mode "STRICT") }}
+{{- $meshWorkloadsEnabled := or (dig "sidecar" "enabled" false .Values.istio) (eq .Values.istio.injection "enabled") }}
+{{- if and .Values.istio.enabled $meshWorkloadsEnabled (eq .Values.istio.mtls.mode "STRICT") }}
 # Allows prometheus to scrape metrics port over cleartext since metrics endpoint does not support TLS
-apiVersion: "security.istio.io/v1beta1"
+apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 metadata:
   name: monitoring-webhook-exception

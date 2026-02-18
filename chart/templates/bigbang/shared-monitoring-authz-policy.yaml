@@ -1,4 +1,4 @@
-{{- if and .Values.istio.enabled (or .Values.istio.hardened.enabled .Values.sso.enabled) -}}
+{{- if and .Values.istio.enabled (or .Values.istio.authorizationPolicies.enabled .Values.sso.enabled) -}}
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
@@ -14,7 +14,7 @@ spec:
         principals:
         - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "kube-prometheus" }}
         - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "kube-alertmanager" }}
-  {{- if and (not .Values.istio.clusterWideHardenedEnabled) .Values.sso.enabled }}
+  {{- if and (not .Values.istio.authorizationPolicies.clusterWideMonitoringAccess) .Values.sso.enabled }}
   selector:
     matchLabels:
       {{ .Values.sso.selector.key | default "protect" }}: {{ .Values.sso.selector.value | default "keycloak" | quote }}

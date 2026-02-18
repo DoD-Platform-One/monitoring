@@ -1,0 +1,3 @@
+{{- if .Values.istio.enabled }}
+{{- include "bb-common.routes.render" . }}
+{{- end }}

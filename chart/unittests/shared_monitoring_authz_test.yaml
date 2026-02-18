@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: Monitoring shared monitoring authorization policy
+templates:
+  - templates/bigbang/shared-monitoring-authz-policy.yaml
+release:
+  name: test
+values:
+  - values/shared-monitoring-authz.yaml
+tests:
+  - it: renders shared monitoring policy when istio and authz are enabled
+    set:
+      istio.enabled: true
+      istio.authorizationPolicies.enabled: true
+      sso.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 1
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          any: true
+          metadata:
+            namespace: istio-system
+          spec:
+            action: ALLOW
+            rules:
+              - from:
+                  - source:
+                      namespaces:
+                        - default
+
+  - it: adds sso selector when sso is enabled and cluster-wide access is disabled
+    set:
+      istio.enabled: true
+      sso.enabled: true
+      istio.authorizationPolicies.clusterWideMonitoringAccess: false
+    asserts:
+      - equal:
+          path: spec.selector.matchLabels.protect
+          value: keycloak
+
+  - it: omits sso selector when cluster-wide monitoring access is enabled
+    set:
+      istio.enabled: true
+      sso.enabled: true
+      istio.authorizationPolicies.clusterWideMonitoringAccess: true
+    asserts:
+      - notExists:
+          path: spec.selector
+
+  - it: renders nothing when istio is disabled
+    set:
+      istio.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0

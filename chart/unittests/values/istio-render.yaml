@@ -1,0 +1,45 @@
+istio:
+  enabled: true
+  injection: enabled
+  mtls:
+    mode: STRICT
+  sidecar:
+    enabled: true
+    outboundTrafficPolicyMode: REGISTRY_ONLY
+  serviceEntries:
+    custom:
+      - name: external-api
+        spec:
+          hosts:
+            - api.example.com
+          location: MESH_EXTERNAL
+          ports:
+            - number: 443
+              name: https
+              protocol: HTTPS
+          resolution: DNS
+  authorizationPolicies:
+    enabled: true
+    generateFromNetpol: true
+networkPolicies:
+  enabled: true
+  ingress:
+    to:
+      kube-prometheus-stack-prometheus-operator:10250:
+        from:
+          cidr:
+            0.0.0.0/0: true
+      prometheus:10901:
+        from:
+          k8s:
+            thanos/thanos: true
+      alertmanager:9093:
+        from:
+          k8s:
+            logging/logging-loki: true
+      prometheus:9090:
+        from:
+          k8s:
+            tempo-tempo@tempo/tempo: true
+            kiali-service-account@kiali/kiali: true
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: true

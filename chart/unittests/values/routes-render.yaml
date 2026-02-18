@@ -1,0 +1,7 @@
+domain: dev.bigbang.mil
+istio:
+  enabled: true
+  authorizationPolicies:
+    enabled: true
+networkPolicies:
+  enabled: true

@@ -6,7 +6,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 80.13.3-bb.0
+version: 80.13.3-bb.1
 # Please do not add a renovate hint here, since appVersion updates involves manual tasks
 appVersion: v0.88.0
 kubeVersion: ">=1.19.0-0"
@@ -96,7 +96,7 @@ annotations:
 
 dependencies:
   - name: bb-common
-    version: "0.12.3"
+    version: "0.14.0"
     repository: oci://registry1.dso.mil/bigbang
   - name: kube-prometheus-stack
     version: "80.13.3"
@@ -132,4 +132,3 @@ dependencies:
   - name: gluon
     version: "0.9.7"
     repository: oci://registry1.dso.mil/bigbang
-
