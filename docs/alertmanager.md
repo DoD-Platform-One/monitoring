@@ -65,8 +65,8 @@ alertmanager:
       # receiver updated from 'null' to 'mattermost' so it becomes the default
       receiver: 'mattermost'
       routes:
-      - match:
-          alertname: Watchdog
+      - matchers:
+          - alertname="Watchdog"
         receiver: 'null'
     receivers:
     - name: 'null'

@@ -1,5 +1,5 @@
 # Istio Hardened
-Big Bang has added the `.Values.istio.hardened` map attibute to the values of applications that can be istio-injected (when `.Values.istio.enabled` is `true`).  This document walks through the impact of setting `.Values.istio.hardened: true` on how traffic is managed within a given istio-injected package.
+Big Bang has added the `.Values.istio.hardened` map attribute to the values of applications that can be istio-injected (when `.Values.istio.enabled` is `true`).  This document walks through the impact of setting `.Values.istio.hardened: true` on how traffic is managed within a given istio-injected package.
 
 ## Prerequisites
 In order for `.Values.istio.hardened.enabled: true` to have any impact, the package must also have `.Values.istio.enabled: true` set.  This is because all of the resources created by setting `.Values.istio.hardened.enabled: true` are applied to the istio service mesh, which includes istio sidecar proxies.  If there are no istio proxies, then no mesh components exist in the namespace and therefore istio Kubernetes resources in the namespace will not effect anything.

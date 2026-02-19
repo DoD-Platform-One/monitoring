@@ -195,16 +195,3 @@ Further filters that can be used are:
 * `kubernetes.pod_name`   = `prometheus-k8s-#` to get logs from a specific <#>  pod
   * `kubernetes.container_name` = `node-exporter` to get logs from prometheus container
 
-### To build and push
-
-build command
-
-```shell
-docker build . -t registry.dso.mil/platform-one/apps/monitoring/grafana:6.7.0
-```
-
-push command
-
-```shell
-docker push registry.dso.mil/platform-one/apps/monitoring/grafana:6.7.0
-```

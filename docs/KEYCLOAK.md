@@ -151,7 +151,7 @@ monitoring:
           subPath: "ca.pem"
 ```
 
-Secret creation example that works with this example"
+Secret creation example that works with the above configuration:
 
 ```bash
 kubectl create secret generic grafana-oidc-secret --from-file=ca.pem=/path/to/cert.pem -n monitoring
