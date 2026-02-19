@@ -11,9 +11,18 @@ We will also take a look at the following topics:
 - [Prometheus Operator](prometheus-operator.md)
 - [Visualizations](visualization.md)
 - [Security](prometheus-security.md)
-- [Node Affinity & Anti-Affinity with Monitoring](AFFINITY.md)  
+- [Node Affinity & Anti-Affinity with Monitoring](AFFINITY.md)
 - [Backup & Recovery](prometheus-backup-recovery.md)
 - [Best Practices](prometheus-best-practices.md)
+- [Alertmanager Configuration](alertmanager.md)
+- [Grafana Persistence](grafana-persistence.md)
+- [Keycloak/SSO Configuration](KEYCLOAK.md)
+- [Istio Hardened Mode](istioHardened.md)
+- [Istio mTLS Metrics](istio-mtls-metrics.md)
+- [Elasticsearch/Kibana Integration](ELASTIC.md)
+- [PLG Stack (Prometheus, Loki, Grafana)](prometheus-loki-grafana.md)
+- [SNMP Exporter](prometheus-snmp-exporter.md)
+- [Development & Maintenance Guide](DEVELOPMENT_MAINTENANCE.md)
 
 ## Additional links
 

@@ -98,7 +98,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: bitnami/redis/5.0.14
+        image: bitnami/redis:7.4
         resources:
           requests:
             cpu: 100m
@@ -106,7 +106,7 @@ spec:
         ports:
         - containerPort: 6379
       - name: redis-exporter
-        image: bitnami/redis-exporter:1.35.1
+        image: bitnami/redis-exporter:1.67.0
         resources:
           requests:
             cpu: 100m
@@ -216,26 +216,26 @@ The daemonset runs using privileged security context, so that container is allow
 To expose the metrics, the pods created by the daemonset are annotated by prometheus.io.scrape set to "true" in the manifest. Subsequently, Prometheus server is configured to scrape endpoints for such pods to get the metrics.
 
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: node-exporter-daemonset
 spec:
   selector:
-      matchLabels:
-        name: node-exporter
+    matchLabels:
+      name: node-exporter
   template:
     metadata:
       name: node-exporter
       labels:
         name: node-exporter
       annotations:
-        prometheus.io.scrape: "true"
+        prometheus.io/scrape: "true"
     spec:
       hostPID: true
       containers:
-      - name:  node-exporter
-        image: prom/node-exporter:v1.3.1
+      - name: node-exporter
+        image: prom/node-exporter:v1.10.2
         securityContext:
           privileged: true
         ports:

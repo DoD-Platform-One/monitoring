@@ -7,7 +7,7 @@
 - Must have a single unit
 - Should use base units
 - Should have a suffix describing the unit, in plural form
-- Should represent the sam logical thing measured across all label dimensions
+- Should represent the same logical thing measured across all label dimensions
 
 ## Labels
 
@@ -81,5 +81,5 @@ Refer to the links below for additional best practices information.
 - [Historgrams & Summaries](https://prometheus.io/docs/practices/histograms/)
 - [Alerting](https://prometheus.io/docs/practices/alerting/)
 - [Recording & Rules](https://prometheus.io/docs/practices/rules/)
--[Pushgateway](https://prometheus.io/docs/practices/pushing/)
--[Remote Write Tuning](https://prometheus.io/docs/practices/remote_write/)  
+- [Pushgateway](https://prometheus.io/docs/practices/pushing/)
+- [Remote Write Tuning](https://prometheus.io/docs/practices/remote_write/)  

@@ -76,16 +76,15 @@ Custom Resource Definitions or CRDs are used to generate configuration files and
 
 ### Prometheus Metric Exporters
 
-[todo: explain how the following mechanisms work]
+Prometheus uses exporters to collect metrics from various sources:
 
-- Prometheus (Exports Prometheus Metrics)
-- node-exporter daemonset
-- sidecar containers can enable export of Prometheus Metrics
+- **Prometheus Self-Monitoring**: Prometheus exposes its own metrics at the `/metrics` endpoint, allowing you to monitor the health and performance of Prometheus itself.
+- **Node Exporter DaemonSet**: Deployed as a DaemonSet to run on every node in the cluster, the node exporter collects hardware and OS-level metrics (CPU, memory, disk, network) and exposes them for Prometheus to scrape.
+- **Sidecar Containers**: Applications that don't natively export Prometheus metrics can use sidecar containers (like redis-exporter for Redis) to translate application-specific metrics into Prometheus format.
 
 ### Prometheus Adapter
 
-[todo: explain how the following mechanisms work]
-Prometheus Adapter enables Prometheus Metrics to be available for use by pod autoscaling operations.
+Prometheus Adapter enables Prometheus metrics to be used by Kubernetes' Horizontal Pod Autoscaler (HPA) and Vertical Pod Autoscaler (VPA). It implements the Kubernetes custom metrics API, allowing you to scale workloads based on any metric available in Prometheus, not just CPU and memory.
 
 ### Visualizations & Dashboards
 

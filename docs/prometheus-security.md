@@ -24,6 +24,6 @@ Refer to this [link](https://prometheus.io/docs/operating/security/) for additio
 
 ### Additional links
 
-- [Monitoring Specific Keycloak Configuration](https://repo1.dso.mil/platform-one/big-bang/apps/core/monitoring/-/blob/main/docs/KEYCLOAK.md)
-- [KeyCloak](https://www.keycloak.org/extensions.html)
-- [Keycloak Metrics SPI](https://github.com/aerogear/keycloak-metrics-spi/blob/master/README.md)
+- [Monitoring Specific Keycloak Configuration](KEYCLOAK.md)
+- [Keycloak](https://www.keycloak.org/)
+- [Keycloak Metrics SPI](https://github.com/aerogear/keycloak-metrics-spi)
