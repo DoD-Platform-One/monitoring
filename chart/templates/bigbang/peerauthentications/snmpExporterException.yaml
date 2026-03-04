@@ -1,4 +1,4 @@
-{{- $meshWorkloadsEnabled := or (dig "sidecar" "enabled" false .Values.istio) (eq .Values.istio.injection "enabled") }}
+{{- $meshWorkloadsEnabled := dig "sidecar" "enabled" false .Values.istio }}
 {{- if and .Values.istio.enabled $meshWorkloadsEnabled (eq .Values.istio.mtls.mode "STRICT") .Values.snmpExporter.enabled }}
 # Allows snmp-exporter metrics to be scraped since metrics endpoint does not support TLS
 apiVersion: security.istio.io/v1

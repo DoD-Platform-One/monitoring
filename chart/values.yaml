@@ -47,6 +47,9 @@ upstream:
           cpu: 100m
           memory: 100Mi
       externalUrl: "https://alertmanager.{{ .Values.domain }}"
+      tlsConfig: {}
+    serviceMonitor:
+      tlsConfig: {}
 
   ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
   grafana:
@@ -176,6 +179,8 @@ upstream:
         requests:
           cpu: 100m
           memory: 128Mi
+    serviceMonitor:
+      tlsConfig: {}
 
   ## Configuration for kube-state-metrics sub-chart
   ##
@@ -388,6 +393,7 @@ upstream:
         requests:
           cpu: 300m
           memory: 5Gi
+
     # Service for thanos service discovery on sidecar
     # Enable this can make Thanos Query can use
     # `--store=dnssrv+_grpc._tcp.${kube-prometheus-stack.fullname}-thanos-discovery.${namespace}.svc.cluster.local` to discovery
@@ -397,6 +403,10 @@ upstream:
       enabled: false
       annotations: {}
       labels: {}
+    thanosServiceMonitor:
+      enabled: false
+      tlsConfig: {}
+      additionalLabels: {}
 
   ## Configuration for thanosRuler
   ## ref: https://thanos.io/tip/components/rule.md/
@@ -409,6 +419,8 @@ upstream:
         sha: ""
         imagePullSecrets:
           - name: private-registry
+      serviceMonitor:
+        tlsConfig: {}
 
 ### NON UPSTREAM
 
@@ -502,8 +514,6 @@ bbtests:
 
 istio:
   enabled: false
-  namespace: istio-system
-  injection: disabled
   mtls:
     # Note that setting this to STRICT requires additional configuration for Prometheus and monitors.
     # Review `./docs/istio-mtls-metrics.md` for additional information.
@@ -529,52 +539,8 @@ istio:
       #     resolution: DNS
   authorizationPolicies:
     enabled: false
-    # Prefer generating authz from ingress netpol rules (namespace, sa@namespace/pod, or cidr).
     generateFromNetpol: true
-    clusterWideMonitoringAccess: false
-    additionalPolicies:
-      # bb-common does not support custom path rules yet
-      loki-prometheus-authz-policy:
-        enabled: false
-        spec:
-          selector:
-            matchLabels:
-              app: prometheus
-          action: ALLOW
-          rules:
-            - from:
-                - source:
-                    namespaces:
-                      - logging
-                    principals:
-                      - cluster.local/ns/logging/sa/logging-loki
-              to:
-                - operation:
-                    methods:
-                      - POST
-                    paths:
-                      - /api/v1/write
-      # bb-common does not support custom http rules yet
-      alloy-prometheus-authz-policy:
-        enabled: false
-        spec:
-          selector:
-            matchLabels:
-              app: prometheus
-          action: ALLOW
-          rules:
-            - from:
-                - source:
-                    namespaces:
-                      - alloy
-                    principals:
-                      - cluster.local/ns/alloy/sa/alloy-alloy-logs
-              to:
-                - operation:
-                    methods:
-                      - POST
-                    paths:
-                      - /api/v1/write
+    custom: []
   # Toggle to disable all rules via the enabled: false
   prometheusRule:
     IstioSidecarMemModerate: true

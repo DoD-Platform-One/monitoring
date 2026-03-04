@@ -1,6 +1,5 @@
 istio:
   enabled: true
-  injection: disabled
   sidecar:
     enabled: true
   mtls:

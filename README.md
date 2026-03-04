@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 80.13.3-bb.1](https://img.shields.io/badge/Version-80.13.3--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.88.0](https://img.shields.io/badge/AppVersion-v0.88.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 80.13.3-bb.2](https://img.shields.io/badge/Version-80.13.3--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.88.0](https://img.shields.io/badge/AppVersion-v0.88.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -54,8 +54,7 @@ helm install monitoring chart/
 | networkPolicies.egress.from.kube-state-metrics.to.definition.kubeAPI | bool | `true` | Kube-state-metrics derives its metrics from the k8s API |
 | networkPolicies.egress.from.prometheus.to.definition.kubeAPI | bool | `true` | Prometheus must be able to read ServiceMonitor and PodMonitor resources from the k8s API |
 | networkPolicies.egress.from.prometheus.to.k8s.* | bool | `true` | Prometheus must be able to scrape any workload in the cluster |
-| networkPolicies.egress.from.admission-create-job.to.k8s.istio-system/istiod:15012 | bool | `true` | Since this is a pre-install/pre-upgrade job, the default istio egress netpol may not be in effect at the time it runs |
-| networkPolicies.egress.from.admission-create-job.to.definition.kubeAPI | bool | `true` | The admission create job needs to be able to create the admission webhooks for prometheus CRDs so it needs access to the k8s API |
+| networkPolicies.egress.from.admission-create-job.to.definition.kubeAPI | bool | `true` | This pre-install/pre-upgrade job creates webhook resources and must reach the kubeAPI before normal release netpols exist. |
 | networkPolicies.egress.from.alertmanager.to.cidr."0.0.0.0/0" | bool | `false` | Alertmanager can be configured to integrate with many external alerting systems, so we define this policy but set it to false; set it to true if you need this connectivity |
 | networkPolicies.ingress.to.kube-prometheus-stack-prometheus-operator:10250.from.cidr."0.0.0.0/0" | bool | `true` | Required for kube API admission webhook traffic and Prometheus scrape access. Override this CIDR from the umbrella when your control-plane range is known. |
 | networkPolicies.ingress.to.prometheus:10901.from.k8s.thanos/thanos | bool | `false` | Thanos store API access to Prometheus sidecar. Set true when Thanos is deployed. |
@@ -67,29 +66,13 @@ helm install monitoring chart/
 | bbtests.cypress.envs.cypress_prometheus_url | string | `"http://monitoring-kube-prometheus-prometheus:9090"` |  |
 | bbtests.cypress.envs.cypress_alertmanager_url | string | `"http://monitoring-kube-prometheus-alertmanager:9093"` |  |
 | istio.enabled | bool | `false` |  |
-| istio.namespace | string | `"istio-system"` |  |
-| istio.injection | string | `"disabled"` |  |
 | istio.mtls.mode | string | `"STRICT"` |  |
 | istio.sidecar.enabled | bool | `false` |  |
 | istio.sidecar.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
 | istio.serviceEntries.custom | list | `[]` |  |
 | istio.authorizationPolicies.enabled | bool | `false` |  |
 | istio.authorizationPolicies.generateFromNetpol | bool | `true` |  |
-| istio.authorizationPolicies.clusterWideMonitoringAccess | bool | `false` |  |
-| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.enabled | bool | `false` |  |
-| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.selector.matchLabels.app | string | `"prometheus"` |  |
-| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.action | string | `"ALLOW"` |  |
-| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.rules[0].from[0].source.namespaces[0] | string | `"logging"` |  |
-| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.rules[0].from[0].source.principals[0] | string | `"cluster.local/ns/logging/sa/logging-loki"` |  |
-| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.rules[0].to[0].operation.methods[0] | string | `"POST"` |  |
-| istio.authorizationPolicies.additionalPolicies.loki-prometheus-authz-policy.spec.rules[0].to[0].operation.paths[0] | string | `"/api/v1/write"` |  |
-| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.enabled | bool | `false` |  |
-| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.selector.matchLabels.app | string | `"prometheus"` |  |
-| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.action | string | `"ALLOW"` |  |
-| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.rules[0].from[0].source.namespaces[0] | string | `"alloy"` |  |
-| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.rules[0].from[0].source.principals[0] | string | `"cluster.local/ns/alloy/sa/alloy-alloy-logs"` |  |
-| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.rules[0].to[0].operation.methods[0] | string | `"POST"` |  |
-| istio.authorizationPolicies.additionalPolicies.alloy-prometheus-authz-policy.spec.rules[0].to[0].operation.paths[0] | string | `"/api/v1/write"` |  |
+| istio.authorizationPolicies.custom | list | `[]` |  |
 | istio.prometheusRule.IstioSidecarMemModerate | bool | `true` |  |
 | istio.prometheusRule.IstioSidecarMemHigh | bool | `true` |  |
 | istio.prometheusRule.IstioConfigValidationFailed | bool | `true` |  |
@@ -97,7 +80,7 @@ helm install monitoring chart/
 | istio.prometheusRule.IstioSidecarEndpointError | bool | `true` |  |
 | istio.prometheusRule.IstioSidecarListenerConflict | bool | `true` |  |
 | istio.console.enabled | bool | `false` |  |
-| routes | object | `{"inbound":{"monitoring-alertmanager":{"containerPort":9093,"enabled":true,"gateways":["istio-system/main"],"hosts":["alertmanager.{{ .Values.domain }}"],"metadata":{"annotations":{},"labels":{}},"port":"{{ .Values.upstream.alertmanager.service.port }}","selector":{"app.kubernetes.io/name":"alertmanager"},"service":"{{ printf \"%s-%s\" (include \"kube-prometheus-stack.fullname\" .) \"kube-alertmanager\" }}.{{ .Release.Namespace }}.svc.cluster.local"},"monitoring-prometheus":{"containerPort":9090,"enabled":true,"gateways":["istio-system/main"],"hosts":["prometheus.{{ .Values.domain }}"],"metadata":{"annotations":{},"labels":{}},"port":"{{ .Values.upstream.prometheus.service.port }}","selector":{"app":"prometheus"},"service":"{{ printf \"%s-%s\" (include \"kube-prometheus-stack.fullname\" .) \"kube-prometheus\" }}.{{ .Release.Namespace }}.svc.cluster.local"}},"outbound":{}}` | [bb-common Routes configuration](https://repo1.dso.mil/big-bang/product/packages/bb-common/-/blob/main/docs/routes/README.md?ref_type=heads) |
+| routes | object | `{"inbound":{"monitoring-alertmanager":{"containerPort":9093,"enabled":true,"gateways":["istio-gateway/public-ingressgateway"],"hosts":["alertmanager.{{ .Values.domain }}"],"metadata":{"annotations":{},"labels":{}},"port":"{{ .Values.upstream.alertmanager.service.port }}","selector":{"app.kubernetes.io/name":"alertmanager"},"service":"{{ printf \"%s-%s\" (include \"kube-prometheus-stack.fullname\" .) \"kube-alertmanager\" }}.{{ .Release.Namespace }}.svc.cluster.local"},"monitoring-prometheus":{"containerPort":9090,"enabled":true,"gateways":["istio-gateway/public-ingressgateway"],"hosts":["prometheus.{{ .Values.domain }}"],"metadata":{"annotations":{},"labels":{}},"port":"{{ .Values.upstream.prometheus.service.port }}","selector":{"app":"prometheus"},"service":"{{ printf \"%s-%s\" (include \"kube-prometheus-stack.fullname\" .) \"kube-prometheus\" }}.{{ .Release.Namespace }}.svc.cluster.local"}},"outbound":{}}` | [bb-common Routes configuration](https://repo1.dso.mil/big-bang/product/packages/bb-common/-/blob/main/docs/routes/README.md?ref_type=heads) |
 | kiali.enabled | bool | `false` |  |
 | sso.enabled | bool | `false` |  |
 | sso.selector.key | string | `"protect"` |  |

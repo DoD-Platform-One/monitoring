@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [80.13.3-bb.2] (2026-02-24)
+### Changed
+
+- Removed layer 7 authorization policies are part of the bb-common work
+- 
+
 ## [80.13.3-bb.1] (2026-01-13)
 ### Changed
 - bb-common 0.12.3 -> 0.14.0 
