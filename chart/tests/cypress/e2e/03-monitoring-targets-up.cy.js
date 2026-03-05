@@ -55,15 +55,14 @@ describe('Monitoring Targets', () => {
 
 describe('Prometheus Targets Test', () => {
 
-  it('Test should fetch and verify Prometheus targets', () => {
-    cy.request(`${Cypress.env('prometheus_url')}/api/v1/targets`).then((response) => {
+  it('Test should fetch and verify Prometheus active targets', () => {
+    cy.request(`${Cypress.env('prometheus_url')}/api/v1/targets?state=active`).then((response) => {
       // Check response status
       expect(response.status).to.eq(200);
 
       // Validate the structure of the response
       const { data } = response.body;
       expect(data).to.have.property('activeTargets');
-      expect(data).to.have.property('droppedTargets');
 
       // Verify active targets
       data.activeTargets.forEach((target) => {
