@@ -765,7 +765,8 @@ blackboxExporter:
 ## Deploy SNMP exporter as a deployment to all nodes
 snmpExporter:
   enabled: false
-## Configuration for prometheus-snmp-exporter subchart
+  ## Configuration for prometheus-snmp-exporter subchart
+  nameOverride: prometheus-snmp-exporter
   image:
     repository: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter
     tag: v0.30.1
@@ -777,6 +778,14 @@ snmpExporter:
       tag: v0.88.0
       imagePullSecrets:
         - name: private-registry
+    ## Security context to be added to configmap-reload container (Kyverno compliance)
+    containerSecurityContext:
+      runAsGroup: 1001
+      runAsNonRoot: true
+      runAsUser: 1001
+      capabilities:
+        drop:
+          - ALL
   ## Security context to be added to snmp-exporter pods
   securityContext:
     runAsNonRoot: true

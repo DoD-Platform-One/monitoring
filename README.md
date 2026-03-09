@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # monitoring
 
-![Version: 80.13.3-bb.3](https://img.shields.io/badge/Version-80.13.3--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.88.0](https://img.shields.io/badge/AppVersion-v0.88.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 80.13.3-bb.4](https://img.shields.io/badge/Version-80.13.3--bb.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.88.0](https://img.shields.io/badge/AppVersion-v0.88.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 kube-prometheus-stack collects Kubernetes manifests, Grafana dashboards, and Prometheus rules combined with documentation and scripts to provide easy to operate end-to-end Kubernetes cluster monitoring with Prometheus using the Prometheus Operator.
 
@@ -185,12 +185,18 @@ helm install monitoring chart/
 | blackboxExporter.configReloader.serviceMonitor.selfMonitor.interval | string | `"30s"` |  |
 | blackboxExporter.configReloader.serviceMonitor.selfMonitor.scrapeTimeout | string | `"30s"` |  |
 | snmpExporter.enabled | bool | `false` |  |
+| snmpExporter.nameOverride | string | `"prometheus-snmp-exporter"` |  |
+| snmpExporter.fullnameOverride | string | `"prometheus-snmp-exporter"` |  |
 | snmpExporter.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter"` |  |
 | snmpExporter.image.tag | string | `"v0.30.1"` |  |
 | snmpExporter.image.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | snmpExporter.configmapReload.image.repository | string | `"registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader"` |  |
 | snmpExporter.configmapReload.image.tag | string | `"v0.88.0"` |  |
 | snmpExporter.configmapReload.image.imagePullSecrets[0].name | string | `"private-registry"` |  |
+| snmpExporter.configmapReload.containerSecurityContext.runAsGroup | int | `1001` |  |
+| snmpExporter.configmapReload.containerSecurityContext.runAsNonRoot | bool | `true` |  |
+| snmpExporter.configmapReload.containerSecurityContext.runAsUser | int | `1001` |  |
+| snmpExporter.configmapReload.containerSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
 | snmpExporter.securityContext.runAsNonRoot | bool | `true` |  |
 | snmpExporter.securityContext.runAsUser | int | `1001` |  |
 | snmpExporter.securityContext.runAsGroup | int | `1001` |  |

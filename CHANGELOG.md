@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [80.13.3-bb.4] (2026-03-06)
+### Changed
+- convert snmp-exporter to passthrough removing dependency on KPT
+
 ## [80.13.3-bb.3] (2026-03-05)
 ### Changed
 - cypress test changed to reduce size of target check payload

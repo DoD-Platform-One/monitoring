@@ -15,19 +15,10 @@ Monitoring is a modified/customized version of an upstream chart. The below deta
 5. Update dependencies and binaries using `helm dependency update ./chart`
     - Pull assets and commit the binaries as well as the Chart.lock file that was generated.
     - **If the `prometheus/snmp_exporter` image is being updated in `Chart.yaml`:**
-      - Check the [upstream prometheus-snmp-exporter
-Chart.yaml](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-snmp-exporter/Chart.yaml) file to see if there is a new chart released with the new image update
-
-        - If a new chart exists with the new image, from the root of the repo run the following:
-
-            1. Update the `file://./deps/prometheus-snmp-exporter` chart version in `chart/Chart.yaml` and the image version in `chart/values.yaml`.
-
-            2. Consult the [Big Bang Modifications](#big-bang-modifications) section for the specific changes that need to be made to the [`chart/deps/prometheus-snmp-exporter/values.yaml`](#chartdepsprometheus-snmp-exportervaluesyaml) and [`chart/deps/prometheus-snmp-exporter/templates/deployment.yaml`](#chartdepsprometheus-snmp-exportertemplatesdeploymentyaml) files.
-
-            3. Last, update dependencies and binaries using `helm dependency update ./chart`.
-
-            **Note:** Any time any file in the `chart/deps/prometheus-snmp-exporter` directory (or a sub-directory thereof) is changed, you must run `helm dependency update ./chart` to rebuild `chart/charts/prometheus-snmp-exporter-<version>.tgz`. Failure to do so will result in your changes not being included in deployments.
-
+      - Check the [upstream prometheus-snmp-exporter Chart.yaml](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-snmp-exporter/Chart.yaml) file to see if there is a new chart released with the new image update
+        - If a new chart exists with the new image:
+            1. Update the `prometheus-snmp-exporter` chart version in `chart/Chart.yaml` and the image version in `chart/values.yaml`.
+            2. Run `helm dependency update ./chart` to pull the new chart version.
         - Otherwise (if a new chart does not exist with the new image), skip this image update (i.e. revert it from `Chart.yaml` because Renovate is trying to jump ahead) and continue to `Step 9.`
 
 6. Generate the `README.md` updates by following the [guide in gluon](https://repo1.dso.mil/platform-one/big-bang/apps/library-charts/gluon/-/blob/master/docs/bb-package-readme.md).
@@ -113,31 +104,35 @@ This provides a log of these changes to make updates from upstream faster.
 
   ```yaml
   ## Deploy SNMP exporter as a deployment to all nodes
-  ##
   snmpExporter:
     enabled: false
-
-  ## Configuration for prometheus-snmp-exporter sub-chart
-  ##
+  ## Configuration for prometheus-snmp-exporter subchart
+    nameOverride: prometheus-snmp-exporter
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter
-      tag: v0.26.0
-
-    imagePullSecrets:
-      - name: private-registry
-
+      tag: v0.30.1
+      imagePullSecrets:
+        - name: private-registry
     configmapReload:
       image:
         repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
-        tag: v0.74.0
-
+        tag: v0.88.0
+        imagePullSecrets:
+          - name: private-registry
+      ## Security context to be added to configmap-reload container (Kyverno compliance)
+      containerSecurityContext:
+        runAsGroup: 1001
+        runAsNonRoot: true
+        runAsUser: 1001
+        capabilities:
+          drop:
+            - ALL
     ## Security context to be added to snmp-exporter pods
     securityContext:
       runAsNonRoot: true
       runAsUser: 1001
       runAsGroup: 1001
       fsGroup: 1001
-
     ## Security context to be added to snmp-exporter containers
     containerSecurityContext:
       runAsGroup: 1001
@@ -146,9 +141,6 @@ This provides a log of these changes to make updates from upstream faster.
       capabilities:
         drop:
           - ALL
-
-    # Enable this if you're using https://github.com/prometheus-operator/prometheus-operator
-    # A service monitor will be created per each item in serviceMonitor.params[]
     serviceMonitor:
       enabled: true
   ```
@@ -383,21 +375,9 @@ prometheus-blackbox-exporter:
 
 - Ensure the `prometheus-blackbox-exporter` configuration is present and the images are set to pull from ironbank.
 
-### ```chart/deps/prometheus-snmp-exporter/values.yaml```
+### ```chart/values.yaml``` (prometheus-snmp-exporter)
 
-- Ensure `nameOverride` is set to `prometheus-snmp-exporter` to keep resource names from changing due to the use of the `snmpExporter` alias.
+- The `prometheus-snmp-exporter` chart is pulled directly from the upstream Helm repository as a normal dependency (no local KPT copy). BB-specific overrides are set in `chart/values.yaml` under the `snmpExporter:` key:
 
-  ```yaml
-  nameOverride: "prometheus-snmp-exporter"
-  ```
-
-### ```chart/deps/prometheus-snmp-exporter/templates/deployment.yaml```
-
-- To comply with Kyverno policies, we alter the upstream chart to pass `containerSecurityContext` into the `configmap-reload` container. This is done by adding the following block to the `configmap-reload` container:
-
-  ```yaml
-  {{- if .Values.containerSecurityContext }}
-            securityContext:
-  {{ toYaml .Values.containerSecurityContext | indent 12 }}
-          {{- end }}
-  ```
+  - `nameOverride: prometheus-snmp-exporter` — keeps resource names stable despite the `snmpExporter` alias.
+  - `configmapReload.containerSecurityContext` — sets Kyverno-compliant security context on the configmap-reload sidecar (the upstream chart supports this natively via `configmapReload.containerSecurityContext`).
