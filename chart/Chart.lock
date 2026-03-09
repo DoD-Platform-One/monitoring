@@ -6,7 +6,7 @@ dependencies:
   repository: https://prometheus-community.github.io/helm-charts
   version: 80.13.3
 - name: prometheus-snmp-exporter
-  repository: file://./deps/prometheus-snmp-exporter
+  repository: https://prometheus-community.github.io/helm-charts
   version: 8.0.0
 - name: prometheus-blackbox-exporter
   repository: https://prometheus-community.github.io/helm-charts
@@ -14,5 +14,5 @@ dependencies:
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
   version: 0.9.7
-digest: sha256:5ec16011abe2af11f31ec1294be969219cb1c18031128d41511e40d5e76ee543
-generated: "2026-02-10T15:42:42.72707-07:00"
+digest: sha256:5c886ff46683013f6ad3bf6e9c34d5c611b46d2dcf7213967e16b2d4777b93d5
+generated: "2026-02-25T10:19:27.577652-05:00"
