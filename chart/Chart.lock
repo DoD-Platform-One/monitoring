@@ -4,15 +4,15 @@ dependencies:
   version: 0.14.0
 - name: kube-prometheus-stack
   repository: https://prometheus-community.github.io/helm-charts
-  version: 80.13.3
+  version: 82.1.1
 - name: prometheus-snmp-exporter
   repository: https://prometheus-community.github.io/helm-charts
-  version: 8.0.0
+  version: 9.12.1
 - name: prometheus-blackbox-exporter
   repository: https://prometheus-community.github.io/helm-charts
-  version: 11.7.0
+  version: 11.8.0
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
-  version: 0.9.7
-digest: sha256:5c886ff46683013f6ad3bf6e9c34d5c611b46d2dcf7213967e16b2d4777b93d5
-generated: "2026-02-25T10:19:27.577652-05:00"
+  version: 0.9.8
+digest: sha256:3088bf651250bd0836926eb62662f817edf72b529c7a24872f2e2eac57b1e41e
+generated: "2026-03-10T11:57:49.87752-04:00"

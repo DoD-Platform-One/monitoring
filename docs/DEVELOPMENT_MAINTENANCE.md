@@ -21,6 +21,14 @@ Monitoring is a modified/customized version of an upstream chart. The below deta
             2. Run `helm dependency update ./chart` to pull the new chart version.
         - Otherwise (if a new chart does not exist with the new image), skip this image update (i.e. revert it from `Chart.yaml` because Renovate is trying to jump ahead) and continue to `Step 9.`
 
+       - Please check the below for corresponding exporter updates to include the MR breaking changes: 
+         - Helm Repo: 
+           - [prometheus-snmp-exporter/README.md](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-snmp-exporter/README.md)
+           - [prometheus-blackbox-exporter/README.md](https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-blackbox-exporter/README.md)
+         - Image Repo: 
+           - [snmp_exporter/changelog](https://github.com/prometheus/snmp_exporter/releases)
+           - [blackbox_exporter/releases](https://github.com/prometheus/blackbox_exporter/releases)
+
 6. Generate the `README.md` updates by following the [guide in gluon](https://repo1.dso.mil/platform-one/big-bang/apps/library-charts/gluon/-/blob/master/docs/bb-package-readme.md).
 
 7. Push up your changes, validate that CI passes. If there are any failures follow the information in the pipeline to make the necessary updates and reach out to the team if needed.
