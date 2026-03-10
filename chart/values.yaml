@@ -33,7 +33,7 @@ upstream:
       image:
         registry: registry1.dso.mil
         repository: ironbank/opensource/prometheus/alertmanager
-        tag: v0.30.0
+        tag: v0.31.1
         sha: ""
         imagePullSecrets:
           - name: private-registry
@@ -59,7 +59,7 @@ upstream:
     image:
       registry: registry1.dso.mil
       repository: ironbank/big-bang/grafana/grafana-plugins
-      tag: 12.3.1
+      tag: 12.3.3
       pullSecrets:
       - private-registry
     containerSecurityContext:
@@ -119,7 +119,7 @@ upstream:
       image:
         registry: registry1.dso.mil
         repository: ironbank/kiwigrid/k8s-sidecar
-        tag: 2.2.3
+        tag: 2.5.0
         imagePullSecrets:
           - name: private-registry
       resources:
@@ -189,7 +189,7 @@ upstream:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/kubernetes/kube-state-metrics
-      tag: v2.17.0
+      tag: v2.18.0
       imagePullSecrets:
         - name: private-registry
     resources:
@@ -270,7 +270,7 @@ upstream:
         image:
           registry: registry1.dso.mil
           repository: ironbank/opensource/ingress-nginx/kube-webhook-certgen
-          tag: v1.6.5
+          tag: v1.6.7
           sha: ""
           pullPolicy: IfNotPresent
           imagePullSecrets:
@@ -321,7 +321,7 @@ upstream:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-operator
-      tag: v0.88.0
+      tag: v0.89.0
       sha: ""
       pullPolicy: IfNotPresent
       imagePullSecrets:
@@ -331,7 +331,7 @@ upstream:
       image:
         registry: registry1.dso.mil
         repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-        tag: v0.88.0
+        tag: v0.89.0
         sha: ""
         imagePullSecrets:
           - name: private-registry
@@ -339,13 +339,13 @@ upstream:
     thanosImage:
       registry: registry1.dso.mil
       repository: ironbank/opensource/thanos/thanos
-      tag: v0.40.1
+      tag: v0.41.0
       sha: ""
     ## kubectl image to use when cleaning up
     kubectlImage:
       registry: registry1.dso.mil
       repository: ironbank/opensource/kubernetes/kubectl
-      tag: v1.34.3
+      tag: v1.34.4
       sha: ""
       pullPolicy: IfNotPresent
   ## Deploy a Prometheus instance
@@ -415,7 +415,7 @@ upstream:
       image:
         registry: registry1.dso.mil
         repository: ironbank/opensource/thanos/thanos
-        tag: v0.40.1
+        tag: v0.41.0
         sha: ""
         imagePullSecrets:
           - name: private-registry
@@ -731,7 +731,7 @@ blackboxExporter:
     image:
       registry: registry1.dso.mil
       repository: ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.88.0
+      tag: v0.89.0
       pullPolicy: IfNotPresent
       digest: ""
       imagePullSecrets:
@@ -775,7 +775,7 @@ snmpExporter:
   configmapReload:
     image:
       repository: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader
-      tag: v0.88.0
+      tag: v0.89.0
       imagePullSecrets:
         - name: private-registry
     ## Security context to be added to configmap-reload container (Kyverno compliance)

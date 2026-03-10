@@ -3,6 +3,24 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [82.1.1-bb.0] (2026-03-10)
+### Changed
+- gluon 0.9.7 -> 0.9.8
+- kube-prometheus-stack 80.13.3 -> 82.1.1
+- prometheus-blackbox-exporter 11.7.0 -> 11.8.0
+- prometheus-snmp-exporter 8.0.0 -> 9.12.1
+- quay.io/prometheus-operator/prometheus-config-reloader v0.88.0 -> v0.89.0
+- registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins 12.3.1 -> 12.3.3
+- registry1.dso.mil/ironbank/kiwigrid/k8s-sidecar 2.2.3 -> 2.5.0
+- registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen v1.6.5 -> v1.6.7
+- registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics v2.17.0 -> v2.18.0
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.34.3 -> v1.34.4
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.88.0 -> v0.89.0
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator v0.88.0 -> v0.89.0
+- registry1.dso.mil/ironbank/opensource/prometheus/alertmanager v0.30.0 -> v0.31.1
+- registry1.dso.mil/ironbank/opensource/thanos/thanos v0.40.1 -> v0.41.0
+- registry1.dso.mil/ironbank/opensource/prometheus/snmp_exporter v0.28.0 -> v0.30.1
+
 ## [80.13.3-bb.4] (2026-03-06)
 ### Changed
 - convert snmp-exporter to passthrough removing dependency on KPT
@@ -14,7 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [80.13.3-bb.2] (2026-02-24)
 ### Changed
 
-- Removed layer 7 authorization policies are part of the bb-common work
+- Removed layer 7 authorization policies are part of the bb-common 
 
 ## [80.13.3-bb.1] (2026-01-13)
 ### Changed
