@@ -59,7 +59,7 @@ upstream:
     image:
       registry: registry1.dso.mil
       repository: ironbank/big-bang/grafana/grafana-plugins
-      tag: 12.3.3
+      tag: 12.4.1
       pullSecrets:
       - private-registry
     containerSecurityContext:
@@ -270,7 +270,7 @@ upstream:
         image:
           registry: registry1.dso.mil
           repository: ironbank/opensource/ingress-nginx/kube-webhook-certgen
-          tag: v1.6.7
+          tag: v1.6.8
           sha: ""
           pullPolicy: IfNotPresent
           imagePullSecrets:
@@ -345,7 +345,7 @@ upstream:
     kubectlImage:
       registry: registry1.dso.mil
       repository: ironbank/opensource/kubernetes/kubectl
-      tag: v1.34.4
+      tag: v1.34.5
       sha: ""
       pullPolicy: IfNotPresent
   ## Deploy a Prometheus instance
@@ -358,7 +358,7 @@ upstream:
       image:
         registry: registry1.dso.mil
         repository: ironbank/opensource/prometheus/prometheus
-        tag: v3.9.1
+        tag: v3.10.0
         sha: ""
         imagePullSecrets:
           - name: private-registry

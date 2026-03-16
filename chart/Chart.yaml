@@ -6,7 +6,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 82.1.1-bb.0
+version: 82.10.4-bb.0
 # Please do not add a renovate hint here, since appVersion updates involves manual tasks
 appVersion: v0.89.0
 kubeVersion: ">=1.19.0-0"
@@ -30,8 +30,8 @@ annotations:
     - [Find our upstream chart's CHANGELOG here](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart)
     - [and our upstream application release notes here](https://github.com/prometheus-operator/kube-prometheus/blob/main/CHANGELOG.md)
   bigbang.dev/applicationVersions: |
-    - Prometheus: 3.9.1
-    - Grafana: 12.3.3
+    - Prometheus: 3.10.0
+    - Grafana: 12.4.1
     - Alertmanager: 0.31.1
   # The big-bang/base image being deployed by this chart is dependent on a few different conditions being true
   # cleanUpgrade.enabled, grafana.enabled, prometheusOperator.admissionWebhooks.enabled
@@ -42,7 +42,7 @@ annotations:
     - name: base
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
     - name: grafana
-      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:12.3.3
+      image: registry1.dso.mil/ironbank/big-bang/grafana/grafana-plugins:12.4.1
       condition: upstream.grafana.enabled
       dependency: grafana
     - name: init-chown-data
@@ -53,17 +53,17 @@ annotations:
       condition: upstream.grafana.enabled
       dependency: grafana
     - name: kubectl
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34.4
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34.5
       condition: upstream.prometheusOperator.enabled
     - name: kube-state-metrics
       image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.18.0
       condition: upstream.kubeStateMetrics.enabled
       dependency: kube-state-metrics
     - name: kube-webhook-certgen
-      image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.6.7
+      image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.6.8
       condition: upstream.prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
-      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.9.1
+      image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.10.0
       condition: upstream.prometheus.enabled
     - name: prometheus-config-reloader
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.89.0
@@ -96,10 +96,10 @@ annotations:
 
 dependencies:
   - name: bb-common
-    version: "0.14.0"
+    version: "0.14.1"
     repository: oci://registry1.dso.mil/bigbang
   - name: kube-prometheus-stack
-    version: "82.1.1"
+    version: "82.10.4"
     repository: https://prometheus-community.github.io/helm-charts
     alias: upstream
     import-values:
