@@ -381,6 +381,10 @@ prometheus-blackbox-exporter:
   externalUrl: "https://prometheus.{{ .Values.domain }}"
   ```
 
+- Ensure `prometheus.prometheusSpec.serviceDiscoveryRole` is set to `"EndpointSlice"`.
+  This configures the Prometheus Operator to use the EndpointSlice API for target discovery,
+  replacing the deprecated Endpoints API (Kubernetes v1.33+).
+
 - Ensure the `prometheus-blackbox-exporter` configuration is present and the images are set to pull from ironbank.
 
 ### ```chart/values.yaml``` (prometheus-snmp-exporter)
