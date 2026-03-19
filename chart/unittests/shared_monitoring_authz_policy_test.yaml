@@ -1,0 +1,81 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: Shared monitoring authorization policy
+templates:
+  - templates/bigbang/authorizationpolicies/shared-monitoring-authz-policy.yaml
+release:
+  name: monitoring
+  namespace: monitoring
+tests:
+  - it: creates AuthorizationPolicy when authorizationPolicies disabled but sso enabled
+    set:
+      istio.enabled: true
+      istio.authorizationPolicies.enabled: false
+      sso.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: shared-monitoring-authz-policy
+    asserts:
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          name: shared-monitoring-authz-policy
+          namespace: istio-system
+
+  - it: includes protect keycloak selector when authorizationPolicies disabled and sso enabled
+    set:
+      istio.enabled: true
+      istio.authorizationPolicies.enabled: false
+      sso.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: shared-monitoring-authz-policy
+    asserts:
+      - equal:
+          path: spec.selector.matchLabels
+          value:
+            protect: keycloak
+
+  - it: uses custom selector values when provided
+    set:
+      istio.enabled: true
+      istio.authorizationPolicies.enabled: false
+      sso.enabled: true
+      sso.selector.key: custom-key
+      sso.selector.value: custom-value
+    documentSelector:
+      path: metadata.name
+      value: shared-monitoring-authz-policy
+    asserts:
+      - equal:
+          path: spec.selector.matchLabels
+          value:
+            custom-key: custom-value
+
+  - it: does not include selector when authorizationPolicies enabled
+    set:
+      istio.enabled: true
+      istio.authorizationPolicies.enabled: true
+      sso.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: shared-monitoring-authz-policy
+    asserts:
+      - notExists:
+          path: spec.selector
+
+  - it: renders nothing when istio is disabled
+    set:
+      istio.enabled: false
+      sso.enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders nothing when both authorizationPolicies and sso are disabled
+    set:
+      istio.enabled: true
+      istio.authorizationPolicies.enabled: false
+      sso.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
