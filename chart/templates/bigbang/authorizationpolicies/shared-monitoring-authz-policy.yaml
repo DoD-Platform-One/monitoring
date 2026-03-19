@@ -1,0 +1,22 @@
+{{- if and .Values.istio.enabled (or .Values.istio.authorizationPolicies.enabled .Values.sso.enabled) -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: shared-monitoring-authz-policy
+  namespace: istio-system
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces:
+        - {{ .Release.Namespace }}
+        principals:
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "kube-prometheus" }}
+        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ printf "%s-%s" (include "kube-prometheus-stack.fullname" .) "kube-alertmanager" }}
+  {{- if and (not .Values.istio.authorizationPolicies.enabled) .Values.sso.enabled }}
+  selector:
+    matchLabels:
+      {{ .Values.sso.selector.key | default "protect" }}: {{ .Values.sso.selector.value | default "keycloak" | quote }}
+  {{- end }}
+{{- end }}
