@@ -3,6 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [82.13.2-bb.0] (2026-03-23)
+### Changed
+- kube-prometheus-stack 82.10.4 -> 82.13.2
+- prometheus-blackbox-exporter 11.8.0 -> 11.9.0
+- prometheus-snmp-exporter 9.12.1 -> 9.13.0
+- registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen v1.6.8 -> v1.6.9
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.34.5 -> v1.34.6
+- registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader v0.89.0 -> v0.90.0
+
 ## [82.10.4-bb.2] (2026-03-19)
 ### Added
 - Added shared-monitoring-authz-policy AuthorizationPolicy for SSO-protected endpoints

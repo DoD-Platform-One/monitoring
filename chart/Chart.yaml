@@ -6,7 +6,7 @@ name: monitoring
 sources:
   - https://github.com/prometheus-community/helm-charts
   - https://github.com/prometheus-operator/kube-prometheus
-version: 82.10.4-bb.2
+version: 82.13.2-bb.0
 # Please do not add a renovate hint here, since appVersion updates involves manual tasks
 appVersion: v0.89.0
 kubeVersion: ">=1.19.0-0"
@@ -53,20 +53,20 @@ annotations:
       condition: upstream.grafana.enabled
       dependency: grafana
     - name: kubectl
-      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34.5
+      image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34.6
       condition: upstream.prometheusOperator.enabled
     - name: kube-state-metrics
       image: registry1.dso.mil/ironbank/opensource/kubernetes/kube-state-metrics:v2.18.0
       condition: upstream.kubeStateMetrics.enabled
       dependency: kube-state-metrics
     - name: kube-webhook-certgen
-      image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.6.8
+      image: registry1.dso.mil/ironbank/opensource/ingress-nginx/kube-webhook-certgen:v1.6.9
       condition: upstream.prometheusOperator.admissionWebhooks.patch.enabled
     - name: prometheus
       image: registry1.dso.mil/ironbank/opensource/prometheus/prometheus:v3.10.0
       condition: upstream.prometheus.enabled
     - name: prometheus-config-reloader
-      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.89.0
+      image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-config-reloader:v0.90.0
       condition: upstream.prometheusOperator.enabled
     - name: prometheus-operator
       image: registry1.dso.mil/ironbank/opensource/prometheus-operator/prometheus-operator:v0.89.0
@@ -99,7 +99,7 @@ dependencies:
     version: "0.14.1"
     repository: oci://registry1.dso.mil/bigbang
   - name: kube-prometheus-stack
-    version: "82.10.4"
+    version: "82.13.2"
     repository: https://prometheus-community.github.io/helm-charts
     alias: upstream
     import-values:
@@ -121,12 +121,12 @@ dependencies:
         parent: thanosRuler
   - name: prometheus-snmp-exporter
     repository: https://prometheus-community.github.io/helm-charts
-    version: "9.12.1"
+    version: "9.13.0"
     condition: snmpExporter.enabled
     alias: snmpExporter
   - name: prometheus-blackbox-exporter
     repository: https://prometheus-community.github.io/helm-charts
-    version: "11.8.0"
+    version: "11.9.0"
     condition: blackboxExporter.enabled
     alias: blackboxExporter
   - name: gluon
