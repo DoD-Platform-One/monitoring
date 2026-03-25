@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [82.13.2-bb.1] (2026-03-24)
+### Fixed
+- Restored a minimal Prometheus AuthorizationPolicy fallback for SSO-enabled, non-hardened monitoring deployments so Grafana can query Prometheus
+
 ## [82.13.2-bb.0] (2026-03-23)
 ### Changed
 - kube-prometheus-stack 82.10.4 -> 82.13.2
