@@ -1,0 +1,61 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/schema/helm-testsuite.json
+suite: Monitoring Prometheus authorization policy
+templates:
+  - templates/bigbang/authorizationpolicies/monitoring-prometheus-authz-policy.yaml
+release:
+  name: monitoring
+  namespace: monitoring
+tests:
+  - it: creates AuthorizationPolicy for prometheus when sso is enabled and generated authz is disabled
+    set:
+      istio.enabled: true
+      istio.authorizationPolicies.enabled: false
+      sso.enabled: true
+    documentSelector:
+      path: metadata.name
+      value: monitoring-prometheus-authz-policy
+    asserts:
+      - containsDocument:
+          apiVersion: security.istio.io/v1
+          kind: AuthorizationPolicy
+          name: monitoring-prometheus-authz-policy
+          namespace: monitoring
+      - equal:
+          path: spec.selector.matchLabels
+          value:
+            app: prometheus
+      - equal:
+          path: spec.rules[0].from[0].source.namespaces
+          value:
+            - monitoring
+      - equal:
+          path: spec.rules[0].to[0].operation.ports
+          value:
+            - "9090"
+
+  - it: renders nothing when authorizationPolicies are enabled
+    set:
+      istio.enabled: true
+      istio.authorizationPolicies.enabled: true
+      sso.enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders nothing when sso is disabled
+    set:
+      istio.enabled: true
+      istio.authorizationPolicies.enabled: false
+      sso.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: renders nothing when istio is disabled
+    set:
+      istio.enabled: false
+      istio.authorizationPolicies.enabled: false
+      sso.enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0

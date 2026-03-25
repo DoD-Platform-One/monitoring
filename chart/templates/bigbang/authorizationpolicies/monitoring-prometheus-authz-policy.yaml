@@ -1,0 +1,21 @@
+{{- if and .Values.istio.enabled .Values.sso.enabled (not .Values.istio.authorizationPolicies.enabled) -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: monitoring-prometheus-authz-policy
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces:
+        - {{ .Release.Namespace }}
+    to:
+    - operation:
+        ports:
+        - "9090"
+{{- end }}
